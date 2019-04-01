@@ -1,4 +1,3 @@
-import 'dart:convert' as JSON;
 
 class Type {
   String description;

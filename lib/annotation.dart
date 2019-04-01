@@ -1,3 +1,4 @@
+
 class GQLGenerator{
   final String url;
   final String headerToken;
