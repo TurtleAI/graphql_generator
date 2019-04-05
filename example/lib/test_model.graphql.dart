@@ -5,17 +5,28 @@
 // **************************************************************************
 
 class Query {
-  Continent continents;
+  List<Continent> continents;
 
   Continent continent;
 
-  Country countries;
+  List<Country> countries;
 
   Country country;
 
-  Language languages;
+  List<Language> languages;
 
   Language language;
+
+  Query([this.continents,
+    this.continent,
+    this.countries,
+    this.country,
+    this.languages,
+    this.language]);
+
+  factory Query.fromJson(Map<String, dynamic> json) {
+    return Query();
+  }
 }
 
 class Continent {
@@ -23,7 +34,13 @@ class Continent {
 
   String name;
 
-  Country countries;
+  List<Country> countries;
+
+  Continent([this.code, this.name, this.countries]);
+
+  factory Continent.fromJson(Map<String, dynamic> json) {
+    return Continent();
+  }
 }
 
 class Country {
@@ -39,11 +56,25 @@ class Country {
 
   String currency;
 
-  Language languages;
+  List<Language> languages;
 
   String emoji;
 
   String emojiU;
+
+  Country([this.code,
+    this.name,
+    this.native,
+    this.phone,
+    this.continent,
+    this.currency,
+    this.languages,
+    this.emoji,
+    this.emojiU]);
+
+  factory Country.fromJson(Map<String, dynamic> json) {
+    return Country();
+  }
 }
 
 class Language {
@@ -54,10 +85,16 @@ class Language {
   String native;
 
   int rtl;
+
+  Language([this.code, this.name, this.native, this.rtl]);
+
+  factory Language.fromJson(Map<String, dynamic> json) {
+    return Language();
+  }
 }
 
 class __Schema {
-  __Type types;
+  List<__Type> types;
 
   __Type queryType;
 
@@ -65,7 +102,17 @@ class __Schema {
 
   __Type subscriptionType;
 
-  __Directive directives;
+  List<__Directive> directives;
+
+  __Schema([this.types,
+    this.queryType,
+    this.mutationType,
+    this.subscriptionType,
+    this.directives]);
+
+  factory __Schema.fromJson(Map<String, dynamic> json) {
+    return __Schema();
+  }
 }
 
 class __Type {
@@ -75,17 +122,31 @@ class __Type {
 
   String description;
 
-  __Field fields;
+  List<__Field> fields;
 
-  __Type interfaces;
+  List<__Type> interfaces;
 
-  __Type possibleTypes;
+  List<__Type> possibleTypes;
 
-  __EnumValue enumValues;
+  List<__EnumValue> enumValues;
 
-  __InputValue inputFields;
+  List<__InputValue> inputFields;
 
   __Type ofType;
+
+  __Type([this.kind,
+    this.name,
+    this.description,
+    this.fields,
+    this.interfaces,
+    this.possibleTypes,
+    this.enumValues,
+    this.inputFields,
+    this.ofType]);
+
+  factory __Type.fromJson(Map<String, dynamic> json) {
+    return __Type();
+  }
 }
 
 class __Field {
@@ -93,13 +154,24 @@ class __Field {
 
   String description;
 
-  __InputValue args;
+  List<__InputValue> args;
 
   __Type type;
 
   bool isDeprecated;
 
   String deprecationReason;
+
+  __Field([this.name,
+    this.description,
+    this.args,
+    this.type,
+    this.isDeprecated,
+    this.deprecationReason]);
+
+  factory __Field.fromJson(Map<String, dynamic> json) {
+    return __Field();
+  }
 }
 
 class __InputValue {
@@ -110,6 +182,12 @@ class __InputValue {
   __Type type;
 
   String defaultValue;
+
+  __InputValue([this.name, this.description, this.type, this.defaultValue]);
+
+  factory __InputValue.fromJson(Map<String, dynamic> json) {
+    return __InputValue();
+  }
 }
 
 class __EnumValue {
@@ -120,6 +198,13 @@ class __EnumValue {
   bool isDeprecated;
 
   String deprecationReason;
+
+  __EnumValue(
+      [this.name, this.description, this.isDeprecated, this.deprecationReason]);
+
+  factory __EnumValue.fromJson(Map<String, dynamic> json) {
+    return __EnumValue();
+  }
 }
 
 class __Directive {
@@ -127,38 +212,18 @@ class __Directive {
 
   String description;
 
-  __DirectiveLocation locations;
+  List<__DirectiveLocation> locations;
 
-  __InputValue args;
+  List<__InputValue> args;
+
+  __Directive([this.name, this.description, this.locations, this.args]);
+
+  factory __Directive.fromJson(Map<String, dynamic> json) {
+    return __Directive();
+  }
 }
 
-class Root {
-  Query query;
-
-  Continent continent;
-
-  Country country;
-
-  Language language;
-
-  __Schema __schema;
-
-  __Type __type;
-
-  __TypeKind __typekind;
-
-  __Field __field;
-
-  __InputValue __inputvalue;
-
-  __EnumValue __enumvalue;
-
-  __Directive __directive;
-
-  __DirectiveLocation __directivelocation;
-
-  CacheControlScope cachecontrolscope;
-}
+class Root {}
 
 enum __TypeKind {
   SCALAR,
@@ -170,7 +235,6 @@ enum __TypeKind {
   LIST,
   NON_NULL,
 }
-
 enum __DirectiveLocation {
   QUERY,
   MUTATION,
@@ -192,7 +256,6 @@ enum __DirectiveLocation {
   INPUT_OBJECT,
   INPUT_FIELD_DEFINITION,
 }
-
 enum CacheControlScope {
   PUBLIC,
   PRIVATE,

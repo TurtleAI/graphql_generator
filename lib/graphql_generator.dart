@@ -1,24 +1,23 @@
 library graphql_generator;
 
-import 'package:analyzer/dart/element/element.dart';
-import 'package:build/build.dart';
-import 'package:graphql_generator/annotation.dart';
-import 'package:graphql_generator/model.dart';
-import 'package:code_builder/code_builder.dart';
-import 'package:dart_style/dart_style.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert' as JSON;
 
+import 'package:analyzer/dart/element/element.dart';
+import 'package:build/build.dart';
+import 'package:code_builder/code_builder.dart';
+import 'package:dart_style/dart_style.dart';
+import 'package:graphql_generator/annotation.dart';
+import 'package:graphql_generator/model.dart';
+import 'package:http/http.dart' as http;
 import 'package:source_gen/source_gen.dart';
 
 class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
-
   var url;
   var headerToken;
   var namespace;
 
   Map<String, Class> classes = {};
-  List<String> enumString =[];
+  List<String> enumString = [];
 
   @override
   Future<String> generateForAnnotatedElement(
@@ -36,7 +35,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     classes.forEach((className, classObject) {
       result += DartFormatter().format('${classObject.accept(emitter)}');
     });
-    enumString.forEach((enumString){
+    enumString.forEach((enumString) {
       result += DartFormatter().format(enumString);
     });
     return result;
@@ -84,50 +83,71 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   /// Set the fields to the class object
   setFields(Type type, ClassBuilder rootClass) {
     if (type.kind == Kind.OBJECT) {
-      rootClass.fields.add(Field((f){
-        f.name = type.name.toLowerCase();
-        f.type = Reference(type.name);
-      }));
       parseObjectType(type);
     } else if (type.kind == Kind.ENUM) {
-      rootClass.fields.add(Field((f){
-        f.name = type.name.toLowerCase();
-        f.type = Reference(type.name);
-      }));
       parseEnumType(type);
-    }
+    } else if (type.kind == Kind.LIST) {}
   }
 
   /// Parse the type @[Kind.OBJECT]
   parseObjectType(Type type) {
     classes.putIfAbsent(type.name, () {
-      return Class((root) {
-        root.name = type.name;
-        if (type.fields != null) {
-          type.fields.forEach((field) {
-            root.fields.add(Field((f){
-              f.name =  field.name;
-              f.type = Reference(findFieldType(field.type));
-            }));
-          });
-        }
-      });
+//      classBuilder.methods.add(Method((m) => createMethods(classBuilder)));
+      return Class((b) => fieldBuilder(b, type));
     });
   }
 
-  /// Loop to find the field types
-  findFieldType(Interface type){
-    while(true){
-      if(type.name != null) {
-        return mapFieldType(type.name);
-      }
-      type = type.ofType;
+  fieldBuilder(ClassBuilder builder, Type type) {
+    builder.name = type.name;
+    if (type.fields != null) {
+      type.fields.forEach((field) {
+        builder.fields.add(Field((f) {
+          f.name = field.name;
+          f.type = Reference(findFieldType(field.type));
+        }));
+      });
+      builder.methods.addAll(createMethods(builder));
     }
+  }
+
+  createMethods(ClassBuilder classBuilder) {
+    MethodBuilder constructorBuilder = new MethodBuilder();
+    MethodBuilder fromJsonBuilder = new MethodBuilder();
+    constructorBuilder..name = classBuilder.name;
+    fromJsonBuilder.returns = Reference("factory");
+    fromJsonBuilder.name = '${classBuilder.name}.fromJson';
+    fromJsonBuilder.requiredParameters.add(Parameter((p) {
+      p.name = "json";
+      p.type = Reference("Map<String,dynamic>");
+    }));
+    fromJsonBuilder.body = Code(" return ${classBuilder.name}();");
+    classBuilder.fields.build().forEach((f) {
+      constructorBuilder.optionalParameters.add(Parameter((p) {
+        p.name = "this.${f.name}";
+        p.named = false;
+      }));
+    });
+    return [constructorBuilder.build(), fromJsonBuilder.build()];
+  }
+
+  createFromJson() {}
+
+  /// Loop to find the field types
+  findFieldType(Interface type, {bool isList}) {
+    if (type.name != null) {
+      return mapFieldType(type.name);
+    }
+    if (type.kind != null) {
+      if (type.kind == Kind.LIST) {
+        return "List<${findFieldType(type.ofType)}>";
+      }
+    }
+    return findFieldType(type.ofType);
   }
 
   /// Map the FieldTypes to Dart objects
   mapFieldType(String name) {
-    switch(name){
+    switch (name) {
       case 'Date':
         return 'DateTime';
       case 'Boolean':
@@ -144,17 +164,17 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   }
 
   /// Parse the type @[Kind.ENUM]
-  parseEnumType(Type type){
+  parseEnumType(Type type) {
     enumString.add(" enum ${type.name} {${_getEnumArray(type)}}");
   }
 
   /// Convert Enum items to String
   _getEnumArray(Type type) {
     String result = '';
-    type.enumValues.forEach((e){
+    type.enumValues.forEach((e) {
       result += '${e.name} ,';
     });
-    result.replaceFirst(RegExp(','),'',result.lastIndexOf(RegExp(',')));
+    result.replaceFirst(RegExp(','), '', result.lastIndexOf(RegExp(',')));
     return result;
   }
 }
