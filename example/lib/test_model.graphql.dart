@@ -4,586 +4,8 @@
 // GraphQLGenerator
 // **************************************************************************
 
-abstract class FeedSource {
-  factory FeedSource.fromJson(Map<String, dynamic> json) {
-    switch (json['__typename']) {
-      case "Card":
-        return Card.fromJson(json);
-      case "User":
-        return User.fromJson(json);
-    }
-    return null;
-  }
-}
-
-class CardCompleted implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Card card;
-
-  String cardId;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  CardCompleted({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory CardCompleted.fromJson(Map<String, dynamic> json) {
-    return CardCompleted(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class RootMutationType {
-  Raw accountOpen;
-
-  Raw feedMarkAsRead;
-
-  User cardInviteUser;
-
-  Raw timeEntryDelete;
-
-  Card cardUncomplete;
-
-  Card cardDueDateSet;
-
-  Raw timeEntryEdit;
-
-  Card cardBudgetDecrease;
-
-  Raw cardAddMember;
-
-  Raw sendLowBalanceReminder;
-
-  Raw cardMetaSet;
-
-  Card cardUndelete;
-
-  Raw accountTransfer;
-
-  Card cardEstimateUnset;
-
-  Card cardComplete;
-
-  Raw timeEntryCreate;
-
-  Raw userSetRoles;
-
-  Card cardDueDateUnset;
-
-  Card cardEstimateSet;
-
-  Raw userSetSkills;
-
-  Raw feedPostMessage;
-
-  Card cardRename;
-
-  Raw feedEditMessage;
-
-  Raw profileTimezoneSet;
-
-  Raw projectAddBalanceWithStripe;
-
-  Card cardCreate;
-
-  Card cardAssign;
-
-  Raw cardTagsSet;
-
-  Raw removeReaction;
-
-  Raw feedDeleteMessage;
-
-  Raw addReaction;
-
-  Raw profileNameSet;
-
-  Card cardBudgetIncrease;
-
-  Raw contractStart;
-
-  Card cardBudgetUnset;
-
-  TwilioAuth meetingRoomJoin;
-
-  Card cardUnassign;
-
-  Raw recordPayout;
-
-  Card cardDelete;
-
-  Raw cardRemoveMember;
-
-  HubspotContact linkOrCreateHubSpotContact;
-
-  Raw contractEnd;
-
-  Card cardMove;
-
-  Raw updateAvailability;
-
-  RootMutationType({this.accountOpen,
-    this.feedMarkAsRead,
-    this.cardInviteUser,
-    this.timeEntryDelete,
-    this.cardUncomplete,
-    this.cardDueDateSet,
-    this.timeEntryEdit,
-    this.cardBudgetDecrease,
-    this.cardAddMember,
-    this.sendLowBalanceReminder,
-    this.cardMetaSet,
-    this.cardUndelete,
-    this.accountTransfer,
-    this.cardEstimateUnset,
-    this.cardComplete,
-    this.timeEntryCreate,
-    this.userSetRoles,
-    this.cardDueDateUnset,
-    this.cardEstimateSet,
-    this.userSetSkills,
-    this.feedPostMessage,
-    this.cardRename,
-    this.feedEditMessage,
-    this.profileTimezoneSet,
-    this.projectAddBalanceWithStripe,
-    this.cardCreate,
-    this.cardAssign,
-    this.cardTagsSet,
-    this.removeReaction,
-    this.feedDeleteMessage,
-    this.addReaction,
-    this.profileNameSet,
-    this.cardBudgetIncrease,
-    this.contractStart,
-    this.cardBudgetUnset,
-    this.meetingRoomJoin,
-    this.cardUnassign,
-    this.recordPayout,
-    this.cardDelete,
-    this.cardRemoveMember,
-    this.linkOrCreateHubSpotContact,
-    this.contractEnd,
-    this.cardMove,
-    this.updateAvailability});
-
-  factory RootMutationType.fromJson(Map<String, dynamic> json) {
-    return RootMutationType(
-      accountOpen: json['accountOpen'] == null
-          ? null
-          : Raw.fromJson(json['accountOpen'] as Map<String, dynamic>),
-      feedMarkAsRead: json['feedMarkAsRead'] == null
-          ? null
-          : Raw.fromJson(json['feedMarkAsRead'] as Map<String, dynamic>),
-      cardInviteUser: json['cardInviteUser'] == null
-          ? null
-          : User.fromJson(json['cardInviteUser'] as Map<String, dynamic>),
-      timeEntryDelete: json['timeEntryDelete'] == null
-          ? null
-          : Raw.fromJson(json['timeEntryDelete'] as Map<String, dynamic>),
-      cardUncomplete: json['cardUncomplete'] == null
-          ? null
-          : Card.fromJson(json['cardUncomplete'] as Map<String, dynamic>),
-      cardDueDateSet: json['cardDueDateSet'] == null
-          ? null
-          : Card.fromJson(json['cardDueDateSet'] as Map<String, dynamic>),
-      timeEntryEdit: json['timeEntryEdit'] == null
-          ? null
-          : Raw.fromJson(json['timeEntryEdit'] as Map<String, dynamic>),
-      cardBudgetDecrease: json['cardBudgetDecrease'] == null
-          ? null
-          : Card.fromJson(json['cardBudgetDecrease'] as Map<String, dynamic>),
-      cardAddMember: json['cardAddMember'] == null
-          ? null
-          : Raw.fromJson(json['cardAddMember'] as Map<String, dynamic>),
-      sendLowBalanceReminder: json['sendLowBalanceReminder'] == null
-          ? null
-          : Raw.fromJson(
-          json['sendLowBalanceReminder'] as Map<String, dynamic>),
-      cardMetaSet: json['cardMetaSet'] == null
-          ? null
-          : Raw.fromJson(json['cardMetaSet'] as Map<String, dynamic>),
-      cardUndelete: json['cardUndelete'] == null
-          ? null
-          : Card.fromJson(json['cardUndelete'] as Map<String, dynamic>),
-      accountTransfer: json['accountTransfer'] == null
-          ? null
-          : Raw.fromJson(json['accountTransfer'] as Map<String, dynamic>),
-      cardEstimateUnset: json['cardEstimateUnset'] == null
-          ? null
-          : Card.fromJson(json['cardEstimateUnset'] as Map<String, dynamic>),
-      cardComplete: json['cardComplete'] == null
-          ? null
-          : Card.fromJson(json['cardComplete'] as Map<String, dynamic>),
-      timeEntryCreate: json['timeEntryCreate'] == null
-          ? null
-          : Raw.fromJson(json['timeEntryCreate'] as Map<String, dynamic>),
-      userSetRoles: json['userSetRoles'] == null
-          ? null
-          : Raw.fromJson(json['userSetRoles'] as Map<String, dynamic>),
-      cardDueDateUnset: json['cardDueDateUnset'] == null
-          ? null
-          : Card.fromJson(json['cardDueDateUnset'] as Map<String, dynamic>),
-      cardEstimateSet: json['cardEstimateSet'] == null
-          ? null
-          : Card.fromJson(json['cardEstimateSet'] as Map<String, dynamic>),
-      userSetSkills: json['userSetSkills'] == null
-          ? null
-          : Raw.fromJson(json['userSetSkills'] as Map<String, dynamic>),
-      feedPostMessage: json['feedPostMessage'] == null
-          ? null
-          : Raw.fromJson(json['feedPostMessage'] as Map<String, dynamic>),
-      cardRename: json['cardRename'] == null
-          ? null
-          : Card.fromJson(json['cardRename'] as Map<String, dynamic>),
-      feedEditMessage: json['feedEditMessage'] == null
-          ? null
-          : Raw.fromJson(json['feedEditMessage'] as Map<String, dynamic>),
-      profileTimezoneSet: json['profileTimezoneSet'] == null
-          ? null
-          : Raw.fromJson(json['profileTimezoneSet'] as Map<String, dynamic>),
-      projectAddBalanceWithStripe: json['projectAddBalanceWithStripe'] == null
-          ? null
-          : Raw.fromJson(
-          json['projectAddBalanceWithStripe'] as Map<String, dynamic>),
-      cardCreate: json['cardCreate'] == null
-          ? null
-          : Card.fromJson(json['cardCreate'] as Map<String, dynamic>),
-      cardAssign: json['cardAssign'] == null
-          ? null
-          : Card.fromJson(json['cardAssign'] as Map<String, dynamic>),
-      cardTagsSet: json['cardTagsSet'] == null
-          ? null
-          : Raw.fromJson(json['cardTagsSet'] as Map<String, dynamic>),
-      removeReaction: json['removeReaction'] == null
-          ? null
-          : Raw.fromJson(json['removeReaction'] as Map<String, dynamic>),
-      feedDeleteMessage: json['feedDeleteMessage'] == null
-          ? null
-          : Raw.fromJson(json['feedDeleteMessage'] as Map<String, dynamic>),
-      addReaction: json['addReaction'] == null
-          ? null
-          : Raw.fromJson(json['addReaction'] as Map<String, dynamic>),
-      profileNameSet: json['profileNameSet'] == null
-          ? null
-          : Raw.fromJson(json['profileNameSet'] as Map<String, dynamic>),
-      cardBudgetIncrease: json['cardBudgetIncrease'] == null
-          ? null
-          : Card.fromJson(json['cardBudgetIncrease'] as Map<String, dynamic>),
-      contractStart: json['contractStart'] == null
-          ? null
-          : Raw.fromJson(json['contractStart'] as Map<String, dynamic>),
-      cardBudgetUnset: json['cardBudgetUnset'] == null
-          ? null
-          : Card.fromJson(json['cardBudgetUnset'] as Map<String, dynamic>),
-      meetingRoomJoin: json['meetingRoomJoin'] == null
-          ? null
-          : TwilioAuth.fromJson(
-          json['meetingRoomJoin'] as Map<String, dynamic>),
-      cardUnassign: json['cardUnassign'] == null
-          ? null
-          : Card.fromJson(json['cardUnassign'] as Map<String, dynamic>),
-      recordPayout: json['recordPayout'] == null
-          ? null
-          : Raw.fromJson(json['recordPayout'] as Map<String, dynamic>),
-      cardDelete: json['cardDelete'] == null
-          ? null
-          : Card.fromJson(json['cardDelete'] as Map<String, dynamic>),
-      cardRemoveMember: json['cardRemoveMember'] == null
-          ? null
-          : Raw.fromJson(json['cardRemoveMember'] as Map<String, dynamic>),
-      linkOrCreateHubSpotContact: json['linkOrCreateHubSpotContact'] == null
-          ? null
-          : HubspotContact.fromJson(
-          json['linkOrCreateHubSpotContact'] as Map<String, dynamic>),
-      contractEnd: json['contractEnd'] == null
-          ? null
-          : Raw.fromJson(json['contractEnd'] as Map<String, dynamic>),
-      cardMove: json['cardMove'] == null
-          ? null
-          : Card.fromJson(json['cardMove'] as Map<String, dynamic>),
-      updateAvailability: json['updateAvailability'] == null
-          ? null
-          : Raw.fromJson(json['updateAvailability'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class DateObject implements DocumentToken {
-  DateTime value;
-
-  DateObject({this.value});
-
-  factory DateObject.fromJson(Map<String, dynamic> json) {
-    return DateObject(
-      value: json['value'] == null
-          ? null
-          : DateTime.parse(json['value'] as String),
-    );
-  }
-}
-
-class HubspotContact {
-  List<String> coreSkills;
-
-  String githubUsername;
-
-  Money hourlyRate;
-
-  int id;
-
-  HubspotDealStage recruitingStage;
-
-  HubspotContact({this.coreSkills,
-    this.githubUsername,
-    this.hourlyRate,
-    this.id,
-    this.recruitingStage});
-
-  factory HubspotContact.fromJson(Map<String, dynamic> json) {
-    return HubspotContact(
-      coreSkills:
-      (json['coreSkills'] as List)?.map((e) => e as String)?.toList(),
-      githubUsername: json['githubUsername'] as String,
-      hourlyRate: json['hourlyRate'] == null
-          ? null
-          : Money.fromJson(json['hourlyRate'] as Map<String, dynamic>),
-      id: json['id'] as int,
-      recruitingStage: json['recruitingStage'] == null
-          ? null
-          : HubspotDealStage.fromJson(
-          json['recruitingStage'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class ReactionRemoved implements TurtleEvent {
-  String actorId;
-
-  String cardId;
-
-  String feedEventId;
-
-  String feedId;
-
-  int id;
-
-  String projectId;
-
-  String reaction;
-
-  String receiverId;
-
-  String requestId;
-
-  String time;
-
-  ReactionRemoved({this.actorId,
-    this.cardId,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.projectId,
-    this.reaction,
-    this.receiverId,
-    this.requestId,
-    this.time});
-
-  factory ReactionRemoved.fromJson(Map<String, dynamic> json) {
-    return ReactionRemoved(
-      actorId: json['actorId'] as String,
-      cardId: json['cardId'] as String,
-      feedEventId: json['feedEventId'] as String,
-      feedId: json['feedId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      reaction: json['reaction'] as String,
-      receiverId: json['receiverId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class DurationRangeObject implements DocumentToken {
-  DurationRange value;
-
-  DurationRangeObject({this.value});
-
-  factory DurationRangeObject.fromJson(Map<String, dynamic> json) {
-    return DurationRangeObject(
-      value: json['value'] == null
-          ? null
-          : DurationRange.fromJson(json['value'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class CardUnassigned implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Card card;
-
-  String cardId;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  CardUnassigned({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory CardUnassigned.fromJson(Map<String, dynamic> json) {
-    return CardUnassigned(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class HubspotPipeline {
-  int id;
-
-  String label;
-
-  List<HubspotDealStage> stages;
-
-  HubspotPipeline({this.id, this.label, this.stages});
-
-  factory HubspotPipeline.fromJson(Map<String, dynamic> json) {
-    return HubspotPipeline(
-      id: json['id'] as int,
-      label: json['label'] as String,
-      stages: (json['stages'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : HubspotDealStage.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-    );
-  }
-}
-
-class PayoutRecorded implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Money amount;
-
-  DateTime date;
-
-  Money fee;
-
-  int id;
-
-  String memo;
-
-  String method;
-
-  String payoutId;
-
-  String requestId;
-
-  String time;
-
-  User user;
-
-  String userId;
-
-  PayoutRecorded({this.actor,
-    this.actorId,
-    this.amount,
-    this.date,
-    this.fee,
-    this.id,
-    this.memo,
-    this.method,
-    this.payoutId,
-    this.requestId,
-    this.time,
-    this.user,
-    this.userId});
-
-  factory PayoutRecorded.fromJson(Map<String, dynamic> json) {
-    return PayoutRecorded(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      amount: json['amount'] == null
-          ? null
-          : Money.fromJson(json['amount'] as Map<String, dynamic>),
-      date:
-      json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      fee: json['fee'] == null
-          ? null
-          : Money.fromJson(json['fee'] as Map<String, dynamic>),
-      id: json['id'] as int,
-      memo: json['memo'] as String,
-      method: json['method'] as String,
-      payoutId: json['payoutId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-      user: json['user'] == null
-          ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
-      userId: json['userId'] as String,
-    );
-  }
-}
-
 abstract class TurtleEvent {
-  int id;
+  String id;
 
   String requestId;
 
@@ -656,243 +78,51 @@ abstract class TurtleEvent {
   }
 }
 
-class CardBudgetIncreased implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  CardBudget budget;
-
-  Card card;
-
-  String cardId;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  CardBudgetIncreased({this.actor,
-    this.actorId,
-    this.budget,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory CardBudgetIncreased.fromJson(Map<String, dynamic> json) {
-    return CardBudgetIncreased(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      budget: json['budget'] == null
-          ? null
-          : CardBudget.fromJson(json['budget'] as Map<String, dynamic>),
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
+abstract class AccountSource {
+  factory AccountSource.fromJson(Map<String, dynamic> json) {
+    switch (json['__typename']) {
+      case "Card":
+        return Card.fromJson(json);
+      case "User":
+        return User.fromJson(json);
+    }
+    return null;
   }
 }
 
-class CreditCard {
-  String brand;
-
-  String expMonth;
-
-  String expYear;
-
-  int id;
-
-  String last4;
-
-  User owner;
-
-  CreditCard({this.brand,
-    this.expMonth,
-    this.expYear,
-    this.id,
-    this.last4,
-    this.owner});
-
-  factory CreditCard.fromJson(Map<String, dynamic> json) {
-    return CreditCard(
-      brand: json['brand'] as String,
-      expMonth: json['expMonth'] as String,
-      expYear: json['expYear'] as String,
-      id: json['id'] as int,
-      last4: json['last4'] as String,
-      owner: json['owner'] == null
-          ? null
-          : User.fromJson(json['owner'] as Map<String, dynamic>),
-    );
+abstract class FeedSource {
+  factory FeedSource.fromJson(Map<String, dynamic> json) {
+    switch (json['__typename']) {
+      case "Card":
+        return Card.fromJson(json);
+      case "User":
+        return User.fromJson(json);
+    }
+    return null;
   }
 }
 
-class CardBudgetSet implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  CardBudget budget;
-
-  Card card;
-
-  String cardId;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  CardBudgetSet({this.actor,
-    this.actorId,
-    this.budget,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory CardBudgetSet.fromJson(Map<String, dynamic> json) {
-    return CardBudgetSet(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      budget: json['budget'] == null
-          ? null
-          : CardBudget.fromJson(json['budget'] as Map<String, dynamic>),
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class FeedMessageDeleted implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Feed feed;
-
-  String feedEventId;
-
-  String feedId;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  FeedMessageDeleted({this.actor,
-    this.actorId,
-    this.feed,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory FeedMessageDeleted.fromJson(Map<String, dynamic> json) {
-    return FeedMessageDeleted(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      feed: json['feed'] == null
-          ? null
-          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
-      feedEventId: json['feedEventId'] as String,
-      feedId: json['feedId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class CardCreated implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Card card;
-
-  String cardId;
-
-  String cardName;
-
-  int id;
-
-  Card parent;
-
-  String parentId;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  CardCreated({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.cardName,
-    this.id,
-    this.parent,
-    this.parentId,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory CardCreated.fromJson(Map<String, dynamic> json) {
-    return CardCreated(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      cardName: json['cardName'] as String,
-      id: json['id'] as int,
-      parent: json['parent'] == null
-          ? null
-          : Card.fromJson(json['parent'] as Map<String, dynamic>),
-      parentId: json['parentId'] as String,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
+abstract class DocumentToken {
+  factory DocumentToken.fromJson(Map<String, dynamic> json) {
+    switch (json['__typename']) {
+      case "Card":
+        return Card.fromJson(json);
+      case "DateObject":
+        return DateObject.fromJson(json);
+      case "DurationRange":
+        return DurationRange.fromJson(json);
+      case "File":
+        return File.fromJson(json);
+      case "Link":
+        return Link.fromJson(json);
+      case "StringObject":
+        return StringObject.fromJson(json);
+      case "TimeEntry":
+        return TimeEntry.fromJson(json);
+      case "User":
+        return User.fromJson(json);
+    }
+    return null;
   }
 }
 
@@ -905,7 +135,7 @@ class ReactionAdded implements TurtleEvent {
 
   String feedId;
 
-  int id;
+  String id;
 
   String projectId;
 
@@ -934,7 +164,7 @@ class ReactionAdded implements TurtleEvent {
       cardId: json['cardId'] as String,
       feedEventId: json['feedEventId'] as String,
       feedId: json['feedId'] as String,
-      id: json['id'] as int,
+      id: json['id'] as String,
       projectId: json['projectId'] as String,
       reaction: json['reaction'] as String,
       receiverId: json['receiverId'] as String,
@@ -944,388 +174,10 @@ class ReactionAdded implements TurtleEvent {
   }
 }
 
-class RootSubscriptionType {
-  FeedSubscription feedSubscriptionUpdated;
-
-  Feed feedUpdated;
-
-  Me unreadCountUpdated;
-
-  RootSubscriptionType({this.feedSubscriptionUpdated,
-    this.feedUpdated,
-    this.unreadCountUpdated});
-
-  factory RootSubscriptionType.fromJson(Map<String, dynamic> json) {
-    return RootSubscriptionType(
-      feedSubscriptionUpdated: json['feedSubscriptionUpdated'] == null
-          ? null
-          : FeedSubscription.fromJson(
-          json['feedSubscriptionUpdated'] as Map<String, dynamic>),
-      feedUpdated: json['feedUpdated'] == null
-          ? null
-          : Feed.fromJson(json['feedUpdated'] as Map<String, dynamic>),
-      unreadCountUpdated: json['unreadCountUpdated'] == null
-          ? null
-          : Me.fromJson(json['unreadCountUpdated'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class FeedMessagePosted implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Feed feed;
-
-  String feedEventId;
-
-  String feedId;
-
-  int id;
-
-  String messageBody;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  FeedMessagePosted({this.actor,
-    this.actorId,
-    this.feed,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.messageBody,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory FeedMessagePosted.fromJson(Map<String, dynamic> json) {
-    return FeedMessagePosted(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      feed: json['feed'] == null
-          ? null
-          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
-      feedEventId: json['feedEventId'] as String,
-      feedId: json['feedId'] as String,
-      id: json['id'] as int,
-      messageBody: json['messageBody'] as String,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class CardBudgetUnset implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Card card;
-
-  String cardId;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  CardBudgetUnset({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory CardBudgetUnset.fromJson(Map<String, dynamic> json) {
-    return CardBudgetUnset(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class UserUnreadFeedEvent implements TurtleEvent {
-  String actorId;
-
-  String feedEventId;
-
-  String feedId;
-
-  int id;
-
-  String requestId;
-
-  String time;
-
-  UserUnreadFeedEvent({this.actorId,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.requestId,
-    this.time});
-
-  factory UserUnreadFeedEvent.fromJson(Map<String, dynamic> json) {
-    return UserUnreadFeedEvent(
-      actorId: json['actorId'] as String,
-      feedEventId: json['feedEventId'] as String,
-      feedId: json['feedId'] as String,
-      id: json['id'] as int,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-abstract class AccountSource {
-  factory AccountSource.fromJson(Map<String, dynamic> json) {
-    switch (json['__typename']) {
-      case "Card":
-        return Card.fromJson(json);
-      case "User":
-        return User.fromJson(json);
-    }
-    return null;
-  }
-}
-
-class Card implements FeedSource, AccountSource, DocumentToken {
-  User assignee;
-
-  String assigneeId;
-
-  CardBudget budget;
-
-  bool completed;
-
-  DateTime completedAt;
-
-  DateTime createdAt;
-
-  bool deleted;
-
-  List<Card> descendants;
-
-  DateTime dueDate;
-
-  DurationRange estimate;
-
-  Feed feed;
-
-  String feedId;
-
-  int id;
-
-  List<User> members;
-
-  Raw meta;
-
-  String name;
-
-  String parentId;
-
-  int position;
-
-  Project project;
-
-  String projectId;
-
-  List<TimeEntry> timeEntries;
-
-  Duration timeTracked;
-
-  Card({this.assignee,
-    this.assigneeId,
-    this.budget,
-    this.completed,
-    this.completedAt,
-    this.createdAt,
-    this.deleted,
-    this.descendants,
-    this.dueDate,
-    this.estimate,
-    this.feed,
-    this.feedId,
-    this.id,
-    this.members,
-    this.meta,
-    this.name,
-    this.parentId,
-    this.position,
-    this.project,
-    this.projectId,
-    this.timeEntries,
-    this.timeTracked});
-
-  factory Card.fromJson(Map<String, dynamic> json) {
-    return Card(
-      assignee: json['assignee'] == null
-          ? null
-          : User.fromJson(json['assignee'] as Map<String, dynamic>),
-      assigneeId: json['assigneeId'] as String,
-      budget: json['budget'] == null
-          ? null
-          : CardBudget.fromJson(json['budget'] as Map<String, dynamic>),
-      completed: json['completed'] as bool,
-      completedAt: json['completedAt'] == null
-          ? null
-          : DateTime.parse(json['completedAt'] as String),
-      createdAt: json['createdAt'] == null
-          ? null
-          : DateTime.parse(json['createdAt'] as String),
-      deleted: json['deleted'] as bool,
-      descendants: (json['descendants'] as List)
-          ?.map((e) =>
-      e == null ? null : Card.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      dueDate: json['dueDate'] == null
-          ? null
-          : DateTime.parse(json['dueDate'] as String),
-      estimate: json['estimate'] == null
-          ? null
-          : DurationRange.fromJson(json['estimate'] as Map<String, dynamic>),
-      feed: json['feed'] == null
-          ? null
-          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
-      feedId: json['feedId'] as String,
-      id: json['id'] as int,
-      members: (json['members'] as List)
-          ?.map((e) =>
-      e == null ? null : User.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      meta: json['meta'] == null
-          ? null
-          : Raw.fromJson(json['meta'] as Map<String, dynamic>),
-      name: json['name'] as String,
-      parentId: json['parentId'] as String,
-      position: json['position'] as int,
-      project: json['project'] == null
-          ? null
-          : Project.fromJson(json['project'] as Map<String, dynamic>),
-      projectId: json['projectId'] as String,
-      timeEntries: (json['timeEntries'] as List)
-          ?.map((e) =>
-      e == null ? null : TimeEntry.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      timeTracked: json['timeTracked'] == null
-          ? null
-          : Duration.fromJson(json['timeTracked'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class HubspotDealStage {
-  bool active;
-
-  String closedWon;
-
-  int displayOrder;
-
-  int id;
-
-  String label;
-
-  double probability;
-
-  HubspotDealStage({this.active,
-    this.closedWon,
-    this.displayOrder,
-    this.id,
-    this.label,
-    this.probability});
-
-  factory HubspotDealStage.fromJson(Map<String, dynamic> json) {
-    return HubspotDealStage(
-      active: json['active'] as bool,
-      closedWon: json['closedWon'] as String,
-      displayOrder: json['displayOrder'] as int,
-      id: json['id'] as int,
-      label: json['label'] as String,
-      probability: json['probability'] as double,
-    );
-  }
-}
-
-class CardMoved implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Card card;
-
-  String cardId;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  Card to;
-
-  String toId;
-
-  CardMoved({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time,
-    this.to,
-    this.toId});
-
-  factory CardMoved.fromJson(Map<String, dynamic> json) {
-    return CardMoved(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-      to: json['to'] == null
-          ? null
-          : Card.fromJson(json['to'] as Map<String, dynamic>),
-      toId: json['toId'] as String,
-    );
-  }
-}
-
 class MeetingRecording {
   String downloadUrl;
 
-  Duration duration;
+  String duration;
 
   int fileSize;
 
@@ -1345,9 +197,7 @@ class MeetingRecording {
   factory MeetingRecording.fromJson(Map<String, dynamic> json) {
     return MeetingRecording(
       downloadUrl: json['downloadUrl'] as String,
-      duration: json['duration'] == null
-          ? null
-          : Duration.fromJson(json['duration'] as Map<String, dynamic>),
+      duration: json['duration'] as String,
       fileSize: json['fileSize'] as int,
       format: json['format'] as String,
       id: json['id'] as String,
@@ -1356,95 +206,75 @@ class MeetingRecording {
   }
 }
 
-class TimeEntryCreated implements TurtleEvent {
+class PayoutRecorded implements TurtleEvent {
   User actor;
 
   String actorId;
 
-  Card card;
+  Money amount;
 
-  String cardId;
+  String date;
 
-  Contract contract;
+  Money fee;
 
-  User contractor;
+  String id;
 
-  DateTime entryDate;
+  String memo;
 
-  Duration entryDuration;
+  String method;
 
-  String entryMemo;
-
-  int id;
-
-  Card project;
-
-  String projectId;
+  String payoutId;
 
   String requestId;
 
   String time;
 
-  TimeEntry timeEntry;
+  User user;
 
-  String timeEntryId;
+  String userId;
 
-  TimeEntryCreated({this.actor,
+  PayoutRecorded({this.actor,
     this.actorId,
-    this.card,
-    this.cardId,
-    this.contract,
-    this.contractor,
-    this.entryDate,
-    this.entryDuration,
-    this.entryMemo,
+    this.amount,
+    this.date,
+    this.fee,
     this.id,
-    this.project,
-    this.projectId,
+    this.memo,
+    this.method,
+    this.payoutId,
     this.requestId,
     this.time,
-    this.timeEntry,
-    this.timeEntryId});
+    this.user,
+    this.userId});
 
-  factory TimeEntryCreated.fromJson(Map<String, dynamic> json) {
-    return TimeEntryCreated(
+  factory PayoutRecorded.fromJson(Map<String, dynamic> json) {
+    return PayoutRecorded(
       actor: json['actor'] == null
           ? null
           : User.fromJson(json['actor'] as Map<String, dynamic>),
       actorId: json['actorId'] as String,
-      card: json['card'] == null
+      amount: json['amount'] == null
           ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      contract: json['contract'] == null
+          : Money.fromJson(json['amount'] as Map<String, dynamic>),
+      date: json['date'] as String,
+      fee: json['fee'] == null
           ? null
-          : Contract.fromJson(json['contract'] as Map<String, dynamic>),
-      contractor: json['contractor'] == null
-          ? null
-          : User.fromJson(json['contractor'] as Map<String, dynamic>),
-      entryDate: json['entryDate'] == null
-          ? null
-          : DateTime.parse(json['entryDate'] as String),
-      entryDuration: json['entryDuration'] == null
-          ? null
-          : Duration.fromJson(json['entryDuration'] as Map<String, dynamic>),
-      entryMemo: json['entryMemo'] as String,
-      id: json['id'] as int,
-      project: json['project'] == null
-          ? null
-          : Card.fromJson(json['project'] as Map<String, dynamic>),
-      projectId: json['projectId'] as String,
+          : Money.fromJson(json['fee'] as Map<String, dynamic>),
+      id: json['id'] as String,
+      memo: json['memo'] as String,
+      method: json['method'] as String,
+      payoutId: json['payoutId'] as String,
       requestId: json['requestId'] as String,
       time: json['time'] as String,
-      timeEntry: json['timeEntry'] == null
+      user: json['user'] == null
           ? null
-          : TimeEntry.fromJson(json['timeEntry'] as Map<String, dynamic>),
-      timeEntryId: json['timeEntryId'] as String,
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+      userId: json['userId'] as String,
     );
   }
 }
 
-class CardRenamed implements TurtleEvent {
+class CardUnassigned implements TurtleEvent {
   User actor;
 
   String actorId;
@@ -1453,9 +283,7 @@ class CardRenamed implements TurtleEvent {
 
   String cardId;
 
-  String cardName;
-
-  int id;
+  String id;
 
   String projectId;
 
@@ -1463,18 +291,17 @@ class CardRenamed implements TurtleEvent {
 
   String time;
 
-  CardRenamed({this.actor,
+  CardUnassigned({this.actor,
     this.actorId,
     this.card,
     this.cardId,
-    this.cardName,
     this.id,
     this.projectId,
     this.requestId,
     this.time});
 
-  factory CardRenamed.fromJson(Map<String, dynamic> json) {
-    return CardRenamed(
+  factory CardUnassigned.fromJson(Map<String, dynamic> json) {
+    return CardUnassigned(
       actor: json['actor'] == null
           ? null
           : User.fromJson(json['actor'] as Map<String, dynamic>),
@@ -1483,8 +310,7 @@ class CardRenamed implements TurtleEvent {
           ? null
           : Card.fromJson(json['card'] as Map<String, dynamic>),
       cardId: json['cardId'] as String,
-      cardName: json['cardName'] as String,
-      id: json['id'] as int,
+      id: json['id'] as String,
       projectId: json['projectId'] as String,
       requestId: json['requestId'] as String,
       time: json['time'] as String,
@@ -1492,17 +318,152 @@ class CardRenamed implements TurtleEvent {
   }
 }
 
-class Money {
-  int amount;
+/// Wrapper for a date scalar
+class DateObject implements DocumentToken {
+  ///
+  String value;
 
-  String currency;
+  DateObject({this.value});
 
-  Money({this.amount, this.currency});
+  factory DateObject.fromJson(Map<String, dynamic> json) {
+    return DateObject(
+      value: json['value'] as String,
+    );
+  }
+}
 
-  factory Money.fromJson(Map<String, dynamic> json) {
-    return Money(
-      amount: json['amount'] as int,
-      currency: json['currency'] as String,
+class FeedEvent {
+  /// The user that posted the message or performed the action which generated the event.
+  User actor;
+
+  /// A string that represents the message that was posted or a text-summary of the event.
+  /// Such as "set due date to @date"
+  ///
+  String body;
+
+  /// An array of tokens used when rendering a message body.
+  /// It may look like types of [string, date, file, ...]
+  /// On the client, you could map over the array and convert each item to a widget that is rendered from left to right.
+  ///
+  List<DocumentToken> bodyTokens;
+
+  /// The time the feed event was posted if it was a message or the time the event was generated.
+  String createdAt;
+
+  /// Whether the message was edited. Also applies to other edits like time entries.
+  bool edited;
+
+  /// The time of the edit if edited=true
+  String editedAt;
+
+  /// The domain event that corresponds to this activity feed entity.
+  TurtleEvent event;
+
+  /// The feed id this belongs to
+  String feedId;
+
+  /// Unique identifier of the feed event. It is time-ordered so sorting by ids results in order of creation.
+  String id;
+
+  /// An array of individual reactions to messages. Multiple users reacting with the same emoji results in distinct records.
+  List<Reaction> reactions;
+
+  FeedEvent({this.actor,
+    this.body,
+    this.bodyTokens,
+    this.createdAt,
+    this.edited,
+    this.editedAt,
+    this.event,
+    this.feedId,
+    this.id,
+    this.reactions});
+
+  factory FeedEvent.fromJson(Map<String, dynamic> json) {
+    return FeedEvent(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      body: json['body'] as String,
+      bodyTokens: (json['bodyTokens'] as List)
+          ?.map((e) =>
+      e == null
+          ? null
+          : DocumentToken.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      createdAt: json['createdAt'] as String,
+      edited: json['edited'] as bool,
+      editedAt: json['editedAt'] as String,
+      event: json['event'] == null
+          ? null
+          : TurtleEvent.fromJson(json['event'] as Map<String, dynamic>),
+      feedId: json['feedId'] as String,
+      id: json['id'] as String,
+      reactions: (json['reactions'] as List)
+          ?.map((e) =>
+      e == null ? null : Reaction.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+    );
+  }
+}
+
+class TwilioAuth {
+  String token;
+
+  TwilioAuth({this.token});
+
+  factory TwilioAuth.fromJson(Map<String, dynamic> json) {
+    return TwilioAuth(
+      token: json['token'] as String,
+    );
+  }
+}
+
+class Contract {
+  bool active;
+
+  User contractor;
+
+  Money contractorHourlyRate;
+
+  Money customerHourlyRate;
+
+  String endedAt;
+
+  String id;
+
+  Project project;
+
+  String startedAt;
+
+  Contract({this.active,
+    this.contractor,
+    this.contractorHourlyRate,
+    this.customerHourlyRate,
+    this.endedAt,
+    this.id,
+    this.project,
+    this.startedAt});
+
+  factory Contract.fromJson(Map<String, dynamic> json) {
+    return Contract(
+      active: json['active'] as bool,
+      contractor: json['contractor'] == null
+          ? null
+          : User.fromJson(json['contractor'] as Map<String, dynamic>),
+      contractorHourlyRate: json['contractorHourlyRate'] == null
+          ? null
+          : Money.fromJson(
+          json['contractorHourlyRate'] as Map<String, dynamic>),
+      customerHourlyRate: json['customerHourlyRate'] == null
+          ? null
+          : Money.fromJson(json['customerHourlyRate'] as Map<String, dynamic>),
+      endedAt: json['endedAt'] as String,
+      id: json['id'] as String,
+      project: json['project'] == null
+          ? null
+          : Project.fromJson(json['project'] as Map<String, dynamic>),
+      startedAt: json['startedAt'] as String,
     );
   }
 }
@@ -1520,15 +481,15 @@ class TimeEntryEdited implements TurtleEvent {
 
   User contractor;
 
-  DateTime entryDate;
+  String entryDate;
 
-  Duration entryDuration;
+  String entryDuration;
 
   String entryMemo;
 
-  int id;
+  String id;
 
-  Duration prevEntryDuration;
+  String prevEntryDuration;
 
   Card project;
 
@@ -1573,18 +534,11 @@ class TimeEntryEdited implements TurtleEvent {
       contractor: json['contractor'] == null
           ? null
           : User.fromJson(json['contractor'] as Map<String, dynamic>),
-      entryDate: json['entryDate'] == null
-          ? null
-          : DateTime.parse(json['entryDate'] as String),
-      entryDuration: json['entryDuration'] == null
-          ? null
-          : Duration.fromJson(json['entryDuration'] as Map<String, dynamic>),
+      entryDate: json['entryDate'] as String,
+      entryDuration: json['entryDuration'] as String,
       entryMemo: json['entryMemo'] as String,
-      id: json['id'] as int,
-      prevEntryDuration: json['prevEntryDuration'] == null
-          ? null
-          : Duration.fromJson(
-          json['prevEntryDuration'] as Map<String, dynamic>),
+      id: json['id'] as String,
+      prevEntryDuration: json['prevEntryDuration'] as String,
       project: json['project'] == null
           ? null
           : Card.fromJson(json['project'] as Map<String, dynamic>),
@@ -1598,77 +552,56 @@ class TimeEntryEdited implements TurtleEvent {
   }
 }
 
-class FeedEvent {
-  User actor;
-
-  String body;
-
-  List<DocumentToken> bodyTokens;
+class AccountEntry {
+  Money balanceSnapshot;
 
   String createdAt;
 
-  bool edited;
+  Money delta;
 
-  String editedAt;
+  String memo;
 
-  TurtleEvent event;
+  TurtleEvent sourceEvent;
 
-  String feedId;
+  String type;
 
-  int id;
-
-  Raw reactions;
-
-  FeedEvent({this.actor,
-    this.body,
-    this.bodyTokens,
+  AccountEntry({this.balanceSnapshot,
     this.createdAt,
-    this.edited,
-    this.editedAt,
-    this.event,
-    this.feedId,
-    this.id,
-    this.reactions});
+    this.delta,
+    this.memo,
+    this.sourceEvent,
+    this.type});
 
-  factory FeedEvent.fromJson(Map<String, dynamic> json) {
-    return FeedEvent(
-      actor: json['actor'] == null
+  factory AccountEntry.fromJson(Map<String, dynamic> json) {
+    return AccountEntry(
+      balanceSnapshot: json['balanceSnapshot'] == null
           ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      body: json['body'] as String,
-      bodyTokens: (json['bodyTokens'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : DocumentToken.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+          : Money.fromJson(json['balanceSnapshot'] as Map<String, dynamic>),
       createdAt: json['createdAt'] as String,
-      edited: json['edited'] as bool,
-      editedAt: json['editedAt'] as String,
-      event: json['event'] == null
+      delta: json['delta'] == null
           ? null
-          : TurtleEvent.fromJson(json['event'] as Map<String, dynamic>),
-      feedId: json['feedId'] as String,
-      id: json['id'] as int,
-      reactions: json['reactions'] == null
+          : Money.fromJson(json['delta'] as Map<String, dynamic>),
+      memo: json['memo'] as String,
+      sourceEvent: json['sourceEvent'] == null
           ? null
-          : Raw.fromJson(json['reactions'] as Map<String, dynamic>),
+          : TurtleEvent.fromJson(json['sourceEvent'] as Map<String, dynamic>),
+      type: json['type'] as String,
     );
   }
 }
 
-class CardBudgetDecreased implements TurtleEvent {
+class CardMemberAdded implements TurtleEvent {
   User actor;
 
   String actorId;
-
-  CardBudget budget;
 
   Card card;
 
   String cardId;
 
-  int id;
+  String id;
+
+  User member;
 
   String projectId;
 
@@ -1676,140 +609,30 @@ class CardBudgetDecreased implements TurtleEvent {
 
   String time;
 
-  CardBudgetDecreased({this.actor,
+  CardMemberAdded({this.actor,
     this.actorId,
-    this.budget,
     this.card,
     this.cardId,
     this.id,
+    this.member,
     this.projectId,
     this.requestId,
     this.time});
 
-  factory CardBudgetDecreased.fromJson(Map<String, dynamic> json) {
-    return CardBudgetDecreased(
+  factory CardMemberAdded.fromJson(Map<String, dynamic> json) {
+    return CardMemberAdded(
       actor: json['actor'] == null
           ? null
           : User.fromJson(json['actor'] as Map<String, dynamic>),
       actorId: json['actorId'] as String,
-      budget: json['budget'] == null
-          ? null
-          : CardBudget.fromJson(json['budget'] as Map<String, dynamic>),
       card: json['card'] == null
           ? null
           : Card.fromJson(json['card'] as Map<String, dynamic>),
       cardId: json['cardId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class Feed {
-  Card card;
-
-  List<FeedEvent> feedEvents;
-
-  FeedSubscription feedSubscription;
-
-  int id;
-
-  FeedEvent lastFeedEvent;
-
-  User otherUser;
-
-  Card project;
-
-  FeedSource source;
-
-  Feed({this.card,
-    this.feedEvents,
-    this.feedSubscription,
-    this.id,
-    this.lastFeedEvent,
-    this.otherUser,
-    this.project,
-    this.source});
-
-  factory Feed.fromJson(Map<String, dynamic> json) {
-    return Feed(
-      card: json['card'] == null
+      id: json['id'] as String,
+      member: json['member'] == null
           ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      feedEvents: (json['feedEvents'] as List)
-          ?.map((e) =>
-      e == null ? null : FeedEvent.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      feedSubscription: json['feedSubscription'] == null
-          ? null
-          : FeedSubscription.fromJson(
-          json['feedSubscription'] as Map<String, dynamic>),
-      id: json['id'] as int,
-      lastFeedEvent: json['lastFeedEvent'] == null
-          ? null
-          : FeedEvent.fromJson(json['lastFeedEvent'] as Map<String, dynamic>),
-      otherUser: json['otherUser'] == null
-          ? null
-          : User.fromJson(json['otherUser'] as Map<String, dynamic>),
-      project: json['project'] == null
-          ? null
-          : Card.fromJson(json['project'] as Map<String, dynamic>),
-      source: json['source'] == null
-          ? null
-          : FeedSource.fromJson(json['source'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class CardAssigned implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  User assignee;
-
-  String assigneeId;
-
-  Card card;
-
-  String cardId;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  CardAssigned({this.actor,
-    this.actorId,
-    this.assignee,
-    this.assigneeId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory CardAssigned.fromJson(Map<String, dynamic> json) {
-    return CardAssigned(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      assignee: json['assignee'] == null
-          ? null
-          : User.fromJson(json['assignee'] as Map<String, dynamic>),
-      assigneeId: json['assigneeId'] as String,
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      id: json['id'] as int,
+          : User.fromJson(json['member'] as Map<String, dynamic>),
       projectId: json['projectId'] as String,
       requestId: json['requestId'] as String,
       time: json['time'] as String,
@@ -1830,9 +653,9 @@ class TimeEntryDeleted implements TurtleEvent {
 
   User contractor;
 
-  int id;
+  String id;
 
-  Duration prevEntryDuration;
+  String prevEntryDuration;
 
   Card project;
 
@@ -1877,11 +700,8 @@ class TimeEntryDeleted implements TurtleEvent {
       contractor: json['contractor'] == null
           ? null
           : User.fromJson(json['contractor'] as Map<String, dynamic>),
-      id: json['id'] as int,
-      prevEntryDuration: json['prevEntryDuration'] == null
-          ? null
-          : Duration.fromJson(
-          json['prevEntryDuration'] as Map<String, dynamic>),
+      id: json['id'] as String,
+      prevEntryDuration: json['prevEntryDuration'] as String,
       project: json['project'] == null
           ? null
           : Card.fromJson(json['project'] as Map<String, dynamic>),
@@ -1892,6 +712,621 @@ class TimeEntryDeleted implements TurtleEvent {
           ? null
           : TimeEntry.fromJson(json['timeEntry'] as Map<String, dynamic>),
       timeEntryId: json['timeEntryId'] as String,
+    );
+  }
+}
+
+class AvailabilityEntry {
+  User author;
+
+  String authorId;
+
+  String endDate;
+
+  Project project;
+
+  String projectId;
+
+  String startDate;
+
+  String timePerWeek;
+
+  String updatedAt;
+
+  User user;
+
+  String userId;
+
+  AvailabilityEntry({this.author,
+    this.authorId,
+    this.endDate,
+    this.project,
+    this.projectId,
+    this.startDate,
+    this.timePerWeek,
+    this.updatedAt,
+    this.user,
+    this.userId});
+
+  factory AvailabilityEntry.fromJson(Map<String, dynamic> json) {
+    return AvailabilityEntry(
+      author: json['author'] == null
+          ? null
+          : User.fromJson(json['author'] as Map<String, dynamic>),
+      authorId: json['authorId'] as String,
+      endDate: json['endDate'] as String,
+      project: json['project'] == null
+          ? null
+          : Project.fromJson(json['project'] as Map<String, dynamic>),
+      projectId: json['projectId'] as String,
+      startDate: json['startDate'] as String,
+      timePerWeek: json['timePerWeek'] as String,
+      updatedAt: json['updatedAt'] as String,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+      userId: json['userId'] as String,
+    );
+  }
+}
+
+class FeedMessageDeleted implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  Feed feed;
+
+  String feedEventId;
+
+  String feedId;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  FeedMessageDeleted({this.actor,
+    this.actorId,
+    this.feed,
+    this.feedEventId,
+    this.feedId,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory FeedMessageDeleted.fromJson(Map<String, dynamic> json) {
+    return FeedMessageDeleted(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      feed: json['feed'] == null
+          ? null
+          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
+      feedEventId: json['feedEventId'] as String,
+      feedId: json['feedId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class CardMoved implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  Card card;
+
+  String cardId;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  Card to;
+
+  String toId;
+
+  CardMoved({this.actor,
+    this.actorId,
+    this.card,
+    this.cardId,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time,
+    this.to,
+    this.toId});
+
+  factory CardMoved.fromJson(Map<String, dynamic> json) {
+    return CardMoved(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+      to: json['to'] == null
+          ? null
+          : Card.fromJson(json['to'] as Map<String, dynamic>),
+      toId: json['toId'] as String,
+    );
+  }
+}
+
+class AccountTransfer implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  Money amount;
+
+  String destAccountId;
+
+  String id;
+
+  String memo;
+
+  String requestId;
+
+  String sourceAccountId;
+
+  String time;
+
+  AccountTransfer({this.actor,
+    this.actorId,
+    this.amount,
+    this.destAccountId,
+    this.id,
+    this.memo,
+    this.requestId,
+    this.sourceAccountId,
+    this.time});
+
+  factory AccountTransfer.fromJson(Map<String, dynamic> json) {
+    return AccountTransfer(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      amount: json['amount'] == null
+          ? null
+          : Money.fromJson(json['amount'] as Map<String, dynamic>),
+      destAccountId: json['destAccountId'] as String,
+      id: json['id'] as String,
+      memo: json['memo'] as String,
+      requestId: json['requestId'] as String,
+      sourceAccountId: json['sourceAccountId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class CardAssigned implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  User assignee;
+
+  String assigneeId;
+
+  Card card;
+
+  String cardId;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  CardAssigned({this.actor,
+    this.actorId,
+    this.assignee,
+    this.assigneeId,
+    this.card,
+    this.cardId,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory CardAssigned.fromJson(Map<String, dynamic> json) {
+    return CardAssigned(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      assignee: json['assignee'] == null
+          ? null
+          : User.fromJson(json['assignee'] as Map<String, dynamic>),
+      assigneeId: json['assigneeId'] as String,
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class UserUnreadFeedEvent implements TurtleEvent {
+  String actorId;
+
+  String feedEventId;
+
+  String feedId;
+
+  String id;
+
+  String requestId;
+
+  String time;
+
+  UserUnreadFeedEvent({this.actorId,
+    this.feedEventId,
+    this.feedId,
+    this.id,
+    this.requestId,
+    this.time});
+
+  factory UserUnreadFeedEvent.fromJson(Map<String, dynamic> json) {
+    return UserUnreadFeedEvent(
+      actorId: json['actorId'] as String,
+      feedEventId: json['feedEventId'] as String,
+      feedId: json['feedId'] as String,
+      id: json['id'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class CardBudgetIncreased implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  CardBudget budget;
+
+  Card card;
+
+  String cardId;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  CardBudgetIncreased({this.actor,
+    this.actorId,
+    this.budget,
+    this.card,
+    this.cardId,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory CardBudgetIncreased.fromJson(Map<String, dynamic> json) {
+    return CardBudgetIncreased(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      budget: json['budget'] == null
+          ? null
+          : CardBudget.fromJson(json['budget'] as Map<String, dynamic>),
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class CardRenamed implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  Card card;
+
+  String cardId;
+
+  String cardName;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  CardRenamed({this.actor,
+    this.actorId,
+    this.card,
+    this.cardId,
+    this.cardName,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory CardRenamed.fromJson(Map<String, dynamic> json) {
+    return CardRenamed(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      cardName: json['cardName'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class CardBudgetDecreased implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  CardBudget budget;
+
+  Card card;
+
+  String cardId;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  CardBudgetDecreased({this.actor,
+    this.actorId,
+    this.budget,
+    this.card,
+    this.cardId,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory CardBudgetDecreased.fromJson(Map<String, dynamic> json) {
+    return CardBudgetDecreased(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      budget: json['budget'] == null
+          ? null
+          : CardBudget.fromJson(json['budget'] as Map<String, dynamic>),
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class Reaction {
+  /// The emoji of the reaction like "🐢"
+  String emoji;
+
+  String reaction;
+
+  /// The id of the user that added the reaction
+  String userId;
+
+  Reaction({this.emoji, this.reaction, this.userId});
+
+  factory Reaction.fromJson(Map<String, dynamic> json) {
+    return Reaction(
+      emoji: json['emoji'] as String,
+      reaction: json['reaction'] as String,
+      userId: json['userId'] as String,
+    );
+  }
+}
+
+class HubspotPipeline {
+  String id;
+
+  String label;
+
+  List<HubspotDealStage> stages;
+
+  HubspotPipeline({this.id, this.label, this.stages});
+
+  factory HubspotPipeline.fromJson(Map<String, dynamic> json) {
+    return HubspotPipeline(
+      id: json['id'] as String,
+      label: json['label'] as String,
+      stages: (json['stages'] as List)
+          ?.map((e) =>
+      e == null
+          ? null
+          : HubspotDealStage.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+    );
+  }
+}
+
+class TimeEntry implements DocumentToken {
+  String addedAt;
+
+  Card card;
+
+  String contractId;
+
+  String date;
+
+  bool deleted;
+
+  String duration;
+
+  bool edited;
+
+  String id;
+
+  String memo;
+
+  User user;
+
+  TimeEntry({this.addedAt,
+    this.card,
+    this.contractId,
+    this.date,
+    this.deleted,
+    this.duration,
+    this.edited,
+    this.id,
+    this.memo,
+    this.user});
+
+  factory TimeEntry.fromJson(Map<String, dynamic> json) {
+    return TimeEntry(
+      addedAt: json['addedAt'] as String,
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      contractId: json['contractId'] as String,
+      date: json['date'] as String,
+      deleted: json['deleted'] as bool,
+      duration: json['duration'] as String,
+      edited: json['edited'] as bool,
+      id: json['id'] as String,
+      memo: json['memo'] as String,
+      user: json['user'] == null
+          ? null
+          : User.fromJson(json['user'] as Map<String, dynamic>),
+    );
+  }
+}
+
+class CardCompleted implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  Card card;
+
+  String cardId;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  CardCompleted({this.actor,
+    this.actorId,
+    this.card,
+    this.cardId,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory CardCompleted.fromJson(Map<String, dynamic> json) {
+    return CardCompleted(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class NotificationDelivery {
+  String deliveredAt;
+
+  Feed feed;
+
+  FeedEvent feedEvent;
+
+  String id;
+
+  User recipient;
+
+  String type;
+
+  NotificationDelivery({this.deliveredAt,
+    this.feed,
+    this.feedEvent,
+    this.id,
+    this.recipient,
+    this.type});
+
+  factory NotificationDelivery.fromJson(Map<String, dynamic> json) {
+    return NotificationDelivery(
+      deliveredAt: json['deliveredAt'] as String,
+      feed: json['feed'] == null
+          ? null
+          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
+      feedEvent: json['feedEvent'] == null
+          ? null
+          : FeedEvent.fromJson(json['feedEvent'] as Map<String, dynamic>),
+      id: json['id'] as String,
+      recipient: json['recipient'] == null
+          ? null
+          : User.fromJson(json['recipient'] as Map<String, dynamic>),
+      type: json['type'] as String,
     );
   }
 }
@@ -1907,7 +1342,7 @@ class CardEstimateSet implements TurtleEvent {
 
   DurationRange estimate;
 
-  int id;
+  String id;
 
   String projectId;
 
@@ -1938,10 +1373,117 @@ class CardEstimateSet implements TurtleEvent {
       estimate: json['estimate'] == null
           ? null
           : DurationRange.fromJson(json['estimate'] as Map<String, dynamic>),
-      id: json['id'] as int,
+      id: json['id'] as String,
       projectId: json['projectId'] as String,
       requestId: json['requestId'] as String,
       time: json['time'] as String,
+    );
+  }
+}
+
+class UserReadFeedEvent implements TurtleEvent {
+  String actorId;
+
+  String feedEventId;
+
+  String feedId;
+
+  String id;
+
+  String requestId;
+
+  String time;
+
+  UserReadFeedEvent({this.actorId,
+    this.feedEventId,
+    this.feedId,
+    this.id,
+    this.requestId,
+    this.time});
+
+  factory UserReadFeedEvent.fromJson(Map<String, dynamic> json) {
+    return UserReadFeedEvent(
+      actorId: json['actorId'] as String,
+      feedEventId: json['feedEventId'] as String,
+      feedId: json['feedId'] as String,
+      id: json['id'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class CardDueDateSet implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  Card card;
+
+  String cardId;
+
+  String dueDate;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  CardDueDateSet({this.actor,
+    this.actorId,
+    this.card,
+    this.cardId,
+    this.dueDate,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory CardDueDateSet.fromJson(Map<String, dynamic> json) {
+    return CardDueDateSet(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      dueDate: json['dueDate'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class RootSubscriptionType {
+  FeedSubscription feedSubscriptionUpdated;
+
+  Feed feedUpdated;
+
+  Me unreadCountUpdated;
+
+  RootSubscriptionType({this.feedSubscriptionUpdated,
+    this.feedUpdated,
+    this.unreadCountUpdated});
+
+  factory RootSubscriptionType.fromJson(Map<String, dynamic> json) {
+    return RootSubscriptionType(
+      feedSubscriptionUpdated: json['feedSubscriptionUpdated'] == null
+          ? null
+          : FeedSubscription.fromJson(
+          json['feedSubscriptionUpdated'] as Map<String, dynamic>),
+      feedUpdated: json['feedUpdated'] == null
+          ? null
+          : Feed.fromJson(json['feedUpdated'] as Map<String, dynamic>),
+      unreadCountUpdated: json['unreadCountUpdated'] == null
+          ? null
+          : Me.fromJson(json['unreadCountUpdated'] as Map<String, dynamic>),
     );
   }
 }
@@ -1955,7 +1497,7 @@ class CardDueDateUnset implements TurtleEvent {
 
   String cardId;
 
-  int id;
+  String id;
 
   String projectId;
 
@@ -1982,7 +1524,7 @@ class CardDueDateUnset implements TurtleEvent {
           ? null
           : Card.fromJson(json['card'] as Map<String, dynamic>),
       cardId: json['cardId'] as String,
-      id: json['id'] as int,
+      id: json['id'] as String,
       projectId: json['projectId'] as String,
       requestId: json['requestId'] as String,
       time: json['time'] as String,
@@ -1990,19 +1532,26 @@ class CardDueDateUnset implements TurtleEvent {
   }
 }
 
+/// Object that namespaces data related to the current user
 class Me {
+  /// All of the users reachable by the current user based on projects they've been on, users they have interacted with, etc.
+  ///         Usually used if you want to give the user autocomplete.
   List<User> accessibleUsers;
 
   List<TurtleEvent> events;
 
   int eventsCount;
 
+  /// A list of conversations private/public current user is involved in. Sorted by last activity descending.
   List<Feed> feeds;
 
+  /// The projects the current user is a member of
   List<Project> projects;
 
+  /// The number of messages unread by the current user
   int unreadCount;
 
+  /// The current user object
   User user;
 
   Me({this.accessibleUsers,
@@ -2042,168 +1591,17 @@ class Me {
   }
 }
 
-class StripeChargeCreated implements TurtleEvent {
-  User actor;
+class Money {
+  int amount;
 
-  CreditCard creditCard;
+  String currency;
 
-  int id;
+  Money({this.amount, this.currency});
 
-  String last4;
-
-  Card project;
-
-  String requestId;
-
-  String time;
-
-  StripeChargeCreated({this.actor,
-    this.creditCard,
-    this.id,
-    this.last4,
-    this.project,
-    this.requestId,
-    this.time});
-
-  factory StripeChargeCreated.fromJson(Map<String, dynamic> json) {
-    return StripeChargeCreated(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      creditCard: json['creditCard'] == null
-          ? null
-          : CreditCard.fromJson(json['creditCard'] as Map<String, dynamic>),
-      id: json['id'] as int,
-      last4: json['last4'] as String,
-      project: json['project'] == null
-          ? null
-          : Card.fromJson(json['project'] as Map<String, dynamic>),
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class CardBudget {
-  Duration duration;
-
-  CardBudget({this.duration});
-
-  factory CardBudget.fromJson(Map<String, dynamic> json) {
-    return CardBudget(
-      duration: json['duration'] == null
-          ? null
-          : Duration.fromJson(json['duration'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class TwilioAuth {
-  String token;
-
-  TwilioAuth({this.token});
-
-  factory TwilioAuth.fromJson(Map<String, dynamic> json) {
-    return TwilioAuth(
-      token: json['token'] as String,
-    );
-  }
-}
-
-class AccountEntry {
-  Money balanceSnapshot;
-
-  String createdAt;
-
-  Money delta;
-
-  String memo;
-
-  TurtleEvent sourceEvent;
-
-  String type;
-
-  AccountEntry({this.balanceSnapshot,
-    this.createdAt,
-    this.delta,
-    this.memo,
-    this.sourceEvent,
-    this.type});
-
-  factory AccountEntry.fromJson(Map<String, dynamic> json) {
-    return AccountEntry(
-      balanceSnapshot: json['balanceSnapshot'] == null
-          ? null
-          : Money.fromJson(json['balanceSnapshot'] as Map<String, dynamic>),
-      createdAt: json['createdAt'] as String,
-      delta: json['delta'] == null
-          ? null
-          : Money.fromJson(json['delta'] as Map<String, dynamic>),
-      memo: json['memo'] as String,
-      sourceEvent: json['sourceEvent'] == null
-          ? null
-          : TurtleEvent.fromJson(json['sourceEvent'] as Map<String, dynamic>),
-      type: json['type'] as String,
-    );
-  }
-}
-
-class AvailabilityEntry {
-  User author;
-
-  String authorId;
-
-  DateTime endDate;
-
-  Project project;
-
-  String projectId;
-
-  DateTime startDate;
-
-  Duration timePerWeek;
-
-  String updatedAt;
-
-  User user;
-
-  String userId;
-
-  AvailabilityEntry({this.author,
-    this.authorId,
-    this.endDate,
-    this.project,
-    this.projectId,
-    this.startDate,
-    this.timePerWeek,
-    this.updatedAt,
-    this.user,
-    this.userId});
-
-  factory AvailabilityEntry.fromJson(Map<String, dynamic> json) {
-    return AvailabilityEntry(
-      author: json['author'] == null
-          ? null
-          : User.fromJson(json['author'] as Map<String, dynamic>),
-      authorId: json['authorId'] as String,
-      endDate: json['endDate'] == null
-          ? null
-          : DateTime.parse(json['endDate'] as String),
-      project: json['project'] == null
-          ? null
-          : Project.fromJson(json['project'] as Map<String, dynamic>),
-      projectId: json['projectId'] as String,
-      startDate: json['startDate'] == null
-          ? null
-          : DateTime.parse(json['startDate'] as String),
-      timePerWeek: json['timePerWeek'] == null
-          ? null
-          : Duration.fromJson(json['timePerWeek'] as Map<String, dynamic>),
-      updatedAt: json['updatedAt'] as String,
-      user: json['user'] == null
-          ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
-      userId: json['userId'] as String,
+  factory Money.fromJson(Map<String, dynamic> json) {
+    return Money(
+      amount: json['amount'] as int,
+      currency: json['currency'] as String,
     );
   }
 }
@@ -2217,7 +1615,7 @@ class CardEstimateUnset implements TurtleEvent {
 
   String cardId;
 
-  int id;
+  String id;
 
   String projectId;
 
@@ -2244,7 +1642,7 @@ class CardEstimateUnset implements TurtleEvent {
           ? null
           : Card.fromJson(json['card'] as Map<String, dynamic>),
       cardId: json['cardId'] as String,
-      id: json['id'] as int,
+      id: json['id'] as String,
       projectId: json['projectId'] as String,
       requestId: json['requestId'] as String,
       time: json['time'] as String,
@@ -2252,55 +1650,59 @@ class CardEstimateUnset implements TurtleEvent {
   }
 }
 
-class AccountTransfer implements TurtleEvent {
+class FeedMessagePosted implements TurtleEvent {
   User actor;
 
   String actorId;
 
-  Money amount;
+  Feed feed;
 
-  String destAccountId;
+  String feedEventId;
 
-  int id;
+  String feedId;
 
-  String memo;
+  String id;
+
+  String messageBody;
+
+  String projectId;
 
   String requestId;
 
-  String sourceAccountId;
-
   String time;
 
-  AccountTransfer({this.actor,
+  FeedMessagePosted({this.actor,
     this.actorId,
-    this.amount,
-    this.destAccountId,
+    this.feed,
+    this.feedEventId,
+    this.feedId,
     this.id,
-    this.memo,
+    this.messageBody,
+    this.projectId,
     this.requestId,
-    this.sourceAccountId,
     this.time});
 
-  factory AccountTransfer.fromJson(Map<String, dynamic> json) {
-    return AccountTransfer(
+  factory FeedMessagePosted.fromJson(Map<String, dynamic> json) {
+    return FeedMessagePosted(
       actor: json['actor'] == null
           ? null
           : User.fromJson(json['actor'] as Map<String, dynamic>),
       actorId: json['actorId'] as String,
-      amount: json['amount'] == null
+      feed: json['feed'] == null
           ? null
-          : Money.fromJson(json['amount'] as Map<String, dynamic>),
-      destAccountId: json['destAccountId'] as String,
-      id: json['id'] as int,
-      memo: json['memo'] as String,
+          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
+      feedEventId: json['feedEventId'] as String,
+      feedId: json['feedId'] as String,
+      id: json['id'] as String,
+      messageBody: json['messageBody'] as String,
+      projectId: json['projectId'] as String,
       requestId: json['requestId'] as String,
-      sourceAccountId: json['sourceAccountId'] as String,
       time: json['time'] as String,
     );
   }
 }
 
-class CardMemberAdded implements TurtleEvent {
+class CardCreated implements TurtleEvent {
   User actor;
 
   String actorId;
@@ -2309,9 +1711,13 @@ class CardMemberAdded implements TurtleEvent {
 
   String cardId;
 
-  int id;
+  String cardName;
 
-  User member;
+  String id;
+
+  Card parent;
+
+  String parentId;
 
   String projectId;
 
@@ -2319,18 +1725,20 @@ class CardMemberAdded implements TurtleEvent {
 
   String time;
 
-  CardMemberAdded({this.actor,
+  CardCreated({this.actor,
     this.actorId,
     this.card,
     this.cardId,
+    this.cardName,
     this.id,
-    this.member,
+    this.parent,
+    this.parentId,
     this.projectId,
     this.requestId,
     this.time});
 
-  factory CardMemberAdded.fromJson(Map<String, dynamic> json) {
-    return CardMemberAdded(
+  factory CardCreated.fromJson(Map<String, dynamic> json) {
+    return CardCreated(
       actor: json['actor'] == null
           ? null
           : User.fromJson(json['actor'] as Map<String, dynamic>),
@@ -2339,13 +1747,820 @@ class CardMemberAdded implements TurtleEvent {
           ? null
           : Card.fromJson(json['card'] as Map<String, dynamic>),
       cardId: json['cardId'] as String,
-      id: json['id'] as int,
-      member: json['member'] == null
+      cardName: json['cardName'] as String,
+      id: json['id'] as String,
+      parent: json['parent'] == null
           ? null
-          : User.fromJson(json['member'] as Map<String, dynamic>),
+          : Card.fromJson(json['parent'] as Map<String, dynamic>),
+      parentId: json['parentId'] as String,
       projectId: json['projectId'] as String,
       requestId: json['requestId'] as String,
       time: json['time'] as String,
+    );
+  }
+}
+
+class HubspotDealStage {
+  bool active;
+
+  String closedWon;
+
+  int displayOrder;
+
+  String id;
+
+  String label;
+
+  double probability;
+
+  HubspotDealStage({this.active,
+    this.closedWon,
+    this.displayOrder,
+    this.id,
+    this.label,
+    this.probability});
+
+  factory HubspotDealStage.fromJson(Map<String, dynamic> json) {
+    return HubspotDealStage(
+      active: json['active'] as bool,
+      closedWon: json['closedWon'] as String,
+      displayOrder: json['displayOrder'] as int,
+      id: json['id'] as String,
+      label: json['label'] as String,
+      probability: json['probability'] as double,
+    );
+  }
+}
+
+class CardUncompleted implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  Card card;
+
+  String cardId;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  CardUncompleted({this.actor,
+    this.actorId,
+    this.card,
+    this.cardId,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory CardUncompleted.fromJson(Map<String, dynamic> json) {
+    return CardUncompleted(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class CardBudgetSet implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  CardBudget budget;
+
+  Card card;
+
+  String cardId;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  CardBudgetSet({this.actor,
+    this.actorId,
+    this.budget,
+    this.card,
+    this.cardId,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory CardBudgetSet.fromJson(Map<String, dynamic> json) {
+    return CardBudgetSet(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      budget: json['budget'] == null
+          ? null
+          : CardBudget.fromJson(json['budget'] as Map<String, dynamic>),
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class FeedSubscription {
+  /// The feed being subscribed to
+  String feedId;
+
+  /// The number of unread messages in the feed for the user
+  int unreadCount;
+
+  /// The user subscribed to the feed
+  String userId;
+
+  FeedSubscription({this.feedId, this.unreadCount, this.userId});
+
+  factory FeedSubscription.fromJson(Map<String, dynamic> json) {
+    return FeedSubscription(
+      feedId: json['feedId'] as String,
+      unreadCount: json['unreadCount'] as int,
+      userId: json['userId'] as String,
+    );
+  }
+}
+
+/// An activity feed that may be associated with a number of things.
+/// Currently supports private 1-on-1 conversations and task-level conversations.
+/// Contains user written messages and also activity-related messages like time tracking and task completion.
+///
+class Feed {
+  Card card;
+
+  /// List of feed events that belong to the activity feed. Sorted by time created ascending.
+  List<FeedEvent> feedEvents;
+
+  /// The current user's subscription of this activity feed.
+  FeedSubscription feedSubscription;
+
+  /// Unique identifier for an activity feed.
+  ///     Generated based on what it is attached to like conversation-123-987, card-556, or meeting-abc
+  String id;
+
+  /// The most recent event/message in the activity feed
+  FeedEvent lastFeedEvent;
+
+  User otherUser;
+
+  /// If the feed is attached to a task, this is the project the task belongs to.
+  ///       Useful if you want to show which project a message belong to.
+  Card project;
+
+  /// The entity the activity feed is attached to.
+  ///         It's either the other user in the conversation if it's a private message.
+  ///         Or it's the card it's attached to.
+  FeedSource source;
+
+  Feed({this.card,
+    this.feedEvents,
+    this.feedSubscription,
+    this.id,
+    this.lastFeedEvent,
+    this.otherUser,
+    this.project,
+    this.source});
+
+  factory Feed.fromJson(Map<String, dynamic> json) {
+    return Feed(
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      feedEvents: (json['feedEvents'] as List)
+          ?.map((e) =>
+      e == null ? null : FeedEvent.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      feedSubscription: json['feedSubscription'] == null
+          ? null
+          : FeedSubscription.fromJson(
+          json['feedSubscription'] as Map<String, dynamic>),
+      id: json['id'] as String,
+      lastFeedEvent: json['lastFeedEvent'] == null
+          ? null
+          : FeedEvent.fromJson(json['lastFeedEvent'] as Map<String, dynamic>),
+      otherUser: json['otherUser'] == null
+          ? null
+          : User.fromJson(json['otherUser'] as Map<String, dynamic>),
+      project: json['project'] == null
+          ? null
+          : Card.fromJson(json['project'] as Map<String, dynamic>),
+      source: json['source'] == null
+          ? null
+          : FeedSource.fromJson(json['source'] as Map<String, dynamic>),
+    );
+  }
+}
+
+class CardBudgetUnset implements TurtleEvent {
+  User actor;
+
+  String actorId;
+
+  Card card;
+
+  String cardId;
+
+  String id;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  CardBudgetUnset({this.actor,
+    this.actorId,
+    this.card,
+    this.cardId,
+    this.id,
+    this.projectId,
+    this.requestId,
+    this.time});
+
+  factory CardBudgetUnset.fromJson(Map<String, dynamic> json) {
+    return CardBudgetUnset(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+/// A directional link between two cards in Turtle. Used for things like tying an internal management project to a customer project.
+class CardLink {
+  /// The card the link is coming from
+  Card from;
+
+  /// The card the link is going to
+  Card to;
+
+  /// The type of link. For example management or turtle_support.
+  String type;
+
+  CardLink({this.from, this.to, this.type});
+
+  factory CardLink.fromJson(Map<String, dynamic> json) {
+    return CardLink(
+      from: json['from'] == null
+          ? null
+          : Card.fromJson(json['from'] as Map<String, dynamic>),
+      to: json['to'] == null
+          ? null
+          : Card.fromJson(json['to'] as Map<String, dynamic>),
+      type: json['type'] as String,
+    );
+  }
+}
+
+class CreditCard {
+  String brand;
+
+  String expMonth;
+
+  String expYear;
+
+  String id;
+
+  String last4;
+
+  User owner;
+
+  CreditCard({this.brand,
+    this.expMonth,
+    this.expYear,
+    this.id,
+    this.last4,
+    this.owner});
+
+  factory CreditCard.fromJson(Map<String, dynamic> json) {
+    return CreditCard(
+      brand: json['brand'] as String,
+      expMonth: json['expMonth'] as String,
+      expYear: json['expYear'] as String,
+      id: json['id'] as String,
+      last4: json['last4'] as String,
+      owner: json['owner'] == null
+          ? null
+          : User.fromJson(json['owner'] as Map<String, dynamic>),
+    );
+  }
+}
+
+class Account {
+  Money balance;
+
+  Money balancePending;
+
+  Money balanceSettled;
+
+  List<AccountEntry> entries;
+
+  String id;
+
+  AccountSource source;
+
+  AccountType type;
+
+  Account({this.balance,
+    this.balancePending,
+    this.balanceSettled,
+    this.entries,
+    this.id,
+    this.source,
+    this.type});
+
+  factory Account.fromJson(Map<String, dynamic> json) {
+    return Account(
+      balance: json['balance'] == null
+          ? null
+          : Money.fromJson(json['balance'] as Map<String, dynamic>),
+      balancePending: json['balancePending'] == null
+          ? null
+          : Money.fromJson(json['balancePending'] as Map<String, dynamic>),
+      balanceSettled: json['balanceSettled'] == null
+          ? null
+          : Money.fromJson(json['balanceSettled'] as Map<String, dynamic>),
+      entries: (json['entries'] as List)
+          ?.map((e) =>
+      e == null
+          ? null
+          : AccountEntry.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      id: json['id'] as String,
+      source: json['source'] == null
+          ? null
+          : AccountSource.fromJson(json['source'] as Map<String, dynamic>),
+      type: AccountTypeValues[json['type']],
+    );
+  }
+}
+
+class Card implements AccountSource, FeedSource, DocumentToken {
+  /// The user this card is assigned to
+  User assignee;
+
+  /// The id of the user this card is assigned to
+  String assigneeId;
+
+  CardBudget budget;
+
+  bool completed;
+
+  /// The time when the card was most recently marked completed.
+  String completedAt;
+
+  /// The time the card was reated
+  String createdAt;
+
+  /// Whether the card is marked deleted or not. If a card is deleted, its children are also marked deleted.
+  bool deleted;
+
+  /// Child cards, grandchild cards, and so on. Can control depth and filters.
+  List<Card> descendants;
+
+  String dueDate;
+
+  DurationRange estimate;
+
+  /// The associated feed for this card. Every card has an activity feed.
+  Feed feed;
+
+  /// The associated feed id for this card. Every card has an activity feed.
+  String feedId;
+
+  String id;
+
+  /// The users that are members of the current card. Only applies to root project cards.
+  List<User> members;
+
+  String meta;
+
+  /// The title of the card. This is what is usually rendered in a task list.
+  String name;
+
+  /// Card links that point from this card to another card.
+  List<CardLink> outgoingLinks;
+
+  /// The id of the parent card. The root project card will not have this set.
+  String parentId;
+
+  /// An integer representing the order of this card with respect to its siblings.
+  /// Frontend should sort children of a card by this propertly. There may be spaces like [1, 10, 15]
+  ///
+  int position;
+
+  /// The project the card belongs to. The root card itself is a project. In this case projectId and id will be equal.
+  Project project;
+
+  /// The id of the project the card belongs to. The root card itself is a project. In this case projectId and id will be equal.
+  String projectId;
+
+  /// All time entries tracked for this card.
+  List<TimeEntry> timeEntries;
+
+  /// The total time tracked with time entries this card. Does not include time tracked on children.
+  String timeTracked;
+
+  /// The event that caused this entity to change. Every time this entity is modified, its version will be updated with a larger value than before.
+  String version;
+
+  Card({this.assignee,
+    this.assigneeId,
+    this.budget,
+    this.completed,
+    this.completedAt,
+    this.createdAt,
+    this.deleted,
+    this.descendants,
+    this.dueDate,
+    this.estimate,
+    this.feed,
+    this.feedId,
+    this.id,
+    this.members,
+    this.meta,
+    this.name,
+    this.outgoingLinks,
+    this.parentId,
+    this.position,
+    this.project,
+    this.projectId,
+    this.timeEntries,
+    this.timeTracked,
+    this.version});
+
+  factory Card.fromJson(Map<String, dynamic> json) {
+    return Card(
+      assignee: json['assignee'] == null
+          ? null
+          : User.fromJson(json['assignee'] as Map<String, dynamic>),
+      assigneeId: json['assigneeId'] as String,
+      budget: json['budget'] == null
+          ? null
+          : CardBudget.fromJson(json['budget'] as Map<String, dynamic>),
+      completed: json['completed'] as bool,
+      completedAt: json['completedAt'] as String,
+      createdAt: json['createdAt'] as String,
+      deleted: json['deleted'] as bool,
+      descendants: (json['descendants'] as List)
+          ?.map((e) =>
+      e == null ? null : Card.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      dueDate: json['dueDate'] as String,
+      estimate: json['estimate'] == null
+          ? null
+          : DurationRange.fromJson(json['estimate'] as Map<String, dynamic>),
+      feed: json['feed'] == null
+          ? null
+          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
+      feedId: json['feedId'] as String,
+      id: json['id'] as String,
+      members: (json['members'] as List)
+          ?.map((e) =>
+      e == null ? null : User.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      meta: json['meta'] as String,
+      name: json['name'] as String,
+      outgoingLinks: (json['outgoingLinks'] as List)
+          ?.map((e) =>
+      e == null ? null : CardLink.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      parentId: json['parentId'] as String,
+      position: json['position'] as int,
+      project: json['project'] == null
+          ? null
+          : Project.fromJson(json['project'] as Map<String, dynamic>),
+      projectId: json['projectId'] as String,
+      timeEntries: (json['timeEntries'] as List)
+          ?.map((e) =>
+      e == null ? null : TimeEntry.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      timeTracked: json['timeTracked'] as String,
+      version: json['version'] as String,
+    );
+  }
+}
+
+class Command {
+  User actor;
+
+  String executedAt;
+
+  String id;
+
+  String input;
+
+  String requestId;
+
+  String type;
+
+  Command({this.actor,
+    this.executedAt,
+    this.id,
+    this.input,
+    this.requestId,
+    this.type});
+
+  factory Command.fromJson(Map<String, dynamic> json) {
+    return Command(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      executedAt: json['executedAt'] as String,
+      id: json['id'] as String,
+      input: json['input'] as String,
+      requestId: json['requestId'] as String,
+      type: json['type'] as String,
+    );
+  }
+}
+
+class StripeChargeCreated implements TurtleEvent {
+  User actor;
+
+  CreditCard creditCard;
+
+  String id;
+
+  String last4;
+
+  Card project;
+
+  String requestId;
+
+  String time;
+
+  StripeChargeCreated({this.actor,
+    this.creditCard,
+    this.id,
+    this.last4,
+    this.project,
+    this.requestId,
+    this.time});
+
+  factory StripeChargeCreated.fromJson(Map<String, dynamic> json) {
+    return StripeChargeCreated(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      creditCard: json['creditCard'] == null
+          ? null
+          : CreditCard.fromJson(json['creditCard'] as Map<String, dynamic>),
+      id: json['id'] as String,
+      last4: json['last4'] as String,
+      project: json['project'] == null
+          ? null
+          : Card.fromJson(json['project'] as Map<String, dynamic>),
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class Project {
+  Money balance;
+
+  Money budget;
+
+  List<Contract> contracts;
+
+  Money estimatedHourlyRate;
+
+  List<Feed> feeds;
+
+  String id;
+
+  String lastActivity;
+
+  CreditCard lastChargedCard;
+
+  List<Card> managerOverdueCards;
+
+  List<User> managers;
+
+  List<User> members;
+
+  String meta;
+
+  String name;
+
+  List<String> projectStatusTags;
+
+  Card rootCard;
+
+  List<TimeEntry> timeEntries;
+
+  Project({this.balance,
+    this.budget,
+    this.contracts,
+    this.estimatedHourlyRate,
+    this.feeds,
+    this.id,
+    this.lastActivity,
+    this.lastChargedCard,
+    this.managerOverdueCards,
+    this.managers,
+    this.members,
+    this.meta,
+    this.name,
+    this.projectStatusTags,
+    this.rootCard,
+    this.timeEntries});
+
+  factory Project.fromJson(Map<String, dynamic> json) {
+    return Project(
+      balance: json['balance'] == null
+          ? null
+          : Money.fromJson(json['balance'] as Map<String, dynamic>),
+      budget: json['budget'] == null
+          ? null
+          : Money.fromJson(json['budget'] as Map<String, dynamic>),
+      contracts: (json['contracts'] as List)
+          ?.map((e) =>
+      e == null ? null : Contract.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      estimatedHourlyRate: json['estimatedHourlyRate'] == null
+          ? null
+          : Money.fromJson(json['estimatedHourlyRate'] as Map<String, dynamic>),
+      feeds: (json['feeds'] as List)
+          ?.map((e) =>
+      e == null ? null : Feed.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      id: json['id'] as String,
+      lastActivity: json['lastActivity'] as String,
+      lastChargedCard: json['lastChargedCard'] == null
+          ? null
+          : CreditCard.fromJson(
+          json['lastChargedCard'] as Map<String, dynamic>),
+      managerOverdueCards: (json['managerOverdueCards'] as List)
+          ?.map((e) =>
+      e == null ? null : Card.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      managers: (json['managers'] as List)
+          ?.map((e) =>
+      e == null ? null : User.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      members: (json['members'] as List)
+          ?.map((e) =>
+      e == null ? null : User.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      meta: json['meta'] as String,
+      name: json['name'] as String,
+      projectStatusTags: (json['projectStatusTags'] as List)
+          ?.map((e) => e as String)
+          ?.toList(),
+      rootCard: json['rootCard'] == null
+          ? null
+          : Card.fromJson(json['rootCard'] as Map<String, dynamic>),
+      timeEntries: (json['timeEntries'] as List)
+          ?.map((e) =>
+      e == null ? null : TimeEntry.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+    );
+  }
+}
+
+class HubspotContact {
+  List<String> coreSkills;
+
+  String githubUsername;
+
+  Money hourlyRate;
+
+  String id;
+
+  HubspotDealStage recruitingStage;
+
+  HubspotContact({this.coreSkills,
+    this.githubUsername,
+    this.hourlyRate,
+    this.id,
+    this.recruitingStage});
+
+  factory HubspotContact.fromJson(Map<String, dynamic> json) {
+    return HubspotContact(
+      coreSkills:
+      (json['coreSkills'] as List)?.map((e) => e as String)?.toList(),
+      githubUsername: json['githubUsername'] as String,
+      hourlyRate: json['hourlyRate'] == null
+          ? null
+          : Money.fromJson(json['hourlyRate'] as Map<String, dynamic>),
+      id: json['id'] as String,
+      recruitingStage: json['recruitingStage'] == null
+          ? null
+          : HubspotDealStage.fromJson(
+          json['recruitingStage'] as Map<String, dynamic>),
+    );
+  }
+}
+
+/// A range of duration, such as 1.5-2h.
+class DurationRange implements DocumentToken {
+  /// The upper bound of the range. If max is the same as min, then it represents a single value like 2h.
+  String max;
+
+  /// The lower bound of the range
+  String min;
+
+  DurationRange({this.max, this.min});
+
+  factory DurationRange.fromJson(Map<String, dynamic> json) {
+    return DurationRange(
+      max: json['max'] as String,
+      min: json['min'] as String,
+    );
+  }
+}
+
+/// Represents the budget for a card. Currently only supports a time-based (not money-based) budget.
+class CardBudget {
+  /// The max number of hours allocated
+  String duration;
+
+  CardBudget({this.duration});
+
+  factory CardBudget.fromJson(Map<String, dynamic> json) {
+    return CardBudget(
+      duration: json['duration'] as String,
+    );
+  }
+}
+
+class File implements DocumentToken {
+  String contentType;
+
+  String downloadUri;
+
+  String id;
+
+  String name;
+
+  String path;
+
+  int size;
+
+  String thumbnailUri;
+
+  String uri;
+
+  String userId;
+
+  File({this.contentType,
+    this.downloadUri,
+    this.id,
+    this.name,
+    this.path,
+    this.size,
+    this.thumbnailUri,
+    this.uri,
+    this.userId});
+
+  factory File.fromJson(Map<String, dynamic> json) {
+    return File(
+      contentType: json['contentType'] as String,
+      downloadUri: json['downloadUri'] as String,
+      id: json['id'] as String,
+      name: json['name'] as String,
+      path: json['path'] as String,
+      size: json['size'] as int,
+      thumbnailUri: json['thumbnailUri'] as String,
+      uri: json['uri'] as String,
+      userId: json['userId'] as String,
     );
   }
 }
@@ -2362,6 +2577,8 @@ class RootQueryType {
   List<AvailabilityEntry> availabilityEntries;
 
   Card card;
+
+  List<Card> cards;
 
   Command command;
 
@@ -2397,6 +2614,7 @@ class RootQueryType {
     this.apiVersion,
     this.availabilityEntries,
     this.card,
+    this.cards,
     this.command,
     this.feed,
     this.feedEvent,
@@ -2435,6 +2653,10 @@ class RootQueryType {
       card: json['card'] == null
           ? null
           : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cards: (json['cards'] as List)
+          ?.map((e) =>
+      e == null ? null : Card.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
       command: json['command'] == null
           ? null
           : Command.fromJson(json['command'] as Map<String, dynamic>),
@@ -2489,544 +2711,15 @@ class RootQueryType {
   }
 }
 
-class Account {
-  Money balance;
-
-  Money balancePending;
-
-  Money balanceSettled;
-
-  List<AccountEntry> entries;
-
-  int id;
-
-  AccountSource source;
-
-  AccountType type;
-
-  Account({this.balance,
-    this.balancePending,
-    this.balanceSettled,
-    this.entries,
-    this.id,
-    this.source,
-    this.type});
-
-  factory Account.fromJson(Map<String, dynamic> json) {
-    return Account(
-      balance: json['balance'] == null
-          ? null
-          : Money.fromJson(json['balance'] as Map<String, dynamic>),
-      balancePending: json['balancePending'] == null
-          ? null
-          : Money.fromJson(json['balancePending'] as Map<String, dynamic>),
-      balanceSettled: json['balanceSettled'] == null
-          ? null
-          : Money.fromJson(json['balanceSettled'] as Map<String, dynamic>),
-      entries: (json['entries'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : AccountEntry.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      id: json['id'] as int,
-      source: json['source'] == null
-          ? null
-          : AccountSource.fromJson(json['source'] as Map<String, dynamic>),
-      type: json['type'] == null
-          ? null
-          : AccountType.fromJson(json['type'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class FeedMessageEdited implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Feed feed;
-
-  String feedEventId;
-
-  String feedId;
-
-  int id;
-
-  String messageBody;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  FeedMessageEdited({this.actor,
-    this.actorId,
-    this.feed,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.messageBody,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory FeedMessageEdited.fromJson(Map<String, dynamic> json) {
-    return FeedMessageEdited(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      feed: json['feed'] == null
-          ? null
-          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
-      feedEventId: json['feedEventId'] as String,
-      feedId: json['feedId'] as String,
-      id: json['id'] as int,
-      messageBody: json['messageBody'] as String,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class Command {
-  User actor;
-
-  String executedAt;
-
-  int id;
-
-  Raw input;
-
-  String requestId;
-
-  String type;
-
-  Command({this.actor,
-    this.executedAt,
-    this.id,
-    this.input,
-    this.requestId,
-    this.type});
-
-  factory Command.fromJson(Map<String, dynamic> json) {
-    return Command(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      executedAt: json['executedAt'] as String,
-      id: json['id'] as int,
-      input: json['input'] == null
-          ? null
-          : Raw.fromJson(json['input'] as Map<String, dynamic>),
-      requestId: json['requestId'] as String,
-      type: json['type'] as String,
-    );
-  }
-}
-
-abstract class DocumentToken {
-  factory DocumentToken.fromJson(Map<String, dynamic> json) {
-    switch (json['__typename']) {
-      case "Card":
-        return Card.fromJson(json);
-      case "DateObject":
-        return DateObject.fromJson(json);
-      case "DurationRangeObject":
-        return DurationRangeObject.fromJson(json);
-      case "File":
-        return File.fromJson(json);
-      case "Link":
-        return Link.fromJson(json);
-      case "StringObject":
-        return StringObject.fromJson(json);
-      case "TimeEntry":
-        return TimeEntry.fromJson(json);
-      case "User":
-        return User.fromJson(json);
-    }
-    return null;
-  }
-}
-
-class Project {
-  Money balance;
-
-  Money budget;
-
-  List<Contract> contracts;
-
-  Money estimatedHourlyRate;
-
-  List<Feed> feeds;
-
-  int id;
-
-  DateTime lastActivity;
-
-  CreditCard lastChargedCard;
-
-  List<Card> managerOverdueCards;
-
-  List<User> managers;
-
-  List<User> members;
-
-  Raw meta;
-
-  String name;
-
-  List<String> projectStatusTags;
-
-  Card rootCard;
-
-  List<TimeEntry> timeEntries;
-
-  Project({this.balance,
-    this.budget,
-    this.contracts,
-    this.estimatedHourlyRate,
-    this.feeds,
-    this.id,
-    this.lastActivity,
-    this.lastChargedCard,
-    this.managerOverdueCards,
-    this.managers,
-    this.members,
-    this.meta,
-    this.name,
-    this.projectStatusTags,
-    this.rootCard,
-    this.timeEntries});
-
-  factory Project.fromJson(Map<String, dynamic> json) {
-    return Project(
-      balance: json['balance'] == null
-          ? null
-          : Money.fromJson(json['balance'] as Map<String, dynamic>),
-      budget: json['budget'] == null
-          ? null
-          : Money.fromJson(json['budget'] as Map<String, dynamic>),
-      contracts: (json['contracts'] as List)
-          ?.map((e) =>
-      e == null ? null : Contract.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      estimatedHourlyRate: json['estimatedHourlyRate'] == null
-          ? null
-          : Money.fromJson(json['estimatedHourlyRate'] as Map<String, dynamic>),
-      feeds: (json['feeds'] as List)
-          ?.map((e) =>
-      e == null ? null : Feed.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      id: json['id'] as int,
-      lastActivity: json['lastActivity'] == null
-          ? null
-          : DateTime.parse(json['lastActivity'] as String),
-      lastChargedCard: json['lastChargedCard'] == null
-          ? null
-          : CreditCard.fromJson(
-          json['lastChargedCard'] as Map<String, dynamic>),
-      managerOverdueCards: (json['managerOverdueCards'] as List)
-          ?.map((e) =>
-      e == null ? null : Card.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      managers: (json['managers'] as List)
-          ?.map((e) =>
-      e == null ? null : User.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      members: (json['members'] as List)
-          ?.map((e) =>
-      e == null ? null : User.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      meta: json['meta'] == null
-          ? null
-          : Raw.fromJson(json['meta'] as Map<String, dynamic>),
-      name: json['name'] as String,
-      projectStatusTags: (json['projectStatusTags'] as List)
-          ?.map((e) => e as String)
-          ?.toList(),
-      rootCard: json['rootCard'] == null
-          ? null
-          : Card.fromJson(json['rootCard'] as Map<String, dynamic>),
-      timeEntries: (json['timeEntries'] as List)
-          ?.map((e) =>
-      e == null ? null : TimeEntry.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-    );
-  }
-}
-
-class NotificationDelivery {
-  String deliveredAt;
-
-  Feed feed;
-
-  FeedEvent feedEvent;
-
-  int id;
-
-  User recipient;
-
-  String type;
-
-  NotificationDelivery({this.deliveredAt,
-    this.feed,
-    this.feedEvent,
-    this.id,
-    this.recipient,
-    this.type});
-
-  factory NotificationDelivery.fromJson(Map<String, dynamic> json) {
-    return NotificationDelivery(
-      deliveredAt: json['deliveredAt'] as String,
-      feed: json['feed'] == null
-          ? null
-          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
-      feedEvent: json['feedEvent'] == null
-          ? null
-          : FeedEvent.fromJson(json['feedEvent'] as Map<String, dynamic>),
-      id: json['id'] as int,
-      recipient: json['recipient'] == null
-          ? null
-          : User.fromJson(json['recipient'] as Map<String, dynamic>),
-      type: json['type'] as String,
-    );
-  }
-}
-
-class CardUncompleted implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Card card;
-
-  String cardId;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  CardUncompleted({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory CardUncompleted.fromJson(Map<String, dynamic> json) {
-    return CardUncompleted(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class TimeEntry implements DocumentToken {
-  String addedAt;
-
-  Card card;
-
-  String contractId;
-
-  DateTime date;
-
-  bool deleted;
-
-  Duration duration;
-
-  bool edited;
-
-  int id;
-
-  String memo;
-
-  User user;
-
-  TimeEntry({this.addedAt,
-    this.card,
-    this.contractId,
-    this.date,
-    this.deleted,
-    this.duration,
-    this.edited,
-    this.id,
-    this.memo,
-    this.user});
-
-  factory TimeEntry.fromJson(Map<String, dynamic> json) {
-    return TimeEntry(
-      addedAt: json['addedAt'] as String,
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      contractId: json['contractId'] as String,
-      date:
-      json['date'] == null ? null : DateTime.parse(json['date'] as String),
-      deleted: json['deleted'] as bool,
-      duration: json['duration'] == null
-          ? null
-          : Duration.fromJson(json['duration'] as Map<String, dynamic>),
-      edited: json['edited'] as bool,
-      id: json['id'] as int,
-      memo: json['memo'] as String,
-      user: json['user'] == null
-          ? null
-          : User.fromJson(json['user'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class UserReadFeedEvent implements TurtleEvent {
-  String actorId;
-
-  String feedEventId;
-
-  String feedId;
-
-  int id;
-
-  String requestId;
-
-  String time;
-
-  UserReadFeedEvent({this.actorId,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.requestId,
-    this.time});
-
-  factory UserReadFeedEvent.fromJson(Map<String, dynamic> json) {
-    return UserReadFeedEvent(
-      actorId: json['actorId'] as String,
-      feedEventId: json['feedEventId'] as String,
-      feedId: json['feedId'] as String,
-      id: json['id'] as int,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class CardDueDateSet implements TurtleEvent {
-  User actor;
-
-  String actorId;
-
-  Card card;
-
-  String cardId;
-
-  DateTime dueDate;
-
-  int id;
-
-  String projectId;
-
-  String requestId;
-
-  String time;
-
-  CardDueDateSet({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.dueDate,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
-
-  factory CardDueDateSet.fromJson(Map<String, dynamic> json) {
-    return CardDueDateSet(
-      actor: json['actor'] == null
-          ? null
-          : User.fromJson(json['actor'] as Map<String, dynamic>),
-      actorId: json['actorId'] as String,
-      card: json['card'] == null
-          ? null
-          : Card.fromJson(json['card'] as Map<String, dynamic>),
-      cardId: json['cardId'] as String,
-      dueDate: json['dueDate'] == null
-          ? null
-          : DateTime.parse(json['dueDate'] as String),
-      id: json['id'] as int,
-      projectId: json['projectId'] as String,
-      requestId: json['requestId'] as String,
-      time: json['time'] as String,
-    );
-  }
-}
-
-class File implements DocumentToken {
-  String contentType;
-
-  String downloadUri;
-
-  int id;
-
-  String name;
-
-  String path;
-
-  int size;
-
-  String thumbnailUri;
-
-  String uri;
-
-  String userId;
-
-  File({this.contentType,
-    this.downloadUri,
-    this.id,
-    this.name,
-    this.path,
-    this.size,
-    this.thumbnailUri,
-    this.uri,
-    this.userId});
-
-  factory File.fromJson(Map<String, dynamic> json) {
-    return File(
-      contentType: json['contentType'] as String,
-      downloadUri: json['downloadUri'] as String,
-      id: json['id'] as int,
-      name: json['name'] as String,
-      path: json['path'] as String,
-      size: json['size'] as int,
-      thumbnailUri: json['thumbnailUri'] as String,
-      uri: json['uri'] as String,
-      userId: json['userId'] as String,
-    );
-  }
-}
-
+/// Link to an internet webpage or an internal turtle link (like card or user)
 class Link implements DocumentToken {
+  /// The title of the link. It's either the name of the entity or left blank.
   String title;
 
+  /// The type of entity that is linked to. It can be user, card, or link (default).
   String type;
 
+  /// The http://... url this goes to
   String uri;
 
   Link({this.title, this.type, this.uri});
@@ -3040,43 +2733,125 @@ class Link implements DocumentToken {
   }
 }
 
-class StringObject implements DocumentToken {
-  String value;
+class TimeEntryCreated implements TurtleEvent {
+  User actor;
 
-  StringObject({this.value});
+  String actorId;
 
-  factory StringObject.fromJson(Map<String, dynamic> json) {
-    return StringObject(
-      value: json['value'] as String,
+  Card card;
+
+  String cardId;
+
+  Contract contract;
+
+  User contractor;
+
+  String entryDate;
+
+  String entryDuration;
+
+  String entryMemo;
+
+  String id;
+
+  Card project;
+
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  TimeEntry timeEntry;
+
+  String timeEntryId;
+
+  TimeEntryCreated({this.actor,
+    this.actorId,
+    this.card,
+    this.cardId,
+    this.contract,
+    this.contractor,
+    this.entryDate,
+    this.entryDuration,
+    this.entryMemo,
+    this.id,
+    this.project,
+    this.projectId,
+    this.requestId,
+    this.time,
+    this.timeEntry,
+    this.timeEntryId});
+
+  factory TimeEntryCreated.fromJson(Map<String, dynamic> json) {
+    return TimeEntryCreated(
+      actor: json['actor'] == null
+          ? null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      card: json['card'] == null
+          ? null
+          : Card.fromJson(json['card'] as Map<String, dynamic>),
+      cardId: json['cardId'] as String,
+      contract: json['contract'] == null
+          ? null
+          : Contract.fromJson(json['contract'] as Map<String, dynamic>),
+      contractor: json['contractor'] == null
+          ? null
+          : User.fromJson(json['contractor'] as Map<String, dynamic>),
+      entryDate: json['entryDate'] as String,
+      entryDuration: json['entryDuration'] as String,
+      entryMemo: json['entryMemo'] as String,
+      id: json['id'] as String,
+      project: json['project'] == null
+          ? null
+          : Card.fromJson(json['project'] as Map<String, dynamic>),
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+      timeEntry: json['timeEntry'] == null
+          ? null
+          : TimeEntry.fromJson(json['timeEntry'] as Map<String, dynamic>),
+      timeEntryId: json['timeEntryId'] as String,
     );
   }
 }
 
-class User implements FeedSource, AccountSource, DocumentToken {
+class User implements AccountSource, FeedSource, DocumentToken {
+  /// The number of contracts the user currently has active.
   int activeContractsCount;
 
+  /// Active contracts the user currently has
   List<Contract> contracts;
 
   String email;
 
+  /// Activity feeds the user currently has access to. Sorted by most recently active first.
   List<Feed> feeds;
 
   HubspotContact hubspotContact;
 
-  int id;
+  /// Unique identifier for the user. A user may have multiple identies connected to a single user.
+  String id;
 
+  /// The full name of the user. Will be taken from their Google account on initial login. Can be overridden in their profile.
   String name;
 
   String photo;
 
+  /// Projects the user is currently a member of.
   List<Project> projects;
 
+  /// The system-wide rules a user has.
   List<Role> roles;
 
+  /// The registration status of the user. Can currently be either invited or active.
   String status;
 
+  /// The time entries tracked by the current user
   List<TimeEntry> timeEntries;
 
+  /// The timezone of the user related currently based on what we read from the browser.
   String timezone;
 
   User({this.activeContractsCount,
@@ -3109,17 +2884,14 @@ class User implements FeedSource, AccountSource, DocumentToken {
           ? null
           : HubspotContact.fromJson(
           json['hubspotContact'] as Map<String, dynamic>),
-      id: json['id'] as int,
+      id: json['id'] as String,
       name: json['name'] as String,
       photo: json['photo'] as String,
       projects: (json['projects'] as List)
           ?.map((e) =>
       e == null ? null : Project.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      roles: (json['roles'] as List)
-          ?.map((e) =>
-      e == null ? null : Role.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+      roles: (json['roles'] as List)?.map((e) => RoleValues[e])?.toList(),
       status: json['status'] as String,
       timeEntries: (json['timeEntries'] as List)
           ?.map((e) =>
@@ -3130,69 +2902,382 @@ class User implements FeedSource, AccountSource, DocumentToken {
   }
 }
 
-class Contract {
-  bool active;
+class FeedMessageEdited implements TurtleEvent {
+  User actor;
 
-  User contractor;
+  String actorId;
 
-  Money contractorHourlyRate;
+  Feed feed;
 
-  Money customerHourlyRate;
+  String feedEventId;
 
-  String endedAt;
+  String feedId;
 
-  int id;
+  String id;
 
-  Project project;
+  String messageBody;
 
-  String startedAt;
+  String projectId;
 
-  Contract({this.active,
-    this.contractor,
-    this.contractorHourlyRate,
-    this.customerHourlyRate,
-    this.endedAt,
+  String requestId;
+
+  String time;
+
+  FeedMessageEdited({this.actor,
+    this.actorId,
+    this.feed,
+    this.feedEventId,
+    this.feedId,
     this.id,
-    this.project,
-    this.startedAt});
+    this.messageBody,
+    this.projectId,
+    this.requestId,
+    this.time});
 
-  factory Contract.fromJson(Map<String, dynamic> json) {
-    return Contract(
-      active: json['active'] as bool,
-      contractor: json['contractor'] == null
+  factory FeedMessageEdited.fromJson(Map<String, dynamic> json) {
+    return FeedMessageEdited(
+      actor: json['actor'] == null
           ? null
-          : User.fromJson(json['contractor'] as Map<String, dynamic>),
-      contractorHourlyRate: json['contractorHourlyRate'] == null
+          : User.fromJson(json['actor'] as Map<String, dynamic>),
+      actorId: json['actorId'] as String,
+      feed: json['feed'] == null
           ? null
-          : Money.fromJson(
-          json['contractorHourlyRate'] as Map<String, dynamic>),
-      customerHourlyRate: json['customerHourlyRate'] == null
-          ? null
-          : Money.fromJson(json['customerHourlyRate'] as Map<String, dynamic>),
-      endedAt: json['endedAt'] as String,
-      id: json['id'] as int,
-      project: json['project'] == null
-          ? null
-          : Project.fromJson(json['project'] as Map<String, dynamic>),
-      startedAt: json['startedAt'] as String,
+          : Feed.fromJson(json['feed'] as Map<String, dynamic>),
+      feedEventId: json['feedEventId'] as String,
+      feedId: json['feedId'] as String,
+      id: json['id'] as String,
+      messageBody: json['messageBody'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
     );
   }
 }
 
-class FeedSubscription {
+class ReactionRemoved implements TurtleEvent {
+  String actorId;
+
+  String cardId;
+
+  String feedEventId;
+
   String feedId;
 
-  int unreadCount;
+  String id;
 
-  String userId;
+  String projectId;
 
-  FeedSubscription({this.feedId, this.unreadCount, this.userId});
+  String reaction;
 
-  factory FeedSubscription.fromJson(Map<String, dynamic> json) {
-    return FeedSubscription(
+  String receiverId;
+
+  String requestId;
+
+  String time;
+
+  ReactionRemoved({this.actorId,
+    this.cardId,
+    this.feedEventId,
+    this.feedId,
+    this.id,
+    this.projectId,
+    this.reaction,
+    this.receiverId,
+    this.requestId,
+    this.time});
+
+  factory ReactionRemoved.fromJson(Map<String, dynamic> json) {
+    return ReactionRemoved(
+      actorId: json['actorId'] as String,
+      cardId: json['cardId'] as String,
+      feedEventId: json['feedEventId'] as String,
       feedId: json['feedId'] as String,
-      unreadCount: json['unreadCount'] as int,
-      userId: json['userId'] as String,
+      id: json['id'] as String,
+      projectId: json['projectId'] as String,
+      reaction: json['reaction'] as String,
+      receiverId: json['receiverId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+class Meeting {
+  String duration;
+
+  String endedAt;
+
+  String id;
+
+  List<User> participants;
+
+  MeetingRecording recording;
+
+  String roomId;
+
+  String startedAt;
+
+  MeetingStatus status;
+
+  Meeting({this.duration,
+    this.endedAt,
+    this.id,
+    this.participants,
+    this.recording,
+    this.roomId,
+    this.startedAt,
+    this.status});
+
+  factory Meeting.fromJson(Map<String, dynamic> json) {
+    return Meeting(
+      duration: json['duration'] as String,
+      endedAt: json['endedAt'] as String,
+      id: json['id'] as String,
+      participants: (json['participants'] as List)
+          ?.map((e) =>
+      e == null ? null : User.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      recording: json['recording'] == null
+          ? null
+          : MeetingRecording.fromJson(
+          json['recording'] as Map<String, dynamic>),
+      roomId: json['roomId'] as String,
+      startedAt: json['startedAt'] as String,
+      status: MeetingStatusValues[json['status']],
+    );
+  }
+}
+
+class RootMutationType {
+  String userSetSkills;
+
+  String timeEntryDelete;
+
+  String timeEntryCreate;
+
+  String feedDeleteMessage;
+
+  Card cardUndelete;
+
+  String updateAvailability;
+
+  /// Link or create HubSpot contact
+  HubspotContact linkOrCreateHubSpotContact;
+
+  String cardMetaSet;
+
+  String addReaction;
+
+  Card cardBudgetUnset;
+
+  String contractEnd;
+
+  String recordPayout;
+
+  String profileTimezoneSet;
+
+  String timeEntryEdit;
+
+  String feedMarkAsRead;
+
+  Card cardMove;
+
+  String removeReaction;
+
+  Card cardRename;
+
+  Card cardAssign;
+
+  String feedEditMessage;
+
+  String sendLowBalanceReminder;
+
+  String userSetRoles;
+
+  Card cardEstimateUnset;
+
+  String profileNameSet;
+
+  User cardInviteUser;
+
+  Card cardDueDateUnset;
+
+  Card cardDelete;
+
+  String cardAddMember;
+
+  TwilioAuth meetingRoomJoin;
+
+  Card cardDueDateSet;
+
+  Card cardEstimateSet;
+
+  String cardTagsSet;
+
+  String feedPostMessage;
+
+  Card cardCreate;
+
+  Card cardUnassign;
+
+  Card cardBudgetIncrease;
+
+  String cardLinkDelete;
+
+  String accountOpen;
+
+  String accountTransfer;
+
+  String projectAddBalanceWithStripe;
+
+  String cardRemoveMember;
+
+  Card cardBudgetDecrease;
+
+  Card cardUncomplete;
+
+  Card cardComplete;
+
+  String cardLinkCreate;
+
+  String contractStart;
+
+  RootMutationType({this.userSetSkills,
+    this.timeEntryDelete,
+    this.timeEntryCreate,
+    this.feedDeleteMessage,
+    this.cardUndelete,
+    this.updateAvailability,
+    this.linkOrCreateHubSpotContact,
+    this.cardMetaSet,
+    this.addReaction,
+    this.cardBudgetUnset,
+    this.contractEnd,
+    this.recordPayout,
+    this.profileTimezoneSet,
+    this.timeEntryEdit,
+    this.feedMarkAsRead,
+    this.cardMove,
+    this.removeReaction,
+    this.cardRename,
+    this.cardAssign,
+    this.feedEditMessage,
+    this.sendLowBalanceReminder,
+    this.userSetRoles,
+    this.cardEstimateUnset,
+    this.profileNameSet,
+    this.cardInviteUser,
+    this.cardDueDateUnset,
+    this.cardDelete,
+    this.cardAddMember,
+    this.meetingRoomJoin,
+    this.cardDueDateSet,
+    this.cardEstimateSet,
+    this.cardTagsSet,
+    this.feedPostMessage,
+    this.cardCreate,
+    this.cardUnassign,
+    this.cardBudgetIncrease,
+    this.cardLinkDelete,
+    this.accountOpen,
+    this.accountTransfer,
+    this.projectAddBalanceWithStripe,
+    this.cardRemoveMember,
+    this.cardBudgetDecrease,
+    this.cardUncomplete,
+    this.cardComplete,
+    this.cardLinkCreate,
+    this.contractStart});
+
+  factory RootMutationType.fromJson(Map<String, dynamic> json) {
+    return RootMutationType(
+      userSetSkills: json['userSetSkills'] as String,
+      timeEntryDelete: json['timeEntryDelete'] as String,
+      timeEntryCreate: json['timeEntryCreate'] as String,
+      feedDeleteMessage: json['feedDeleteMessage'] as String,
+      cardUndelete: json['cardUndelete'] == null
+          ? null
+          : Card.fromJson(json['cardUndelete'] as Map<String, dynamic>),
+      updateAvailability: json['updateAvailability'] as String,
+      linkOrCreateHubSpotContact: json['linkOrCreateHubSpotContact'] == null
+          ? null
+          : HubspotContact.fromJson(
+          json['linkOrCreateHubSpotContact'] as Map<String, dynamic>),
+      cardMetaSet: json['cardMetaSet'] as String,
+      addReaction: json['addReaction'] as String,
+      cardBudgetUnset: json['cardBudgetUnset'] == null
+          ? null
+          : Card.fromJson(json['cardBudgetUnset'] as Map<String, dynamic>),
+      contractEnd: json['contractEnd'] as String,
+      recordPayout: json['recordPayout'] as String,
+      profileTimezoneSet: json['profileTimezoneSet'] as String,
+      timeEntryEdit: json['timeEntryEdit'] as String,
+      feedMarkAsRead: json['feedMarkAsRead'] as String,
+      cardMove: json['cardMove'] == null
+          ? null
+          : Card.fromJson(json['cardMove'] as Map<String, dynamic>),
+      removeReaction: json['removeReaction'] as String,
+      cardRename: json['cardRename'] == null
+          ? null
+          : Card.fromJson(json['cardRename'] as Map<String, dynamic>),
+      cardAssign: json['cardAssign'] == null
+          ? null
+          : Card.fromJson(json['cardAssign'] as Map<String, dynamic>),
+      feedEditMessage: json['feedEditMessage'] as String,
+      sendLowBalanceReminder: json['sendLowBalanceReminder'] as String,
+      userSetRoles: json['userSetRoles'] as String,
+      cardEstimateUnset: json['cardEstimateUnset'] == null
+          ? null
+          : Card.fromJson(json['cardEstimateUnset'] as Map<String, dynamic>),
+      profileNameSet: json['profileNameSet'] as String,
+      cardInviteUser: json['cardInviteUser'] == null
+          ? null
+          : User.fromJson(json['cardInviteUser'] as Map<String, dynamic>),
+      cardDueDateUnset: json['cardDueDateUnset'] == null
+          ? null
+          : Card.fromJson(json['cardDueDateUnset'] as Map<String, dynamic>),
+      cardDelete: json['cardDelete'] == null
+          ? null
+          : Card.fromJson(json['cardDelete'] as Map<String, dynamic>),
+      cardAddMember: json['cardAddMember'] as String,
+      meetingRoomJoin: json['meetingRoomJoin'] == null
+          ? null
+          : TwilioAuth.fromJson(
+          json['meetingRoomJoin'] as Map<String, dynamic>),
+      cardDueDateSet: json['cardDueDateSet'] == null
+          ? null
+          : Card.fromJson(json['cardDueDateSet'] as Map<String, dynamic>),
+      cardEstimateSet: json['cardEstimateSet'] == null
+          ? null
+          : Card.fromJson(json['cardEstimateSet'] as Map<String, dynamic>),
+      cardTagsSet: json['cardTagsSet'] as String,
+      feedPostMessage: json['feedPostMessage'] as String,
+      cardCreate: json['cardCreate'] == null
+          ? null
+          : Card.fromJson(json['cardCreate'] as Map<String, dynamic>),
+      cardUnassign: json['cardUnassign'] == null
+          ? null
+          : Card.fromJson(json['cardUnassign'] as Map<String, dynamic>),
+      cardBudgetIncrease: json['cardBudgetIncrease'] == null
+          ? null
+          : Card.fromJson(json['cardBudgetIncrease'] as Map<String, dynamic>),
+      cardLinkDelete: json['cardLinkDelete'] as String,
+      accountOpen: json['accountOpen'] as String,
+      accountTransfer: json['accountTransfer'] as String,
+      projectAddBalanceWithStripe:
+      json['projectAddBalanceWithStripe'] as String,
+      cardRemoveMember: json['cardRemoveMember'] as String,
+      cardBudgetDecrease: json['cardBudgetDecrease'] == null
+          ? null
+          : Card.fromJson(json['cardBudgetDecrease'] as Map<String, dynamic>),
+      cardUncomplete: json['cardUncomplete'] == null
+          ? null
+          : Card.fromJson(json['cardUncomplete'] as Map<String, dynamic>),
+      cardComplete: json['cardComplete'] == null
+          ? null
+          : Card.fromJson(json['cardComplete'] as Map<String, dynamic>),
+      cardLinkCreate: json['cardLinkCreate'] as String,
+      contractStart: json['contractStart'] as String,
     );
   }
 }
@@ -3206,7 +3291,7 @@ class CardMemberRemoved implements TurtleEvent {
 
   String cardId;
 
-  int id;
+  String id;
 
   User member;
 
@@ -3236,7 +3321,7 @@ class CardMemberRemoved implements TurtleEvent {
           ? null
           : Card.fromJson(json['card'] as Map<String, dynamic>),
       cardId: json['cardId'] as String,
-      id: json['id'] as int,
+      id: json['id'] as String,
       member: json['member'] == null
           ? null
           : User.fromJson(json['member'] as Map<String, dynamic>),
@@ -3247,56 +3332,97 @@ class CardMemberRemoved implements TurtleEvent {
   }
 }
 
-class Meeting {
-  Duration duration;
+/// Wrapper for a string scalar
+class StringObject implements DocumentToken {
+  String value;
 
-  DateTime endedAt;
+  StringObject({this.value});
 
-  String id;
+  factory StringObject.fromJson(Map<String, dynamic> json) {
+    return StringObject(
+      value: json['value'] as String,
+    );
+  }
+}
 
-  List<User> participants;
+/// Represents a schema
+class __Schema {
+  List<__Directive> directives;
 
-  MeetingRecording recording;
+  __Type mutationType;
 
-  String roomId;
+  __Type queryType;
 
-  DateTime startedAt;
+  __Type subscriptionType;
 
-  MeetingStatus status;
+  List<__Type> types;
 
-  Meeting({this.duration,
-    this.endedAt,
-    this.id,
-    this.participants,
-    this.recording,
-    this.roomId,
-    this.startedAt,
-    this.status});
+  __Schema({this.directives,
+    this.mutationType,
+    this.queryType,
+    this.subscriptionType,
+    this.types});
 
-  factory Meeting.fromJson(Map<String, dynamic> json) {
-    return Meeting(
-      duration: json['duration'] == null
-          ? null
-          : Duration.fromJson(json['duration'] as Map<String, dynamic>),
-      endedAt: json['endedAt'] == null
-          ? null
-          : DateTime.parse(json['endedAt'] as String),
-      id: json['id'] as String,
-      participants: (json['participants'] as List)
+  factory __Schema.fromJson(Map<String, dynamic> json) {
+    return __Schema(
+      directives: (json['directives'] as List)
           ?.map((e) =>
-      e == null ? null : User.fromJson(e as Map<String, dynamic>))
+      e == null
+          ? null
+          : __Directive.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      recording: json['recording'] == null
+      mutationType: json['mutationType'] == null
           ? null
-          : MeetingRecording.fromJson(
-          json['recording'] as Map<String, dynamic>),
-      roomId: json['roomId'] as String,
-      startedAt: json['startedAt'] == null
+          : __Type.fromJson(json['mutationType'] as Map<String, dynamic>),
+      queryType: json['queryType'] == null
           ? null
-          : DateTime.parse(json['startedAt'] as String),
-      status: json['status'] == null
+          : __Type.fromJson(json['queryType'] as Map<String, dynamic>),
+      subscriptionType: json['subscriptionType'] == null
           ? null
-          : MeetingStatus.fromJson(json['status'] as Map<String, dynamic>),
+          : __Type.fromJson(json['subscriptionType'] as Map<String, dynamic>),
+      types: (json['types'] as List)
+          ?.map((e) =>
+      e == null ? null : __Type.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+    );
+  }
+}
+
+class __Field {
+  List<__InputValue> args;
+
+  String deprecationReason;
+
+  String description;
+
+  bool isDeprecated;
+
+  String name;
+
+  __Type type;
+
+  __Field({this.args,
+    this.deprecationReason,
+    this.description,
+    this.isDeprecated,
+    this.name,
+    this.type});
+
+  factory __Field.fromJson(Map<String, dynamic> json) {
+    return __Field(
+      args: (json['args'] as List)
+          ?.map((e) =>
+      e == null
+          ? null
+          : __InputValue.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      deprecationReason: json['deprecationReason'] as String,
+      description: json['description'] as String,
+      isDeprecated: json['isDeprecated'] as bool,
+      name: json['name'] as String,
+      type: json['type'] == null
+          ? null
+          : __Type.fromJson(json['type'] as Map<String, dynamic>),
     );
   }
 }
@@ -3324,47 +3450,7 @@ class __InputValue {
   }
 }
 
-class __Schema {
-  List<__Directive> directives;
-
-  __Type mutationType;
-
-  __Type queryType;
-
-  __Type subscriptionType;
-
-  List<__Type> types;
-
-  __Schema({this.directives,
-    this.mutationType,
-    this.queryType,
-    this.subscriptionType,
-    this.types});
-  factory __Schema.fromJson(Map<String, dynamic> json) {
-    return __Schema(
-      directives: (json['directives'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : __Directive.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      mutationType: json['mutationType'] == null
-          ? null
-          : __Type.fromJson(json['mutationType'] as Map<String, dynamic>),
-      queryType: json['queryType'] == null
-          ? null
-          : __Type.fromJson(json['queryType'] as Map<String, dynamic>),
-      subscriptionType: json['subscriptionType'] == null
-          ? null
-          : __Type.fromJson(json['subscriptionType'] as Map<String, dynamic>),
-      types: (json['types'] as List)
-          ?.map((e) =>
-      e == null ? null : __Type.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-    );
-  }
-}
-
+/// Represents a directive
 class __Directive {
   List<__InputValue> args;
 
@@ -3398,10 +3484,7 @@ class __Directive {
           ?.toList(),
       description: json['description'] as String,
       locations: (json['locations'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : __DirectiveLocation.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => __DirectiveLocationValues[e])
           ?.toList(),
       name: json['name'] as String,
       onField: json['onField'] as bool,
@@ -3411,6 +3494,29 @@ class __Directive {
   }
 }
 
+class __EnumValue {
+  String deprecationReason;
+
+  String description;
+
+  bool isDeprecated;
+
+  String name;
+
+  __EnumValue(
+      {this.deprecationReason, this.description, this.isDeprecated, this.name});
+
+  factory __EnumValue.fromJson(Map<String, dynamic> json) {
+    return __EnumValue(
+      deprecationReason: json['deprecationReason'] as String,
+      description: json['description'] as String,
+      isDeprecated: json['isDeprecated'] as bool,
+      name: json['name'] as String,
+    );
+  }
+}
+
+/// Represents scalars, interfaces, object types, unions, enums in the system
 class __Type {
   String description;
 
@@ -3439,6 +3545,7 @@ class __Type {
     this.name,
     this.ofType,
     this.possibleTypes});
+
   factory __Type.fromJson(Map<String, dynamic> json) {
     return __Type(
       description: json['description'] as String,
@@ -3475,90 +3582,56 @@ class __Type {
   }
 }
 
-class __Field {
-  List<__InputValue> args;
-
-  String deprecationReason;
-
-  String description;
-
-  bool isDeprecated;
-
-  String name;
-
-  __Type type;
-
-  __Field({this.args,
-    this.deprecationReason,
-    this.description,
-    this.isDeprecated,
-    this.name,
-    this.type});
-  factory __Field.fromJson(Map<String, dynamic> json) {
-    return __Field(
-      args: (json['args'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : __InputValue.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      deprecationReason: json['deprecationReason'] as String,
-      description: json['description'] as String,
-      isDeprecated: json['isDeprecated'] as bool,
-      name: json['name'] as String,
-      type: json['type'] == null
-          ? null
-          : __Type.fromJson(json['type'] as Map<String, dynamic>),
-    );
-  }
-}
-
-class __EnumValue {
-  String deprecationReason;
-
-  String description;
-
-  bool isDeprecated;
-
-  String name;
-
-  __EnumValue(
-      {this.deprecationReason, this.description, this.isDeprecated, this.name});
-  factory __EnumValue.fromJson(Map<String, dynamic> json) {
-    return __EnumValue(
-      deprecationReason: json['deprecationReason'] as String,
-      description: json['description'] as String,
-      isDeprecated: json['isDeprecated'] as bool,
-      name: json['name'] as String,
-    );
-  }
-}
-
-class RootObject {}
-
 enum AccountType {
   EXTERNAL,
   PROJECT,
   TURTLE,
   USER,
 }
-enum MeetingStatus {
-  COMPLETED,
-  FAILED,
-  IN_PROGRESS,
-}
-enum Role {
-  ADMIN,
-  CONTRACTOR,
-  CUSTOMER,
-  MANAGER,
-}
+
+final AccountTypeValues = {
+  "EXTERNAL": AccountType.EXTERNAL,
+  "PROJECT": AccountType.PROJECT,
+  "TURTLE": AccountType.TURTLE,
+  "USER": AccountType.USER,
+};
 enum ReadStatus {
   ALL,
   READ,
   SUBSCRIBED,
   UNREAD,
 }
+
+final ReadStatusValues = {
+  "ALL": ReadStatus.ALL,
+  "READ": ReadStatus.READ,
+  "SUBSCRIBED": ReadStatus.SUBSCRIBED,
+  "UNREAD": ReadStatus.UNREAD,
+};
+enum MeetingStatus {
+  COMPLETED,
+  FAILED,
+  IN_PROGRESS,
+}
+
+final MeetingStatusValues = {
+  "COMPLETED": MeetingStatus.COMPLETED,
+  "FAILED": MeetingStatus.FAILED,
+  "IN_PROGRESS": MeetingStatus.IN_PROGRESS,
+};
+enum Role {
+  ADMIN,
+  CONTRACTOR,
+  CUSTOMER,
+  MANAGER,
+}
+
+final RoleValues = {
+  "ADMIN": Role.ADMIN,
+  "CONTRACTOR": Role.CONTRACTOR,
+  "CUSTOMER": Role.CUSTOMER,
+  "MANAGER": Role.MANAGER,
+};
 enum __DirectiveLocation {
   FIELD,
   FRAGMENT_DEFINITION,
@@ -3568,3 +3641,13 @@ enum __DirectiveLocation {
   QUERY,
   SUBSCRIPTION,
 }
+
+final __DirectiveLocationValues = {
+  "FIELD": __DirectiveLocation.FIELD,
+  "FRAGMENT_DEFINITION": __DirectiveLocation.FRAGMENT_DEFINITION,
+  "FRAGMENT_SPREAD": __DirectiveLocation.FRAGMENT_SPREAD,
+  "INLINE_FRAGMENT": __DirectiveLocation.INLINE_FRAGMENT,
+  "MUTATION": __DirectiveLocation.MUTATION,
+  "QUERY": __DirectiveLocation.QUERY,
+  "SUBSCRIPTION": __DirectiveLocation.SUBSCRIPTION,
+};

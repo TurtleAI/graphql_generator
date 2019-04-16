@@ -18,8 +18,11 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
 
   Map<String, Class> classes = {};
   List<String> enumString = [];
-  List<TypeA> unionList = [];
-  List<InterfaceA> cl = [];
+
+  List<TypeA> enumTypes = [];
+  List<TypeA> interfaceTypes = [];
+  List<TypeA> unionTypes = [];
+  List<TypeA> objectTypes = [];
 
   @override
   Future<String> generateForAnnotatedElement(
@@ -29,19 +32,23 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     namespace = annotation.read('namespace').stringValue;
 
     var response = await getSchema();
-    parseAllTypes(getTypesFromResponse(response));
+    List<TypeA> typesFromResponse = getTypeList(getTypesFromResponse(response));
+    enumTypes =
+        typesFromResponse.where((type) => type.kind == Kind.ENUM).toList();
+    parseEnumType(enumTypes);
+    interfaceTypes =
+        typesFromResponse.where((type) => type.kind == Kind.INTERFACE).toList();
+    parseInterface(interfaceTypes);
+    unionTypes =
+        typesFromResponse.where((type) => type.kind == Kind.UNION).toList();
+    parseUnion(unionTypes);
+    objectTypes =
+        typesFromResponse.where((type) => type.kind == Kind.OBJECT).toList();
+    parseObjectType(objectTypes);
 
     ///Concat and return the String value back.
     var result = '';
     var emitter = DartEmitter();
-    unionList.forEach((u) {
-      u.possibleTypes.forEach((i) {
-        classes[i.name] = classes[i.name].rebuild((b) {
-          print('${u.name} = ${classes[i.name].name}');
-          b.implements.add(Reference(u.name));
-        });
-      });
-    });
     classes.forEach((className, classObject) {
       result += DartFormatter().format('${classObject.accept(emitter)}');
     });
@@ -68,7 +75,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   }
 
   /// Get all the types array from the response.
-  getTypesFromResponse(http.Response response) {
+  List<dynamic> getTypesFromResponse(http.Response response) {
     Map<String, dynamic> json = JSON.jsonDecode(response.body);
     Map<String, dynamic> jsonData = json['data'];
     Map<String, dynamic> jsonSchema = jsonData['__schema'];
@@ -76,49 +83,28 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     return types;
   }
 
-  /// Create the root class with the namespace name given in the annotation.
-  parseAllTypes(List<dynamic> types) {
-    Class rootClass = Class((root) {
-      root..name = namespace;
-      types.forEach((t) {
-        TypeA type = TypeA.fromJson(t);
-        setFields(type, root);
+  /// Parse the type @[Kind.OBJECT]
+  parseObjectType(List<TypeA> objectTypes) {
+    objectTypes.forEach((typeObject) {
+      classes.putIfAbsent(typeObject.name, () {
+        return Class((b) => classBuilder(b, typeObject));
       });
     });
-    classes.putIfAbsent(namespace, () {
-      return rootClass;
-    });
   }
 
-  /// Set the fields to the class object
-  setFields(TypeA type, ClassBuilder rootClass) {
-    if (type.kind == Kind.OBJECT) {
-      parseObjectType(type);
-    } else if (type.kind == Kind.ENUM) {
-      parseEnumType(type);
-    } else
-    if (type.kind == Kind.LIST) {} else if (type.kind == Kind.INTERFACE) {
-      parseInterface(type);
-    } else if (type.kind == Kind.UNION) {
-      parseUnion(type);
-    }
-  }
-
-  /// Parse the type @[Kind.OBJECT]
-  parseObjectType(TypeA type) {
-    classes.putIfAbsent(type.name, () {
-//      classBuilder.methods.add(Method((m) => createMethods(classBuilder)));
-      return Class((b) => fieldBuilder(b, type));
-    });
-  }
-
-  fieldBuilder(ClassBuilder builder, TypeA type) {
+  classBuilder(ClassBuilder builder, TypeA type) {
     builder.name = type.name;
+    if (type.description != null) {
+      String documentation = type.description.replaceAll('\n', '\n/// ');
+      builder.docs.add('/// $documentation');
+    }
     if (type.fields != null) {
       type.fields.forEach((field) {
         builder.fields.add(Field((f) {
           f.name = field.name;
           f.type = Reference(findFieldType(field.type));
+          if (field.description != null)
+            f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
         }));
       });
       builder.methods.addAll(createMethods(builder));
@@ -127,6 +113,12 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       type.interfaces.forEach((interface) {
         builder.implements.add(Reference(interface.name));
       });
+    unionTypes.forEach((unionType) {
+      if (unionType.possibleTypes
+          .any((possibleType) => possibleType.name == type.name)) {
+        builder.implements.add(Reference(unionType.name));
+      }
+    });
   }
 
   createMethods(ClassBuilder classBuilder) {
@@ -162,10 +154,10 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       case "bool":
       case "double":
         return "${f.name} : json['${f.name}'] as ${f.type.symbol},";
-      case "DateTime":
-        return "${f.name} : json['${f
-            .name}'] == null ? null : DateTime.parse( json['${f
-            .name}'] as String),";
+      default:
+        if (enumTypes.any((type) => type.name == f.type.symbol)) {
+          return "${f.name} : ${f.type.symbol}Values[json['${f.name}']],";
+        }
     }
 
     if (f.type.symbol.contains('List')) {
@@ -177,6 +169,12 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
         case "double":
           return "${f.name} : (json['${f
               .name}'] as List)?.map((e) => e as $split)?.toList(),";
+        default:
+          if (enumTypes.any((type) => type.name == split)) {
+//            return "${f.name} : (json['roles'] as List)?.map((e) => RoleValues[e])?.toList(),";
+            return "${f.name} : (json['${f
+                .name}'] as List)?.map((e) => ${split}Values[e])?.toList(),";
+          }
       }
 
       return "${f.name} : (json['${f
@@ -205,24 +203,32 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   /// Map the FieldTypes to Dart objects
   mapFieldType(String name) {
     switch (name) {
-      case 'Date':
-        return 'DateTime';
       case 'Boolean':
         return 'bool';
       case 'Int':
         return 'int';
       case 'Float':
         return 'double';
-      case 'ID':
-        return 'int';
+      case 'String':
+        return 'String';
       default:
-        return name;
+        if (enumTypes.any((type) => type.name == name) ||
+            interfaceTypes.any((type) => type.name == name) ||
+            unionTypes.any((type) => type.name == name) ||
+            objectTypes.any((type) => type.name == name))
+          return name;
+        else
+          return 'String';
     }
   }
 
   /// Parse the type @[Kind.ENUM]
-  parseEnumType(TypeA type) {
-    enumString.add(" enum ${type.name} {${_getEnumArray(type)}}");
+  parseEnumType(List<TypeA> enumTypes) {
+    enumTypes.forEach((enumType) {
+      enumString.add(" enum ${enumType.name} {${_getEnumArray(enumType)}}");
+      enumString.add(
+          " final ${enumType.name}Values = {${_getEnumMapValues(enumType)}};");
+    });
   }
 
   /// Convert Enum items to String
@@ -235,59 +241,70 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     return result;
   }
 
-  parseInterface(TypeA type) {
-    classes.putIfAbsent(type.name, () {
-      return Class((b) {
-        b.name = type.name;
-        b.abstract = true;
-        type.fields.forEach((field) {
-          b.fields.add(Field((f) {
-            f.name = field.name;
-            f.type = Reference(findFieldType(field.type));
+  _getEnumMapValues(TypeA type) {
+    String result = '';
+    type.enumValues.forEach((e) {
+      result += '"${e.name}" : ${type.name}.${e.name},';
+    });
+    return result;
+  }
+
+  parseInterface(List<TypeA> interfaceTypes) {
+    interfaceTypes.forEach((interfaceType) {
+      classes.putIfAbsent(interfaceType.name, () {
+        return Class((b) {
+          b.name = interfaceType.name;
+          b.abstract = true;
+          interfaceType.fields.forEach((field) {
+            b.fields.add(Field((f) {
+              f.name = field.name;
+              f.type = Reference(findFieldType(field.type));
+            }));
+          });
+          b.methods.add(Method((m) {
+            String fromJsonBody = "";
+            m.returns = Reference("factory");
+            m.name = '${interfaceType.name}.fromJson';
+            m.requiredParameters.add(Parameter((p) {
+              p.name = "json";
+              p.type = Reference("Map<String,dynamic>");
+            }));
+            fromJsonBody += "switch(json['__typename']){";
+            interfaceType.possibleTypes.forEach((type) {
+              fromJsonBody +=
+              'case "${type.name}" : return ${type.name}.fromJson(json);';
+            });
+            fromJsonBody += "} return null;";
+            m.body = Code(fromJsonBody);
           }));
         });
-        b.methods.add(Method((m) {
-          String fromJsonBody = "";
-          m.returns = Reference("factory");
-          m.name = '${type.name}.fromJson';
-          m.requiredParameters.add(Parameter((p) {
-            p.name = "json";
-            p.type = Reference("Map<String,dynamic>");
-          }));
-          fromJsonBody += "switch(json['__typename']){";
-          type.possibleTypes.forEach((type) {
-            fromJsonBody +=
-            'case "${type.name}" : return ${type.name}.fromJson(json);';
-          });
-          fromJsonBody += "} return null;";
-          m.body = Code(fromJsonBody);
-        }));
       });
     });
   }
 
-  parseUnion(TypeA type) {
-    unionList.add(type);
-    classes.putIfAbsent(type.name, () {
-      return Class((b) {
-        b.name = type.name;
-        b.abstract = true;
-        b.methods.add(Method((m) {
-          String fromJsonBody = "";
-          m.returns = Reference("factory");
-          m.name = '${type.name}.fromJson';
-          m.requiredParameters.add(Parameter((p) {
-            p.name = "json";
-            p.type = Reference("Map<String,dynamic>");
+  parseUnion(List<TypeA> unionTypes) {
+    unionTypes.forEach((unionType) {
+      classes.putIfAbsent(unionType.name, () {
+        return Class((b) {
+          b.name = unionType.name;
+          b.abstract = true;
+          b.methods.add(Method((m) {
+            String fromJsonBody = "";
+            m.returns = Reference("factory");
+            m.name = '${unionType.name}.fromJson';
+            m.requiredParameters.add(Parameter((p) {
+              p.name = "json";
+              p.type = Reference("Map<String,dynamic>");
+            }));
+            fromJsonBody += "switch(json['__typename']){";
+            unionType.possibleTypes.forEach((type) {
+              fromJsonBody +=
+              'case "${type.name}" : return ${type.name}.fromJson(json);';
+            });
+            fromJsonBody += "} return null;";
+            m.body = Code(fromJsonBody);
           }));
-          fromJsonBody += "switch(json['__typename']){";
-          type.possibleTypes.forEach((type) {
-            fromJsonBody +=
-            'case "${type.name}" : return ${type.name}.fromJson(json);';
-          });
-          fromJsonBody += "} return null;";
-          m.body = Code(fromJsonBody);
-        }));
+        });
       });
     });
   }
