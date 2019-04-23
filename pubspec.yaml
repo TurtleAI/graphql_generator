@@ -1,5 +1,5 @@
 name: graphql_generator
-description: A new Flutter package.
+description: A library to generate the model class for GraphQL query.
 version: 0.0.1
 author:
 homepage:

@@ -6,10 +6,11 @@ import 'package:analyzer/dart/element/element.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
-import 'package:graphql_generator/annotation.dart';
-import 'package:graphql_generator/model.dart';
 import 'package:http/http.dart' as http;
 import 'package:source_gen/source_gen.dart';
+
+import 'annotation.dart';
+import 'model.dart';
 
 class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   var url;

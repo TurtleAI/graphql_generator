@@ -13,8 +13,9 @@
 library source_gen_example.builder;
 
 import 'package:build/build.dart';
-import 'package:graphql_generator/graphql_generator.dart';
 import 'package:source_gen/source_gen.dart';
+
+import 'graphql_generator.dart';
 
 Builder generateGraphQLBuilder(BuilderOptions options) =>
     LibraryBuilder(GraphQLGenerator(),generatedExtension: '.graphql.dart');

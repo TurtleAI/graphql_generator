@@ -1,14 +1,48 @@
 # graphql_generator
 
-A new Flutter package.
 
 ## Getting Started
+First of all clone this repository to the project in which you need to apply this plugin.
 
-This project is a starting point for a Dart
-[package](https://flutter.io/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+Then add to the following line to your ```pubspec.yaml```
+```
+dependencies:
+  graphql_generator:
+    path: <LOCATION OF THE CLONED PACKAGE>
+dev_dependencies:
+  build_runner: any
+```
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+#Example
+```
+dependencies:
+  graphql_generator:
+    path: .\graphql-type-gen
+dev_dependencies:
+  build_runner: any
+```
+
+To use the package, annotate a method, variable, or a class as follows (All three fields are mandatory.)
+```
+@GQLGenerator(url: "GRAPHQL URL",
+    headerToken: "BEARER TOKEN",
+    namespace: "NAMESPACE")
+```
+
+#Example
+```
+@GQLGenerator(url: "https://turtle-api.herokuapp.com/graphql",
+    headerToken: "Bearer asdf1234",
+    namespace: "T")
+```
+
+Then open up your terminal in your project root and type the following:
+```
+flutter packages pub run build_runner build
+```
+
+This will generate a file with an extension `.graphql.dart`.
+
+The generated file will contain all the model classes for the GraphQL URL.
+
+* Make sure that there is a proper internet connection.
