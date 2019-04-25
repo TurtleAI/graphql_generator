@@ -2,7 +2,9 @@ library graphql_generator;
 
 import 'dart:convert' as JSON;
 
+import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
@@ -18,6 +20,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   var namespace;
 
   Map<String, Class> classes = {};
+  Map<String, DartType> scalarTypes = {};
   List<String> enumString = [];
 
   List<TypeA> enumTypes = [];
@@ -25,13 +28,20 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   List<TypeA> unionTypes = [];
   List<TypeA> objectTypes = [];
   List<TypeA> inputObjectTypes = [];
+
   @override
   Future<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
     url = annotation.read('url').stringValue;
     headerToken = annotation.read('headerToken').stringValue;
     namespace = annotation.read('namespace').stringValue;
-
+    if (!annotation
+        .read('scalarType')
+        .isNull) {
+      scalarTypes = _convertDartObjectMap(annotation
+          .read('scalarType')
+          .mapValue);
+    }
     var response = await getSchema();
     List<TypeA> typesFromResponse = getTypeList(getTypesFromResponse(response));
     enumTypes =
@@ -43,9 +53,9 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     unionTypes =
         typesFromResponse.where((type) => type.kind == Kind.UNION).toList();
     parseUnion(unionTypes);
-    inputObjectTypes =
-        typesFromResponse.where((type) => type.kind == Kind.INPUT_OBJECT)
-            .toList();
+    inputObjectTypes = typesFromResponse
+        .where((type) => type.kind == Kind.INPUT_OBJECT)
+        .toList();
     parseInputObjectTypes(inputObjectTypes);
     objectTypes =
         typesFromResponse.where((type) => type.kind == Kind.OBJECT).toList();
@@ -59,6 +69,15 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     });
     enumString.forEach((enumString) {
       result += DartFormatter().format(enumString);
+    });
+    return result;
+  }
+
+  _convertDartObjectMap(Map<DartObject, DartObject> dartMap) {
+    Map<String, DartType> result = {};
+    dartMap.keys.forEach((keys) {
+      result.putIfAbsent(
+          keys.toStringValue(), () => dartMap[keys].toTypeValue());
     });
     return result;
   }
@@ -160,8 +179,8 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       case "double":
         return "${f.name} : json['${f.name}'] as ${f.type.symbol},";
       default:
-        if (enumTypes.any((type) =>
-        '$namespace${type.name}' == f.type.symbol)) {
+        if (enumTypes
+            .any((type) => '$namespace${type.name}' == f.type.symbol)) {
           return "${f.name} : ${f.type.symbol}Values[json['${f.name}']],";
         }
     }
@@ -187,6 +206,9 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
           '<')[1].split(
           '>')[0]}.fromJson(e as Map<String,dynamic>))?.toList(),";
     } else {
+//      if(scalarTypes !=null && scalarTypes[f.type.symbol] != null){
+//
+//      }
       return "${f.name} : json['${f.name}'] == null ? null : ${f.type
           .symbol}.fromJson(json['${f.name}'] as Map<String,dynamic>),";
     }
@@ -222,16 +244,17 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
             unionTypes.any((type) => type.name == name) ||
             objectTypes.any((type) => type.name == name))
           return '$namespace$name';
-        else
-          return 'String';
+        else if (scalarTypes != null && scalarTypes.containsKey(name))
+          return scalarTypes[name].toString();
+        return 'String';
     }
   }
 
   /// Parse the type @[Kind.ENUM]
   parseEnumType(List<TypeA> enumTypes) {
     enumTypes.forEach((enumType) {
-      enumString.add(
-          " enum $namespace${enumType.name} {${_getEnumArray(enumType)}}");
+      enumString
+          .add(" enum $namespace${enumType.name} {${_getEnumArray(enumType)}}");
       enumString.add(
           " final $namespace${enumType.name}Values = {${_getEnumMapValues(
               enumType)}};");
