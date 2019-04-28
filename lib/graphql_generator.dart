@@ -38,9 +38,10 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     if (!annotation
         .read('scalarType')
         .isNull) {
-      scalarTypes = _convertDartObjectMap(annotation
-          .read('scalarType')
-          .mapValue);
+      scalarTypes =
+          _convertDartObjectMap(annotation
+              .read('scalarType')
+              .mapValue);
     }
     var response = await getSchema();
     List<TypeA> typesFromResponse = getTypeList(getTypesFromResponse(response));
@@ -122,9 +123,13 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       String documentation = type.description.replaceAll('\n', '\n/// ');
       builder.docs.add('/// $documentation');
     }
+
+    ///Adding fields to the class
     if (type.fields != null) {
       type.fields.forEach((field) {
         builder.fields.add(Field((f) {
+          if (field.isDeprecated) f.annotations.add(Reference(
+              "Deprecated('${field.deprecationReason.replaceAll('\n', '')}')"));
           f.name = field.name;
           f.type = Reference(findFieldType(field.type));
           if (field.description != null)
@@ -133,6 +138,16 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       });
       builder.methods.addAll(createMethods(builder));
     }
+
+    ///Build constructor
+    builder.constructors.add(Constructor((c) {
+      builder.fields.build().forEach((f) {
+        c.optionalParameters.add(Parameter((p) {
+          p.name = "this.${f.name}";
+          p.named = true;
+        }));
+      });
+    }));
     if (type.interfaces != null)
       type.interfaces.forEach((interface) {
         builder.implements.add(Reference('$namespace${interface.name}'));
@@ -146,9 +161,6 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   }
 
   createMethods(ClassBuilder classBuilder) {
-    MethodBuilder constructorBuilder = new MethodBuilder();
-    constructorBuilder..name = classBuilder.name;
-
     MethodBuilder fromJsonBuilder = new MethodBuilder();
     String fromJsonBody = "return ${classBuilder.name} (";
     fromJsonBuilder.returns = Reference("factory");
@@ -157,18 +169,12 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       p.name = "json";
       p.type = Reference("Map<String,dynamic>");
     }));
-
     classBuilder.fields.build().forEach((f) {
-      constructorBuilder.optionalParameters.add(Parameter((p) {
-        p.name = "this.${f.name}";
-        p.named = true;
-      }));
       fromJsonBody += createFromJSONString(f);
     });
     fromJsonBody += ");";
-
     fromJsonBuilder.body = Code(fromJsonBody);
-    return [constructorBuilder.build(), fromJsonBuilder.build()];
+    return [fromJsonBuilder.build()];
   }
 
   String createFromJSONString(Field f) {
@@ -206,9 +212,6 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
           '<')[1].split(
           '>')[0]}.fromJson(e as Map<String,dynamic>))?.toList(),";
     } else {
-//      if(scalarTypes !=null && scalarTypes[f.type.symbol] != null){
-//
-//      }
       return "${f.name} : json['${f.name}'] == null ? null : ${f.type
           .symbol}.fromJson(json['${f.name}'] as Map<String,dynamic>),";
     }
@@ -366,6 +369,16 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       });
       builder.methods.addAll(createMethods(builder));
     }
+
+    builder.constructors.add(Constructor((c) {
+      builder.fields.build().forEach((f) {
+        c.optionalParameters.add(Parameter((p) {
+          p.name = "this.${f.name}";
+          p.named = true;
+        }));
+      });
+    }));
+
     if (type.interfaces != null)
       type.interfaces.forEach((interface) {
         builder.implements.add(Reference('$namespace${interface.name}'));

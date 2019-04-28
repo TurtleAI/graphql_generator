@@ -22,18 +22,20 @@ dev_dependencies:
   build_runner: any
 ```
 
-To use the package, annotate a method, variable, or a class as follows (All three fields are mandatory.)
+To use the package, annotate a method, variable, or a class as follows
 ```
 @GQLGenerator(url: "GRAPHQL URL",
     headerToken: "BEARER TOKEN",
-    namespace: "NAMESPACE")
+    namespace: "NAMESPACE",
+    scalarType: Map<String,Type>)
 ```
 
 #Example
 ```
 @GQLGenerator(url: "https://turtle-api.herokuapp.com/graphql",
     headerToken: "Bearer asdf1234",
-    namespace: "T")
+    namespace: "T",
+    scalarType: {"Duration": bool, "ID": int})
 ```
 
 Then open up your terminal in your project root and type the following:
