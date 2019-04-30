@@ -20,7 +20,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   var namespace;
 
   Map<String, Class> classes = {};
-  Map<String, DartType> scalarTypes = {};
+  Map<String, DartType> types = {};
   List<String> enumString = [];
 
   List<TypeA> enumTypes = [];
@@ -36,12 +36,11 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     headerToken = annotation.read('headerToken').stringValue;
     namespace = annotation.read('namespace').stringValue;
     if (!annotation
-        .read('scalarType')
+        .read('types')
         .isNull) {
-      scalarTypes =
-          _convertDartObjectMap(annotation
-              .read('scalarType')
-              .mapValue);
+      types = _convertDartObjectMap(annotation
+          .read('types')
+          .mapValue);
     }
     var response = await getSchema();
     List<TypeA> typesFromResponse = getTypeList(getTypesFromResponse(response));
@@ -64,10 +63,9 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
 
     ///Concat and return the String value back.
     var result = '';
-    var emitter = DartEmitter();
-    classes.forEach((className, classObject) {
-      result += DartFormatter().format('${classObject.accept(emitter)}');
-    });
+    var emitter = DartEmitter(Allocator());
+    Library library = new Library((lib) => lib.body.addAll(classes.values));
+    result += DartFormatter().format('${library.accept(emitter)}');
     enumString.forEach((enumString) {
       result += DartFormatter().format(enumString);
     });
@@ -128,8 +126,10 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     if (type.fields != null) {
       type.fields.forEach((field) {
         builder.fields.add(Field((f) {
-          if (field.isDeprecated) f.annotations.add(Reference(
-              "Deprecated('${field.deprecationReason.replaceAll('\n', '')}')"));
+          if (field.isDeprecated)
+            f.annotations.add(Reference(
+                "Deprecated('${field.deprecationReason.replaceAll(
+                    '\n', '')}')"));
           f.name = field.name;
           f.type = Reference(findFieldType(field.type));
           if (field.description != null)
@@ -232,6 +232,8 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
 
   /// Map the FieldTypes to Dart objects
   mapFieldType(String name) {
+    if (types.containsKey(name)) return types[name].toString();
+
     switch (name) {
       case 'Boolean':
         return 'bool';
@@ -247,9 +249,8 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
             unionTypes.any((type) => type.name == name) ||
             objectTypes.any((type) => type.name == name))
           return '$namespace$name';
-        else if (scalarTypes != null && scalarTypes.containsKey(name))
-          return scalarTypes[name].toString();
-        return 'String';
+        else
+          return 'String';
     }
   }
 
@@ -353,11 +354,13 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   }
 
   inputObjectClassBuilder(ClassBuilder builder, TypeA type) {
+    ConstructorBuilder constructorBuilder = new ConstructorBuilder();
     builder.name = '$namespace${type.name}';
     if (type.description != null) {
       String documentation = type.description.replaceAll('\n', '\n/// ');
       builder.docs.add('/// $documentation');
     }
+
     if (type.inputFields != null) {
       type.inputFields.forEach((field) {
         builder.fields.add(Field((f) {
@@ -365,19 +368,19 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
           f.type = Reference(findFieldType(field.type));
           if (field.description != null)
             f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
+          constructorBuilder.optionalParameters.add(new Parameter((p) {
+            p.name = "${f.name}";
+            p.named = true;
+            p.toThis = true;
+            if (field.type.kind == Kind.NON_NULL)
+              p.annotations.add(refer('required', 'package:meta/meta.dart'));
+          }));
         }));
       });
       builder.methods.addAll(createMethods(builder));
     }
 
-    builder.constructors.add(Constructor((c) {
-      builder.fields.build().forEach((f) {
-        c.optionalParameters.add(Parameter((p) {
-          p.name = "this.${f.name}";
-          p.named = true;
-        }));
-      });
-    }));
+    builder.constructors.add(constructorBuilder.build());
 
     if (type.interfaces != null)
       type.interfaces.forEach((interface) {
