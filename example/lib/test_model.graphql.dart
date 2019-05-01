@@ -4,6 +4,8 @@
 // GraphQLGenerator
 // **************************************************************************
 
+import 'package:meta/meta.dart';
+
 abstract class TTurtleEvent {
   int id;
 
@@ -152,7 +154,7 @@ class TProfileTimezoneSetInput {
 }
 
 class TCardUnassignInput {
-  TCardUnassignInput({this.cardId});
+  TCardUnassignInput({@required this.cardId});
 
   String cardId;
 
@@ -179,7 +181,7 @@ class TKv {
 }
 
 class TCardTagsSetInput {
-  TCardTagsSetInput({this.cardId, this.tagGroup, this.tags});
+  TCardTagsSetInput({@required this.cardId, this.tagGroup, this.tags});
 
   String cardId;
 
@@ -197,7 +199,7 @@ class TCardTagsSetInput {
 }
 
 class TCardAddMemberInput {
-  TCardAddMemberInput({this.cardId, this.memberId});
+  TCardAddMemberInput({@required this.cardId, @required this.memberId});
 
   String cardId;
 
@@ -224,7 +226,7 @@ class TFeedDeleteMessageInput {
 }
 
 class TUserSetRolesInput {
-  TUserSetRolesInput({this.roles, this.userId});
+  TUserSetRolesInput({this.roles, @required this.userId});
 
   List<TRole> roles;
 
@@ -239,7 +241,7 @@ class TUserSetRolesInput {
 }
 
 class TCardDueDateUnsetInput {
-  TCardDueDateUnsetInput({this.cardId});
+  TCardDueDateUnsetInput({@required this.cardId});
 
   String cardId;
 
@@ -263,7 +265,7 @@ class TFeedMarkAsReadInput {
 }
 
 class TCardEstimateSetInput {
-  TCardEstimateSetInput({this.cardId, this.estimate});
+  TCardEstimateSetInput({@required this.cardId, @required this.estimate});
 
   String cardId;
 
@@ -293,7 +295,7 @@ class TFeedEditMessageInput {
 }
 
 class TCardInviteUserInput {
-  TCardInviteUserInput({this.cardId, this.email});
+  TCardInviteUserInput({this.cardId, @required this.email});
 
   String cardId;
 
@@ -308,7 +310,7 @@ class TCardInviteUserInput {
 }
 
 class TCardAssignInput {
-  TCardAssignInput({this.assigneeId, this.cardId});
+  TCardAssignInput({@required this.assigneeId, @required this.cardId});
 
   String assigneeId;
 
@@ -323,7 +325,7 @@ class TCardAssignInput {
 }
 
 class TFeedPostMessageInput {
-  TFeedPostMessageInput({this.feedId, this.messageBody});
+  TFeedPostMessageInput({@required this.feedId, @required this.messageBody});
 
   String feedId;
 
@@ -338,8 +340,10 @@ class TFeedPostMessageInput {
 }
 
 class TProjectAddBalanceWithStripeInput {
-  TProjectAddBalanceWithStripeInput(
-      {this.amount, this.cardToken, this.creditCardId, this.projectId});
+  TProjectAddBalanceWithStripeInput({@required this.amount,
+    this.cardToken,
+    this.creditCardId,
+    @required this.projectId});
 
   String amount;
 
@@ -361,7 +365,7 @@ class TProjectAddBalanceWithStripeInput {
 }
 
 class TCardUncompleteInput {
-  TCardUncompleteInput({this.cardId});
+  TCardUncompleteInput({@required this.cardId});
 
   String cardId;
 
@@ -373,9 +377,9 @@ class TCardUncompleteInput {
 }
 
 class TTimeEntryCreateInput {
-  TTimeEntryCreateInput({this.cardId,
-    this.entryDate,
-    this.entryDuration,
+  TTimeEntryCreateInput({@required this.cardId,
+    @required this.entryDate,
+    @required this.entryDuration,
     this.entryId,
     this.entryMemo});
 
@@ -416,7 +420,8 @@ class TAddReactionInput {
 }
 
 class TCardMoveInput {
-  TCardMoveInput({this.afterId, this.beforeId, this.cardId, this.toId});
+  TCardMoveInput(
+      {this.afterId, this.beforeId, @required this.cardId, this.toId});
 
   String afterId;
 
@@ -452,7 +457,7 @@ class TRemoveReactionInput {
 }
 
 class TCardDeleteInput {
-  TCardDeleteInput({this.cardId});
+  TCardDeleteInput({@required this.cardId});
 
   String cardId;
 
@@ -464,7 +469,9 @@ class TCardDeleteInput {
 }
 
 class TCardMetaSetInput {
-  TCardMetaSetInput({this.cardId, this.metaKey, this.metaValue});
+  TCardMetaSetInput({@required this.cardId,
+    @required this.metaKey,
+    @required this.metaValue});
 
   String cardId;
 
@@ -482,8 +489,10 @@ class TCardMetaSetInput {
 }
 
 class TTimeEntryEditInput {
-  TTimeEntryEditInput(
-      {this.entryDate, this.entryDuration, this.entryId, this.entryMemo});
+  TTimeEntryEditInput({this.entryDate,
+    this.entryDuration,
+    @required this.entryId,
+    this.entryMemo});
 
   String entryDate;
 
@@ -508,7 +517,7 @@ class TCardCreateInput {
     this.assigneeId,
     this.beforeId,
     this.cardId,
-    this.cardName,
+    @required this.cardName,
     this.meta,
     this.parentId,
     this.quickAdd});
@@ -544,7 +553,7 @@ class TCardCreateInput {
 }
 
 class TAccountOpenInput {
-  TAccountOpenInput({this.accountId});
+  TAccountOpenInput({@required this.accountId});
 
   String accountId;
 
@@ -556,7 +565,7 @@ class TAccountOpenInput {
 }
 
 class TCardBudgetUnsetInput {
-  TCardBudgetUnsetInput({this.cardId});
+  TCardBudgetUnsetInput({@required this.cardId});
 
   String cardId;
 
@@ -568,7 +577,7 @@ class TCardBudgetUnsetInput {
 }
 
 class TCardEstimateUnsetInput {
-  TCardEstimateUnsetInput({this.cardId});
+  TCardEstimateUnsetInput({@required this.cardId});
 
   String cardId;
 
@@ -580,7 +589,8 @@ class TCardEstimateUnsetInput {
 }
 
 class TCardLinkDeleteInput {
-  TCardLinkDeleteInput({this.fromId, this.linkType, this.toId});
+  TCardLinkDeleteInput(
+      {@required this.fromId, @required this.linkType, @required this.toId});
 
   String fromId;
 
@@ -598,7 +608,7 @@ class TCardLinkDeleteInput {
 }
 
 class TCardCompleteInput {
-  TCardCompleteInput({this.cardId});
+  TCardCompleteInput({@required this.cardId});
 
   String cardId;
 
@@ -610,7 +620,8 @@ class TCardCompleteInput {
 }
 
 class TCardBudgetIncreaseInput {
-  TCardBudgetIncreaseInput({this.budgetDuration, this.cardId});
+  TCardBudgetIncreaseInput(
+      {@required this.budgetDuration, @required this.cardId});
 
   bool budgetDuration;
 
@@ -626,10 +637,10 @@ class TCardBudgetIncreaseInput {
 
 class TContractStartInput {
   TContractStartInput({this.contractId,
-    this.contractorHourlyRate,
-    this.contractorId,
-    this.customerHourlyRate,
-    this.projectId});
+    @required this.contractorHourlyRate,
+    @required this.contractorId,
+    @required this.customerHourlyRate,
+    @required this.projectId});
 
   String contractId;
 
@@ -653,7 +664,7 @@ class TContractStartInput {
 }
 
 class TCardDueDateSetInput {
-  TCardDueDateSetInput({this.cardId, this.dueDate});
+  TCardDueDateSetInput({@required this.cardId, @required this.dueDate});
 
   String cardId;
 
@@ -668,10 +679,10 @@ class TCardDueDateSetInput {
 }
 
 class TUpdateAvailabilityInput {
-  TUpdateAvailabilityInput({this.endDate,
+  TUpdateAvailabilityInput({@required this.endDate,
     this.projectId,
-    this.startDate,
-    this.timePerWeek,
+    @required this.startDate,
+    @required this.timePerWeek,
     this.userId});
 
   String endDate;
@@ -696,7 +707,8 @@ class TUpdateAvailabilityInput {
 }
 
 class TCardBudgetDecreaseInput {
-  TCardBudgetDecreaseInput({this.budgetDuration, this.cardId});
+  TCardBudgetDecreaseInput(
+      {@required this.budgetDuration, @required this.cardId});
 
   bool budgetDuration;
 
@@ -711,7 +723,8 @@ class TCardBudgetDecreaseInput {
 }
 
 class TCardLinkCreateInput {
-  TCardLinkCreateInput({this.fromId, this.linkType, this.toId});
+  TCardLinkCreateInput(
+      {@required this.fromId, @required this.linkType, @required this.toId});
 
   String fromId;
 
@@ -729,7 +742,7 @@ class TCardLinkCreateInput {
 }
 
 class TCardRenameInput {
-  TCardRenameInput({this.cardId, this.cardName});
+  TCardRenameInput({@required this.cardId, @required this.cardName});
 
   String cardId;
 
@@ -744,7 +757,7 @@ class TCardRenameInput {
 }
 
 class TUserSetSkillsInput {
-  TUserSetSkillsInput({this.skills, this.userId});
+  TUserSetSkillsInput({this.skills, @required this.userId});
 
   List<String> skills;
 
@@ -759,7 +772,7 @@ class TUserSetSkillsInput {
 }
 
 class TCardUndeleteInput {
-  TCardUndeleteInput({this.cardId});
+  TCardUndeleteInput({@required this.cardId});
 
   String cardId;
 
@@ -771,7 +784,7 @@ class TCardUndeleteInput {
 }
 
 class TContractEndInput {
-  TContractEndInput({this.contractId});
+  TContractEndInput({@required this.contractId});
 
   String contractId;
 
@@ -783,13 +796,13 @@ class TContractEndInput {
 }
 
 class TRecordPayoutInput {
-  TRecordPayoutInput({this.amount,
-    this.date,
-    this.fee,
+  TRecordPayoutInput({@required this.amount,
+    @required this.date,
+    @required this.fee,
     this.memo,
-    this.method,
+    @required this.method,
     this.payoutId,
-    this.userId});
+    @required this.userId});
 
   String amount;
 
@@ -819,7 +832,7 @@ class TRecordPayoutInput {
 }
 
 class TTimeEntryDeleteInput {
-  TTimeEntryDeleteInput({this.entryId});
+  TTimeEntryDeleteInput({@required this.entryId});
 
   String entryId;
 
@@ -831,7 +844,7 @@ class TTimeEntryDeleteInput {
 }
 
 class TCardRemoveMemberInput {
-  TCardRemoveMemberInput({this.cardId, this.memberId});
+  TCardRemoveMemberInput({@required this.cardId, @required this.memberId});
 
   String cardId;
 
@@ -846,8 +859,10 @@ class TCardRemoveMemberInput {
 }
 
 class TAccountTransferInput {
-  TAccountTransferInput(
-      {this.amount, this.destAccount, this.memo, this.sourceAccount});
+  TAccountTransferInput({@required this.amount,
+    @required this.destAccount,
+    this.memo,
+    @required this.sourceAccount});
 
   String amount;
 
@@ -4812,7 +4827,6 @@ enum TAccountType {
   TURTLE,
   USER,
 }
-
 final TAccountTypeValues = {
   "EXTERNAL": TAccountType.EXTERNAL,
   "PROJECT": TAccountType.PROJECT,
@@ -4825,7 +4839,6 @@ enum TPermission {
   PROJECT_ACCOUNTING_VIEW,
   PROJECT_MEMBERS_MANAGE,
 }
-
 final TPermissionValues = {
   "ADMIN_VIEW": TPermission.ADMIN_VIEW,
   "MY_ACCOUNTING_VIEW": TPermission.MY_ACCOUNTING_VIEW,
@@ -4837,7 +4850,6 @@ enum TFeedSubscriptionStatus {
   FOLLOWING,
   MUTED,
 }
-
 final TFeedSubscriptionStatusValues = {
   "DELETED": TFeedSubscriptionStatus.DELETED,
   "FOLLOWING": TFeedSubscriptionStatus.FOLLOWING,
