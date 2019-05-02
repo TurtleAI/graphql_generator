@@ -19,6 +19,8 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   var headerToken;
   var namespace;
 
+  String mutationType = "";
+
   Map<String, Class> classes = {};
   Map<String, DartType> types = {};
   List<String> enumString = [];
@@ -102,6 +104,8 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     Map<String, dynamic> json = JSON.jsonDecode(response.body);
     Map<String, dynamic> jsonData = json['data'];
     Map<String, dynamic> jsonSchema = jsonData['__schema'];
+    mutationType = jsonSchema['mutationType']['name'] ??
+        jsonSchema['mutationType']['name'];
     List<dynamic> types = jsonSchema["types"];
     return types;
   }
@@ -109,9 +113,69 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   /// Parse the type @[Kind.OBJECT]
   parseObjectType(List<TypeA> objectTypes) {
     objectTypes.forEach((typeObject) {
-      classes.putIfAbsent(typeObject.name, () {
-        return Class((b) => classBuilder(b, typeObject));
+      if (typeObject.name.compareTo(mutationType) == 0)
+        classes.putIfAbsent(typeObject.name, () {
+          return Class((b) => classBuilderMutation(b, typeObject));
+        });
+      else
+        classes.putIfAbsent(typeObject.name, () {
+          return Class((b) => classBuilder(b, typeObject));
+        });
+    });
+  }
+
+  classBuilderMutation(ClassBuilder builder, TypeA type) {
+    builder.name = '$namespace${type.name}';
+    if (type.description != null) {
+      String documentation = type.description.replaceAll('\n', '\n/// ');
+      builder.docs.add('/// $documentation');
+    }
+
+    ///Adding fields to the class
+    if (type.fields != null) {
+      type.fields.forEach((field) {
+        builder.fields.add(Field((f) {
+          f.name = field.name;
+          f.type = Reference(findFieldType(field.type));
+          if (field.isDeprecated)
+            f.annotations.add(Reference(
+                "Deprecated('${field.deprecationReason.replaceAll(
+                    '\n', '')}')"));
+          if (field.description != null)
+            f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
+          builder.methods.add(Method((m) {
+            m.name = "t" + field.name;
+            field.args.forEach((f) {
+              m.requiredParameters.add(Parameter((p) {
+                p.name = f.name;
+                p.type = Reference(findFieldType(f.type));
+              }));
+              m.body = Code("");
+            });
+          }));
+        }));
       });
+      builder.methods.addAll(createMethods(builder));
+    }
+
+    ///Build constructor
+    builder.constructors.add(Constructor((c) {
+      builder.fields.build().forEach((f) {
+        c.optionalParameters.add(Parameter((p) {
+          p.name = "this.${f.name}";
+          p.named = true;
+        }));
+      });
+    }));
+    if (type.interfaces != null)
+      type.interfaces.forEach((interface) {
+        builder.implements.add(Reference('$namespace${interface.name}'));
+      });
+    unionTypes.forEach((unionType) {
+      if (unionType.possibleTypes
+          .any((possibleType) => possibleType.name == type.name)) {
+        builder.implements.add(Reference('$namespace${unionType.name}'));
+      }
     });
   }
 
@@ -247,7 +311,8 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
         if (enumTypes.any((type) => type.name == name) ||
             interfaceTypes.any((type) => type.name == name) ||
             unionTypes.any((type) => type.name == name) ||
-            objectTypes.any((type) => type.name == name))
+            objectTypes.any((type) => type.name == name) ||
+            inputObjectTypes.any((type) => type.name == name))
           return '$namespace$name';
         else
           return 'String';
