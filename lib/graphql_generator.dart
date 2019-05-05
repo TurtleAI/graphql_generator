@@ -133,6 +133,8 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
 
     ///Adding fields to the class
     if (type.fields != null) {
+      ClassBuilder mutationClassBuilder = new ClassBuilder();
+      mutationClassBuilder.name = 'TMutation';
       type.fields.forEach((field) {
         builder.fields.add(Field((f) {
           f.name = field.name;
@@ -143,18 +145,26 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
                     '\n', '')}')"));
           if (field.description != null)
             f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
-          builder.methods.add(Method((m) {
-            m.name = "t" + field.name;
+          mutationClassBuilder.methods.add(Method((m) {
+            m.modifier = MethodModifier.async;
+            m.name = field.name;
+//            m.returns = Reference('QueryResult','package:graphql_flutter/graphql_flutter.dart');
             field.args.forEach((f) {
               m.requiredParameters.add(Parameter((p) {
                 p.name = f.name;
                 p.type = Reference(findFieldType(f.type));
               }));
-              m.body = Code("");
+              m.body = Code(
+                  ' return await query(document:"""\n\tmutation ${field
+                      .name}(\\\$${f.name}: ${findFieldType(f.type)}! )'
+                      '{\n\t${field.name}(${f.name}:\\\$${f
+                      .name}){FIELDS}\n\t}\n\t""",variables:{\n\t"${f.name}":${f
+                      .name}\n\t});');
             });
           }));
         }));
       });
+      classes.putIfAbsent('TMutation', () => mutationClassBuilder.build());
       builder.methods.addAll(createMethods(builder));
     }
 
@@ -425,7 +435,6 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       String documentation = type.description.replaceAll('\n', '\n/// ');
       builder.docs.add('/// $documentation');
     }
-
     if (type.inputFields != null) {
       type.inputFields.forEach((field) {
         builder.fields.add(Field((f) {

@@ -1993,6 +1993,376 @@ class TCardAssigned implements TTurtleEvent {
   }
 }
 
+class TMutation {
+  sendLowBalanceReminder(TSendLowBalanceReminderInput input) async {
+    return await query(document: """
+	mutation sendLowBalanceReminder(\$input: TSendLowBalanceReminderInput! ){
+	sendLowBalanceReminder(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  profileNameSet(TProfileNameSetInput input) async {
+    return await query(document: """
+	mutation profileNameSet(\$input: TProfileNameSetInput! ){
+	profileNameSet(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  accountOpen(TAccountOpenInput input) async {
+    return await query(document: """
+	mutation accountOpen(\$input: TAccountOpenInput! ){
+	accountOpen(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  profileTimezoneSet(TProfileTimezoneSetInput input) async {
+    return await query(document: """
+	mutation profileTimezoneSet(\$input: TProfileTimezoneSetInput! ){
+	profileTimezoneSet(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardRemoveMember(TCardRemoveMemberInput input) async {
+    return await query(document: """
+	mutation cardRemoveMember(\$input: TCardRemoveMemberInput! ){
+	cardRemoveMember(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  timeEntryDelete(TTimeEntryDeleteInput input) async {
+    return await query(document: """
+	mutation timeEntryDelete(\$input: TTimeEntryDeleteInput! ){
+	timeEntryDelete(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardBudgetUnset(TCardBudgetUnsetInput input) async {
+    return await query(document: """
+	mutation cardBudgetUnset(\$input: TCardBudgetUnsetInput! ){
+	cardBudgetUnset(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardUndelete(TCardUndeleteInput input) async {
+    return await query(document: """
+	mutation cardUndelete(\$input: TCardUndeleteInput! ){
+	cardUndelete(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  userSetSkills(TUserSetSkillsInput input) async {
+    return await query(document: """
+	mutation userSetSkills(\$input: TUserSetSkillsInput! ){
+	userSetSkills(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardRename(TCardRenameInput input) async {
+    return await query(document: """
+	mutation cardRename(\$input: TCardRenameInput! ){
+	cardRename(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardDelete(TCardDeleteInput input) async {
+    return await query(document: """
+	mutation cardDelete(\$input: TCardDeleteInput! ){
+	cardDelete(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardLinkCreate(TCardLinkCreateInput input) async {
+    return await query(document: """
+	mutation cardLinkCreate(\$input: TCardLinkCreateInput! ){
+	cardLinkCreate(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardBudgetDecrease(TCardBudgetDecreaseInput input) async {
+    return await query(document: """
+	mutation cardBudgetDecrease(\$input: TCardBudgetDecreaseInput! ){
+	cardBudgetDecrease(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  feedMarkAsRead(TFeedMarkAsReadInput input) async {
+    return await query(document: """
+	mutation feedMarkAsRead(\$input: TFeedMarkAsReadInput! ){
+	feedMarkAsRead(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  updateAvailability(TUpdateAvailabilityInput input) async {
+    return await query(document: """
+	mutation updateAvailability(\$input: TUpdateAvailabilityInput! ){
+	updateAvailability(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardDueDateSet(TCardDueDateSetInput input) async {
+    return await query(document: """
+	mutation cardDueDateSet(\$input: TCardDueDateSetInput! ){
+	cardDueDateSet(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  recordPayout(TRecordPayoutInput input) async {
+    return await query(document: """
+	mutation recordPayout(\$input: TRecordPayoutInput! ){
+	recordPayout(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  contractStart(TContractStartInput input) async {
+    return await query(document: """
+	mutation contractStart(\$input: TContractStartInput! ){
+	contractStart(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardBudgetIncrease(TCardBudgetIncreaseInput input) async {
+    return await query(document: """
+	mutation cardBudgetIncrease(\$input: TCardBudgetIncreaseInput! ){
+	cardBudgetIncrease(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  feedPostMessage(TFeedPostMessageInput input) async {
+    return await query(document: """
+	mutation feedPostMessage(\$input: TFeedPostMessageInput! ){
+	feedPostMessage(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardLinkDelete(TCardLinkDeleteInput input) async {
+    return await query(document: """
+	mutation cardLinkDelete(\$input: TCardLinkDeleteInput! ){
+	cardLinkDelete(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  linkOrCreateHubSpotContact(String userId) async {
+    return await query(document: """
+	mutation linkOrCreateHubSpotContact(\$userId: String! ){
+	linkOrCreateHubSpotContact(userId:\$userId){FIELDS}
+	}
+	""", variables: {"userId": userId});
+  }
+
+  cardCreate(TCardCreateInput input) async {
+    return await query(document: """
+	mutation cardCreate(\$input: TCardCreateInput! ){
+	cardCreate(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  feedEditMessage(TFeedEditMessageInput input) async {
+    return await query(document: """
+	mutation feedEditMessage(\$input: TFeedEditMessageInput! ){
+	feedEditMessage(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  timeEntryEdit(TTimeEntryEditInput input) async {
+    return await query(document: """
+	mutation timeEntryEdit(\$input: TTimeEntryEditInput! ){
+	timeEntryEdit(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardMetaSet(TCardMetaSetInput input) async {
+    return await query(document: """
+	mutation cardMetaSet(\$input: TCardMetaSetInput! ){
+	cardMetaSet(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  feedDeleteMessage(TFeedDeleteMessageInput input) async {
+    return await query(document: """
+	mutation feedDeleteMessage(\$input: TFeedDeleteMessageInput! ){
+	feedDeleteMessage(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardMove(TCardMoveInput input) async {
+    return await query(document: """
+	mutation cardMove(\$input: TCardMoveInput! ){
+	cardMove(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  contractEnd(TContractEndInput input) async {
+    return await query(document: """
+	mutation contractEnd(\$input: TContractEndInput! ){
+	contractEnd(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  timeEntryCreate(TTimeEntryCreateInput input) async {
+    return await query(document: """
+	mutation timeEntryCreate(\$input: TTimeEntryCreateInput! ){
+	timeEntryCreate(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  removeReaction(TRemoveReactionInput input) async {
+    return await query(document: """
+	mutation removeReaction(\$input: TRemoveReactionInput! ){
+	removeReaction(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardComplete(TCardCompleteInput input) async {
+    return await query(document: """
+	mutation cardComplete(\$input: TCardCompleteInput! ){
+	cardComplete(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardDueDateUnset(TCardDueDateUnsetInput input) async {
+    return await query(document: """
+	mutation cardDueDateUnset(\$input: TCardDueDateUnsetInput! ){
+	cardDueDateUnset(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardUncomplete(TCardUncompleteInput input) async {
+    return await query(document: """
+	mutation cardUncomplete(\$input: TCardUncompleteInput! ){
+	cardUncomplete(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  projectAddBalanceWithStripe(TProjectAddBalanceWithStripeInput input) async {
+    return await query(document: """
+	mutation projectAddBalanceWithStripe(\$input: TProjectAddBalanceWithStripeInput! ){
+	projectAddBalanceWithStripe(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  addReaction(TAddReactionInput input) async {
+    return await query(document: """
+	mutation addReaction(\$input: TAddReactionInput! ){
+	addReaction(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  accountTransfer(TAccountTransferInput input) async {
+    return await query(document: """
+	mutation accountTransfer(\$input: TAccountTransferInput! ){
+	accountTransfer(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardAssign(TCardAssignInput input) async {
+    return await query(document: """
+	mutation cardAssign(\$input: TCardAssignInput! ){
+	cardAssign(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardInviteUser(TCardInviteUserInput input) async {
+    return await query(document: """
+	mutation cardInviteUser(\$input: TCardInviteUserInput! ){
+	cardInviteUser(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardEstimateSet(TCardEstimateSetInput input) async {
+    return await query(document: """
+	mutation cardEstimateSet(\$input: TCardEstimateSetInput! ){
+	cardEstimateSet(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  userSetRoles(TUserSetRolesInput input) async {
+    return await query(document: """
+	mutation userSetRoles(\$input: TUserSetRolesInput! ){
+	userSetRoles(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardEstimateUnset(TCardEstimateUnsetInput input) async {
+    return await query(document: """
+	mutation cardEstimateUnset(\$input: TCardEstimateUnsetInput! ){
+	cardEstimateUnset(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardAddMember(TCardAddMemberInput input) async {
+    return await query(document: """
+	mutation cardAddMember(\$input: TCardAddMemberInput! ){
+	cardAddMember(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  cardTagsSet(TCardTagsSetInput input) async {
+    return await query(document: """
+	mutation cardTagsSet(\$input: TCardTagsSetInput! ){
+	cardTagsSet(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+
+  meetingRoomJoin(String projectId) async {
+    return await query(document: """
+	mutation meetingRoomJoin(\$projectId: String! ){
+	meetingRoomJoin(projectId:\$projectId){FIELDS}
+	}
+	""", variables: {"projectId": projectId});
+  }
+
+  cardUnassign(TCardUnassignInput input) async {
+    return await query(document: """
+	mutation cardUnassign(\$input: TCardUnassignInput! ){
+	cardUnassign(input:\$input){FIELDS}
+	}
+	""", variables: {"input": input});
+  }
+}
+
 class TRootMutationType {
   TRootMutationType({this.sendLowBalanceReminder,
     this.profileNameSet,
@@ -2160,98 +2530,6 @@ class TRootMutationType {
   TTwilioAuth meetingRoomJoin;
 
   TCard cardUnassign;
-
-  tsendLowBalanceReminder(TSendLowBalanceReminderInput input) {}
-
-  tprofileNameSet(TProfileNameSetInput input) {}
-
-  taccountOpen(TAccountOpenInput input) {}
-
-  tprofileTimezoneSet(TProfileTimezoneSetInput input) {}
-
-  tcardRemoveMember(TCardRemoveMemberInput input) {}
-
-  ttimeEntryDelete(TTimeEntryDeleteInput input) {}
-
-  tcardBudgetUnset(TCardBudgetUnsetInput input) {}
-
-  tcardUndelete(TCardUndeleteInput input) {}
-
-  tuserSetSkills(TUserSetSkillsInput input) {}
-
-  tcardRename(TCardRenameInput input) {}
-
-  tcardDelete(TCardDeleteInput input) {}
-
-  tcardLinkCreate(TCardLinkCreateInput input) {}
-
-  tcardBudgetDecrease(TCardBudgetDecreaseInput input) {}
-
-  tfeedMarkAsRead(TFeedMarkAsReadInput input) {}
-
-  tupdateAvailability(TUpdateAvailabilityInput input) {}
-
-  tcardDueDateSet(TCardDueDateSetInput input) {}
-
-  trecordPayout(TRecordPayoutInput input) {}
-
-  tcontractStart(TContractStartInput input) {}
-
-  tcardBudgetIncrease(TCardBudgetIncreaseInput input) {}
-
-  tfeedPostMessage(TFeedPostMessageInput input) {}
-
-  tcardLinkDelete(TCardLinkDeleteInput input) {}
-
-  tlinkOrCreateHubSpotContact(String userId) {}
-
-  tcardCreate(TCardCreateInput input) {}
-
-  tfeedEditMessage(TFeedEditMessageInput input) {}
-
-  ttimeEntryEdit(TTimeEntryEditInput input) {}
-
-  tcardMetaSet(TCardMetaSetInput input) {}
-
-  tfeedDeleteMessage(TFeedDeleteMessageInput input) {}
-
-  tcardMove(TCardMoveInput input) {}
-
-  tcontractEnd(TContractEndInput input) {}
-
-  ttimeEntryCreate(TTimeEntryCreateInput input) {}
-
-  tremoveReaction(TRemoveReactionInput input) {}
-
-  tcardComplete(TCardCompleteInput input) {}
-
-  tcardDueDateUnset(TCardDueDateUnsetInput input) {}
-
-  tcardUncomplete(TCardUncompleteInput input) {}
-
-  tprojectAddBalanceWithStripe(TProjectAddBalanceWithStripeInput input) {}
-
-  taddReaction(TAddReactionInput input) {}
-
-  taccountTransfer(TAccountTransferInput input) {}
-
-  tcardAssign(TCardAssignInput input) {}
-
-  tcardInviteUser(TCardInviteUserInput input) {}
-
-  tcardEstimateSet(TCardEstimateSetInput input) {}
-
-  tuserSetRoles(TUserSetRolesInput input) {}
-
-  tcardEstimateUnset(TCardEstimateUnsetInput input) {}
-
-  tcardAddMember(TCardAddMemberInput input) {}
-
-  tcardTagsSet(TCardTagsSetInput input) {}
-
-  tmeetingRoomJoin(String projectId) {}
-
-  tcardUnassign(TCardUnassignInput input) {}
 
   factory TRootMutationType.fromJson(Map<String, dynamic> json) {
     return TRootMutationType(
@@ -5003,7 +5281,6 @@ enum TNotificationDeliveryType {
   EMAIL,
   PUSH,
 }
-
 final TNotificationDeliveryTypeValues = {
   "EMAIL": TNotificationDeliveryType.EMAIL,
   "PUSH": TNotificationDeliveryType.PUSH,
@@ -5013,7 +5290,6 @@ enum TMeetingRecordingStatus {
   DELETED,
   PROCESSING,
 }
-
 final TMeetingRecordingStatusValues = {
   "COMPLETED": TMeetingRecordingStatus.COMPLETED,
   "DELETED": TMeetingRecordingStatus.DELETED,
@@ -5082,7 +5358,6 @@ enum TMeetingStatus {
   FAILED,
   IN_PROGRESS,
 }
-
 final TMeetingStatusValues = {
   "COMPLETED": TMeetingStatus.COMPLETED,
   "FAILED": TMeetingStatus.FAILED,
