@@ -114,11 +114,11 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   parseObjectType(List<TypeA> objectTypes) {
     objectTypes.forEach((typeObject) {
       if (typeObject.name.compareTo(mutationType) == 0)
-        classes.putIfAbsent(typeObject.name, () {
+        classes.putIfAbsent(namespace + typeObject.name, () {
           return Class((b) => classBuilderMutation(b, typeObject));
         });
       else
-        classes.putIfAbsent(typeObject.name, () {
+        classes.putIfAbsent(namespace + typeObject.name, () {
           return Class((b) => classBuilder(b, typeObject));
         });
     });
@@ -135,6 +135,21 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     if (type.fields != null) {
       ClassBuilder mutationClassBuilder = new ClassBuilder();
       mutationClassBuilder.name = 'TMutation';
+      mutationClassBuilder.abstract = true;
+      mutationClassBuilder.methods.add(new Method((m) {
+        m.returns = Reference('Future<Map<String, dynamic>>');
+        m.name = "query";
+        m.optionalParameters.add(new Parameter((p) {
+          p.name = "document";
+          p.type = Reference("String");
+          p.named = true;
+        }));
+        m.optionalParameters.add(new Parameter((p) {
+          p.name = "variables";
+          p.type = Reference("Map<String, dynamic>");
+          p.named = true;
+        }));
+      }));
       type.fields.forEach((field) {
         builder.fields.add(Field((f) {
           f.name = field.name;
@@ -148,18 +163,20 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
           mutationClassBuilder.methods.add(Method((m) {
             m.modifier = MethodModifier.async;
             m.name = field.name;
-//            m.returns = Reference('QueryResult','package:graphql_flutter/graphql_flutter.dart');
+            m.returns = Reference('Future<$namespace${field.type.name}>');
             field.args.forEach((f) {
               m.requiredParameters.add(Parameter((p) {
                 p.name = f.name;
                 p.type = Reference(findFieldType(f.type));
               }));
               m.body = Code(
-                  ' return await query(document:"""\n\tmutation ${field
+                  ' var result =  await query(document:"""\n\tmutation ${field
                       .name}(\\\$${f.name}: ${findFieldType(f.type)}! )'
                       '{\n\t${field.name}(${f.name}:\\\$${f
-                      .name}){FIELDS}\n\t}\n\t""",variables:{\n\t"${f.name}":${f
-                      .name}\n\t});');
+                      .name}){FIELDS \n\t}\n\t""",variables:{\n\t"${f.name}":${f
+                      .name}\n\t});'
+                      'return $namespace${field.type
+                      .name}.fromJson(result["data"]["${field.name}"]);');
             });
           }));
         }));
@@ -167,7 +184,6 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       classes.putIfAbsent('TMutation', () => mutationClassBuilder.build());
       builder.methods.addAll(createMethods(builder));
     }
-
     ///Build constructor
     builder.constructors.add(Constructor((c) {
       builder.fields.build().forEach((f) {
@@ -187,6 +203,10 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
         builder.implements.add(Reference('$namespace${unionType.name}'));
       }
     });
+  }
+
+  _generateMutationFields(String name) {
+
   }
 
   classBuilder(ClassBuilder builder, TypeA type) {

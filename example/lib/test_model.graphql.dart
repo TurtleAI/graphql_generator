@@ -78,8 +78,8 @@ abstract class TTurtleEvent {
   }
 }
 
-abstract class TAccountSource {
-  factory TAccountSource.fromJson(Map<String, dynamic> json) {
+abstract class TFeedSource {
+  factory TFeedSource.fromJson(Map<String, dynamic> json) {
     switch (json['__typename']) {
       case "Card":
         return TCard.fromJson(json);
@@ -114,8 +114,8 @@ abstract class TDocumentToken {
   }
 }
 
-abstract class TFeedSource {
-  factory TFeedSource.fromJson(Map<String, dynamic> json) {
+abstract class TAccountSource {
+  factory TAccountSource.fromJson(Map<String, dynamic> json) {
     switch (json['__typename']) {
       case "Card":
         return TCard.fromJson(json);
@@ -1173,33 +1173,685 @@ class TCardUnassigned implements TTurtleEvent {
   }
 }
 
-class TRootSubscriptionType {
-  TRootSubscriptionType({this.feedSubscriptionUpdated,
-    this.feedUpdated,
-    this.unreadCountUpdated});
+abstract class TMutation {
+  Future<Map<String, dynamic>> query(
+      {String document, Map<String, dynamic> variables});
 
-  /// One or more attributes of a feed was updated.
+  Future<TRaw> sendLowBalanceReminder(
+      TSendLowBalanceReminderInput input) async {
+    var result = await query(document: """
+	mutation sendLowBalanceReminder(\$input: TSendLowBalanceReminderInput! ){
+	sendLowBalanceReminder(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["sendLowBalanceReminder"]);
+  }
+
+  Future<TRaw> profileNameSet(TProfileNameSetInput input) async {
+    var result = await query(document: """
+	mutation profileNameSet(\$input: TProfileNameSetInput! ){
+	profileNameSet(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["profileNameSet"]);
+  }
+
+  Future<TRaw> accountOpen(TAccountOpenInput input) async {
+    var result = await query(document: """
+	mutation accountOpen(\$input: TAccountOpenInput! ){
+	accountOpen(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["accountOpen"]);
+  }
+
+  Future<TRaw> profileTimezoneSet(TProfileTimezoneSetInput input) async {
+    var result = await query(document: """
+	mutation profileTimezoneSet(\$input: TProfileTimezoneSetInput! ){
+	profileTimezoneSet(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["profileTimezoneSet"]);
+  }
+
+  Future<TRaw> cardRemoveMember(TCardRemoveMemberInput input) async {
+    var result = await query(document: """
+	mutation cardRemoveMember(\$input: TCardRemoveMemberInput! ){
+	cardRemoveMember(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["cardRemoveMember"]);
+  }
+
+  Future<TRaw> timeEntryDelete(TTimeEntryDeleteInput input) async {
+    var result = await query(document: """
+	mutation timeEntryDelete(\$input: TTimeEntryDeleteInput! ){
+	timeEntryDelete(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["timeEntryDelete"]);
+  }
+
+  Future<TCard> cardBudgetUnset(TCardBudgetUnsetInput input) async {
+    var result = await query(document: """
+	mutation cardBudgetUnset(\$input: TCardBudgetUnsetInput! ){
+	cardBudgetUnset(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardBudgetUnset"]);
+  }
+
+  Future<TCard> cardUndelete(TCardUndeleteInput input) async {
+    var result = await query(document: """
+	mutation cardUndelete(\$input: TCardUndeleteInput! ){
+	cardUndelete(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardUndelete"]);
+  }
+
+  Future<TRaw> userSetSkills(TUserSetSkillsInput input) async {
+    var result = await query(document: """
+	mutation userSetSkills(\$input: TUserSetSkillsInput! ){
+	userSetSkills(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["userSetSkills"]);
+  }
+
+  Future<TCard> cardRename(TCardRenameInput input) async {
+    var result = await query(document: """
+	mutation cardRename(\$input: TCardRenameInput! ){
+	cardRename(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardRename"]);
+  }
+
+  Future<TCard> cardDelete(TCardDeleteInput input) async {
+    var result = await query(document: """
+	mutation cardDelete(\$input: TCardDeleteInput! ){
+	cardDelete(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardDelete"]);
+  }
+
+  Future<TRaw> cardLinkCreate(TCardLinkCreateInput input) async {
+    var result = await query(document: """
+	mutation cardLinkCreate(\$input: TCardLinkCreateInput! ){
+	cardLinkCreate(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["cardLinkCreate"]);
+  }
+
+  Future<TCard> cardBudgetDecrease(TCardBudgetDecreaseInput input) async {
+    var result = await query(document: """
+	mutation cardBudgetDecrease(\$input: TCardBudgetDecreaseInput! ){
+	cardBudgetDecrease(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardBudgetDecrease"]);
+  }
+
+  Future<TRaw> feedMarkAsRead(TFeedMarkAsReadInput input) async {
+    var result = await query(document: """
+	mutation feedMarkAsRead(\$input: TFeedMarkAsReadInput! ){
+	feedMarkAsRead(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["feedMarkAsRead"]);
+  }
+
+  Future<TRaw> updateAvailability(TUpdateAvailabilityInput input) async {
+    var result = await query(document: """
+	mutation updateAvailability(\$input: TUpdateAvailabilityInput! ){
+	updateAvailability(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["updateAvailability"]);
+  }
+
+  Future<TCard> cardDueDateSet(TCardDueDateSetInput input) async {
+    var result = await query(document: """
+	mutation cardDueDateSet(\$input: TCardDueDateSetInput! ){
+	cardDueDateSet(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardDueDateSet"]);
+  }
+
+  Future<TRaw> recordPayout(TRecordPayoutInput input) async {
+    var result = await query(document: """
+	mutation recordPayout(\$input: TRecordPayoutInput! ){
+	recordPayout(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["recordPayout"]);
+  }
+
+  Future<TRaw> contractStart(TContractStartInput input) async {
+    var result = await query(document: """
+	mutation contractStart(\$input: TContractStartInput! ){
+	contractStart(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["contractStart"]);
+  }
+
+  Future<TCard> cardBudgetIncrease(TCardBudgetIncreaseInput input) async {
+    var result = await query(document: """
+	mutation cardBudgetIncrease(\$input: TCardBudgetIncreaseInput! ){
+	cardBudgetIncrease(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardBudgetIncrease"]);
+  }
+
+  Future<TRaw> feedPostMessage(TFeedPostMessageInput input) async {
+    var result = await query(document: """
+	mutation feedPostMessage(\$input: TFeedPostMessageInput! ){
+	feedPostMessage(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["feedPostMessage"]);
+  }
+
+  Future<TRaw> cardLinkDelete(TCardLinkDeleteInput input) async {
+    var result = await query(document: """
+	mutation cardLinkDelete(\$input: TCardLinkDeleteInput! ){
+	cardLinkDelete(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["cardLinkDelete"]);
+  }
+
+  Future<THubspotContact> linkOrCreateHubSpotContact(String userId) async {
+    var result = await query(document: """
+	mutation linkOrCreateHubSpotContact(\$userId: String! ){
+	linkOrCreateHubSpotContact(userId:\$userId){FIELDS 
+	}
+	""", variables: {"userId": userId});
+    return THubspotContact.fromJson(
+        result["data"]["linkOrCreateHubSpotContact"]);
+  }
+
+  Future<TCard> cardCreate(TCardCreateInput input) async {
+    var result = await query(document: """
+	mutation cardCreate(\$input: TCardCreateInput! ){
+	cardCreate(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardCreate"]);
+  }
+
+  Future<TRaw> feedEditMessage(TFeedEditMessageInput input) async {
+    var result = await query(document: """
+	mutation feedEditMessage(\$input: TFeedEditMessageInput! ){
+	feedEditMessage(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["feedEditMessage"]);
+  }
+
+  Future<TRaw> timeEntryEdit(TTimeEntryEditInput input) async {
+    var result = await query(document: """
+	mutation timeEntryEdit(\$input: TTimeEntryEditInput! ){
+	timeEntryEdit(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["timeEntryEdit"]);
+  }
+
+  Future<TRaw> cardMetaSet(TCardMetaSetInput input) async {
+    var result = await query(document: """
+	mutation cardMetaSet(\$input: TCardMetaSetInput! ){
+	cardMetaSet(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["cardMetaSet"]);
+  }
+
+  Future<TRaw> feedDeleteMessage(TFeedDeleteMessageInput input) async {
+    var result = await query(document: """
+	mutation feedDeleteMessage(\$input: TFeedDeleteMessageInput! ){
+	feedDeleteMessage(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["feedDeleteMessage"]);
+  }
+
+  Future<TCard> cardMove(TCardMoveInput input) async {
+    var result = await query(document: """
+	mutation cardMove(\$input: TCardMoveInput! ){
+	cardMove(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardMove"]);
+  }
+
+  Future<TRaw> contractEnd(TContractEndInput input) async {
+    var result = await query(document: """
+	mutation contractEnd(\$input: TContractEndInput! ){
+	contractEnd(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["contractEnd"]);
+  }
+
+  Future<TRaw> timeEntryCreate(TTimeEntryCreateInput input) async {
+    var result = await query(document: """
+	mutation timeEntryCreate(\$input: TTimeEntryCreateInput! ){
+	timeEntryCreate(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["timeEntryCreate"]);
+  }
+
+  Future<TRaw> removeReaction(TRemoveReactionInput input) async {
+    var result = await query(document: """
+	mutation removeReaction(\$input: TRemoveReactionInput! ){
+	removeReaction(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["removeReaction"]);
+  }
+
+  Future<TCard> cardComplete(TCardCompleteInput input) async {
+    var result = await query(document: """
+	mutation cardComplete(\$input: TCardCompleteInput! ){
+	cardComplete(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardComplete"]);
+  }
+
+  Future<TCard> cardDueDateUnset(TCardDueDateUnsetInput input) async {
+    var result = await query(document: """
+	mutation cardDueDateUnset(\$input: TCardDueDateUnsetInput! ){
+	cardDueDateUnset(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardDueDateUnset"]);
+  }
+
+  Future<TCard> cardUncomplete(TCardUncompleteInput input) async {
+    var result = await query(document: """
+	mutation cardUncomplete(\$input: TCardUncompleteInput! ){
+	cardUncomplete(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardUncomplete"]);
+  }
+
+  Future<TRaw> projectAddBalanceWithStripe(
+      TProjectAddBalanceWithStripeInput input) async {
+    var result = await query(document: """
+	mutation projectAddBalanceWithStripe(\$input: TProjectAddBalanceWithStripeInput! ){
+	projectAddBalanceWithStripe(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["projectAddBalanceWithStripe"]);
+  }
+
+  Future<TRaw> addReaction(TAddReactionInput input) async {
+    var result = await query(document: """
+	mutation addReaction(\$input: TAddReactionInput! ){
+	addReaction(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["addReaction"]);
+  }
+
+  Future<TRaw> accountTransfer(TAccountTransferInput input) async {
+    var result = await query(document: """
+	mutation accountTransfer(\$input: TAccountTransferInput! ){
+	accountTransfer(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["accountTransfer"]);
+  }
+
+  Future<TCard> cardAssign(TCardAssignInput input) async {
+    var result = await query(document: """
+	mutation cardAssign(\$input: TCardAssignInput! ){
+	cardAssign(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardAssign"]);
+  }
+
+  Future<TUser> cardInviteUser(TCardInviteUserInput input) async {
+    var result = await query(document: """
+	mutation cardInviteUser(\$input: TCardInviteUserInput! ){
+	cardInviteUser(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TUser.fromJson(result["data"]["cardInviteUser"]);
+  }
+
+  Future<TCard> cardEstimateSet(TCardEstimateSetInput input) async {
+    var result = await query(document: """
+	mutation cardEstimateSet(\$input: TCardEstimateSetInput! ){
+	cardEstimateSet(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardEstimateSet"]);
+  }
+
+  Future<TRaw> userSetRoles(TUserSetRolesInput input) async {
+    var result = await query(document: """
+	mutation userSetRoles(\$input: TUserSetRolesInput! ){
+	userSetRoles(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["userSetRoles"]);
+  }
+
+  Future<TCard> cardEstimateUnset(TCardEstimateUnsetInput input) async {
+    var result = await query(document: """
+	mutation cardEstimateUnset(\$input: TCardEstimateUnsetInput! ){
+	cardEstimateUnset(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardEstimateUnset"]);
+  }
+
+  Future<TRaw> cardAddMember(TCardAddMemberInput input) async {
+    var result = await query(document: """
+	mutation cardAddMember(\$input: TCardAddMemberInput! ){
+	cardAddMember(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["cardAddMember"]);
+  }
+
+  Future<TRaw> cardTagsSet(TCardTagsSetInput input) async {
+    var result = await query(document: """
+	mutation cardTagsSet(\$input: TCardTagsSetInput! ){
+	cardTagsSet(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TRaw.fromJson(result["data"]["cardTagsSet"]);
+  }
+
+  Future<TTwilioAuth> meetingRoomJoin(String projectId) async {
+    var result = await query(document: """
+	mutation meetingRoomJoin(\$projectId: String! ){
+	meetingRoomJoin(projectId:\$projectId){FIELDS 
+	}
+	""", variables: {"projectId": projectId});
+    return TTwilioAuth.fromJson(result["data"]["meetingRoomJoin"]);
+  }
+
+  Future<TCard> cardUnassign(TCardUnassignInput input) async {
+    var result = await query(document: """
+	mutation cardUnassign(\$input: TCardUnassignInput! ){
+	cardUnassign(input:\$input){FIELDS 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result["data"]["cardUnassign"]);
+  }
+}
+
+class TRootMutationType {
+  TRootMutationType({this.sendLowBalanceReminder,
+    this.profileNameSet,
+    this.accountOpen,
+    this.profileTimezoneSet,
+    this.cardRemoveMember,
+    this.timeEntryDelete,
+    this.cardBudgetUnset,
+    this.cardUndelete,
+    this.userSetSkills,
+    this.cardRename,
+    this.cardDelete,
+    this.cardLinkCreate,
+    this.cardBudgetDecrease,
+    this.feedMarkAsRead,
+    this.updateAvailability,
+    this.cardDueDateSet,
+    this.recordPayout,
+    this.contractStart,
+    this.cardBudgetIncrease,
+    this.feedPostMessage,
+    this.cardLinkDelete,
+    this.linkOrCreateHubSpotContact,
+    this.cardCreate,
+    this.feedEditMessage,
+    this.timeEntryEdit,
+    this.cardMetaSet,
+    this.feedDeleteMessage,
+    this.cardMove,
+    this.contractEnd,
+    this.timeEntryCreate,
+    this.removeReaction,
+    this.cardComplete,
+    this.cardDueDateUnset,
+    this.cardUncomplete,
+    this.projectAddBalanceWithStripe,
+    this.addReaction,
+    this.accountTransfer,
+    this.cardAssign,
+    this.cardInviteUser,
+    this.cardEstimateSet,
+    this.userSetRoles,
+    this.cardEstimateUnset,
+    this.cardAddMember,
+    this.cardTagsSet,
+    this.meetingRoomJoin,
+    this.cardUnassign});
+
+  String sendLowBalanceReminder;
+
+  String profileNameSet;
+
+  /// Open an account if one doesn't already exist
+  String accountOpen;
+
+  String profileTimezoneSet;
+
+  /// Remove a user from a project.
+  /// They will lose access to everything in the project.
   ///
-  TFeedSubscription feedSubscriptionUpdated;
+  String cardRemoveMember;
 
-  /// One or more attributes of a feed was updated
-  TFeed feedUpdated;
+  String timeEntryDelete;
 
-  /// The current user's number of unread messages has changed
-  TMe unreadCountUpdated;
+  TCard cardBudgetUnset;
 
-  factory TRootSubscriptionType.fromJson(Map<String, dynamic> json) {
-    return TRootSubscriptionType(
-      feedSubscriptionUpdated: json['feedSubscriptionUpdated'] == null
+  TCard cardUndelete;
+
+  String userSetSkills;
+
+  /// Change the name of a card (or project)
+  TCard cardRename;
+
+  /// Delete a card (project/task)
+  TCard cardDelete;
+
+  String cardLinkCreate;
+
+  TCard cardBudgetDecrease;
+
+  String feedMarkAsRead;
+
+  String updateAvailability;
+
+  /// Set the due date of a card.
+  /// Use CardDueDateUnset to remove the due date.
+  ///
+  TCard cardDueDateSet;
+
+  String recordPayout;
+
+  /// Start a contract between a person and a project.
+  /// This is required for a contractor to start billing time and working on a project so the accounting system can generate the proper transactions when time is tracked.
+  /// Note: contracts are immutable. To change a contractor's rate, you must end a contract and start a new one.
+  ///
+  String contractStart;
+
+  TCard cardBudgetIncrease;
+
+  String feedPostMessage;
+
+  String cardLinkDelete;
+
+  /// Link or create HubSpot contact
+  THubspotContact linkOrCreateHubSpotContact;
+
+  /// Create a new card. This could either mean creating a project or a task.
+  ///
+  TCard cardCreate;
+
+  String feedEditMessage;
+
+  String timeEntryEdit;
+
+  String cardMetaSet;
+
+  String feedDeleteMessage;
+
+  /// Move a card (task) from one location to another.
+  /// Currently only possible to move cards that belong to a project within their own project.
+  ///
+  TCard cardMove;
+
+  /// End a contract.
+  /// This means time can no longer be tracked by a contractor to this project without a new contract being started.
+  ///
+  String contractEnd;
+
+  String timeEntryCreate;
+
+  String removeReaction;
+
+  /// Mark a card as complete
+  TCard cardComplete;
+
+  /// Clear the due date of a card
+  TCard cardDueDateUnset;
+
+  TCard cardUncomplete;
+
+  String projectAddBalanceWithStripe;
+
+  String addReaction;
+
+  /// Transfer money from one account to another.
+  ///
+  String accountTransfer;
+
+  /// Assign a card to a user
+  TCard cardAssign;
+
+  TUser cardInviteUser;
+
+  TCard cardEstimateSet;
+
+  String userSetRoles;
+
+  TCard cardEstimateUnset;
+
+  /// Add a user to a project.
+  String cardAddMember;
+
+  String cardTagsSet;
+
+  TTwilioAuth meetingRoomJoin;
+
+  TCard cardUnassign;
+
+  factory TRootMutationType.fromJson(Map<String, dynamic> json) {
+    return TRootMutationType(
+      sendLowBalanceReminder: json['sendLowBalanceReminder'] as String,
+      profileNameSet: json['profileNameSet'] as String,
+      accountOpen: json['accountOpen'] as String,
+      profileTimezoneSet: json['profileTimezoneSet'] as String,
+      cardRemoveMember: json['cardRemoveMember'] as String,
+      timeEntryDelete: json['timeEntryDelete'] as String,
+      cardBudgetUnset: json['cardBudgetUnset'] == null
           ? null
-          : TFeedSubscription.fromJson(
-          json['feedSubscriptionUpdated'] as Map<String, dynamic>),
-      feedUpdated: json['feedUpdated'] == null
+          : TCard.fromJson(json['cardBudgetUnset'] as Map<String, dynamic>),
+      cardUndelete: json['cardUndelete'] == null
           ? null
-          : TFeed.fromJson(json['feedUpdated'] as Map<String, dynamic>),
-      unreadCountUpdated: json['unreadCountUpdated'] == null
+          : TCard.fromJson(json['cardUndelete'] as Map<String, dynamic>),
+      userSetSkills: json['userSetSkills'] as String,
+      cardRename: json['cardRename'] == null
           ? null
-          : TMe.fromJson(json['unreadCountUpdated'] as Map<String, dynamic>),
+          : TCard.fromJson(json['cardRename'] as Map<String, dynamic>),
+      cardDelete: json['cardDelete'] == null
+          ? null
+          : TCard.fromJson(json['cardDelete'] as Map<String, dynamic>),
+      cardLinkCreate: json['cardLinkCreate'] as String,
+      cardBudgetDecrease: json['cardBudgetDecrease'] == null
+          ? null
+          : TCard.fromJson(json['cardBudgetDecrease'] as Map<String, dynamic>),
+      feedMarkAsRead: json['feedMarkAsRead'] as String,
+      updateAvailability: json['updateAvailability'] as String,
+      cardDueDateSet: json['cardDueDateSet'] == null
+          ? null
+          : TCard.fromJson(json['cardDueDateSet'] as Map<String, dynamic>),
+      recordPayout: json['recordPayout'] as String,
+      contractStart: json['contractStart'] as String,
+      cardBudgetIncrease: json['cardBudgetIncrease'] == null
+          ? null
+          : TCard.fromJson(json['cardBudgetIncrease'] as Map<String, dynamic>),
+      feedPostMessage: json['feedPostMessage'] as String,
+      cardLinkDelete: json['cardLinkDelete'] as String,
+      linkOrCreateHubSpotContact: json['linkOrCreateHubSpotContact'] == null
+          ? null
+          : THubspotContact.fromJson(
+          json['linkOrCreateHubSpotContact'] as Map<String, dynamic>),
+      cardCreate: json['cardCreate'] == null
+          ? null
+          : TCard.fromJson(json['cardCreate'] as Map<String, dynamic>),
+      feedEditMessage: json['feedEditMessage'] as String,
+      timeEntryEdit: json['timeEntryEdit'] as String,
+      cardMetaSet: json['cardMetaSet'] as String,
+      feedDeleteMessage: json['feedDeleteMessage'] as String,
+      cardMove: json['cardMove'] == null
+          ? null
+          : TCard.fromJson(json['cardMove'] as Map<String, dynamic>),
+      contractEnd: json['contractEnd'] as String,
+      timeEntryCreate: json['timeEntryCreate'] as String,
+      removeReaction: json['removeReaction'] as String,
+      cardComplete: json['cardComplete'] == null
+          ? null
+          : TCard.fromJson(json['cardComplete'] as Map<String, dynamic>),
+      cardDueDateUnset: json['cardDueDateUnset'] == null
+          ? null
+          : TCard.fromJson(json['cardDueDateUnset'] as Map<String, dynamic>),
+      cardUncomplete: json['cardUncomplete'] == null
+          ? null
+          : TCard.fromJson(json['cardUncomplete'] as Map<String, dynamic>),
+      projectAddBalanceWithStripe:
+      json['projectAddBalanceWithStripe'] as String,
+      addReaction: json['addReaction'] as String,
+      accountTransfer: json['accountTransfer'] as String,
+      cardAssign: json['cardAssign'] == null
+          ? null
+          : TCard.fromJson(json['cardAssign'] as Map<String, dynamic>),
+      cardInviteUser: json['cardInviteUser'] == null
+          ? null
+          : TUser.fromJson(json['cardInviteUser'] as Map<String, dynamic>),
+      cardEstimateSet: json['cardEstimateSet'] == null
+          ? null
+          : TCard.fromJson(json['cardEstimateSet'] as Map<String, dynamic>),
+      userSetRoles: json['userSetRoles'] as String,
+      cardEstimateUnset: json['cardEstimateUnset'] == null
+          ? null
+          : TCard.fromJson(json['cardEstimateUnset'] as Map<String, dynamic>),
+      cardAddMember: json['cardAddMember'] as String,
+      cardTagsSet: json['cardTagsSet'] as String,
+      meetingRoomJoin: json['meetingRoomJoin'] == null
+          ? null
+          : TTwilioAuth.fromJson(
+          json['meetingRoomJoin'] as Map<String, dynamic>),
+      cardUnassign: json['cardUnassign'] == null
+          ? null
+          : TCard.fromJson(json['cardUnassign'] as Map<String, dynamic>),
     );
   }
 }
@@ -1423,20 +2075,6 @@ class TCardMemberAdded implements TTurtleEvent {
       projectId: json['projectId'] as String,
       requestId: json['requestId'] as String,
       time: json['time'] as String,
-    );
-  }
-}
-
-/// Wrapper for a date scalar
-class TDateObject implements TDocumentToken {
-  TDateObject({this.value});
-
-  ///
-  String value;
-
-  factory TDateObject.fromJson(Map<String, dynamic> json) {
-    return TDateObject(
-      value: json['value'] as String,
     );
   }
 }
@@ -1993,637 +2631,6 @@ class TCardAssigned implements TTurtleEvent {
   }
 }
 
-class TMutation {
-  sendLowBalanceReminder(TSendLowBalanceReminderInput input) async {
-    return await query(document: """
-	mutation sendLowBalanceReminder(\$input: TSendLowBalanceReminderInput! ){
-	sendLowBalanceReminder(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  profileNameSet(TProfileNameSetInput input) async {
-    return await query(document: """
-	mutation profileNameSet(\$input: TProfileNameSetInput! ){
-	profileNameSet(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  accountOpen(TAccountOpenInput input) async {
-    return await query(document: """
-	mutation accountOpen(\$input: TAccountOpenInput! ){
-	accountOpen(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  profileTimezoneSet(TProfileTimezoneSetInput input) async {
-    return await query(document: """
-	mutation profileTimezoneSet(\$input: TProfileTimezoneSetInput! ){
-	profileTimezoneSet(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardRemoveMember(TCardRemoveMemberInput input) async {
-    return await query(document: """
-	mutation cardRemoveMember(\$input: TCardRemoveMemberInput! ){
-	cardRemoveMember(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  timeEntryDelete(TTimeEntryDeleteInput input) async {
-    return await query(document: """
-	mutation timeEntryDelete(\$input: TTimeEntryDeleteInput! ){
-	timeEntryDelete(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardBudgetUnset(TCardBudgetUnsetInput input) async {
-    return await query(document: """
-	mutation cardBudgetUnset(\$input: TCardBudgetUnsetInput! ){
-	cardBudgetUnset(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardUndelete(TCardUndeleteInput input) async {
-    return await query(document: """
-	mutation cardUndelete(\$input: TCardUndeleteInput! ){
-	cardUndelete(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  userSetSkills(TUserSetSkillsInput input) async {
-    return await query(document: """
-	mutation userSetSkills(\$input: TUserSetSkillsInput! ){
-	userSetSkills(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardRename(TCardRenameInput input) async {
-    return await query(document: """
-	mutation cardRename(\$input: TCardRenameInput! ){
-	cardRename(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardDelete(TCardDeleteInput input) async {
-    return await query(document: """
-	mutation cardDelete(\$input: TCardDeleteInput! ){
-	cardDelete(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardLinkCreate(TCardLinkCreateInput input) async {
-    return await query(document: """
-	mutation cardLinkCreate(\$input: TCardLinkCreateInput! ){
-	cardLinkCreate(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardBudgetDecrease(TCardBudgetDecreaseInput input) async {
-    return await query(document: """
-	mutation cardBudgetDecrease(\$input: TCardBudgetDecreaseInput! ){
-	cardBudgetDecrease(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  feedMarkAsRead(TFeedMarkAsReadInput input) async {
-    return await query(document: """
-	mutation feedMarkAsRead(\$input: TFeedMarkAsReadInput! ){
-	feedMarkAsRead(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  updateAvailability(TUpdateAvailabilityInput input) async {
-    return await query(document: """
-	mutation updateAvailability(\$input: TUpdateAvailabilityInput! ){
-	updateAvailability(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardDueDateSet(TCardDueDateSetInput input) async {
-    return await query(document: """
-	mutation cardDueDateSet(\$input: TCardDueDateSetInput! ){
-	cardDueDateSet(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  recordPayout(TRecordPayoutInput input) async {
-    return await query(document: """
-	mutation recordPayout(\$input: TRecordPayoutInput! ){
-	recordPayout(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  contractStart(TContractStartInput input) async {
-    return await query(document: """
-	mutation contractStart(\$input: TContractStartInput! ){
-	contractStart(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardBudgetIncrease(TCardBudgetIncreaseInput input) async {
-    return await query(document: """
-	mutation cardBudgetIncrease(\$input: TCardBudgetIncreaseInput! ){
-	cardBudgetIncrease(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  feedPostMessage(TFeedPostMessageInput input) async {
-    return await query(document: """
-	mutation feedPostMessage(\$input: TFeedPostMessageInput! ){
-	feedPostMessage(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardLinkDelete(TCardLinkDeleteInput input) async {
-    return await query(document: """
-	mutation cardLinkDelete(\$input: TCardLinkDeleteInput! ){
-	cardLinkDelete(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  linkOrCreateHubSpotContact(String userId) async {
-    return await query(document: """
-	mutation linkOrCreateHubSpotContact(\$userId: String! ){
-	linkOrCreateHubSpotContact(userId:\$userId){FIELDS}
-	}
-	""", variables: {"userId": userId});
-  }
-
-  cardCreate(TCardCreateInput input) async {
-    return await query(document: """
-	mutation cardCreate(\$input: TCardCreateInput! ){
-	cardCreate(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  feedEditMessage(TFeedEditMessageInput input) async {
-    return await query(document: """
-	mutation feedEditMessage(\$input: TFeedEditMessageInput! ){
-	feedEditMessage(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  timeEntryEdit(TTimeEntryEditInput input) async {
-    return await query(document: """
-	mutation timeEntryEdit(\$input: TTimeEntryEditInput! ){
-	timeEntryEdit(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardMetaSet(TCardMetaSetInput input) async {
-    return await query(document: """
-	mutation cardMetaSet(\$input: TCardMetaSetInput! ){
-	cardMetaSet(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  feedDeleteMessage(TFeedDeleteMessageInput input) async {
-    return await query(document: """
-	mutation feedDeleteMessage(\$input: TFeedDeleteMessageInput! ){
-	feedDeleteMessage(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardMove(TCardMoveInput input) async {
-    return await query(document: """
-	mutation cardMove(\$input: TCardMoveInput! ){
-	cardMove(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  contractEnd(TContractEndInput input) async {
-    return await query(document: """
-	mutation contractEnd(\$input: TContractEndInput! ){
-	contractEnd(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  timeEntryCreate(TTimeEntryCreateInput input) async {
-    return await query(document: """
-	mutation timeEntryCreate(\$input: TTimeEntryCreateInput! ){
-	timeEntryCreate(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  removeReaction(TRemoveReactionInput input) async {
-    return await query(document: """
-	mutation removeReaction(\$input: TRemoveReactionInput! ){
-	removeReaction(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardComplete(TCardCompleteInput input) async {
-    return await query(document: """
-	mutation cardComplete(\$input: TCardCompleteInput! ){
-	cardComplete(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardDueDateUnset(TCardDueDateUnsetInput input) async {
-    return await query(document: """
-	mutation cardDueDateUnset(\$input: TCardDueDateUnsetInput! ){
-	cardDueDateUnset(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardUncomplete(TCardUncompleteInput input) async {
-    return await query(document: """
-	mutation cardUncomplete(\$input: TCardUncompleteInput! ){
-	cardUncomplete(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  projectAddBalanceWithStripe(TProjectAddBalanceWithStripeInput input) async {
-    return await query(document: """
-	mutation projectAddBalanceWithStripe(\$input: TProjectAddBalanceWithStripeInput! ){
-	projectAddBalanceWithStripe(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  addReaction(TAddReactionInput input) async {
-    return await query(document: """
-	mutation addReaction(\$input: TAddReactionInput! ){
-	addReaction(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  accountTransfer(TAccountTransferInput input) async {
-    return await query(document: """
-	mutation accountTransfer(\$input: TAccountTransferInput! ){
-	accountTransfer(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardAssign(TCardAssignInput input) async {
-    return await query(document: """
-	mutation cardAssign(\$input: TCardAssignInput! ){
-	cardAssign(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardInviteUser(TCardInviteUserInput input) async {
-    return await query(document: """
-	mutation cardInviteUser(\$input: TCardInviteUserInput! ){
-	cardInviteUser(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardEstimateSet(TCardEstimateSetInput input) async {
-    return await query(document: """
-	mutation cardEstimateSet(\$input: TCardEstimateSetInput! ){
-	cardEstimateSet(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  userSetRoles(TUserSetRolesInput input) async {
-    return await query(document: """
-	mutation userSetRoles(\$input: TUserSetRolesInput! ){
-	userSetRoles(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardEstimateUnset(TCardEstimateUnsetInput input) async {
-    return await query(document: """
-	mutation cardEstimateUnset(\$input: TCardEstimateUnsetInput! ){
-	cardEstimateUnset(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardAddMember(TCardAddMemberInput input) async {
-    return await query(document: """
-	mutation cardAddMember(\$input: TCardAddMemberInput! ){
-	cardAddMember(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  cardTagsSet(TCardTagsSetInput input) async {
-    return await query(document: """
-	mutation cardTagsSet(\$input: TCardTagsSetInput! ){
-	cardTagsSet(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-
-  meetingRoomJoin(String projectId) async {
-    return await query(document: """
-	mutation meetingRoomJoin(\$projectId: String! ){
-	meetingRoomJoin(projectId:\$projectId){FIELDS}
-	}
-	""", variables: {"projectId": projectId});
-  }
-
-  cardUnassign(TCardUnassignInput input) async {
-    return await query(document: """
-	mutation cardUnassign(\$input: TCardUnassignInput! ){
-	cardUnassign(input:\$input){FIELDS}
-	}
-	""", variables: {"input": input});
-  }
-}
-
-class TRootMutationType {
-  TRootMutationType({this.sendLowBalanceReminder,
-    this.profileNameSet,
-    this.accountOpen,
-    this.profileTimezoneSet,
-    this.cardRemoveMember,
-    this.timeEntryDelete,
-    this.cardBudgetUnset,
-    this.cardUndelete,
-    this.userSetSkills,
-    this.cardRename,
-    this.cardDelete,
-    this.cardLinkCreate,
-    this.cardBudgetDecrease,
-    this.feedMarkAsRead,
-    this.updateAvailability,
-    this.cardDueDateSet,
-    this.recordPayout,
-    this.contractStart,
-    this.cardBudgetIncrease,
-    this.feedPostMessage,
-    this.cardLinkDelete,
-    this.linkOrCreateHubSpotContact,
-    this.cardCreate,
-    this.feedEditMessage,
-    this.timeEntryEdit,
-    this.cardMetaSet,
-    this.feedDeleteMessage,
-    this.cardMove,
-    this.contractEnd,
-    this.timeEntryCreate,
-    this.removeReaction,
-    this.cardComplete,
-    this.cardDueDateUnset,
-    this.cardUncomplete,
-    this.projectAddBalanceWithStripe,
-    this.addReaction,
-    this.accountTransfer,
-    this.cardAssign,
-    this.cardInviteUser,
-    this.cardEstimateSet,
-    this.userSetRoles,
-    this.cardEstimateUnset,
-    this.cardAddMember,
-    this.cardTagsSet,
-    this.meetingRoomJoin,
-    this.cardUnassign});
-
-  String sendLowBalanceReminder;
-
-  String profileNameSet;
-
-  /// Open an account if one doesn't already exist
-  String accountOpen;
-
-  String profileTimezoneSet;
-
-  /// Remove a user from a project.
-  /// They will lose access to everything in the project.
-  ///
-  String cardRemoveMember;
-
-  String timeEntryDelete;
-
-  TCard cardBudgetUnset;
-
-  TCard cardUndelete;
-
-  String userSetSkills;
-
-  /// Change the name of a card (or project)
-  TCard cardRename;
-
-  /// Delete a card (project/task)
-  TCard cardDelete;
-
-  String cardLinkCreate;
-
-  TCard cardBudgetDecrease;
-
-  String feedMarkAsRead;
-
-  String updateAvailability;
-
-  /// Set the due date of a card.
-  /// Use CardDueDateUnset to remove the due date.
-  ///
-  TCard cardDueDateSet;
-
-  String recordPayout;
-
-  /// Start a contract between a person and a project.
-  /// This is required for a contractor to start billing time and working on a project so the accounting system can generate the proper transactions when time is tracked.
-  /// Note: contracts are immutable. To change a contractor's rate, you must end a contract and start a new one.
-  ///
-  String contractStart;
-
-  TCard cardBudgetIncrease;
-
-  String feedPostMessage;
-
-  String cardLinkDelete;
-
-  /// Link or create HubSpot contact
-  THubspotContact linkOrCreateHubSpotContact;
-
-  /// Create a new card. This could either mean creating a project or a task.
-  ///
-  TCard cardCreate;
-
-  String feedEditMessage;
-
-  String timeEntryEdit;
-
-  String cardMetaSet;
-
-  String feedDeleteMessage;
-
-  /// Move a card (task) from one location to another.
-  /// Currently only possible to move cards that belong to a project within their own project.
-  ///
-  TCard cardMove;
-
-  /// End a contract.
-  /// This means time can no longer be tracked by a contractor to this project without a new contract being started.
-  ///
-  String contractEnd;
-
-  String timeEntryCreate;
-
-  String removeReaction;
-
-  /// Mark a card as complete
-  TCard cardComplete;
-
-  /// Clear the due date of a card
-  TCard cardDueDateUnset;
-
-  TCard cardUncomplete;
-
-  String projectAddBalanceWithStripe;
-
-  String addReaction;
-
-  /// Transfer money from one account to another.
-  ///
-  String accountTransfer;
-
-  /// Assign a card to a user
-  TCard cardAssign;
-
-  TUser cardInviteUser;
-
-  TCard cardEstimateSet;
-
-  String userSetRoles;
-
-  TCard cardEstimateUnset;
-
-  /// Add a user to a project.
-  String cardAddMember;
-
-  String cardTagsSet;
-
-  TTwilioAuth meetingRoomJoin;
-
-  TCard cardUnassign;
-
-  factory TRootMutationType.fromJson(Map<String, dynamic> json) {
-    return TRootMutationType(
-      sendLowBalanceReminder: json['sendLowBalanceReminder'] as String,
-      profileNameSet: json['profileNameSet'] as String,
-      accountOpen: json['accountOpen'] as String,
-      profileTimezoneSet: json['profileTimezoneSet'] as String,
-      cardRemoveMember: json['cardRemoveMember'] as String,
-      timeEntryDelete: json['timeEntryDelete'] as String,
-      cardBudgetUnset: json['cardBudgetUnset'] == null
-          ? null
-          : TCard.fromJson(json['cardBudgetUnset'] as Map<String, dynamic>),
-      cardUndelete: json['cardUndelete'] == null
-          ? null
-          : TCard.fromJson(json['cardUndelete'] as Map<String, dynamic>),
-      userSetSkills: json['userSetSkills'] as String,
-      cardRename: json['cardRename'] == null
-          ? null
-          : TCard.fromJson(json['cardRename'] as Map<String, dynamic>),
-      cardDelete: json['cardDelete'] == null
-          ? null
-          : TCard.fromJson(json['cardDelete'] as Map<String, dynamic>),
-      cardLinkCreate: json['cardLinkCreate'] as String,
-      cardBudgetDecrease: json['cardBudgetDecrease'] == null
-          ? null
-          : TCard.fromJson(json['cardBudgetDecrease'] as Map<String, dynamic>),
-      feedMarkAsRead: json['feedMarkAsRead'] as String,
-      updateAvailability: json['updateAvailability'] as String,
-      cardDueDateSet: json['cardDueDateSet'] == null
-          ? null
-          : TCard.fromJson(json['cardDueDateSet'] as Map<String, dynamic>),
-      recordPayout: json['recordPayout'] as String,
-      contractStart: json['contractStart'] as String,
-      cardBudgetIncrease: json['cardBudgetIncrease'] == null
-          ? null
-          : TCard.fromJson(json['cardBudgetIncrease'] as Map<String, dynamic>),
-      feedPostMessage: json['feedPostMessage'] as String,
-      cardLinkDelete: json['cardLinkDelete'] as String,
-      linkOrCreateHubSpotContact: json['linkOrCreateHubSpotContact'] == null
-          ? null
-          : THubspotContact.fromJson(
-          json['linkOrCreateHubSpotContact'] as Map<String, dynamic>),
-      cardCreate: json['cardCreate'] == null
-          ? null
-          : TCard.fromJson(json['cardCreate'] as Map<String, dynamic>),
-      feedEditMessage: json['feedEditMessage'] as String,
-      timeEntryEdit: json['timeEntryEdit'] as String,
-      cardMetaSet: json['cardMetaSet'] as String,
-      feedDeleteMessage: json['feedDeleteMessage'] as String,
-      cardMove: json['cardMove'] == null
-          ? null
-          : TCard.fromJson(json['cardMove'] as Map<String, dynamic>),
-      contractEnd: json['contractEnd'] as String,
-      timeEntryCreate: json['timeEntryCreate'] as String,
-      removeReaction: json['removeReaction'] as String,
-      cardComplete: json['cardComplete'] == null
-          ? null
-          : TCard.fromJson(json['cardComplete'] as Map<String, dynamic>),
-      cardDueDateUnset: json['cardDueDateUnset'] == null
-          ? null
-          : TCard.fromJson(json['cardDueDateUnset'] as Map<String, dynamic>),
-      cardUncomplete: json['cardUncomplete'] == null
-          ? null
-          : TCard.fromJson(json['cardUncomplete'] as Map<String, dynamic>),
-      projectAddBalanceWithStripe:
-      json['projectAddBalanceWithStripe'] as String,
-      addReaction: json['addReaction'] as String,
-      accountTransfer: json['accountTransfer'] as String,
-      cardAssign: json['cardAssign'] == null
-          ? null
-          : TCard.fromJson(json['cardAssign'] as Map<String, dynamic>),
-      cardInviteUser: json['cardInviteUser'] == null
-          ? null
-          : TUser.fromJson(json['cardInviteUser'] as Map<String, dynamic>),
-      cardEstimateSet: json['cardEstimateSet'] == null
-          ? null
-          : TCard.fromJson(json['cardEstimateSet'] as Map<String, dynamic>),
-      userSetRoles: json['userSetRoles'] as String,
-      cardEstimateUnset: json['cardEstimateUnset'] == null
-          ? null
-          : TCard.fromJson(json['cardEstimateUnset'] as Map<String, dynamic>),
-      cardAddMember: json['cardAddMember'] as String,
-      cardTagsSet: json['cardTagsSet'] as String,
-      meetingRoomJoin: json['meetingRoomJoin'] == null
-          ? null
-          : TTwilioAuth.fromJson(
-          json['meetingRoomJoin'] as Map<String, dynamic>),
-      cardUnassign: json['cardUnassign'] == null
-          ? null
-          : TCard.fromJson(json['cardUnassign'] as Map<String, dynamic>),
-    );
-  }
-}
-
 /// The name property of a card was changed
 class TCardRenamed implements TTurtleEvent {
   TCardRenamed({this.actor,
@@ -2794,16 +2801,15 @@ class TCardBudgetIncreased implements TTurtleEvent {
   }
 }
 
-/// The authentication result after joining a twilio meeting room.
-class TTwilioAuth {
-  TTwilioAuth({this.token});
+/// Wrapper for a string scalar
+class TStringObject implements TDocumentToken {
+  TStringObject({this.value});
 
-  /// The token used for requests related to a twilio meeting room
-  String token;
+  String value;
 
-  factory TTwilioAuth.fromJson(Map<String, dynamic> json) {
-    return TTwilioAuth(
-      token: json['token'] as String,
+  factory TStringObject.fromJson(Map<String, dynamic> json) {
+    return TStringObject(
+      value: json['value'] as String,
     );
   }
 }
@@ -3044,7 +3050,7 @@ class TDurationRange implements TDocumentToken {
   }
 }
 
-class TCard implements TAccountSource, TDocumentToken, TFeedSource {
+class TCard implements TFeedSource, TDocumentToken, TAccountSource {
   TCard({this.assignee,
     this.assigneeId,
     this.budget,
@@ -3262,36 +3268,25 @@ class TMe {
   }
 }
 
-class THubspotContact {
-  THubspotContact({this.coreSkills,
-    this.githubUsername,
-    this.hourlyRate,
-    this.id,
-    this.recruitingStage});
-
-  List<String> coreSkills;
-
-  String githubUsername;
-
-  TMoney hourlyRate;
+class THubspotPipeline {
+  THubspotPipeline({this.id, this.label, this.stages});
 
   int id;
 
-  THubspotDealStage recruitingStage;
+  String label;
 
-  factory THubspotContact.fromJson(Map<String, dynamic> json) {
-    return THubspotContact(
-      coreSkills:
-      (json['coreSkills'] as List)?.map((e) => e as String)?.toList(),
-      githubUsername: json['githubUsername'] as String,
-      hourlyRate: json['hourlyRate'] == null
-          ? null
-          : TMoney.fromJson(json['hourlyRate'] as Map<String, dynamic>),
+  List<THubspotDealStage> stages;
+
+  factory THubspotPipeline.fromJson(Map<String, dynamic> json) {
+    return THubspotPipeline(
       id: json['id'] as int,
-      recruitingStage: json['recruitingStage'] == null
+      label: json['label'] as String,
+      stages: (json['stages'] as List)
+          ?.map((e) =>
+      e == null
           ? null
-          : THubspotDealStage.fromJson(
-          json['recruitingStage'] as Map<String, dynamic>),
+          : THubspotDealStage.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
     );
   }
 }
@@ -3487,25 +3482,34 @@ class TCardCreated implements TTurtleEvent {
   }
 }
 
-class THubspotPipeline {
-  THubspotPipeline({this.id, this.label, this.stages});
+class THubspotDealStage {
+  THubspotDealStage({this.active,
+    this.closedWon,
+    this.displayOrder,
+    this.id,
+    this.label,
+    this.probability});
+
+  bool active;
+
+  String closedWon;
+
+  int displayOrder;
 
   int id;
 
   String label;
 
-  List<THubspotDealStage> stages;
+  double probability;
 
-  factory THubspotPipeline.fromJson(Map<String, dynamic> json) {
-    return THubspotPipeline(
+  factory THubspotDealStage.fromJson(Map<String, dynamic> json) {
+    return THubspotDealStage(
+      active: json['active'] as bool,
+      closedWon: json['closedWon'] as String,
+      displayOrder: json['displayOrder'] as int,
       id: json['id'] as int,
       label: json['label'] as String,
-      stages: (json['stages'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : THubspotDealStage.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+      probability: json['probability'] as double,
     );
   }
 }
@@ -3800,51 +3804,6 @@ class TCardBudgetDecreased implements TTurtleEvent {
   }
 }
 
-class THubspotDealStage {
-  THubspotDealStage({this.active,
-    this.closedWon,
-    this.displayOrder,
-    this.id,
-    this.label,
-    this.probability});
-
-  bool active;
-
-  String closedWon;
-
-  int displayOrder;
-
-  int id;
-
-  String label;
-
-  double probability;
-
-  factory THubspotDealStage.fromJson(Map<String, dynamic> json) {
-    return THubspotDealStage(
-      active: json['active'] as bool,
-      closedWon: json['closedWon'] as String,
-      displayOrder: json['displayOrder'] as int,
-      id: json['id'] as int,
-      label: json['label'] as String,
-      probability: json['probability'] as double,
-    );
-  }
-}
-
-/// Wrapper for a string scalar
-class TStringObject implements TDocumentToken {
-  TStringObject({this.value});
-
-  String value;
-
-  factory TStringObject.fromJson(Map<String, dynamic> json) {
-    return TStringObject(
-      value: json['value'] as String,
-    );
-  }
-}
-
 /// The subscription for a specific user and feed.
 /// Contains user-specific info like unread counts.
 ///
@@ -3880,6 +3839,68 @@ class TFeedSubscription {
       unreadCount: json['unreadCount'] as int,
       userId: json['userId'] as String,
       version: json['version'] as String,
+    );
+  }
+}
+
+/// Represents the budget for a card. Currently only supports a time-based (not money-based) budget.
+class TCardBudget {
+  TCardBudget({this.duration});
+
+  /// The max number of hours allocated
+  bool duration;
+
+  factory TCardBudget.fromJson(Map<String, dynamic> json) {
+    return TCardBudget(
+      duration: json['duration'] as bool,
+    );
+  }
+}
+
+/// Wrapper for a date scalar
+class TDateObject implements TDocumentToken {
+  TDateObject({this.value});
+
+  ///
+  String value;
+
+  factory TDateObject.fromJson(Map<String, dynamic> json) {
+    return TDateObject(
+      value: json['value'] as String,
+    );
+  }
+}
+
+class THubspotContact {
+  THubspotContact({this.coreSkills,
+    this.githubUsername,
+    this.hourlyRate,
+    this.id,
+    this.recruitingStage});
+
+  List<String> coreSkills;
+
+  String githubUsername;
+
+  TMoney hourlyRate;
+
+  int id;
+
+  THubspotDealStage recruitingStage;
+
+  factory THubspotContact.fromJson(Map<String, dynamic> json) {
+    return THubspotContact(
+      coreSkills:
+      (json['coreSkills'] as List)?.map((e) => e as String)?.toList(),
+      githubUsername: json['githubUsername'] as String,
+      hourlyRate: json['hourlyRate'] == null
+          ? null
+          : TMoney.fromJson(json['hourlyRate'] as Map<String, dynamic>),
+      id: json['id'] as int,
+      recruitingStage: json['recruitingStage'] == null
+          ? null
+          : THubspotDealStage.fromJson(
+          json['recruitingStage'] as Map<String, dynamic>),
     );
   }
 }
@@ -3954,6 +3975,44 @@ class TTimeEntry implements TDocumentToken {
           ? null
           : TUser.fromJson(json['user'] as Map<String, dynamic>),
       version: json['version'] as String,
+    );
+  }
+}
+
+class TRootSubscriptionType {
+  TRootSubscriptionType({this.feedSubscriptionUpdated,
+    this.feedUpdated,
+    this.meetingUpdated,
+    this.unreadCountUpdated});
+
+  /// One or more attributes of a feed was updated.
+  ///
+  TFeedSubscription feedSubscriptionUpdated;
+
+  /// One or more attributes of a feed was updated
+  TFeed feedUpdated;
+
+  /// A meeting is updated. This could mean any state on the meeting has changed.
+  TMeeting meetingUpdated;
+
+  /// The current user's number of unread messages has changed
+  TMe unreadCountUpdated;
+
+  factory TRootSubscriptionType.fromJson(Map<String, dynamic> json) {
+    return TRootSubscriptionType(
+      feedSubscriptionUpdated: json['feedSubscriptionUpdated'] == null
+          ? null
+          : TFeedSubscription.fromJson(
+          json['feedSubscriptionUpdated'] as Map<String, dynamic>),
+      feedUpdated: json['feedUpdated'] == null
+          ? null
+          : TFeed.fromJson(json['feedUpdated'] as Map<String, dynamic>),
+      meetingUpdated: json['meetingUpdated'] == null
+          ? null
+          : TMeeting.fromJson(json['meetingUpdated'] as Map<String, dynamic>),
+      unreadCountUpdated: json['unreadCountUpdated'] == null
+          ? null
+          : TMe.fromJson(json['unreadCountUpdated'] as Map<String, dynamic>),
     );
   }
 }
@@ -4201,16 +4260,44 @@ class TCardBudgetUnset implements TTurtleEvent {
   }
 }
 
-/// Represents the budget for a card. Currently only supports a time-based (not money-based) budget.
-class TCardBudget {
-  TCardBudget({this.duration});
+/// The authentication result after joining a twilio meeting room.
+class TTwilioAuth {
+  TTwilioAuth({this.token});
 
-  /// The max number of hours allocated
-  bool duration;
+  /// The token used for requests related to a twilio meeting room
+  String token;
 
-  factory TCardBudget.fromJson(Map<String, dynamic> json) {
-    return TCardBudget(
-      duration: json['duration'] as bool,
+  factory TTwilioAuth.fromJson(Map<String, dynamic> json) {
+    return TTwilioAuth(
+      token: json['token'] as String,
+    );
+  }
+}
+
+/// A directional link between two cards in Turtle. Kind of like a hyperlink.
+/// Used for things like tying an internal management project to a customer project.
+///
+class TCardLink {
+  TCardLink({this.from, this.to, this.type});
+
+  /// The card the link is coming from
+  TCard from;
+
+  /// The card the link is going to
+  TCard to;
+
+  /// The type of link. For example management or turtle_support.
+  String type;
+
+  factory TCardLink.fromJson(Map<String, dynamic> json) {
+    return TCardLink(
+      from: json['from'] == null
+          ? null
+          : TCard.fromJson(json['from'] as Map<String, dynamic>),
+      to: json['to'] == null
+          ? null
+          : TCard.fromJson(json['to'] as Map<String, dynamic>),
+      type: json['type'] as String,
     );
   }
 }
@@ -4690,7 +4777,7 @@ class TTimeEntryCreated implements TTurtleEvent {
   }
 }
 
-class TUser implements TAccountSource, TDocumentToken, TFeedSource {
+class TUser implements TFeedSource, TDocumentToken, TAccountSource {
   TUser({this.activeContractsCount,
     this.contracts,
     this.email,
@@ -4950,34 +5037,6 @@ class TCardMemberRemoved implements TTurtleEvent {
   }
 }
 
-/// A directional link between two cards in Turtle. Kind of like a hyperlink.
-/// Used for things like tying an internal management project to a customer project.
-///
-class TCardLink {
-  TCardLink({this.from, this.to, this.type});
-
-  /// The card the link is coming from
-  TCard from;
-
-  /// The card the link is going to
-  TCard to;
-
-  /// The type of link. For example management or turtle_support.
-  String type;
-
-  factory TCardLink.fromJson(Map<String, dynamic> json) {
-    return TCardLink(
-      from: json['from'] == null
-          ? null
-          : TCard.fromJson(json['from'] as Map<String, dynamic>),
-      to: json['to'] == null
-          ? null
-          : TCard.fromJson(json['to'] as Map<String, dynamic>),
-      type: json['type'] as String,
-    );
-  }
-}
-
 /// An hourly contract between a project and user. Used in generating transactions when a user tracks time.
 /// It is worth noting that contracts are immutable. They can only be started and ended. (This is to avoid complications which we don't get into here.)
 ///
@@ -5033,6 +5092,76 @@ class TContract {
           ? null
           : TProject.fromJson(json['project'] as Map<String, dynamic>),
       startedAt: json['startedAt'] as String,
+    );
+  }
+}
+
+/// Represents a directive
+class T__Directive {
+  T__Directive({this.args,
+    this.description,
+    this.locations,
+    this.name,
+    this.onField,
+    this.onFragment,
+    this.onOperation});
+
+  List<T__InputValue> args;
+
+  String description;
+
+  List<T__DirectiveLocation> locations;
+
+  String name;
+
+  @Deprecated('Check `locations` field for enum value FIELD')
+  bool onField;
+
+  @Deprecated('Check `locations` field for enum value FRAGMENT_SPREAD')
+  bool onFragment;
+
+  @Deprecated('Check `locations` field for enum value OPERATION')
+  bool onOperation;
+
+  factory T__Directive.fromJson(Map<String, dynamic> json) {
+    return T__Directive(
+      args: (json['args'] as List)
+          ?.map((e) =>
+      e == null
+          ? null
+          : T__InputValue.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+      description: json['description'] as String,
+      locations: (json['locations'] as List)
+          ?.map((e) => T__DirectiveLocationValues[e])
+          ?.toList(),
+      name: json['name'] as String,
+      onField: json['onField'] as bool,
+      onFragment: json['onFragment'] as bool,
+      onOperation: json['onOperation'] as bool,
+    );
+  }
+}
+
+class T__InputValue {
+  T__InputValue({this.defaultValue, this.description, this.name, this.type});
+
+  String defaultValue;
+
+  String description;
+
+  String name;
+
+  T__Type type;
+
+  factory T__InputValue.fromJson(Map<String, dynamic> json) {
+    return T__InputValue(
+      defaultValue: json['defaultValue'] as String,
+      description: json['description'] as String,
+      name: json['name'] as String,
+      type: json['type'] == null
+          ? null
+          : T__Type.fromJson(json['type'] as Map<String, dynamic>),
     );
   }
 }
@@ -5119,6 +5248,28 @@ class T__Field {
   }
 }
 
+class T__EnumValue {
+  T__EnumValue(
+      {this.deprecationReason, this.description, this.isDeprecated, this.name});
+
+  String deprecationReason;
+
+  String description;
+
+  bool isDeprecated;
+
+  String name;
+
+  factory T__EnumValue.fromJson(Map<String, dynamic> json) {
+    return T__EnumValue(
+      deprecationReason: json['deprecationReason'] as String,
+      description: json['description'] as String,
+      isDeprecated: json['isDeprecated'] as bool,
+      name: json['name'] as String,
+    );
+  }
+}
+
 /// Represents scalars, interfaces, object types, unions, enums in the system
 class T__Type {
   T__Type({this.description,
@@ -5185,98 +5336,6 @@ class T__Type {
   }
 }
 
-class T__InputValue {
-  T__InputValue({this.defaultValue, this.description, this.name, this.type});
-
-  String defaultValue;
-
-  String description;
-
-  String name;
-
-  T__Type type;
-
-  factory T__InputValue.fromJson(Map<String, dynamic> json) {
-    return T__InputValue(
-      defaultValue: json['defaultValue'] as String,
-      description: json['description'] as String,
-      name: json['name'] as String,
-      type: json['type'] == null
-          ? null
-          : T__Type.fromJson(json['type'] as Map<String, dynamic>),
-    );
-  }
-}
-
-/// Represents a directive
-class T__Directive {
-  T__Directive({this.args,
-    this.description,
-    this.locations,
-    this.name,
-    this.onField,
-    this.onFragment,
-    this.onOperation});
-
-  List<T__InputValue> args;
-
-  String description;
-
-  List<T__DirectiveLocation> locations;
-
-  String name;
-
-  @Deprecated('Check `locations` field for enum value FIELD')
-  bool onField;
-
-  @Deprecated('Check `locations` field for enum value FRAGMENT_SPREAD')
-  bool onFragment;
-
-  @Deprecated('Check `locations` field for enum value OPERATION')
-  bool onOperation;
-
-  factory T__Directive.fromJson(Map<String, dynamic> json) {
-    return T__Directive(
-      args: (json['args'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : T__InputValue.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      description: json['description'] as String,
-      locations: (json['locations'] as List)
-          ?.map((e) => T__DirectiveLocationValues[e])
-          ?.toList(),
-      name: json['name'] as String,
-      onField: json['onField'] as bool,
-      onFragment: json['onFragment'] as bool,
-      onOperation: json['onOperation'] as bool,
-    );
-  }
-}
-
-class T__EnumValue {
-  T__EnumValue(
-      {this.deprecationReason, this.description, this.isDeprecated, this.name});
-
-  String deprecationReason;
-
-  String description;
-
-  bool isDeprecated;
-
-  String name;
-
-  factory T__EnumValue.fromJson(Map<String, dynamic> json) {
-    return T__EnumValue(
-      deprecationReason: json['deprecationReason'] as String,
-      description: json['description'] as String,
-      isDeprecated: json['isDeprecated'] as bool,
-      name: json['name'] as String,
-    );
-  }
-}
-
 enum TNotificationDeliveryType {
   EMAIL,
   PUSH,
@@ -5285,15 +5344,16 @@ final TNotificationDeliveryTypeValues = {
   "EMAIL": TNotificationDeliveryType.EMAIL,
   "PUSH": TNotificationDeliveryType.PUSH,
 };
-enum TMeetingRecordingStatus {
-  COMPLETED,
+enum TFeedSubscriptionStatus {
   DELETED,
-  PROCESSING,
+  FOLLOWING,
+  MUTED,
 }
-final TMeetingRecordingStatusValues = {
-  "COMPLETED": TMeetingRecordingStatus.COMPLETED,
-  "DELETED": TMeetingRecordingStatus.DELETED,
-  "PROCESSING": TMeetingRecordingStatus.PROCESSING,
+
+final TFeedSubscriptionStatusValues = {
+  "DELETED": TFeedSubscriptionStatus.DELETED,
+  "FOLLOWING": TFeedSubscriptionStatus.FOLLOWING,
+  "MUTED": TFeedSubscriptionStatus.MUTED,
 };
 enum TAccountType {
   EXTERNAL,
@@ -5307,6 +5367,39 @@ final TAccountTypeValues = {
   "TURTLE": TAccountType.TURTLE,
   "USER": TAccountType.USER,
 };
+enum TReadStatus {
+  ALL,
+  READ,
+  SUBSCRIBED,
+  UNREAD,
+}
+
+final TReadStatusValues = {
+  "ALL": TReadStatus.ALL,
+  "READ": TReadStatus.READ,
+  "SUBSCRIBED": TReadStatus.SUBSCRIBED,
+  "UNREAD": TReadStatus.UNREAD,
+};
+enum TMeetingParticipantFilter {
+  ALL,
+  CONNECTED,
+}
+
+final TMeetingParticipantFilterValues = {
+  "ALL": TMeetingParticipantFilter.ALL,
+  "CONNECTED": TMeetingParticipantFilter.CONNECTED,
+};
+enum TMeetingStatus {
+  COMPLETED,
+  FAILED,
+  IN_PROGRESS,
+}
+
+final TMeetingStatusValues = {
+  "COMPLETED": TMeetingStatus.COMPLETED,
+  "FAILED": TMeetingStatus.FAILED,
+  "IN_PROGRESS": TMeetingStatus.IN_PROGRESS,
+};
 enum TPermission {
   ADMIN_VIEW,
   MY_ACCOUNTING_VIEW,
@@ -5318,28 +5411,6 @@ final TPermissionValues = {
   "MY_ACCOUNTING_VIEW": TPermission.MY_ACCOUNTING_VIEW,
   "PROJECT_ACCOUNTING_VIEW": TPermission.PROJECT_ACCOUNTING_VIEW,
   "PROJECT_MEMBERS_MANAGE": TPermission.PROJECT_MEMBERS_MANAGE,
-};
-enum TFeedSubscriptionStatus {
-  DELETED,
-  FOLLOWING,
-  MUTED,
-}
-final TFeedSubscriptionStatusValues = {
-  "DELETED": TFeedSubscriptionStatus.DELETED,
-  "FOLLOWING": TFeedSubscriptionStatus.FOLLOWING,
-  "MUTED": TFeedSubscriptionStatus.MUTED,
-};
-enum TReadStatus {
-  ALL,
-  READ,
-  SUBSCRIBED,
-  UNREAD,
-}
-final TReadStatusValues = {
-  "ALL": TReadStatus.ALL,
-  "READ": TReadStatus.READ,
-  "SUBSCRIBED": TReadStatus.SUBSCRIBED,
-  "UNREAD": TReadStatus.UNREAD,
 };
 enum TRole {
   ADMIN,
@@ -5353,15 +5424,18 @@ final TRoleValues = {
   "CUSTOMER": TRole.CUSTOMER,
   "MANAGER": TRole.MANAGER,
 };
-enum TMeetingStatus {
+enum TMeetingRecordingStatus {
   COMPLETED,
-  FAILED,
-  IN_PROGRESS,
+  DELETED,
+  ENQUEUED,
+  PROCESSING,
 }
-final TMeetingStatusValues = {
-  "COMPLETED": TMeetingStatus.COMPLETED,
-  "FAILED": TMeetingStatus.FAILED,
-  "IN_PROGRESS": TMeetingStatus.IN_PROGRESS,
+
+final TMeetingRecordingStatusValues = {
+  "COMPLETED": TMeetingRecordingStatus.COMPLETED,
+  "DELETED": TMeetingRecordingStatus.DELETED,
+  "ENQUEUED": TMeetingRecordingStatus.ENQUEUED,
+  "PROCESSING": TMeetingRecordingStatus.PROCESSING,
 };
 enum T__DirectiveLocation {
   FIELD,
