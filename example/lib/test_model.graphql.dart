@@ -1173,428 +1173,6 @@ class TCardUnassigned implements TTurtleEvent {
   }
 }
 
-abstract class TMutation {
-  Future<Map<String, dynamic>> query(
-      {String document, Map<String, dynamic> variables});
-
-  Future<TRaw> sendLowBalanceReminder(
-      TSendLowBalanceReminderInput input) async {
-    var result = await query(document: """
-	mutation sendLowBalanceReminder(\$input: TSendLowBalanceReminderInput! ){
-	sendLowBalanceReminder(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["sendLowBalanceReminder"]);
-  }
-
-  Future<TRaw> profileNameSet(TProfileNameSetInput input) async {
-    var result = await query(document: """
-	mutation profileNameSet(\$input: TProfileNameSetInput! ){
-	profileNameSet(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["profileNameSet"]);
-  }
-
-  Future<TRaw> accountOpen(TAccountOpenInput input) async {
-    var result = await query(document: """
-	mutation accountOpen(\$input: TAccountOpenInput! ){
-	accountOpen(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["accountOpen"]);
-  }
-
-  Future<TRaw> profileTimezoneSet(TProfileTimezoneSetInput input) async {
-    var result = await query(document: """
-	mutation profileTimezoneSet(\$input: TProfileTimezoneSetInput! ){
-	profileTimezoneSet(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["profileTimezoneSet"]);
-  }
-
-  Future<TRaw> cardRemoveMember(TCardRemoveMemberInput input) async {
-    var result = await query(document: """
-	mutation cardRemoveMember(\$input: TCardRemoveMemberInput! ){
-	cardRemoveMember(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["cardRemoveMember"]);
-  }
-
-  Future<TRaw> timeEntryDelete(TTimeEntryDeleteInput input) async {
-    var result = await query(document: """
-	mutation timeEntryDelete(\$input: TTimeEntryDeleteInput! ){
-	timeEntryDelete(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["timeEntryDelete"]);
-  }
-
-  Future<TCard> cardBudgetUnset(TCardBudgetUnsetInput input) async {
-    var result = await query(document: """
-	mutation cardBudgetUnset(\$input: TCardBudgetUnsetInput! ){
-	cardBudgetUnset(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardBudgetUnset"]);
-  }
-
-  Future<TCard> cardUndelete(TCardUndeleteInput input) async {
-    var result = await query(document: """
-	mutation cardUndelete(\$input: TCardUndeleteInput! ){
-	cardUndelete(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardUndelete"]);
-  }
-
-  Future<TRaw> userSetSkills(TUserSetSkillsInput input) async {
-    var result = await query(document: """
-	mutation userSetSkills(\$input: TUserSetSkillsInput! ){
-	userSetSkills(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["userSetSkills"]);
-  }
-
-  Future<TCard> cardRename(TCardRenameInput input) async {
-    var result = await query(document: """
-	mutation cardRename(\$input: TCardRenameInput! ){
-	cardRename(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardRename"]);
-  }
-
-  Future<TCard> cardDelete(TCardDeleteInput input) async {
-    var result = await query(document: """
-	mutation cardDelete(\$input: TCardDeleteInput! ){
-	cardDelete(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardDelete"]);
-  }
-
-  Future<TRaw> cardLinkCreate(TCardLinkCreateInput input) async {
-    var result = await query(document: """
-	mutation cardLinkCreate(\$input: TCardLinkCreateInput! ){
-	cardLinkCreate(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["cardLinkCreate"]);
-  }
-
-  Future<TCard> cardBudgetDecrease(TCardBudgetDecreaseInput input) async {
-    var result = await query(document: """
-	mutation cardBudgetDecrease(\$input: TCardBudgetDecreaseInput! ){
-	cardBudgetDecrease(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardBudgetDecrease"]);
-  }
-
-  Future<TRaw> feedMarkAsRead(TFeedMarkAsReadInput input) async {
-    var result = await query(document: """
-	mutation feedMarkAsRead(\$input: TFeedMarkAsReadInput! ){
-	feedMarkAsRead(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["feedMarkAsRead"]);
-  }
-
-  Future<TRaw> updateAvailability(TUpdateAvailabilityInput input) async {
-    var result = await query(document: """
-	mutation updateAvailability(\$input: TUpdateAvailabilityInput! ){
-	updateAvailability(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["updateAvailability"]);
-  }
-
-  Future<TCard> cardDueDateSet(TCardDueDateSetInput input) async {
-    var result = await query(document: """
-	mutation cardDueDateSet(\$input: TCardDueDateSetInput! ){
-	cardDueDateSet(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardDueDateSet"]);
-  }
-
-  Future<TRaw> recordPayout(TRecordPayoutInput input) async {
-    var result = await query(document: """
-	mutation recordPayout(\$input: TRecordPayoutInput! ){
-	recordPayout(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["recordPayout"]);
-  }
-
-  Future<TRaw> contractStart(TContractStartInput input) async {
-    var result = await query(document: """
-	mutation contractStart(\$input: TContractStartInput! ){
-	contractStart(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["contractStart"]);
-  }
-
-  Future<TCard> cardBudgetIncrease(TCardBudgetIncreaseInput input) async {
-    var result = await query(document: """
-	mutation cardBudgetIncrease(\$input: TCardBudgetIncreaseInput! ){
-	cardBudgetIncrease(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardBudgetIncrease"]);
-  }
-
-  Future<TRaw> feedPostMessage(TFeedPostMessageInput input) async {
-    var result = await query(document: """
-	mutation feedPostMessage(\$input: TFeedPostMessageInput! ){
-	feedPostMessage(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["feedPostMessage"]);
-  }
-
-  Future<TRaw> cardLinkDelete(TCardLinkDeleteInput input) async {
-    var result = await query(document: """
-	mutation cardLinkDelete(\$input: TCardLinkDeleteInput! ){
-	cardLinkDelete(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["cardLinkDelete"]);
-  }
-
-  Future<THubspotContact> linkOrCreateHubSpotContact(String userId) async {
-    var result = await query(document: """
-	mutation linkOrCreateHubSpotContact(\$userId: String! ){
-	linkOrCreateHubSpotContact(userId:\$userId){FIELDS 
-	}
-	""", variables: {"userId": userId});
-    return THubspotContact.fromJson(
-        result["data"]["linkOrCreateHubSpotContact"]);
-  }
-
-  Future<TCard> cardCreate(TCardCreateInput input) async {
-    var result = await query(document: """
-	mutation cardCreate(\$input: TCardCreateInput! ){
-	cardCreate(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardCreate"]);
-  }
-
-  Future<TRaw> feedEditMessage(TFeedEditMessageInput input) async {
-    var result = await query(document: """
-	mutation feedEditMessage(\$input: TFeedEditMessageInput! ){
-	feedEditMessage(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["feedEditMessage"]);
-  }
-
-  Future<TRaw> timeEntryEdit(TTimeEntryEditInput input) async {
-    var result = await query(document: """
-	mutation timeEntryEdit(\$input: TTimeEntryEditInput! ){
-	timeEntryEdit(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["timeEntryEdit"]);
-  }
-
-  Future<TRaw> cardMetaSet(TCardMetaSetInput input) async {
-    var result = await query(document: """
-	mutation cardMetaSet(\$input: TCardMetaSetInput! ){
-	cardMetaSet(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["cardMetaSet"]);
-  }
-
-  Future<TRaw> feedDeleteMessage(TFeedDeleteMessageInput input) async {
-    var result = await query(document: """
-	mutation feedDeleteMessage(\$input: TFeedDeleteMessageInput! ){
-	feedDeleteMessage(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["feedDeleteMessage"]);
-  }
-
-  Future<TCard> cardMove(TCardMoveInput input) async {
-    var result = await query(document: """
-	mutation cardMove(\$input: TCardMoveInput! ){
-	cardMove(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardMove"]);
-  }
-
-  Future<TRaw> contractEnd(TContractEndInput input) async {
-    var result = await query(document: """
-	mutation contractEnd(\$input: TContractEndInput! ){
-	contractEnd(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["contractEnd"]);
-  }
-
-  Future<TRaw> timeEntryCreate(TTimeEntryCreateInput input) async {
-    var result = await query(document: """
-	mutation timeEntryCreate(\$input: TTimeEntryCreateInput! ){
-	timeEntryCreate(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["timeEntryCreate"]);
-  }
-
-  Future<TRaw> removeReaction(TRemoveReactionInput input) async {
-    var result = await query(document: """
-	mutation removeReaction(\$input: TRemoveReactionInput! ){
-	removeReaction(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["removeReaction"]);
-  }
-
-  Future<TCard> cardComplete(TCardCompleteInput input) async {
-    var result = await query(document: """
-	mutation cardComplete(\$input: TCardCompleteInput! ){
-	cardComplete(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardComplete"]);
-  }
-
-  Future<TCard> cardDueDateUnset(TCardDueDateUnsetInput input) async {
-    var result = await query(document: """
-	mutation cardDueDateUnset(\$input: TCardDueDateUnsetInput! ){
-	cardDueDateUnset(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardDueDateUnset"]);
-  }
-
-  Future<TCard> cardUncomplete(TCardUncompleteInput input) async {
-    var result = await query(document: """
-	mutation cardUncomplete(\$input: TCardUncompleteInput! ){
-	cardUncomplete(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardUncomplete"]);
-  }
-
-  Future<TRaw> projectAddBalanceWithStripe(
-      TProjectAddBalanceWithStripeInput input) async {
-    var result = await query(document: """
-	mutation projectAddBalanceWithStripe(\$input: TProjectAddBalanceWithStripeInput! ){
-	projectAddBalanceWithStripe(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["projectAddBalanceWithStripe"]);
-  }
-
-  Future<TRaw> addReaction(TAddReactionInput input) async {
-    var result = await query(document: """
-	mutation addReaction(\$input: TAddReactionInput! ){
-	addReaction(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["addReaction"]);
-  }
-
-  Future<TRaw> accountTransfer(TAccountTransferInput input) async {
-    var result = await query(document: """
-	mutation accountTransfer(\$input: TAccountTransferInput! ){
-	accountTransfer(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["accountTransfer"]);
-  }
-
-  Future<TCard> cardAssign(TCardAssignInput input) async {
-    var result = await query(document: """
-	mutation cardAssign(\$input: TCardAssignInput! ){
-	cardAssign(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardAssign"]);
-  }
-
-  Future<TUser> cardInviteUser(TCardInviteUserInput input) async {
-    var result = await query(document: """
-	mutation cardInviteUser(\$input: TCardInviteUserInput! ){
-	cardInviteUser(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TUser.fromJson(result["data"]["cardInviteUser"]);
-  }
-
-  Future<TCard> cardEstimateSet(TCardEstimateSetInput input) async {
-    var result = await query(document: """
-	mutation cardEstimateSet(\$input: TCardEstimateSetInput! ){
-	cardEstimateSet(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardEstimateSet"]);
-  }
-
-  Future<TRaw> userSetRoles(TUserSetRolesInput input) async {
-    var result = await query(document: """
-	mutation userSetRoles(\$input: TUserSetRolesInput! ){
-	userSetRoles(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["userSetRoles"]);
-  }
-
-  Future<TCard> cardEstimateUnset(TCardEstimateUnsetInput input) async {
-    var result = await query(document: """
-	mutation cardEstimateUnset(\$input: TCardEstimateUnsetInput! ){
-	cardEstimateUnset(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardEstimateUnset"]);
-  }
-
-  Future<TRaw> cardAddMember(TCardAddMemberInput input) async {
-    var result = await query(document: """
-	mutation cardAddMember(\$input: TCardAddMemberInput! ){
-	cardAddMember(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["cardAddMember"]);
-  }
-
-  Future<TRaw> cardTagsSet(TCardTagsSetInput input) async {
-    var result = await query(document: """
-	mutation cardTagsSet(\$input: TCardTagsSetInput! ){
-	cardTagsSet(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TRaw.fromJson(result["data"]["cardTagsSet"]);
-  }
-
-  Future<TTwilioAuth> meetingRoomJoin(String projectId) async {
-    var result = await query(document: """
-	mutation meetingRoomJoin(\$projectId: String! ){
-	meetingRoomJoin(projectId:\$projectId){FIELDS 
-	}
-	""", variables: {"projectId": projectId});
-    return TTwilioAuth.fromJson(result["data"]["meetingRoomJoin"]);
-  }
-
-  Future<TCard> cardUnassign(TCardUnassignInput input) async {
-    var result = await query(document: """
-	mutation cardUnassign(\$input: TCardUnassignInput! ){
-	cardUnassign(input:\$input){FIELDS 
-	}
-	""", variables: {"input": input});
-    return TCard.fromJson(result["data"]["cardUnassign"]);
-  }
-}
-
 class TRootMutationType {
   TRootMutationType({this.sendLowBalanceReminder,
     this.profileNameSet,
@@ -1643,27 +1221,27 @@ class TRootMutationType {
     this.meetingRoomJoin,
     this.cardUnassign});
 
-  String sendLowBalanceReminder;
+  dynamic sendLowBalanceReminder;
 
-  String profileNameSet;
+  dynamic profileNameSet;
 
   /// Open an account if one doesn't already exist
-  String accountOpen;
+  dynamic accountOpen;
 
-  String profileTimezoneSet;
+  dynamic profileTimezoneSet;
 
   /// Remove a user from a project.
   /// They will lose access to everything in the project.
   ///
-  String cardRemoveMember;
+  dynamic cardRemoveMember;
 
-  String timeEntryDelete;
+  dynamic timeEntryDelete;
 
   TCard cardBudgetUnset;
 
   TCard cardUndelete;
 
-  String userSetSkills;
+  dynamic userSetSkills;
 
   /// Change the name of a card (or project)
   TCard cardRename;
@@ -1671,32 +1249,32 @@ class TRootMutationType {
   /// Delete a card (project/task)
   TCard cardDelete;
 
-  String cardLinkCreate;
+  dynamic cardLinkCreate;
 
   TCard cardBudgetDecrease;
 
-  String feedMarkAsRead;
+  dynamic feedMarkAsRead;
 
-  String updateAvailability;
+  dynamic updateAvailability;
 
   /// Set the due date of a card.
   /// Use CardDueDateUnset to remove the due date.
   ///
   TCard cardDueDateSet;
 
-  String recordPayout;
+  dynamic recordPayout;
 
   /// Start a contract between a person and a project.
   /// This is required for a contractor to start billing time and working on a project so the accounting system can generate the proper transactions when time is tracked.
   /// Note: contracts are immutable. To change a contractor's rate, you must end a contract and start a new one.
   ///
-  String contractStart;
+  dynamic contractStart;
 
   TCard cardBudgetIncrease;
 
-  String feedPostMessage;
+  dynamic feedPostMessage;
 
-  String cardLinkDelete;
+  dynamic cardLinkDelete;
 
   /// Link or create HubSpot contact
   THubspotContact linkOrCreateHubSpotContact;
@@ -1705,13 +1283,13 @@ class TRootMutationType {
   ///
   TCard cardCreate;
 
-  String feedEditMessage;
+  dynamic feedEditMessage;
 
-  String timeEntryEdit;
+  dynamic timeEntryEdit;
 
-  String cardMetaSet;
+  dynamic cardMetaSet;
 
-  String feedDeleteMessage;
+  dynamic feedDeleteMessage;
 
   /// Move a card (task) from one location to another.
   /// Currently only possible to move cards that belong to a project within their own project.
@@ -1721,11 +1299,11 @@ class TRootMutationType {
   /// End a contract.
   /// This means time can no longer be tracked by a contractor to this project without a new contract being started.
   ///
-  String contractEnd;
+  dynamic contractEnd;
 
-  String timeEntryCreate;
+  dynamic timeEntryCreate;
 
-  String removeReaction;
+  dynamic removeReaction;
 
   /// Mark a card as complete
   TCard cardComplete;
@@ -1735,13 +1313,13 @@ class TRootMutationType {
 
   TCard cardUncomplete;
 
-  String projectAddBalanceWithStripe;
+  dynamic projectAddBalanceWithStripe;
 
-  String addReaction;
+  dynamic addReaction;
 
   /// Transfer money from one account to another.
   ///
-  String accountTransfer;
+  dynamic accountTransfer;
 
   /// Assign a card to a user
   TCard cardAssign;
@@ -1750,14 +1328,14 @@ class TRootMutationType {
 
   TCard cardEstimateSet;
 
-  String userSetRoles;
+  dynamic userSetRoles;
 
   TCard cardEstimateUnset;
 
   /// Add a user to a project.
-  String cardAddMember;
+  dynamic cardAddMember;
 
-  String cardTagsSet;
+  dynamic cardTagsSet;
 
   TTwilioAuth meetingRoomJoin;
 
@@ -1765,41 +1343,41 @@ class TRootMutationType {
 
   factory TRootMutationType.fromJson(Map<String, dynamic> json) {
     return TRootMutationType(
-      sendLowBalanceReminder: json['sendLowBalanceReminder'] as String,
-      profileNameSet: json['profileNameSet'] as String,
-      accountOpen: json['accountOpen'] as String,
-      profileTimezoneSet: json['profileTimezoneSet'] as String,
-      cardRemoveMember: json['cardRemoveMember'] as String,
-      timeEntryDelete: json['timeEntryDelete'] as String,
+      sendLowBalanceReminder: json['sendLowBalanceReminder'],
+      profileNameSet: json['profileNameSet'],
+      accountOpen: json['accountOpen'],
+      profileTimezoneSet: json['profileTimezoneSet'],
+      cardRemoveMember: json['cardRemoveMember'],
+      timeEntryDelete: json['timeEntryDelete'],
       cardBudgetUnset: json['cardBudgetUnset'] == null
           ? null
           : TCard.fromJson(json['cardBudgetUnset'] as Map<String, dynamic>),
       cardUndelete: json['cardUndelete'] == null
           ? null
           : TCard.fromJson(json['cardUndelete'] as Map<String, dynamic>),
-      userSetSkills: json['userSetSkills'] as String,
+      userSetSkills: json['userSetSkills'],
       cardRename: json['cardRename'] == null
           ? null
           : TCard.fromJson(json['cardRename'] as Map<String, dynamic>),
       cardDelete: json['cardDelete'] == null
           ? null
           : TCard.fromJson(json['cardDelete'] as Map<String, dynamic>),
-      cardLinkCreate: json['cardLinkCreate'] as String,
+      cardLinkCreate: json['cardLinkCreate'],
       cardBudgetDecrease: json['cardBudgetDecrease'] == null
           ? null
           : TCard.fromJson(json['cardBudgetDecrease'] as Map<String, dynamic>),
-      feedMarkAsRead: json['feedMarkAsRead'] as String,
-      updateAvailability: json['updateAvailability'] as String,
+      feedMarkAsRead: json['feedMarkAsRead'],
+      updateAvailability: json['updateAvailability'],
       cardDueDateSet: json['cardDueDateSet'] == null
           ? null
           : TCard.fromJson(json['cardDueDateSet'] as Map<String, dynamic>),
-      recordPayout: json['recordPayout'] as String,
-      contractStart: json['contractStart'] as String,
+      recordPayout: json['recordPayout'],
+      contractStart: json['contractStart'],
       cardBudgetIncrease: json['cardBudgetIncrease'] == null
           ? null
           : TCard.fromJson(json['cardBudgetIncrease'] as Map<String, dynamic>),
-      feedPostMessage: json['feedPostMessage'] as String,
-      cardLinkDelete: json['cardLinkDelete'] as String,
+      feedPostMessage: json['feedPostMessage'],
+      cardLinkDelete: json['cardLinkDelete'],
       linkOrCreateHubSpotContact: json['linkOrCreateHubSpotContact'] == null
           ? null
           : THubspotContact.fromJson(
@@ -1807,16 +1385,16 @@ class TRootMutationType {
       cardCreate: json['cardCreate'] == null
           ? null
           : TCard.fromJson(json['cardCreate'] as Map<String, dynamic>),
-      feedEditMessage: json['feedEditMessage'] as String,
-      timeEntryEdit: json['timeEntryEdit'] as String,
-      cardMetaSet: json['cardMetaSet'] as String,
-      feedDeleteMessage: json['feedDeleteMessage'] as String,
+      feedEditMessage: json['feedEditMessage'],
+      timeEntryEdit: json['timeEntryEdit'],
+      cardMetaSet: json['cardMetaSet'],
+      feedDeleteMessage: json['feedDeleteMessage'],
       cardMove: json['cardMove'] == null
           ? null
           : TCard.fromJson(json['cardMove'] as Map<String, dynamic>),
-      contractEnd: json['contractEnd'] as String,
-      timeEntryCreate: json['timeEntryCreate'] as String,
-      removeReaction: json['removeReaction'] as String,
+      contractEnd: json['contractEnd'],
+      timeEntryCreate: json['timeEntryCreate'],
+      removeReaction: json['removeReaction'],
       cardComplete: json['cardComplete'] == null
           ? null
           : TCard.fromJson(json['cardComplete'] as Map<String, dynamic>),
@@ -1826,10 +1404,9 @@ class TRootMutationType {
       cardUncomplete: json['cardUncomplete'] == null
           ? null
           : TCard.fromJson(json['cardUncomplete'] as Map<String, dynamic>),
-      projectAddBalanceWithStripe:
-      json['projectAddBalanceWithStripe'] as String,
-      addReaction: json['addReaction'] as String,
-      accountTransfer: json['accountTransfer'] as String,
+      projectAddBalanceWithStripe: json['projectAddBalanceWithStripe'],
+      addReaction: json['addReaction'],
+      accountTransfer: json['accountTransfer'],
       cardAssign: json['cardAssign'] == null
           ? null
           : TCard.fromJson(json['cardAssign'] as Map<String, dynamic>),
@@ -1839,12 +1416,12 @@ class TRootMutationType {
       cardEstimateSet: json['cardEstimateSet'] == null
           ? null
           : TCard.fromJson(json['cardEstimateSet'] as Map<String, dynamic>),
-      userSetRoles: json['userSetRoles'] as String,
+      userSetRoles: json['userSetRoles'],
       cardEstimateUnset: json['cardEstimateUnset'] == null
           ? null
           : TCard.fromJson(json['cardEstimateUnset'] as Map<String, dynamic>),
-      cardAddMember: json['cardAddMember'] as String,
-      cardTagsSet: json['cardTagsSet'] as String,
+      cardAddMember: json['cardAddMember'],
+      cardTagsSet: json['cardTagsSet'],
       meetingRoomJoin: json['meetingRoomJoin'] == null
           ? null
           : TTwilioAuth.fromJson(
@@ -3120,7 +2697,7 @@ class TCard implements TFeedSource, TDocumentToken, TAccountSource {
   /// The users that are members of the current card. Only applies to root project cards.
   List<TUser> members;
 
-  String meta;
+  dynamic meta;
 
   /// The title of the card. This is what is usually rendered in a task list.
   String name;
@@ -3181,7 +2758,7 @@ class TCard implements TFeedSource, TDocumentToken, TAccountSource {
           ?.map((e) =>
       e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      meta: json['meta'] as String,
+      meta: json['meta'],
       name: json['name'] as String,
       outgoingLinks: (json['outgoingLinks'] as List)
           ?.map((e) =>
@@ -4031,7 +3608,7 @@ class TCommand {
 
   int id;
 
-  String input;
+  dynamic input;
 
   String requestId;
 
@@ -4044,7 +3621,7 @@ class TCommand {
           : TUser.fromJson(json['actor'] as Map<String, dynamic>),
       executedAt: json['executedAt'] as String,
       id: json['id'] as int,
-      input: json['input'] as String,
+      input: json['input'],
       requestId: json['requestId'] as String,
       type: json['type'] as String,
     );
@@ -4144,7 +3721,7 @@ class TProject {
 
   List<TUser> members;
 
-  String meta;
+  dynamic meta;
 
   String name;
 
@@ -4192,7 +3769,7 @@ class TProject {
           ?.map((e) =>
       e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
           ?.toList(),
-      meta: json['meta'] as String,
+      meta: json['meta'],
       name: json['name'] as String,
       projectStatusTags: (json['projectStatusTags'] as List)
           ?.map((e) => e as String)
@@ -5336,6 +4913,640 @@ class T__Type {
   }
 }
 
+abstract class TMutation {
+  Future<Map<String, dynamic>> query(
+      {String document, Map<String, dynamic> variables});
+
+  Future<dynamic> sendLowBalanceReminder(
+      TSendLowBalanceReminderInput input) async {
+    var result = await query(document: """
+	mutation sendLowBalanceReminder(\$input: TSendLowBalanceReminderInput! ){
+	sendLowBalanceReminder(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][sendLowBalanceReminder];
+  }
+
+  Future<dynamic> profileNameSet(TProfileNameSetInput input) async {
+    var result = await query(document: """
+	mutation profileNameSet(\$input: TProfileNameSetInput! ){
+	profileNameSet(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][profileNameSet];
+  }
+
+  Future<dynamic> accountOpen(TAccountOpenInput input) async {
+    var result = await query(document: """
+	mutation accountOpen(\$input: TAccountOpenInput! ){
+	accountOpen(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][accountOpen];
+  }
+
+  Future<dynamic> profileTimezoneSet(TProfileTimezoneSetInput input) async {
+    var result = await query(document: """
+	mutation profileTimezoneSet(\$input: TProfileTimezoneSetInput! ){
+	profileTimezoneSet(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][profileTimezoneSet];
+  }
+
+  Future<dynamic> cardRemoveMember(TCardRemoveMemberInput input) async {
+    var result = await query(document: """
+	mutation cardRemoveMember(\$input: TCardRemoveMemberInput! ){
+	cardRemoveMember(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][cardRemoveMember];
+  }
+
+  Future<dynamic> timeEntryDelete(TTimeEntryDeleteInput input) async {
+    var result = await query(document: """
+	mutation timeEntryDelete(\$input: TTimeEntryDeleteInput! ){
+	timeEntryDelete(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][timeEntryDelete];
+  }
+
+  Future<TCard> cardBudgetUnset(TCardBudgetUnsetInput input) async {
+    var result = await query(document: """
+	mutation cardBudgetUnset(\$input: TCardBudgetUnsetInput! ){
+	cardBudgetUnset(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(
+        result['data'][cardBudgetUnset] as Map<String, dynamic>);
+  }
+
+  Future<TCard> cardUndelete(TCardUndeleteInput input) async {
+    var result = await query(document: """
+	mutation cardUndelete(\$input: TCardUndeleteInput! ){
+	cardUndelete(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result['data'][cardUndelete] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> userSetSkills(TUserSetSkillsInput input) async {
+    var result = await query(document: """
+	mutation userSetSkills(\$input: TUserSetSkillsInput! ){
+	userSetSkills(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][userSetSkills];
+  }
+
+  Future<TCard> cardRename(TCardRenameInput input) async {
+    var result = await query(document: """
+	mutation cardRename(\$input: TCardRenameInput! ){
+	cardRename(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result['data'][cardRename] as Map<String, dynamic>);
+  }
+
+  Future<TCard> cardDelete(TCardDeleteInput input) async {
+    var result = await query(document: """
+	mutation cardDelete(\$input: TCardDeleteInput! ){
+	cardDelete(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result['data'][cardDelete] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> cardLinkCreate(TCardLinkCreateInput input) async {
+    var result = await query(document: """
+	mutation cardLinkCreate(\$input: TCardLinkCreateInput! ){
+	cardLinkCreate(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][cardLinkCreate];
+  }
+
+  Future<TCard> cardBudgetDecrease(TCardBudgetDecreaseInput input) async {
+    var result = await query(document: """
+	mutation cardBudgetDecrease(\$input: TCardBudgetDecreaseInput! ){
+	cardBudgetDecrease(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(
+        result['data'][cardBudgetDecrease] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> feedMarkAsRead(TFeedMarkAsReadInput input) async {
+    var result = await query(document: """
+	mutation feedMarkAsRead(\$input: TFeedMarkAsReadInput! ){
+	feedMarkAsRead(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][feedMarkAsRead];
+  }
+
+  Future<dynamic> updateAvailability(TUpdateAvailabilityInput input) async {
+    var result = await query(document: """
+	mutation updateAvailability(\$input: TUpdateAvailabilityInput! ){
+	updateAvailability(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][updateAvailability];
+  }
+
+  Future<TCard> cardDueDateSet(TCardDueDateSetInput input) async {
+    var result = await query(document: """
+	mutation cardDueDateSet(\$input: TCardDueDateSetInput! ){
+	cardDueDateSet(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(
+        result['data'][cardDueDateSet] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> recordPayout(TRecordPayoutInput input) async {
+    var result = await query(document: """
+	mutation recordPayout(\$input: TRecordPayoutInput! ){
+	recordPayout(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][recordPayout];
+  }
+
+  Future<dynamic> contractStart(TContractStartInput input) async {
+    var result = await query(document: """
+	mutation contractStart(\$input: TContractStartInput! ){
+	contractStart(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][contractStart];
+  }
+
+  Future<TCard> cardBudgetIncrease(TCardBudgetIncreaseInput input) async {
+    var result = await query(document: """
+	mutation cardBudgetIncrease(\$input: TCardBudgetIncreaseInput! ){
+	cardBudgetIncrease(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(
+        result['data'][cardBudgetIncrease] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> feedPostMessage(TFeedPostMessageInput input) async {
+    var result = await query(document: """
+	mutation feedPostMessage(\$input: TFeedPostMessageInput! ){
+	feedPostMessage(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][feedPostMessage];
+  }
+
+  Future<dynamic> cardLinkDelete(TCardLinkDeleteInput input) async {
+    var result = await query(document: """
+	mutation cardLinkDelete(\$input: TCardLinkDeleteInput! ){
+	cardLinkDelete(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][cardLinkDelete];
+  }
+
+  Future<THubspotContact> linkOrCreateHubSpotContact(String userId) async {
+    var result = await query(document: """
+	mutation linkOrCreateHubSpotContact(\$userId: String! ){
+	linkOrCreateHubSpotContact(userId:\$userId){
+			githubUsername
+			id 
+	}
+	""", variables: {"userId": userId});
+    return THubspotContact.fromJson(
+        result['data'][linkOrCreateHubSpotContact] as Map<String, dynamic>);
+  }
+
+  Future<TCard> cardCreate(TCardCreateInput input) async {
+    var result = await query(document: """
+	mutation cardCreate(\$input: TCardCreateInput! ){
+	cardCreate(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result['data'][cardCreate] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> feedEditMessage(TFeedEditMessageInput input) async {
+    var result = await query(document: """
+	mutation feedEditMessage(\$input: TFeedEditMessageInput! ){
+	feedEditMessage(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][feedEditMessage];
+  }
+
+  Future<dynamic> timeEntryEdit(TTimeEntryEditInput input) async {
+    var result = await query(document: """
+	mutation timeEntryEdit(\$input: TTimeEntryEditInput! ){
+	timeEntryEdit(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][timeEntryEdit];
+  }
+
+  Future<dynamic> cardMetaSet(TCardMetaSetInput input) async {
+    var result = await query(document: """
+	mutation cardMetaSet(\$input: TCardMetaSetInput! ){
+	cardMetaSet(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][cardMetaSet];
+  }
+
+  Future<dynamic> feedDeleteMessage(TFeedDeleteMessageInput input) async {
+    var result = await query(document: """
+	mutation feedDeleteMessage(\$input: TFeedDeleteMessageInput! ){
+	feedDeleteMessage(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][feedDeleteMessage];
+  }
+
+  Future<TCard> cardMove(TCardMoveInput input) async {
+    var result = await query(document: """
+	mutation cardMove(\$input: TCardMoveInput! ){
+	cardMove(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result['data'][cardMove] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> contractEnd(TContractEndInput input) async {
+    var result = await query(document: """
+	mutation contractEnd(\$input: TContractEndInput! ){
+	contractEnd(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][contractEnd];
+  }
+
+  Future<dynamic> timeEntryCreate(TTimeEntryCreateInput input) async {
+    var result = await query(document: """
+	mutation timeEntryCreate(\$input: TTimeEntryCreateInput! ){
+	timeEntryCreate(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][timeEntryCreate];
+  }
+
+  Future<dynamic> removeReaction(TRemoveReactionInput input) async {
+    var result = await query(document: """
+	mutation removeReaction(\$input: TRemoveReactionInput! ){
+	removeReaction(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][removeReaction];
+  }
+
+  Future<TCard> cardComplete(TCardCompleteInput input) async {
+    var result = await query(document: """
+	mutation cardComplete(\$input: TCardCompleteInput! ){
+	cardComplete(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result['data'][cardComplete] as Map<String, dynamic>);
+  }
+
+  Future<TCard> cardDueDateUnset(TCardDueDateUnsetInput input) async {
+    var result = await query(document: """
+	mutation cardDueDateUnset(\$input: TCardDueDateUnsetInput! ){
+	cardDueDateUnset(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(
+        result['data'][cardDueDateUnset] as Map<String, dynamic>);
+  }
+
+  Future<TCard> cardUncomplete(TCardUncompleteInput input) async {
+    var result = await query(document: """
+	mutation cardUncomplete(\$input: TCardUncompleteInput! ){
+	cardUncomplete(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(
+        result['data'][cardUncomplete] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> projectAddBalanceWithStripe(
+      TProjectAddBalanceWithStripeInput input) async {
+    var result = await query(document: """
+	mutation projectAddBalanceWithStripe(\$input: TProjectAddBalanceWithStripeInput! ){
+	projectAddBalanceWithStripe(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][projectAddBalanceWithStripe];
+  }
+
+  Future<dynamic> addReaction(TAddReactionInput input) async {
+    var result = await query(document: """
+	mutation addReaction(\$input: TAddReactionInput! ){
+	addReaction(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][addReaction];
+  }
+
+  Future<dynamic> accountTransfer(TAccountTransferInput input) async {
+    var result = await query(document: """
+	mutation accountTransfer(\$input: TAccountTransferInput! ){
+	accountTransfer(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][accountTransfer];
+  }
+
+  Future<TCard> cardAssign(TCardAssignInput input) async {
+    var result = await query(document: """
+	mutation cardAssign(\$input: TCardAssignInput! ){
+	cardAssign(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result['data'][cardAssign] as Map<String, dynamic>);
+  }
+
+  Future<TUser> cardInviteUser(TCardInviteUserInput input) async {
+    var result = await query(document: """
+	mutation cardInviteUser(\$input: TCardInviteUserInput! ){
+	cardInviteUser(input:\$input){
+			activeContractsCount
+			email
+			id
+			name
+			photo
+			status
+			timezone 
+	}
+	""", variables: {"input": input});
+    return TUser.fromJson(
+        result['data'][cardInviteUser] as Map<String, dynamic>);
+  }
+
+  Future<TCard> cardEstimateSet(TCardEstimateSetInput input) async {
+    var result = await query(document: """
+	mutation cardEstimateSet(\$input: TCardEstimateSetInput! ){
+	cardEstimateSet(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(
+        result['data'][cardEstimateSet] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> userSetRoles(TUserSetRolesInput input) async {
+    var result = await query(document: """
+	mutation userSetRoles(\$input: TUserSetRolesInput! ){
+	userSetRoles(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][userSetRoles];
+  }
+
+  Future<TCard> cardEstimateUnset(TCardEstimateUnsetInput input) async {
+    var result = await query(document: """
+	mutation cardEstimateUnset(\$input: TCardEstimateUnsetInput! ){
+	cardEstimateUnset(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(
+        result['data'][cardEstimateUnset] as Map<String, dynamic>);
+  }
+
+  Future<dynamic> cardAddMember(TCardAddMemberInput input) async {
+    var result = await query(document: """
+	mutation cardAddMember(\$input: TCardAddMemberInput! ){
+	cardAddMember(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][cardAddMember];
+  }
+
+  Future<dynamic> cardTagsSet(TCardTagsSetInput input) async {
+    var result = await query(document: """
+	mutation cardTagsSet(\$input: TCardTagsSetInput! ){
+	cardTagsSet(input:\$input){ 
+	}
+	""", variables: {"input": input});
+    return result['data'][cardTagsSet];
+  }
+
+  Future<TTwilioAuth> meetingRoomJoin(String projectId) async {
+    var result = await query(document: """
+	mutation meetingRoomJoin(\$projectId: String! ){
+	meetingRoomJoin(projectId:\$projectId){
+			token 
+	}
+	""", variables: {"projectId": projectId});
+    return TTwilioAuth.fromJson(
+        result['data'][meetingRoomJoin] as Map<String, dynamic>);
+  }
+
+  Future<TCard> cardUnassign(TCardUnassignInput input) async {
+    var result = await query(document: """
+	mutation cardUnassign(\$input: TCardUnassignInput! ){
+	cardUnassign(input:\$input){
+			assigneeId
+			completedAt
+			createdAt
+			dueDate
+			feedId
+			id
+			meta
+			name
+			parentId
+			position
+			projectId
+			version 
+	}
+	""", variables: {"input": input});
+    return TCard.fromJson(result['data'][cardUnassign] as Map<String, dynamic>);
+  }
+}
+
 enum TNotificationDeliveryType {
   EMAIL,
   PUSH,
@@ -5349,7 +5560,6 @@ enum TFeedSubscriptionStatus {
   FOLLOWING,
   MUTED,
 }
-
 final TFeedSubscriptionStatusValues = {
   "DELETED": TFeedSubscriptionStatus.DELETED,
   "FOLLOWING": TFeedSubscriptionStatus.FOLLOWING,
@@ -5373,7 +5583,6 @@ enum TReadStatus {
   SUBSCRIBED,
   UNREAD,
 }
-
 final TReadStatusValues = {
   "ALL": TReadStatus.ALL,
   "READ": TReadStatus.READ,
@@ -5384,7 +5593,6 @@ enum TMeetingParticipantFilter {
   ALL,
   CONNECTED,
 }
-
 final TMeetingParticipantFilterValues = {
   "ALL": TMeetingParticipantFilter.ALL,
   "CONNECTED": TMeetingParticipantFilter.CONNECTED,
@@ -5394,7 +5602,6 @@ enum TMeetingStatus {
   FAILED,
   IN_PROGRESS,
 }
-
 final TMeetingStatusValues = {
   "COMPLETED": TMeetingStatus.COMPLETED,
   "FAILED": TMeetingStatus.FAILED,
@@ -5430,7 +5637,6 @@ enum TMeetingRecordingStatus {
   ENQUEUED,
   PROCESSING,
 }
-
 final TMeetingRecordingStatusValues = {
   "COMPLETED": TMeetingRecordingStatus.COMPLETED,
   "DELETED": TMeetingRecordingStatus.DELETED,

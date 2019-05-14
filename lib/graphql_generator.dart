@@ -31,6 +31,8 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   List<TypeA> objectTypes = [];
   List<TypeA> inputObjectTypes = [];
 
+  TypeA mutation = new TypeA();
+
   @override
   Future<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
@@ -62,6 +64,11 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     objectTypes =
         typesFromResponse.where((type) => type.kind == Kind.OBJECT).toList();
     parseObjectType(objectTypes);
+    mutation = typesFromResponse
+        .where((type) => type.name == mutationType)
+        .toList()
+        .first;
+    classBuilderMutation();
 
     ///Concat and return the String value back.
     var result = '';
@@ -113,26 +120,19 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   /// Parse the type @[Kind.OBJECT]
   parseObjectType(List<TypeA> objectTypes) {
     objectTypes.forEach((typeObject) {
-      if (typeObject.name.compareTo(mutationType) == 0)
-        classes.putIfAbsent(namespace + typeObject.name, () {
-          return Class((b) => classBuilderMutation(b, typeObject));
-        });
-      else
-        classes.putIfAbsent(namespace + typeObject.name, () {
-          return Class((b) => classBuilder(b, typeObject));
-        });
+//      if (typeObject.name.compareTo(mutationType) == 0)
+//        classes.putIfAbsent(namespace + typeObject.name, () {
+//          return Class((b) => classBuilderMutation(b, typeObject));
+//        });
+//      else
+      classes.putIfAbsent(namespace + typeObject.name, () {
+        return Class((b) => classBuilder(b, typeObject));
+      });
     });
   }
 
-  classBuilderMutation(ClassBuilder builder, TypeA type) {
-    builder.name = '$namespace${type.name}';
-    if (type.description != null) {
-      String documentation = type.description.replaceAll('\n', '\n/// ');
-      builder.docs.add('/// $documentation');
-    }
-
-    ///Adding fields to the class
-    if (type.fields != null) {
+  classBuilderMutation() {
+    if (mutation.fields != null) {
       ClassBuilder mutationClassBuilder = new ClassBuilder();
       mutationClassBuilder.name = 'TMutation';
       mutationClassBuilder.abstract = true;
@@ -150,63 +150,79 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
           p.named = true;
         }));
       }));
-      type.fields.forEach((field) {
-        builder.fields.add(Field((f) {
-          f.name = field.name;
-          f.type = Reference(findFieldType(field.type));
-          if (field.isDeprecated)
-            f.annotations.add(Reference(
-                "Deprecated('${field.deprecationReason.replaceAll(
-                    '\n', '')}')"));
-          if (field.description != null)
-            f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
-          mutationClassBuilder.methods.add(Method((m) {
-            m.modifier = MethodModifier.async;
-            m.name = field.name;
-            m.returns = Reference('Future<$namespace${field.type.name}>');
-            field.args.forEach((f) {
-              m.requiredParameters.add(Parameter((p) {
-                p.name = f.name;
-                p.type = Reference(findFieldType(f.type));
-              }));
-              m.body = Code(
-                  ' var result =  await query(document:"""\n\tmutation ${field
-                      .name}(\\\$${f.name}: ${findFieldType(f.type)}! )'
-                      '{\n\t${field.name}(${f.name}:\\\$${f
-                      .name}){FIELDS \n\t}\n\t""",variables:{\n\t"${f.name}":${f
-                      .name}\n\t});'
-                      'return $namespace${field.type
-                      .name}.fromJson(result["data"]["${field.name}"]);');
-            });
-          }));
+      mutation.fields.forEach((field) {
+        mutationClassBuilder.methods.add(Method((m) {
+          m.modifier = MethodModifier.async;
+          m.name = field.name;
+          m.returns = Reference('Future<${mapFieldType(field.type.name)}>');
+          field.args.forEach((f) {
+            m.requiredParameters.add(Parameter((p) {
+              p.name = f.name;
+              p.type = Reference(findFieldType(f.type));
+            }));
+            m.body = Code(
+                ' var result =  await query(document:"""\n\tmutation ${field
+                    .name}(\\\$${f.name}: ${findFieldType(f.type)}! )'
+                    '{\n\t${field.name}(${f.name}:\\\$${f
+                    .name}){${_generateMutationFields(namespace +
+                    field.type.name)} \n\t}\n\t""",variables:{\n\t"${f
+                    .name}":${f.name}\n\t});'
+                    '${_generateMutationReturn(field.type.name, field.name)}');
+          });
         }));
       });
       classes.putIfAbsent('TMutation', () => mutationClassBuilder.build());
-      builder.methods.addAll(createMethods(builder));
     }
-    ///Build constructor
-    builder.constructors.add(Constructor((c) {
-      builder.fields.build().forEach((f) {
-        c.optionalParameters.add(Parameter((p) {
-          p.name = "this.${f.name}";
-          p.named = true;
-        }));
-      });
-    }));
-    if (type.interfaces != null)
-      type.interfaces.forEach((interface) {
-        builder.implements.add(Reference('$namespace${interface.name}'));
-      });
-    unionTypes.forEach((unionType) {
-      if (unionType.possibleTypes
-          .any((possibleType) => possibleType.name == type.name)) {
-        builder.implements.add(Reference('$namespace${unionType.name}'));
+  }
+
+  _generateMutationReturn(String name, String nname) {
+    var mapFieldTypes = mapFieldType(name);
+    switch (mapFieldTypes) {
+      case "String":
+      case "int":
+      case "bool":
+      case "double":
+      case "Map<String,dynamic>":
+        return "return result['data'][$nname] as $mapFieldTypes;";
+      case "dynamic":
+        return "return result['data'][$nname];";
+    }
+
+    if (mapFieldTypes.contains('List<')) {
+      String split = mapFieldTypes.split('<')[1].split('>')[0];
+      switch (split) {
+        case "String":
+        case "int":
+        case "bool":
+        case "double":
+        case "dynamic":
+          return "return (result['data'][$nname] as List)?.map((e) => e as $split)?.toList();";
       }
-    });
+
+      return "return (result['data'][$nname] as List)?.map((e) => e == null? null : ${mapFieldTypes
+          .split('<')[1].split(
+          '>')[0]}.fromJson(e as Map<String,dynamic>))?.toList();";
+    } else {
+      return "return $mapFieldTypes.fromJson(result['data'][$nname] as Map<String,dynamic>);";
+    }
   }
 
   _generateMutationFields(String name) {
-
+    String result = "";
+    if (classes.containsKey(name)) {
+      classes[name].fields.forEach((fields) {
+        switch (fields.type.symbol) {
+          case "String":
+          case "int":
+          case "double":
+          case "dynamic":
+          case "Map<String,dynamic>":
+            result += '\n\t\t\t' + fields.name;
+            break;
+        }
+      });
+    }
+    return result;
   }
 
   classBuilder(ClassBuilder builder, TypeA type) {
@@ -277,7 +293,10 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       case "int":
       case "bool":
       case "double":
+      case "Map<String,dynamic>":
         return "${f.name} : json['${f.name}'] as ${f.type.symbol},";
+      case "dynamic":
+        return "${f.name} : json['${f.name}'],";
       default:
         if (enumTypes
             .any((type) => '$namespace${type.name}' == f.type.symbol)) {
@@ -292,6 +311,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
         case "int":
         case "bool":
         case "double":
+        case "dynamic":
           return "${f.name} : (json['${f
               .name}'] as List)?.map((e) => e as $split)?.toList(),";
         default:
@@ -326,7 +346,15 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
 
   /// Map the FieldTypes to Dart objects
   mapFieldType(String name) {
-    if (types.containsKey(name)) return types[name].toString();
+    if (types.containsKey(name)) {
+      if (types[name].name.compareTo('Map') == 0) {
+        return "Map<String,dynamic>";
+      }
+      if (types[name].name.compareTo('List') == 0) {
+        return "List<dynamic>";
+      }
+      return types[name].toString();
+    }
 
     switch (name) {
       case 'Boolean':
