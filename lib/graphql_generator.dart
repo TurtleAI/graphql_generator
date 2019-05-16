@@ -17,7 +17,7 @@ import 'model.dart';
 class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   var url;
   var headerToken;
-  var namespace;
+  String namespace;
 
   String mutationType = "";
 
@@ -150,6 +150,25 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
           p.named = true;
         }));
       }));
+      mutationClassBuilder
+        ..methods.add(new Method((m) {
+          m.returns = Reference('String');
+          m.name = "_extractFragmentName";
+          m.requiredParameters.add(new Parameter((p) {
+            p.name = "fragment";
+            p.type = Reference("String");
+          }));
+          m.requiredParameters.add(new Parameter((p) {
+            p.name = "typeName";
+            p.type = Reference("String");
+          }));
+          m.body = new Code(''
+              'if (fragment != null) { '
+              'RegExp exp = new RegExp("\\b[A-Za-z]*\$typeName[A-Za-z]*\\b", caseSensitive: true);'
+              'Iterable<Match> matches = exp.allMatches(fragment);'
+              'if (matches.length > 0)return matches.elementAt(0).group(0); else return "";} '
+              'else {return "";}');
+        }));
       mutation.fields.forEach((field) {
         mutationClassBuilder.methods.add(Method((m) {
           m.modifier = MethodModifier.async;
@@ -160,18 +179,53 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
               p.name = f.name;
               p.type = Reference(findFieldType(f.type));
             }));
+            m.optionalParameters.add(Parameter((p) {
+              p.name = "fragment";
+              p.type = Reference("String");
+              p.named = true;
+            }));
             m.body = Code(
-                ' var result =  await query(document:"""\n\tmutation ${field
-                    .name}(\\\$${f.name}: ${findFieldType(f.type)}! )'
-                    '{\n\t${field.name}(${f.name}:\\\$${f
-                    .name}){${_generateMutationFields(namespace +
-                    field.type.name)} \n\t}\n\t""",variables:{\n\t"${f
-                    .name}":${f.name}\n\t});'
+                ' var fragmentName = _extractFragmentName(fragment, "${mapFieldType(
+                    field.type.name)}");'
+                    ' ${_generateDefaultFragment(field.type.name)}'
+                    ' var result =  await query(document:"""\n\tmutation\n\t\t${field
+                    .name}(\\\$${f.name}: ${findFieldType(f.type).contains(
+                    namespace) ? findFieldType(f.type).substring(
+                    namespace.length) : findFieldType(f.type)}! )'
+                    ' {\n\t\t\t${field.name}(${f.name}:\\\$${f
+                    .name})${_generateMutationFields(
+                    namespace + field.type.name,
+                    field.name)}\n\t""",variables:{\n\t"${f.name}":${f
+                    .name}\n\t});'
                     '${_generateMutationReturn(field.type.name, field.name)}');
           });
         }));
       });
       classes.putIfAbsent('TMutation', () => mutationClassBuilder.build());
+    }
+  }
+
+  _generateDefaultFragment(String name) {
+    String result = '';
+    bool hasValue = false;
+    if (classes.containsKey(namespace + name)) {
+      classes[namespace + name].fields.forEach((fields) {
+        switch (fields.type.symbol) {
+          case "String":
+          case "int":
+          case "double":
+          case "dynamic":
+          case "Map<String,dynamic>":
+            hasValue = true;
+            result += "${fields.name} ";
+            break;
+        }
+      });
+    }
+    if (hasValue) {
+      return "var defaultFragment = 'fragment graphQL$name on $name { $result }';";
+    } else {
+      return "";
     }
   }
 
@@ -183,9 +237,9 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       case "bool":
       case "double":
       case "Map<String,dynamic>":
-        return "return result['data'][$nname] as $mapFieldTypes;";
+        return "return result['data']['$nname'] as $mapFieldTypes;";
       case "dynamic":
-        return "return result['data'][$nname];";
+        return "return result['data']['$nname'];";
     }
 
     if (mapFieldTypes.contains('List<')) {
@@ -196,33 +250,43 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
         case "bool":
         case "double":
         case "dynamic":
-          return "return (result['data'][$nname] as List)?.map((e) => e as $split)?.toList();";
+          return "return (result['data']['$nname'] as List)?.map((e) => e as $split)?.toList();";
       }
 
-      return "return (result['data'][$nname] as List)?.map((e) => e == null? null : ${mapFieldTypes
+      return "return (result['data']['$nname'] as List)?.map((e) => e == null? null : ${mapFieldTypes
           .split('<')[1].split(
           '>')[0]}.fromJson(e as Map<String,dynamic>))?.toList();";
     } else {
-      return "return $mapFieldTypes.fromJson(result['data'][$nname] as Map<String,dynamic>);";
+      return "return $mapFieldTypes.fromJson(result['data']['$nname'] as Map<String,dynamic>);";
     }
   }
 
-  _generateMutationFields(String name) {
-    String result = "";
+  _generateMutationFields(String name, String fragName) {
+    String result = "{";
+    bool isFound = false;
     if (classes.containsKey(name)) {
-      classes[name].fields.forEach((fields) {
-        switch (fields.type.symbol) {
+      isFound = classes[name].fields.any((field) {
+        switch (field.type.symbol) {
           case "String":
           case "int":
           case "double":
           case "dynamic":
           case "Map<String,dynamic>":
-            result += '\n\t\t\t' + fields.name;
-            break;
+            return true;
+          default:
+            return false;
         }
       });
     }
-    return result;
+    if (isFound) {
+      return "{\n\t\t\t\t...\${fragment == null? 'graphQL$name' : fragmentName}\n\t\t\t}\n\t\t}"
+          "\n\t\${fragment == null? defaultFragment : fragment}";
+    } else {
+      return "\n\t\t}";
+    }
+//    result += "\n\t\t\t}";
+//    if (result.compareTo("{\n\t\t\t}") == 0) return "\n\t}";
+//    return result + "\n\t}";
   }
 
   classBuilder(ClassBuilder builder, TypeA type) {
@@ -332,7 +396,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   }
 
   /// Loop to find the field types
-  findFieldType(InterfaceA type, {bool isList}) {
+  String findFieldType(InterfaceA type, {bool isList}) {
     if (type.name != null) {
       return mapFieldType(type.name);
     }
