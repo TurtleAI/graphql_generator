@@ -5102,13 +5102,12 @@ abstract class TMutation {
   Future<Map<String, dynamic>> query(
       {String document, Map<String, dynamic> variables});
 
-  String _extractFragmentName(String fragment, String typeName) {
+  String _extractFragmentName(String fragment) {
     if (fragment != null) {
-      RegExp exp =
-      new RegExp("\b[A-Za-z]*$typeName[A-Za-z]*\b", caseSensitive: true);
+      RegExp exp = new RegExp("fragment (\w+) on (\w+)", caseSensitive: true);
       Iterable<Match> matches = exp.allMatches(fragment);
       if (matches.length > 0)
-        return matches.elementAt(0).group(0);
+        return matches.elementAt(0).group(0).split(" ")[1];
       else
         return "";
     } else {
@@ -5116,9 +5115,7 @@ abstract class TMutation {
     }
   }
 
-  Future<dynamic> timeEntryDelete(TTimeEntryDeleteInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> timeEntryDelete(TTimeEntryDeleteInput input) async {
     var result = await query(document: """
 	mutation
 		timeEntryDelete(\$input: TimeEntryDeleteInput! ) {
@@ -5128,9 +5125,7 @@ abstract class TMutation {
     return result['data']['timeEntryDelete'];
   }
 
-  Future<dynamic> accountTransfer(TAccountTransferInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> accountTransfer(TAccountTransferInput input) async {
     var result = await query(document: """
 	mutation
 		accountTransfer(\$input: AccountTransferInput! ) {
@@ -5140,9 +5135,7 @@ abstract class TMutation {
     return result['data']['accountTransfer'];
   }
 
-  Future<dynamic> feedMarkAsRead(TFeedMarkAsReadInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> feedMarkAsRead(TFeedMarkAsReadInput input) async {
     var result = await query(document: """
 	mutation
 		feedMarkAsRead(\$input: FeedMarkAsReadInput! ) {
@@ -5152,9 +5145,7 @@ abstract class TMutation {
     return result['data']['feedMarkAsRead'];
   }
 
-  Future<dynamic> cardTagsSet(TCardTagsSetInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> cardTagsSet(TCardTagsSetInput input) async {
     var result = await query(document: """
 	mutation
 		cardTagsSet(\$input: CardTagsSetInput! ) {
@@ -5164,9 +5155,7 @@ abstract class TMutation {
     return result['data']['cardTagsSet'];
   }
 
-  Future<dynamic> updateAvailability(TUpdateAvailabilityInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> updateAvailability(TUpdateAvailabilityInput input) async {
     var result = await query(document: """
 	mutation
 		updateAvailability(\$input: UpdateAvailabilityInput! ) {
@@ -5177,26 +5166,23 @@ abstract class TMutation {
   }
 
   Future<TCard> cardComplete(TCardCompleteInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardComplete(\$input: CardCompleteInput! ) {
 			cardComplete(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardComplete'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> profileNameSet(TProfileNameSetInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> profileNameSet(TProfileNameSetInput input) async {
     var result = await query(document: """
 	mutation
 		profileNameSet(\$input: ProfileNameSetInput! ) {
@@ -5207,25 +5193,24 @@ abstract class TMutation {
   }
 
   Future<TTwilioAuth> meetingRoomJoin(String projectId,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TTwilioAuth");
-    var defaultFragment = 'fragment graphQLTwilioAuth on TwilioAuth { token  }';
+      {String fragment =
+      'fragment TwilioAuthFragment on TwilioAuth { token  }'}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		meetingRoomJoin(\$projectId: String! ) {
 			meetingRoomJoin(projectId:\$projectId){
-				...${fragment == null ? 'graphQLTTwilioAuth' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"projectId": projectId});
     return TTwilioAuth.fromJson(
         result['data']['meetingRoomJoin'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> sendLowBalanceReminder(TSendLowBalanceReminderInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> sendLowBalanceReminder(
+      TSendLowBalanceReminderInput input) async {
     var result = await query(document: """
 	mutation
 		sendLowBalanceReminder(\$input: SendLowBalanceReminderInput! ) {
@@ -5235,9 +5220,7 @@ abstract class TMutation {
     return result['data']['sendLowBalanceReminder'];
   }
 
-  Future<dynamic> feedEditMessage(TFeedEditMessageInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> feedEditMessage(TFeedEditMessageInput input) async {
     var result = await query(document: """
 	mutation
 		feedEditMessage(\$input: FeedEditMessageInput! ) {
@@ -5248,26 +5231,23 @@ abstract class TMutation {
   }
 
   Future<TUser> cardInviteUser(TCardInviteUserInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TUser");
-    var defaultFragment =
-        'fragment graphQLUser on User { activeContractsCount email id name photo status timezone  }';
+      {String fragment =
+      'fragment UserFragment on User { activeContractsCount email id name photo status timezone  }'}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardInviteUser(\$input: CardInviteUserInput! ) {
 			cardInviteUser(input:\$input){
-				...${fragment == null ? 'graphQLTUser' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TUser.fromJson(
         result['data']['cardInviteUser'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> cardAddMember(TCardAddMemberInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> cardAddMember(TCardAddMemberInput input) async {
     var result = await query(document: """
 	mutation
 		cardAddMember(\$input: CardAddMemberInput! ) {
@@ -5277,43 +5257,40 @@ abstract class TMutation {
     return result['data']['cardAddMember'];
   }
 
-  Future<TCard> cardAssign(TCardAssignInput input, {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+  Future<TCard> cardAssign(TCardAssignInput input,
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardAssign(\$input: CardAssignInput! ) {
 			cardAssign(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(result['data']['cardAssign'] as Map<String, dynamic>);
   }
 
   Future<TCard> cardBudgetDecrease(TCardBudgetDecreaseInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardBudgetDecrease(\$input: CardBudgetDecreaseInput! ) {
 			cardBudgetDecrease(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardBudgetDecrease'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> userSetSkills(TUserSetSkillsInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> userSetSkills(TUserSetSkillsInput input) async {
     var result = await query(document: """
 	mutation
 		userSetSkills(\$input: UserSetSkillsInput! ) {
@@ -5324,44 +5301,40 @@ abstract class TMutation {
   }
 
   Future<TCard> cardDueDateSet(TCardDueDateSetInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardDueDateSet(\$input: CardDueDateSetInput! ) {
 			cardDueDateSet(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardDueDateSet'] as Map<String, dynamic>);
   }
 
   Future<TCard> cardEstimateUnset(TCardEstimateUnsetInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardEstimateUnset(\$input: CardEstimateUnsetInput! ) {
 			cardEstimateUnset(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardEstimateUnset'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> removeReaction(TRemoveReactionInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> removeReaction(TRemoveReactionInput input) async {
     var result = await query(document: """
 	mutation
 		removeReaction(\$input: RemoveReactionInput! ) {
@@ -5371,9 +5344,7 @@ abstract class TMutation {
     return result['data']['removeReaction'];
   }
 
-  Future<dynamic> accountOpen(TAccountOpenInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> accountOpen(TAccountOpenInput input) async {
     var result = await query(document: """
 	mutation
 		accountOpen(\$input: AccountOpenInput! ) {
@@ -5383,79 +5354,74 @@ abstract class TMutation {
     return result['data']['accountOpen'];
   }
 
-  Future<TCard> cardDelete(TCardDeleteInput input, {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+  Future<TCard> cardDelete(TCardDeleteInput input,
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardDelete(\$input: CardDeleteInput! ) {
 			cardDelete(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(result['data']['cardDelete'] as Map<String, dynamic>);
   }
 
   Future<TCard> cardDueDateUnset(TCardDueDateUnsetInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardDueDateUnset(\$input: CardDueDateUnsetInput! ) {
 			cardDueDateUnset(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardDueDateUnset'] as Map<String, dynamic>);
   }
 
   Future<THubspotContact> linkOrCreateHubSpotContact(String userId,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "THubspotContact");
-    var defaultFragment =
-        'fragment graphQLHubspotContact on HubspotContact { githubUsername id  }';
+      {String fragment =
+      'fragment HubspotContactFragment on HubspotContact { githubUsername id  }'}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		linkOrCreateHubSpotContact(\$userId: String! ) {
 			linkOrCreateHubSpotContact(userId:\$userId){
-				...${fragment == null ? 'graphQLTHubspotContact' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"userId": userId});
     return THubspotContact.fromJson(
         result['data']['linkOrCreateHubSpotContact'] as Map<String, dynamic>);
   }
 
   Future<TCard> cardEstimateSet(TCardEstimateSetInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardEstimateSet(\$input: CardEstimateSetInput! ) {
 			cardEstimateSet(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardEstimateSet'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> cardRemoveMember(TCardRemoveMemberInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> cardRemoveMember(TCardRemoveMemberInput input) async {
     var result = await query(document: """
 	mutation
 		cardRemoveMember(\$input: CardRemoveMemberInput! ) {
@@ -5465,9 +5431,7 @@ abstract class TMutation {
     return result['data']['cardRemoveMember'];
   }
 
-  Future<dynamic> timeEntryEdit(TTimeEntryEditInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> timeEntryEdit(TTimeEntryEditInput input) async {
     var result = await query(document: """
 	mutation
 		timeEntryEdit(\$input: TimeEntryEditInput! ) {
@@ -5478,45 +5442,41 @@ abstract class TMutation {
   }
 
   Future<TCard> cardUndelete(TCardUndeleteInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardUndelete(\$input: CardUndeleteInput! ) {
 			cardUndelete(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardUndelete'] as Map<String, dynamic>);
   }
 
   Future<TCard> cardBudgetUnset(TCardBudgetUnsetInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardBudgetUnset(\$input: CardBudgetUnsetInput! ) {
 			cardBudgetUnset(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardBudgetUnset'] as Map<String, dynamic>);
   }
 
   Future<dynamic> projectAddBalanceWithStripe(
-      TProjectAddBalanceWithStripeInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+      TProjectAddBalanceWithStripeInput input) async {
     var result = await query(document: """
 	mutation
 		projectAddBalanceWithStripe(\$input: ProjectAddBalanceWithStripeInput! ) {
@@ -5526,9 +5486,7 @@ abstract class TMutation {
     return result['data']['projectAddBalanceWithStripe'];
   }
 
-  Future<dynamic> cardLinkCreate(TCardLinkCreateInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> cardLinkCreate(TCardLinkCreateInput input) async {
     var result = await query(document: """
 	mutation
 		cardLinkCreate(\$input: CardLinkCreateInput! ) {
@@ -5539,26 +5497,23 @@ abstract class TMutation {
   }
 
   Future<TCard> cardUncomplete(TCardUncompleteInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardUncomplete(\$input: CardUncompleteInput! ) {
 			cardUncomplete(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardUncomplete'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> feedPostMessage(TFeedPostMessageInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> feedPostMessage(TFeedPostMessageInput input) async {
     var result = await query(document: """
 	mutation
 		feedPostMessage(\$input: FeedPostMessageInput! ) {
@@ -5568,9 +5523,7 @@ abstract class TMutation {
     return result['data']['feedPostMessage'];
   }
 
-  Future<dynamic> recordPayout(TRecordPayoutInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> recordPayout(TRecordPayoutInput input) async {
     var result = await query(document: """
 	mutation
 		recordPayout(\$input: RecordPayoutInput! ) {
@@ -5580,41 +5533,39 @@ abstract class TMutation {
     return result['data']['recordPayout'];
   }
 
-  Future<TCard> cardRename(TCardRenameInput input, {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+  Future<TCard> cardRename(TCardRenameInput input,
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardRename(\$input: CardRenameInput! ) {
 			cardRename(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(result['data']['cardRename'] as Map<String, dynamic>);
   }
 
-  Future<TCard> cardMove(TCardMoveInput input, {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+  Future<TCard> cardMove(TCardMoveInput input,
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardMove(\$input: CardMoveInput! ) {
 			cardMove(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(result['data']['cardMove'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> userSetRoles(TUserSetRolesInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> userSetRoles(TUserSetRolesInput input) async {
     var result = await query(document: """
 	mutation
 		userSetRoles(\$input: UserSetRolesInput! ) {
@@ -5624,9 +5575,7 @@ abstract class TMutation {
     return result['data']['userSetRoles'];
   }
 
-  Future<dynamic> cardLinkDelete(TCardLinkDeleteInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> cardLinkDelete(TCardLinkDeleteInput input) async {
     var result = await query(document: """
 	mutation
 		cardLinkDelete(\$input: CardLinkDeleteInput! ) {
@@ -5636,9 +5585,7 @@ abstract class TMutation {
     return result['data']['cardLinkDelete'];
   }
 
-  Future<dynamic> addReaction(TAddReactionInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> addReaction(TAddReactionInput input) async {
     var result = await query(document: """
 	mutation
 		addReaction(\$input: AddReactionInput! ) {
@@ -5648,9 +5595,7 @@ abstract class TMutation {
     return result['data']['addReaction'];
   }
 
-  Future<dynamic> timeEntryCreate(TTimeEntryCreateInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> timeEntryCreate(TTimeEntryCreateInput input) async {
     var result = await query(document: """
 	mutation
 		timeEntryCreate(\$input: TimeEntryCreateInput! ) {
@@ -5660,9 +5605,7 @@ abstract class TMutation {
     return result['data']['timeEntryCreate'];
   }
 
-  Future<dynamic> contractStart(TContractStartInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> contractStart(TContractStartInput input) async {
     var result = await query(document: """
 	mutation
 		contractStart(\$input: ContractStartInput! ) {
@@ -5672,9 +5615,7 @@ abstract class TMutation {
     return result['data']['contractStart'];
   }
 
-  Future<dynamic> profileTimezoneSet(TProfileTimezoneSetInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> profileTimezoneSet(TProfileTimezoneSetInput input) async {
     var result = await query(document: """
 	mutation
 		profileTimezoneSet(\$input: ProfileTimezoneSetInput! ) {
@@ -5684,9 +5625,7 @@ abstract class TMutation {
     return result['data']['profileTimezoneSet'];
   }
 
-  Future<dynamic> contractEnd(TContractEndInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> contractEnd(TContractEndInput input) async {
     var result = await query(document: """
 	mutation
 		contractEnd(\$input: ContractEndInput! ) {
@@ -5697,44 +5636,40 @@ abstract class TMutation {
   }
 
   Future<TCard> cardUnassign(TCardUnassignInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardUnassign(\$input: CardUnassignInput! ) {
 			cardUnassign(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardUnassign'] as Map<String, dynamic>);
   }
 
   Future<TCard> cardBudgetIncrease(TCardBudgetIncreaseInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardBudgetIncrease(\$input: CardBudgetIncreaseInput! ) {
 			cardBudgetIncrease(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(
         result['data']['cardBudgetIncrease'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> feedDeleteMessage(TFeedDeleteMessageInput input,
-      {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "dynamic");
+  Future<dynamic> feedDeleteMessage(TFeedDeleteMessageInput input) async {
     var result = await query(document: """
 	mutation
 		feedDeleteMessage(\$input: FeedDeleteMessageInput! ) {
@@ -5744,18 +5679,18 @@ abstract class TMutation {
     return result['data']['feedDeleteMessage'];
   }
 
-  Future<TCard> cardCreate(TCardCreateInput input, {String fragment}) async {
-    var fragmentName = _extractFragmentName(fragment, "TCard");
-    var defaultFragment =
-        'fragment graphQLCard on Card { assigneeId completedAt createdAt dueDate feedId id meta name parentId position projectId version  }';
+  Future<TCard> cardCreate(TCardCreateInput input,
+      {String fragment =
+      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
 		cardCreate(\$input: CardCreateInput! ) {
 			cardCreate(input:\$input){
-				...${fragment == null ? 'graphQLTCard' : fragmentName}
+				...$fragmentName
 			}
 		}
-	${fragment == null ? defaultFragment : fragment}
+	$fragment
 	""", variables: {"input": input});
     return TCard.fromJson(result['data']['cardCreate'] as Map<String, dynamic>);
   }
@@ -5766,7 +5701,6 @@ enum TMeetingStatus {
   FAILED,
   IN_PROGRESS,
 }
-
 final TMeetingStatusValues = {
   "COMPLETED": TMeetingStatus.COMPLETED,
   "FAILED": TMeetingStatus.FAILED,
@@ -5808,7 +5742,6 @@ enum TNotificationDeliveryType {
   EMAIL,
   PUSH,
 }
-
 final TNotificationDeliveryTypeValues = {
   "EMAIL": TNotificationDeliveryType.EMAIL,
   "PUSH": TNotificationDeliveryType.PUSH,
@@ -5831,7 +5764,6 @@ enum TMeetingRecordingStatus {
   ENQUEUED,
   PROCESSING,
 }
-
 final TMeetingRecordingStatusValues = {
   "COMPLETED": TMeetingRecordingStatus.COMPLETED,
   "DELETED": TMeetingRecordingStatus.DELETED,
@@ -5855,7 +5787,6 @@ enum TFeedSubscriptionStatus {
   FOLLOWING,
   MUTED,
 }
-
 final TFeedSubscriptionStatusValues = {
   "DELETED": TFeedSubscriptionStatus.DELETED,
   "FOLLOWING": TFeedSubscriptionStatus.FOLLOWING,
