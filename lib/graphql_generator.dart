@@ -240,7 +240,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     String result = '';
     bool hasValue = false;
     if (fragments.containsKey(name)) {
-      return "'${fragments[name]}'";
+      return '"""${fragments[name]}"""';
     } else if (classes.containsKey(namespace + name)) {
       classes[namespace + name].fields.forEach((fields) {
         switch (fields.type.symbol) {
@@ -526,7 +526,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       enumString
           .add(" enum $namespace${enumType.name} {${_getEnumArray(enumType)}}");
       enumString.add(
-          " final $namespace${enumType.name}Values = {${_getEnumMapValues(
+          " const $namespace${enumType.name}Values = {${_getEnumMapValues(
               enumType)}};");
     });
   }

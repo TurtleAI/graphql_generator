@@ -12,6 +12,7 @@ import 'package:graphql_generator/annotation.dart';
     },
     fragments: {
       "Card":
-      "fragment DemoCard on Card { assigneeId budget completed completedAt } "
+      """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """
     })
 String value;

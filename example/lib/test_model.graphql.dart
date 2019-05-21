@@ -157,7 +157,6 @@ class TContractStartInput {
       projectId: json['projectId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'contractId': contractId,
@@ -180,7 +179,6 @@ class TTimeEntryDeleteInput {
       entryId: json['entryId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'entryId': entryId,
@@ -204,7 +202,6 @@ class TKv {
       v: json['v'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'k': k,
@@ -224,7 +221,6 @@ class TCardUncompleteInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -243,7 +239,6 @@ class TAccountOpenInput {
       accountId: json['accountId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'accountId': accountId,
@@ -266,7 +261,6 @@ class TCardAddMemberInput {
       memberId: json['memberId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -286,7 +280,6 @@ class TCardEstimateUnsetInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -326,7 +319,6 @@ class TProjectAddBalanceWithStripeInput {
       projectId: json['projectId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'amount': amount,
@@ -354,7 +346,6 @@ class TUserSetRolesInput {
       userId: json['userId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'roles': roles,
@@ -374,7 +365,6 @@ class TFeedMarkAsReadInput {
       feedId: json['feedId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'feedId': feedId,
@@ -393,7 +383,6 @@ class TCardDueDateUnsetInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -427,7 +416,6 @@ class TTimeEntryEditInput {
       entryMemo: json['entryMemo'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'entryDate': entryDate,
@@ -470,7 +458,6 @@ class TCardMoveInput {
       toId: json['toId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'afterId': afterId,
@@ -499,7 +486,6 @@ class TCardBudgetDecreaseInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'budgetDuration': budgetDuration,
@@ -519,7 +505,6 @@ class TCardUnassignInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -538,7 +523,6 @@ class TFeedDeleteMessageInput {
       feedEventId: json['feedEventId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'feedEventId': feedEventId,
@@ -557,7 +541,6 @@ class TProfileTimezoneSetInput {
       timezone: json['timezone'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'timezone': timezone,
@@ -580,7 +563,6 @@ class TSendLowBalanceReminderInput {
       userId: json['userId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'projectId': projectId,
@@ -600,7 +582,6 @@ class TCardDeleteInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -623,7 +604,6 @@ class TAddReactionInput {
       reaction: json['reaction'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'feedEventId': feedEventId,
@@ -658,7 +638,6 @@ class TAccountTransferInput {
       sourceAccount: json['sourceAccount'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'amount': amount,
@@ -691,7 +670,6 @@ class TFeedPostMessageInput {
       messageBody: json['messageBody'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'feedId': feedId,
@@ -720,7 +698,6 @@ class TCardLinkDeleteInput {
       toId: json['toId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'fromId': fromId,
@@ -741,7 +718,6 @@ class TProfileNameSetInput {
       name: json['name'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'name': name,
@@ -764,7 +740,6 @@ class TCardRemoveMemberInput {
       memberId: json['memberId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -814,7 +789,6 @@ class TRecordPayoutInput {
       userId: json['userId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'amount': amount,
@@ -845,7 +819,6 @@ class TUserSetSkillsInput {
       userId: json['userId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'skills': skills,
@@ -871,7 +844,6 @@ class TCardInviteUserInput {
       email: json['email'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -901,7 +873,6 @@ class TCardTagsSetInput {
       tags: (json['tags'] as List)?.map((e) => e as String)?.toList(),
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -947,7 +918,6 @@ class TUpdateAvailabilityInput {
       userId: json['userId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'endDate': endDate,
@@ -970,7 +940,6 @@ class TCardBudgetUnsetInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -993,7 +962,6 @@ class TCardDueDateSetInput {
       dueDate: json['dueDate'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -1048,7 +1016,6 @@ class TCardCreateInput {
       quickAdd: json['quickAdd'] as bool,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'afterId': afterId,
@@ -1078,7 +1045,6 @@ class TCardAssignInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'assigneeId': assigneeId,
@@ -1100,7 +1066,6 @@ class TContractEndInput {
       contractId: json['contractId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'contractId': contractId,
@@ -1126,7 +1091,6 @@ class TCardBudgetIncreaseInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'budgetDuration': budgetDuration,
@@ -1146,7 +1110,6 @@ class TCardUndeleteInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -1169,7 +1132,6 @@ class TRemoveReactionInput {
       reaction: json['reaction'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'feedEventId': feedEventId,
@@ -1189,7 +1151,6 @@ class TCardCompleteInput {
       cardId: json['cardId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -1217,7 +1178,6 @@ class TCardLinkCreateInput {
       toId: json['toId'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'fromId': fromId,
@@ -1242,7 +1202,6 @@ class TCardRenameInput {
       cardName: json['cardName'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -1282,7 +1241,6 @@ class TTimeEntryCreateInput {
       entryMemo: json['entryMemo'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -1309,7 +1267,6 @@ class TCardEstimateSetInput {
       estimate: json['estimate'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'cardId': cardId,
@@ -1336,7 +1293,6 @@ class TFeedEditMessageInput {
       messageBody: json['messageBody'] as String,
     );
   }
-
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'feedEventId': feedEventId,
@@ -5489,8 +5445,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardComplete(TCardCompleteInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5564,8 +5520,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardAssign(TCardAssignInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5580,8 +5536,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardBudgetDecrease(TCardBudgetDecreaseInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5607,8 +5563,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardDueDateSet(TCardDueDateSetInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5641,8 +5597,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardEstimateUnset(TCardEstimateUnsetInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5678,8 +5634,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardDelete(TCardDeleteInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5694,8 +5650,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardDueDateUnset(TCardDueDateUnsetInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5711,8 +5667,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardEstimateSet(TCardEstimateSetInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5748,8 +5704,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardUndelete(TCardUndeleteInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5765,8 +5721,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardBudgetUnset(TCardBudgetUnsetInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5803,8 +5759,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardUncomplete(TCardUncompleteInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5840,8 +5796,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardRename(TCardRenameInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5856,8 +5812,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardMove(TCardMoveInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5942,8 +5898,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardUnassign(TCardUnassignInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -5976,8 +5932,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardBudgetIncrease(TCardBudgetIncreaseInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -6003,8 +5959,8 @@ abstract class TMutation {
   }
 
   Future<TCard> cardCreate(TCardCreateInput input,
-      {String fragment =
-      'fragment DemoCard on Card { assigneeId budget completed completedAt } '}) async {
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
 	mutation
@@ -6026,7 +5982,7 @@ enum TPermission {
   PROJECT_MEMBERS_MANAGE,
 }
 
-final TPermissionValues = {
+const TPermissionValues = {
   "ADMIN_VIEW": TPermission.ADMIN_VIEW,
   "MY_ACCOUNTING_VIEW": TPermission.MY_ACCOUNTING_VIEW,
   "PROJECT_ACCOUNTING_VIEW": TPermission.PROJECT_ACCOUNTING_VIEW,
@@ -6038,7 +5994,8 @@ enum TReadStatus {
   SUBSCRIBED,
   UNREAD,
 }
-final TReadStatusValues = {
+
+const TReadStatusValues = {
   "ALL": TReadStatus.ALL,
   "READ": TReadStatus.READ,
   "SUBSCRIBED": TReadStatus.SUBSCRIBED,
@@ -6050,7 +6007,7 @@ enum TFeedSubscriptionStatus {
   MUTED,
 }
 
-final TFeedSubscriptionStatusValues = {
+const TFeedSubscriptionStatusValues = {
   "DELETED": TFeedSubscriptionStatus.DELETED,
   "FOLLOWING": TFeedSubscriptionStatus.FOLLOWING,
   "MUTED": TFeedSubscriptionStatus.MUTED,
@@ -6059,7 +6016,8 @@ enum TNotificationDeliveryType {
   EMAIL,
   PUSH,
 }
-final TNotificationDeliveryTypeValues = {
+
+const TNotificationDeliveryTypeValues = {
   "EMAIL": TNotificationDeliveryType.EMAIL,
   "PUSH": TNotificationDeliveryType.PUSH,
 };
@@ -6068,7 +6026,7 @@ enum TMeetingParticipantFilter {
   CONNECTED,
 }
 
-final TMeetingParticipantFilterValues = {
+const TMeetingParticipantFilterValues = {
   "ALL": TMeetingParticipantFilter.ALL,
   "CONNECTED": TMeetingParticipantFilter.CONNECTED,
 };
@@ -6078,7 +6036,8 @@ enum TMeetingRecordingStatus {
   ENQUEUED,
   PROCESSING,
 }
-final TMeetingRecordingStatusValues = {
+
+const TMeetingRecordingStatusValues = {
   "COMPLETED": TMeetingRecordingStatus.COMPLETED,
   "DELETED": TMeetingRecordingStatus.DELETED,
   "ENQUEUED": TMeetingRecordingStatus.ENQUEUED,
@@ -6090,7 +6049,7 @@ enum TMeetingStatus {
   IN_PROGRESS,
 }
 
-final TMeetingStatusValues = {
+const TMeetingStatusValues = {
   "COMPLETED": TMeetingStatus.COMPLETED,
   "FAILED": TMeetingStatus.FAILED,
   "IN_PROGRESS": TMeetingStatus.IN_PROGRESS,
@@ -6102,7 +6061,7 @@ enum TAccountType {
   USER,
 }
 
-final TAccountTypeValues = {
+const TAccountTypeValues = {
   "EXTERNAL": TAccountType.EXTERNAL,
   "PROJECT": TAccountType.PROJECT,
   "TURTLE": TAccountType.TURTLE,
@@ -6114,7 +6073,8 @@ enum TRole {
   CUSTOMER,
   MANAGER,
 }
-final TRoleValues = {
+
+const TRoleValues = {
   "ADMIN": TRole.ADMIN,
   "CONTRACTOR": TRole.CONTRACTOR,
   "CUSTOMER": TRole.CUSTOMER,
@@ -6129,7 +6089,8 @@ enum T__DirectiveLocation {
   QUERY,
   SUBSCRIPTION,
 }
-final T__DirectiveLocationValues = {
+
+const T__DirectiveLocationValues = {
   "FIELD": T__DirectiveLocation.FIELD,
   "FRAGMENT_DEFINITION": T__DirectiveLocation.FRAGMENT_DEFINITION,
   "FRAGMENT_SPREAD": T__DirectiveLocation.FRAGMENT_SPREAD,
