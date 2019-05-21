@@ -211,7 +211,10 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
                     ' {\n\t\t\t${field.name}(${f.name}:\\\$${f
                     .name})${_generateMutationFields(
                     namespace + field.type.name)}\n\t""",variables:{\n\t"${f
-                    .name}":${f.name}\n\t});'
+                    .name}":${f.name}${_mutationHasFragments(
+                    m.requiredParameters.first.type.symbol)
+                    ? ".toJson()"
+                    : ""}\n\t});'
                     '${_generateMutationReturn(field.type.name, field.name)}');
           });
         }));
@@ -365,6 +368,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
 
   createMethods(ClassBuilder classBuilder) {
     MethodBuilder fromJsonBuilder = new MethodBuilder();
+
     String fromJsonBody = "return ${classBuilder.name} (";
     fromJsonBuilder.returns = Reference("factory");
     fromJsonBuilder.name = '${classBuilder.name}.fromJson';
@@ -378,6 +382,52 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     fromJsonBody += ");";
     fromJsonBuilder.body = Code(fromJsonBody);
     return [fromJsonBuilder.build()];
+  }
+
+  createInputMethods(ClassBuilder classBuilder) {
+    MethodBuilder fromJsonBuilder = new MethodBuilder();
+
+    MethodBuilder toJSONBuilder = new MethodBuilder();
+
+    toJSONBuilder.name = "toJson";
+    toJSONBuilder.returns = Reference("Map<String,dynamic>");
+
+    String toJsonBody = "return <String,dynamic> {";
+
+    String fromJsonBody = "return ${classBuilder.name} (";
+    fromJsonBuilder.returns = Reference("factory");
+    fromJsonBuilder.name = '${classBuilder.name}.fromJson';
+    fromJsonBuilder.requiredParameters.add(Parameter((p) {
+      p.name = "json";
+      p.type = Reference("Map<String,dynamic>");
+    }));
+    classBuilder.fields.build().forEach((f) {
+      fromJsonBody += createFromJSONString(f);
+      toJsonBody += createToJSONString(f);
+    });
+    fromJsonBody += ");";
+    toJsonBody += "};";
+    fromJsonBuilder.body = Code(fromJsonBody);
+    toJSONBuilder.body = Code(toJsonBody);
+    return [fromJsonBuilder.build(), toJSONBuilder.build()];
+  }
+
+  String createToJSONString(Field f) {
+    switch (f.type.symbol) {
+      case "String":
+      case "int":
+      case "bool":
+      case "double":
+      case "Map<String,dynamic>":
+        return "'${f.name}' : ${f.name},";
+      default:
+        return "'${f.name}' : ${f.name},";
+//      default:
+//        if (enumTypes
+//            .any((type) => '$namespace${type.name}' == f.type.symbol)) {
+//          return "${f.name} : ${f.type.symbol}Values[json['${f.name}']],";
+//        }
+    }
   }
 
   String createFromJSONString(Field f) {
@@ -576,6 +626,9 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       String documentation = type.description.replaceAll('\n', '\n/// ');
       builder.docs.add('/// $documentation');
     }
+    MethodBuilder toJSONBuilder = new MethodBuilder();
+    toJSONBuilder.name = "toJson";
+    toJSONBuilder.returns = Reference("Map<String,dynamic>");
     if (type.inputFields != null) {
       type.inputFields.forEach((field) {
         builder.fields.add(Field((f) {
@@ -592,7 +645,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
           }));
         }));
       });
-      builder.methods.addAll(createMethods(builder));
+      builder.methods.addAll(createInputMethods(builder));
     }
 
     builder.constructors.add(constructorBuilder.build());
