@@ -18,7 +18,7 @@ class InterfaceGenerator {
 
   interfaceGenerator(List<TypeA> interfaceTypes) {
     this.interfaceTypes = interfaceTypes;
-    _parseInterface();
+    return _parseInterface();
   }
 
   _parseInterface() {
@@ -34,7 +34,7 @@ class InterfaceGenerator {
   _generateClass(TypeA interfaceType) {
     ClassBuilder classBuilder = new ClassBuilder();
     classBuilder.abstract = true;
-    classBuilder.name = '${GraphQLGenerator().namespace}${interfaceType.name}';
+    classBuilder.name = '${GraphQLGenerators().namespace}${interfaceType.name}';
     classBuilder.fields.addAll(_generateFields(interfaceType.fields));
     classBuilder.methods.add(_generateMethod(interfaceType));
     return classBuilder.build();
@@ -64,7 +64,7 @@ class InterfaceGenerator {
   }
 
   _mapFieldType(String name) {
-    Map<String, DartType> types = new GraphQLGenerator().types;
+    Map<String, DartType> types = new GraphQLGenerators().types;
     if (types.containsKey(name)) {
       if (types[name].name.compareTo('Map') == 0) {
         return "Map<String,dynamic>";
@@ -85,14 +85,16 @@ class InterfaceGenerator {
       case 'String':
         return 'String';
       default:
-        if (GraphQLGenerator().enumTypes.any((type) => type.name == name) ||
-            GraphQLGenerator().interfaceTypes.any((type) => type.name == name) ||
-            GraphQLGenerator().unionTypes.any((type) => type.name == name) ||
-            GraphQLGenerator().objectTypes.any((type) => type.name == name) ||
-            GraphQLGenerator()
+        if (GraphQLGenerators().enumTypes.any((type) => type.name == name) ||
+            GraphQLGenerators()
+                .interfaceTypes
+                .any((type) => type.name == name) ||
+            GraphQLGenerators().unionTypes.any((type) => type.name == name) ||
+            GraphQLGenerators().objectTypes.any((type) => type.name == name) ||
+            GraphQLGenerators()
                 .inputObjectTypes
                 .any((type) => type.name == name))
-          return '${GraphQLGenerator().namespace}$name';
+          return '${GraphQLGenerators().namespace}$name';
         else
           return 'String';
     }
@@ -102,7 +104,7 @@ class InterfaceGenerator {
     MethodBuilder methodBuilder = new MethodBuilder();
     String fromJsonBody = "";
     methodBuilder.name =
-        '${GraphQLGenerator().namespace}${interfaceType.name}.fromJson';
+        '${GraphQLGenerators().namespace}${interfaceType.name}.fromJson';
     methodBuilder.returns = Reference("factory");
     methodBuilder.requiredParameters.add(Parameter((p) {
       p.name = "json";
@@ -111,7 +113,7 @@ class InterfaceGenerator {
     fromJsonBody += "switch(json['__typename']){";
     interfaceType.possibleTypes.forEach((type) {
       fromJsonBody +=
-          'case "${type.name}" : return ${GraphQLGenerator().namespace}${type.name}.fromJson(json);';
+          'case "${type.name}" : return ${GraphQLGenerators().namespace}${type.name}.fromJson(json);';
     });
     fromJsonBody += "} return null;";
     methodBuilder.body = Code(fromJsonBody);

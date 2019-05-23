@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:source_gen/source_gen.dart';
 
 import 'annotation.dart';
+import 'generator.dart';
 import 'model.dart';
 
 class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
@@ -57,37 +58,39 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     }
     var response = await getSchema();
     List<TypeA> typesFromResponse = getTypeList(getTypesFromResponse(response));
-    enumTypes =
-        typesFromResponse.where((type) => type.kind == Kind.ENUM).toList();
-    parseEnumType(enumTypes);
-    interfaceTypes =
-        typesFromResponse.where((type) => type.kind == Kind.INTERFACE).toList();
-    parseInterface(interfaceTypes);
-    unionTypes =
-        typesFromResponse.where((type) => type.kind == Kind.UNION).toList();
-    parseUnion(unionTypes);
-    inputObjectTypes = typesFromResponse
-        .where((type) => type.kind == Kind.INPUT_OBJECT)
-        .toList();
-    parseInputObjectTypes(inputObjectTypes);
-    objectTypes =
-        typesFromResponse.where((type) => type.kind == Kind.OBJECT).toList();
-    parseObjectType(objectTypes);
-    mutation = typesFromResponse
-        .where((type) => type.name == mutationType)
-        .toList()
-        .first;
-    classBuilderMutation();
+
+    return GraphQLGenerators().graphQLGenerate(typesFromResponse,namespace, types, fragments);
+//    enumTypes =
+//        typesFromResponse.where((type) => type.kind == Kind.ENUM).toList();
+//    parseEnumType(enumTypes);
+//    interfaceTypes =
+//        typesFromResponse.where((type) => type.kind == Kind.INTERFACE).toList();
+//    parseInterface(interfaceTypes);
+//    unionTypes =
+//        typesFromResponse.where((type) => type.kind == Kind.UNION).toList();
+//    parseUnion(unionTypes);
+//    inputObjectTypes = typesFromResponse
+//        .where((type) => type.kind == Kind.INPUT_OBJECT)
+//        .toList();
+//    parseInputObjectTypes(inputObjectTypes);
+//    objectTypes =
+//        typesFromResponse.where((type) => type.kind == Kind.OBJECT).toList();
+//    parseObjectType(objectTypes);
+//    mutation = typesFromResponse
+//        .where((type) => type.name == mutationType)
+//        .toList()
+//        .first;
+//    classBuilderMutation();
 
     ///Concat and return the String value back.
-    var result = '';
-    var emitter = DartEmitter(Allocator());
-    Library library = new Library((lib) => lib.body.addAll(classes.values));
-    result += DartFormatter().format('${library.accept(emitter)}');
-    enumString.forEach((enumString) {
-      result += DartFormatter().format(enumString);
-    });
-    return result;
+//    var result = '';
+//    var emitter = DartEmitter(Allocator());
+//    Library library = new Library((lib) => lib.body.addAll(classes.values));
+//    result += DartFormatter().format('${library.accept(emitter)}');
+//    enumString.forEach((enumString) {
+//      result += DartFormatter().format(enumString);
+//    });
+//    return result;
   }
 
   _convertDartObjectMap(Map<DartObject, DartObject> dartMap) {
@@ -664,7 +667,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   }
 
   inputObjectClassBuilder(ClassBuilder builder, TypeA type) {
-    ConstructorBuilder constructorBuilder = new ConstructorBuilder();
+        ConstructorBuilder constructorBuilder = new ConstructorBuilder();
     builder.name = '$namespace${type.name}';
     if (type.description != null) {
       String documentation = type.description.replaceAll('\n', '\n/// ');

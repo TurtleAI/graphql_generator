@@ -129,11 +129,12 @@ abstract class TFeedSource {
 }
 
 class TContractStartInput {
-  TContractStartInput({this.contractId,
-    @required this.contractorHourlyRate,
-    @required this.contractorId,
-    @required this.customerHourlyRate,
-    @required this.projectId});
+  TContractStartInput(
+      {this.contractId,
+      @required this.contractorHourlyRate,
+      @required this.contractorId,
+      @required this.customerHourlyRate,
+      @required this.projectId});
 
   /// Pass in 'new' on the client. The server will replace with a generated id.
   String contractId;
@@ -188,7 +189,6 @@ class TTimeEntryDeleteInput {
   }
 }
 
-/// A key-value pair
 class TKv {
   TKv({this.k, this.v});
 
@@ -290,10 +290,11 @@ class TCardEstimateUnsetInput {
 }
 
 class TProjectAddBalanceWithStripeInput {
-  TProjectAddBalanceWithStripeInput({@required this.amount,
-    this.cardToken,
-    this.creditCardId,
-    @required this.projectId});
+  TProjectAddBalanceWithStripeInput(
+      {@required this.amount,
+      this.cardToken,
+      this.creditCardId,
+      @required this.projectId});
 
   /// The amount of money to add to the project account
   String amount;
@@ -393,10 +394,11 @@ class TCardDueDateUnsetInput {
 }
 
 class TTimeEntryEditInput {
-  TTimeEntryEditInput({this.entryDate,
-    this.entryDuration,
-    @required this.entryId,
-    this.entryMemo});
+  TTimeEntryEditInput(
+      {this.entryDate,
+      this.entryDuration,
+      @required this.entryId,
+      this.entryMemo});
 
   /// The date the work was done (if modified)
   String entryDate;
@@ -429,10 +431,11 @@ class TTimeEntryEditInput {
 }
 
 class TCardMoveInput {
-  TCardMoveInput({this.afterId,
-    this.beforeId,
-    @required this.cardId,
-    @required this.toId});
+  TCardMoveInput(
+      {this.afterId,
+      this.beforeId,
+      @required this.cardId,
+      @required this.toId});
 
   /// The sibling to move the card right after.
   /// Can't pass in beforeId and afterId together.
@@ -615,10 +618,11 @@ class TAddReactionInput {
 }
 
 class TAccountTransferInput {
-  TAccountTransferInput({@required this.amount,
-    @required this.destAccount,
-    this.memo,
-    @required this.sourceAccount});
+  TAccountTransferInput(
+      {@required this.amount,
+      @required this.destAccount,
+      this.memo,
+      @required this.sourceAccount});
 
   /// The amount of money to transfer
   String amount;
@@ -751,13 +755,14 @@ class TCardRemoveMemberInput {
 }
 
 class TRecordPayoutInput {
-  TRecordPayoutInput({@required this.amount,
-    @required this.date,
-    @required this.fee,
-    this.memo,
-    @required this.method,
-    this.payoutId,
-    @required this.userId});
+  TRecordPayoutInput(
+      {@required this.amount,
+      @required this.date,
+      @required this.fee,
+      this.memo,
+      @required this.method,
+      this.payoutId,
+      @required this.userId});
 
   /// The amount that the user got paid
   String amount;
@@ -885,11 +890,12 @@ class TCardTagsSetInput {
 }
 
 class TUpdateAvailabilityInput {
-  TUpdateAvailabilityInput({@required this.endDate,
-    this.projectId,
-    @required this.startDate,
-    @required this.timePerWeek,
-    this.userId});
+  TUpdateAvailabilityInput(
+      {@required this.endDate,
+      this.projectId,
+      @required this.startDate,
+      @required this.timePerWeek,
+      this.userId});
 
   /// The end date when the user has this availability.
   /// Must be a Sunday to confirm to the US calendar week.
@@ -973,14 +979,15 @@ class TCardDueDateSetInput {
 }
 
 class TCardCreateInput {
-  TCardCreateInput({this.afterId,
-    this.assigneeId,
-    this.beforeId,
-    this.cardId,
-    @required this.cardName,
-    this.meta,
-    this.parentId,
-    this.quickAdd});
+  TCardCreateInput(
+      {this.afterId,
+      this.assigneeId,
+      this.beforeId,
+      this.cardId,
+      @required this.cardName,
+      this.meta,
+      this.parentId,
+      this.quickAdd});
 
   /// The sibling card to place the new card after.
   String afterId;
@@ -1213,11 +1220,12 @@ class TCardRenameInput {
 }
 
 class TTimeEntryCreateInput {
-  TTimeEntryCreateInput({@required this.cardId,
-    @required this.entryDate,
-    @required this.entryDuration,
-    this.entryId,
-    this.entryMemo});
+  TTimeEntryCreateInput(
+      {@required this.cardId,
+      @required this.entryDate,
+      @required this.entryDuration,
+      this.entryId,
+      this.entryMemo});
 
   /// The card (task) the work was done on
   String cardId;
@@ -1308,15 +1316,16 @@ class TFeedEditMessageInput {
 /// For example, a customer could limit the cost of a feature to 100h.
 ///
 class TCardBudgetIncreased implements TTurtleEvent {
-  TCardBudgetIncreased({this.actor,
-    this.actorId,
-    this.budget,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardBudgetIncreased(
+      {this.actor,
+      this.actorId,
+      this.budget,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that increased the budget
   TUser actor;
@@ -1364,30 +1373,31 @@ class TCardBudgetIncreased implements TTurtleEvent {
 }
 
 class TCard implements TDocumentToken, TAccountSource, TFeedSource {
-  TCard({this.assignee,
-    this.assigneeId,
-    this.budget,
-    this.completed,
-    this.completedAt,
-    this.createdAt,
-    this.deleted,
-    this.descendants,
-    this.dueDate,
-    this.estimate,
-    this.feed,
-    this.feedId,
-    this.id,
-    this.members,
-    this.meta,
-    this.name,
-    this.outgoingLinks,
-    this.parentId,
-    this.position,
-    this.project,
-    this.projectId,
-    this.timeEntries,
-    this.timeTracked,
-    this.version});
+  TCard(
+      {this.assignee,
+      this.assigneeId,
+      this.budget,
+      this.completed,
+      this.completedAt,
+      this.createdAt,
+      this.deleted,
+      this.descendants,
+      this.dueDate,
+      this.estimate,
+      this.feed,
+      this.feedId,
+      this.id,
+      this.members,
+      this.meta,
+      this.name,
+      this.outgoingLinks,
+      this.parentId,
+      this.position,
+      this.project,
+      this.projectId,
+      this.timeEntries,
+      this.timeTracked,
+      this.version});
 
   /// The user this card is assigned to
   TUser assignee;
@@ -1479,7 +1489,7 @@ class TCard implements TDocumentToken, TAccountSource, TFeedSource {
       deleted: json['deleted'] as bool,
       descendants: (json['descendants'] as List)
           ?.map((e) =>
-      e == null ? null : TCard.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TCard.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       dueDate: json['dueDate'] as String,
       estimate: json['estimate'] == null
@@ -1492,13 +1502,13 @@ class TCard implements TDocumentToken, TAccountSource, TFeedSource {
       id: json['id'] as int,
       members: (json['members'] as List)
           ?.map((e) =>
-      e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       meta: json['meta'],
       name: json['name'] as String,
       outgoingLinks: (json['outgoingLinks'] as List)
           ?.map((e) =>
-      e == null ? null : TCardLink.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TCardLink.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       parentId: json['parentId'] as String,
       position: json['position'] as int,
@@ -1508,7 +1518,7 @@ class TCard implements TDocumentToken, TAccountSource, TFeedSource {
       projectId: json['projectId'] as String,
       timeEntries: (json['timeEntries'] as List)
           ?.map((e) =>
-      e == null ? null : TTimeEntry.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TTimeEntry.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       timeTracked: json['timeTracked'] as bool,
       version: json['version'] as String,
@@ -1524,12 +1534,13 @@ class TCard implements TDocumentToken, TAccountSource, TFeedSource {
 /// For example, it could be when a user clicks on an activity feed. Or when could be a user scrolls to see the message.
 ///
 class TUserReadFeedEvent implements TTurtleEvent {
-  TUserReadFeedEvent({this.actorId,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.requestId,
-    this.time});
+  TUserReadFeedEvent(
+      {this.actorId,
+      this.feedEventId,
+      this.feedId,
+      this.id,
+      this.requestId,
+      this.time});
 
   /// The user that read the event
   String actorId;
@@ -1562,13 +1573,14 @@ class TUserReadFeedEvent implements TTurtleEvent {
 /// Generates a transaction.
 ///
 class TStripeChargeCreated implements TTurtleEvent {
-  TStripeChargeCreated({this.actor,
-    this.creditCard,
-    this.id,
-    this.last4,
-    this.project,
-    this.requestId,
-    this.time});
+  TStripeChargeCreated(
+      {this.actor,
+      this.creditCard,
+      this.id,
+      this.last4,
+      this.project,
+      this.requestId,
+      this.time});
 
   /// The user that charged the credit card.
   /// Currently only used when a customer refills their balance using a credit card
@@ -1627,14 +1639,15 @@ class TTwilioAuth {
 /// A single instance of a video conference meeting. Has a start time, end time, participants and so on.
 ///
 class TMeeting {
-  TMeeting({this.duration,
-    this.endedAt,
-    this.id,
-    this.participants,
-    this.recording,
-    this.roomId,
-    this.startedAt,
-    this.status});
+  TMeeting(
+      {this.duration,
+      this.endedAt,
+      this.id,
+      this.participants,
+      this.recording,
+      this.roomId,
+      this.startedAt,
+      this.status});
 
   /// The time the meeting took. Does not have a value until the meeting has ended.
   bool duration;
@@ -1673,12 +1686,12 @@ class TMeeting {
       id: json['id'] as String,
       participants: (json['participants'] as List)
           ?.map((e) =>
-      e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       recording: json['recording'] == null
           ? null
           : TMeetingRecording.fromJson(
-          json['recording'] as Map<String, dynamic>),
+              json['recording'] as Map<String, dynamic>),
       roomId: json['roomId'] as String,
       startedAt: json['startedAt'] as String,
       status: TMeetingStatusValues[json['status']],
@@ -1688,16 +1701,17 @@ class TMeeting {
 
 /// A card was assigned to a user
 class TCardAssigned implements TTurtleEvent {
-  TCardAssigned({this.actor,
-    this.actorId,
-    this.assignee,
-    this.assigneeId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardAssigned(
+      {this.actor,
+      this.actorId,
+      this.assignee,
+      this.assigneeId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user who assigned the card
   TUser actor;
@@ -1750,16 +1764,17 @@ class TCardAssigned implements TTurtleEvent {
 
 /// A user posted a message to an activity feed.
 class TFeedMessagePosted implements TTurtleEvent {
-  TFeedMessagePosted({this.actor,
-    this.actorId,
-    this.feed,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.messageBody,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TFeedMessagePosted(
+      {this.actor,
+      this.actorId,
+      this.feed,
+      this.feedEventId,
+      this.feedId,
+      this.id,
+      this.messageBody,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that posted the message
   TUser actor;
@@ -1824,10 +1839,9 @@ class THubspotPipeline {
       id: json['id'] as int,
       label: json['label'] as String,
       stages: (json['stages'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : THubspotDealStage.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : THubspotDealStage.fromJson(e as Map<String, dynamic>))
           ?.toList(),
     );
   }
@@ -1837,17 +1851,18 @@ class THubspotPipeline {
 /// If the card is a project (root card), then parentId will be null and the projectId will equal to the cardId.
 ///
 class TCardCreated implements TTurtleEvent {
-  TCardCreated({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.cardName,
-    this.id,
-    this.parent,
-    this.parentId,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardCreated(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.cardName,
+      this.id,
+      this.parent,
+      this.parentId,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that created the card
   TUser actor;
@@ -1925,15 +1940,16 @@ class TDateObject implements TDocumentToken {
 /// For example, a customer could limit the cost of a feature to 100h.
 ///
 class TCardBudgetDecreased implements TTurtleEvent {
-  TCardBudgetDecreased({this.actor,
-    this.actorId,
-    this.budget,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardBudgetDecreased(
+      {this.actor,
+      this.actorId,
+      this.budget,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that increased the budget
   TUser actor;
@@ -1986,12 +2002,13 @@ class TCardBudgetDecreased implements TTurtleEvent {
 /// This, in combination with [UserReadFeedEvent], can be used to generate unread counts per feed.
 ///
 class TUserUnreadFeedEvent implements TTurtleEvent {
-  TUserUnreadFeedEvent({this.actorId,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.requestId,
-    this.time});
+  TUserUnreadFeedEvent(
+      {this.actorId,
+      this.feedEventId,
+      this.feedId,
+      this.id,
+      this.requestId,
+      this.time});
 
   /// The user that should be notified of this event
   String actorId;
@@ -2022,15 +2039,16 @@ class TUserUnreadFeedEvent implements TTurtleEvent {
 
 /// A user edited deleted an existing message in a feed.
 class TFeedMessageDeleted implements TTurtleEvent {
-  TFeedMessageDeleted({this.actor,
-    this.actorId,
-    this.feed,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TFeedMessageDeleted(
+      {this.actor,
+      this.actorId,
+      this.feed,
+      this.feedEventId,
+      this.feedId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that deleted the message
   TUser actor;
@@ -2079,12 +2097,13 @@ class TFeedMessageDeleted implements TTurtleEvent {
 
 /// A credit card that customers pay with. Currently all credit cards are from Stripe.
 class TCreditCard {
-  TCreditCard({this.brand,
-    this.expMonth,
-    this.expYear,
-    this.id,
-    this.last4,
-    this.owner});
+  TCreditCard(
+      {this.brand,
+      this.expMonth,
+      this.expYear,
+      this.id,
+      this.last4,
+      this.owner});
 
   /// The brand of credit card. For ex: MasterCard, American Express, Visa
   String brand;
@@ -2120,15 +2139,16 @@ class TCreditCard {
 
 /// A user was added to a project.
 class TCardMemberAdded implements TTurtleEvent {
-  TCardMemberAdded({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.member,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardMemberAdded(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.member,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user performing the action. The one who added the user to the project.
   TUser actor;
@@ -2179,14 +2199,15 @@ class TCardMemberAdded implements TTurtleEvent {
 
 /// Object that namespaces data related to the current user
 class TMe {
-  TMe({this.accessibleUsers,
-    this.events,
-    this.eventsCount,
-    this.feeds,
-    this.permissions,
-    this.projects,
-    this.unreadCount,
-    this.user});
+  TMe(
+      {this.accessibleUsers,
+      this.events,
+      this.eventsCount,
+      this.feeds,
+      this.permissions,
+      this.projects,
+      this.unreadCount,
+      this.user});
 
   /// All of the users reachable by the current user based on projects they've been on, users they have interacted with, etc.
   ///         Usually used if you want to give the user autocomplete.
@@ -2214,25 +2235,24 @@ class TMe {
     return TMe(
       accessibleUsers: (json['accessibleUsers'] as List)
           ?.map((e) =>
-      e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       events: (json['events'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : TTurtleEvent.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : TTurtleEvent.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       eventsCount: json['eventsCount'] as int,
       feeds: (json['feeds'] as List)
           ?.map((e) =>
-      e == null ? null : TFeed.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TFeed.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       permissions: (json['permissions'] as List)
           ?.map((e) => TPermissionValues[e])
           ?.toList(),
       projects: (json['projects'] as List)
           ?.map((e) =>
-      e == null ? null : TProject.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TProject.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       unreadCount: json['unreadCount'] as int,
       user: json['user'] == null
@@ -2244,15 +2264,16 @@ class TMe {
 
 /// A user was removed from a project
 class TCardMemberRemoved implements TTurtleEvent {
-  TCardMemberRemoved({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.member,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardMemberRemoved(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.member,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user performing the action. The one who added the user to the project.
   TUser actor;
@@ -2304,19 +2325,20 @@ class TCardMemberRemoved implements TTurtleEvent {
 /// Generates a transaction.
 ///
 class TPayoutRecorded implements TTurtleEvent {
-  TPayoutRecorded({this.actor,
-    this.actorId,
-    this.amount,
-    this.date,
-    this.fee,
-    this.id,
-    this.memo,
-    this.method,
-    this.payoutId,
-    this.requestId,
-    this.time,
-    this.user,
-    this.userId});
+  TPayoutRecorded(
+      {this.actor,
+      this.actorId,
+      this.amount,
+      this.date,
+      this.fee,
+      this.id,
+      this.memo,
+      this.method,
+      this.payoutId,
+      this.requestId,
+      this.time,
+      this.user,
+      this.userId});
 
   /// The user that recorded the payout
   TUser actor;
@@ -2384,16 +2406,17 @@ class TPayoutRecorded implements TTurtleEvent {
 
 /// A card was move from one parent to another
 class TCardMoved implements TTurtleEvent {
-  TCardMoved({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time,
-    this.to,
-    this.toId});
+  TCardMoved(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time,
+      this.to,
+      this.toId});
 
   /// The user who moved the card
   TUser actor;
@@ -2445,17 +2468,18 @@ class TCardMoved implements TTurtleEvent {
 }
 
 class TFeedEvent {
-  TFeedEvent({this.actor,
-    this.body,
-    this.bodyTokens,
-    this.createdAt,
-    this.edited,
-    this.editedAt,
-    this.event,
-    this.feedId,
-    this.id,
-    this.reactions,
-    this.version});
+  TFeedEvent(
+      {this.actor,
+      this.body,
+      this.bodyTokens,
+      this.createdAt,
+      this.edited,
+      this.editedAt,
+      this.event,
+      this.feedId,
+      this.id,
+      this.reactions,
+      this.version});
 
   /// The user that posted the message or performed the action which generated the event.
   TUser actor;
@@ -2504,10 +2528,9 @@ class TFeedEvent {
           : TUser.fromJson(json['actor'] as Map<String, dynamic>),
       body: json['body'] as String,
       bodyTokens: (json['bodyTokens'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : TDocumentToken.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : TDocumentToken.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       createdAt: json['createdAt'] as String,
       edited: json['edited'] as bool,
@@ -2519,7 +2542,7 @@ class TFeedEvent {
       id: json['id'] as int,
       reactions: (json['reactions'] as List)
           ?.map((e) =>
-      e == null ? null : TReaction.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TReaction.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       version: json['version'] as String,
     );
@@ -2530,12 +2553,13 @@ class TFeedEvent {
 /// Contains user-specific info like unread counts.
 ///
 class TFeedSubscription {
-  TFeedSubscription({this.feedId,
-    this.id,
-    this.status,
-    this.unreadCount,
-    this.userId,
-    this.version});
+  TFeedSubscription(
+      {this.feedId,
+      this.id,
+      this.status,
+      this.unreadCount,
+      this.userId,
+      this.version});
 
   /// The feed being subscribed to
   String feedId;
@@ -2569,14 +2593,15 @@ class TFeedSubscription {
 /// Usually means that a customer decided they didn't want a budget for a card.
 ///
 class TCardBudgetUnset implements TTurtleEvent {
-  TCardBudgetUnset({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardBudgetUnset(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that removed the cards budget
   TUser actor;
@@ -2620,13 +2645,14 @@ class TCardBudgetUnset implements TTurtleEvent {
 /// A bank-account-like entity that is used for keeping track of balances for projects, contractors, and turtle itself.
 ///
 class TAccount {
-  TAccount({this.balance,
-    this.balancePending,
-    this.balanceSettled,
-    this.entries,
-    this.id,
-    this.source,
-    this.type});
+  TAccount(
+      {this.balance,
+      this.balancePending,
+      this.balanceSettled,
+      this.entries,
+      this.id,
+      this.source,
+      this.type});
 
   /// The current balance of the account. Kind of like a Venmo/PayPal balance. It's the sum of all ledger in the account.
   TMoney balance;
@@ -2661,10 +2687,9 @@ class TAccount {
           ? null
           : TMoney.fromJson(json['balanceSettled'] as Map<String, dynamic>),
       entries: (json['entries'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : TAccountEntry.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : TAccountEntry.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       id: json['id'] as int,
       source: json['source'] == null
@@ -2677,14 +2702,15 @@ class TAccount {
 
 /// A card's assignee was removed
 class TCardUnassigned implements TTurtleEvent {
-  TCardUnassigned({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardUnassigned(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that removed the assignee
   TUser actor;
@@ -2729,17 +2755,18 @@ class TCardUnassigned implements TTurtleEvent {
 /// Whenever they do work, the contractor logs how much time was spent, the associated task, some notes about the work.
 ///
 class TTimeEntry implements TDocumentToken {
-  TTimeEntry({this.addedAt,
-    this.card,
-    this.contractId,
-    this.date,
-    this.deleted,
-    this.duration,
-    this.edited,
-    this.id,
-    this.memo,
-    this.user,
-    this.version});
+  TTimeEntry(
+      {this.addedAt,
+      this.card,
+      this.contractId,
+      this.date,
+      this.deleted,
+      this.duration,
+      this.edited,
+      this.id,
+      this.memo,
+      this.user,
+      this.version});
 
   /// The date the entry was logged
   String addedAt;
@@ -2801,14 +2828,15 @@ class TTimeEntry implements TDocumentToken {
 
 /// A user marked a card as completed.
 class TCardCompleted implements TTurtleEvent {
-  TCardCompleted({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardCompleted(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that marked the card as completed
   TUser actor;
@@ -2853,14 +2881,15 @@ class TCardCompleted implements TTurtleEvent {
 /// It is worth noting that contracts are immutable. They can only be started and ended. (This is to avoid complications which we don't get into here.)
 ///
 class TContract {
-  TContract({this.active,
-    this.contractor,
-    this.contractorHourlyRate,
-    this.customerHourlyRate,
-    this.endedAt,
-    this.id,
-    this.project,
-    this.startedAt});
+  TContract(
+      {this.active,
+      this.contractor,
+      this.contractorHourlyRate,
+      this.customerHourlyRate,
+      this.endedAt,
+      this.id,
+      this.project,
+      this.startedAt});
 
   /// Whether the contract is currently ongoing. Becomes false once a contract is ended.
   bool active;
@@ -2894,7 +2923,7 @@ class TContract {
       contractorHourlyRate: json['contractorHourlyRate'] == null
           ? null
           : TMoney.fromJson(
-          json['contractorHourlyRate'] as Map<String, dynamic>),
+              json['contractorHourlyRate'] as Map<String, dynamic>),
       customerHourlyRate: json['customerHourlyRate'] == null
           ? null
           : TMoney.fromJson(json['customerHourlyRate'] as Map<String, dynamic>),
@@ -2913,16 +2942,17 @@ class TContract {
 /// To simplify things, start and end dates currently must line up on a US calendar.
 ///
 class TAvailabilityEntry {
-  TAvailabilityEntry({this.author,
-    this.authorId,
-    this.endDate,
-    this.project,
-    this.projectId,
-    this.startDate,
-    this.timePerWeek,
-    this.updatedAt,
-    this.user,
-    this.userId});
+  TAvailabilityEntry(
+      {this.author,
+      this.authorId,
+      this.endDate,
+      this.project,
+      this.projectId,
+      this.startDate,
+      this.timePerWeek,
+      this.updatedAt,
+      this.user,
+      this.userId});
 
   /// The user that logged the entry.  Might be a manager or the user self-reporting.
   TUser author;
@@ -2986,15 +3016,16 @@ class TAvailabilityEntry {
 /// Also includes situtations when a user revises their estimate.
 ///
 class TCardEstimateSet implements TTurtleEvent {
-  TCardEstimateSet({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.estimate,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardEstimateSet(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.estimate,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that set the estimate. Usually done by the person doing the work, but can be done by anyone.
   TUser actor;
@@ -3057,14 +3088,15 @@ class TMoney {
 }
 
 class TCardDueDateUnset implements TTurtleEvent {
-  TCardDueDateUnset({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardDueDateUnset(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that cleared the due date
   TUser actor;
@@ -3108,51 +3140,52 @@ class TCardDueDateUnset implements TTurtleEvent {
 }
 
 class TRootMutationType {
-  TRootMutationType({this.timeEntryDelete,
-    this.accountTransfer,
-    this.feedMarkAsRead,
-    this.cardTagsSet,
-    this.updateAvailability,
-    this.cardComplete,
-    this.profileNameSet,
-    this.sendLowBalanceReminder,
-    this.feedEditMessage,
-    this.cardInviteUser,
-    this.cardAddMember,
-    this.cardAssign,
-    this.cardBudgetDecrease,
-    this.userSetSkills,
-    this.cardDueDateSet,
-    this.meetingRoomJoin,
-    this.cardEstimateUnset,
-    this.removeReaction,
-    this.accountOpen,
-    this.cardDelete,
-    this.cardDueDateUnset,
-    this.cardEstimateSet,
-    this.cardRemoveMember,
-    this.timeEntryEdit,
-    this.cardUndelete,
-    this.cardBudgetUnset,
-    this.projectAddBalanceWithStripe,
-    this.cardLinkCreate,
-    this.cardUncomplete,
-    this.feedPostMessage,
-    this.recordPayout,
-    this.cardRename,
-    this.cardMove,
-    this.userSetRoles,
-    this.cardLinkDelete,
-    this.addReaction,
-    this.timeEntryCreate,
-    this.contractStart,
-    this.profileTimezoneSet,
-    this.contractEnd,
-    this.cardUnassign,
-    this.linkOrCreateHubSpotContact,
-    this.cardBudgetIncrease,
-    this.feedDeleteMessage,
-    this.cardCreate});
+  TRootMutationType(
+      {this.timeEntryDelete,
+      this.accountTransfer,
+      this.feedMarkAsRead,
+      this.cardTagsSet,
+      this.updateAvailability,
+      this.cardComplete,
+      this.profileNameSet,
+      this.sendLowBalanceReminder,
+      this.feedEditMessage,
+      this.cardInviteUser,
+      this.cardAddMember,
+      this.cardAssign,
+      this.cardBudgetDecrease,
+      this.userSetSkills,
+      this.cardDueDateSet,
+      this.meetingRoomJoin,
+      this.cardEstimateUnset,
+      this.removeReaction,
+      this.accountOpen,
+      this.cardDelete,
+      this.cardDueDateUnset,
+      this.cardEstimateSet,
+      this.cardRemoveMember,
+      this.timeEntryEdit,
+      this.cardUndelete,
+      this.cardBudgetUnset,
+      this.projectAddBalanceWithStripe,
+      this.cardLinkCreate,
+      this.cardUncomplete,
+      this.feedPostMessage,
+      this.recordPayout,
+      this.cardRename,
+      this.cardMove,
+      this.userSetRoles,
+      this.cardLinkDelete,
+      this.addReaction,
+      this.timeEntryCreate,
+      this.contractStart,
+      this.profileTimezoneSet,
+      this.contractEnd,
+      this.cardUnassign,
+      this.linkOrCreateHubSpotContact,
+      this.cardBudgetIncrease,
+      this.feedDeleteMessage,
+      this.cardCreate});
 
   /// Deletes the time entry for work that was done.
   /// Generates a transaction that takes money from your account and gives it back to the customer.
@@ -3407,7 +3440,7 @@ class TRootMutationType {
       meetingRoomJoin: json['meetingRoomJoin'] == null
           ? null
           : TTwilioAuth.fromJson(
-          json['meetingRoomJoin'] as Map<String, dynamic>),
+              json['meetingRoomJoin'] as Map<String, dynamic>),
       cardEstimateUnset: json['cardEstimateUnset'] == null
           ? null
           : TCard.fromJson(json['cardEstimateUnset'] as Map<String, dynamic>),
@@ -3456,7 +3489,7 @@ class TRootMutationType {
       linkOrCreateHubSpotContact: json['linkOrCreateHubSpotContact'] == null
           ? null
           : THubspotContact.fromJson(
-          json['linkOrCreateHubSpotContact'] as Map<String, dynamic>),
+              json['linkOrCreateHubSpotContact'] as Map<String, dynamic>),
       cardBudgetIncrease: json['cardBudgetIncrease'] == null
           ? null
           : TCard.fromJson(json['cardBudgetIncrease'] as Map<String, dynamic>),
@@ -3474,22 +3507,23 @@ class TRootMutationType {
 /// If the duration was edited, this generates an adjustment transaction to account for this change.
 ///
 class TTimeEntryEdited implements TTurtleEvent {
-  TTimeEntryEdited({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.contract,
-    this.contractor,
-    this.entryDate,
-    this.entryDuration,
-    this.entryMemo,
-    this.id,
-    this.prevEntryDuration,
-    this.project,
-    this.requestId,
-    this.time,
-    this.timeEntry,
-    this.timeEntryId});
+  TTimeEntryEdited(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.contract,
+      this.contractor,
+      this.entryDate,
+      this.entryDuration,
+      this.entryMemo,
+      this.id,
+      this.prevEntryDuration,
+      this.project,
+      this.requestId,
+      this.time,
+      this.timeEntry,
+      this.timeEntryId});
 
   /// The user that edited the time. (It's possible that this may be different from the user who did the work.)
   TUser actor;
@@ -3576,14 +3610,15 @@ class TTimeEntryEdited implements TTurtleEvent {
 
 /// A completed card was marked as incomplete
 class TCardUncompleted implements TTurtleEvent {
-  TCardUncompleted({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardUncompleted(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that marked the card as incomplete
   TUser actor;
@@ -3626,14 +3661,15 @@ class TCardUncompleted implements TTurtleEvent {
 
 /// A user removed the estimate for a card (task)
 class TCardEstimateUnset implements TTurtleEvent {
-  TCardEstimateUnset({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardEstimateUnset(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that set the estimate
   TUser actor;
@@ -3678,11 +3714,12 @@ class TCardEstimateUnset implements TTurtleEvent {
 /// Whenever a transaction is generated, it has 2+ accounting entries.
 ///
 class TAccountEntry {
-  TAccountEntry({this.balanceSnapshot,
-    this.createdAt,
-    this.delta,
-    this.memo,
-    this.sourceEvent});
+  TAccountEntry(
+      {this.balanceSnapshot,
+      this.createdAt,
+      this.delta,
+      this.memo,
+      this.sourceEvent});
 
   /// The total balance at this moment. (Includes the delta applied.)
   TMoney balanceSnapshot;
@@ -3717,10 +3754,11 @@ class TAccountEntry {
 }
 
 class TRootSubscriptionType {
-  TRootSubscriptionType({this.feedSubscriptionUpdated,
-    this.feedUpdated,
-    this.meetingUpdated,
-    this.unreadCountUpdated});
+  TRootSubscriptionType(
+      {this.feedSubscriptionUpdated,
+      this.feedUpdated,
+      this.meetingUpdated,
+      this.unreadCountUpdated});
 
   /// One or more attributes of a feed was updated.
   ///
@@ -3740,7 +3778,7 @@ class TRootSubscriptionType {
       feedSubscriptionUpdated: json['feedSubscriptionUpdated'] == null
           ? null
           : TFeedSubscription.fromJson(
-          json['feedSubscriptionUpdated'] as Map<String, dynamic>),
+              json['feedSubscriptionUpdated'] as Map<String, dynamic>),
       feedUpdated: json['feedUpdated'] == null
           ? null
           : TFeed.fromJson(json['feedUpdated'] as Map<String, dynamic>),
@@ -3768,15 +3806,16 @@ class TStringObject implements TDocumentToken {
 }
 
 class TCardDueDateSet implements TTurtleEvent {
-  TCardDueDateSet({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.dueDate,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardDueDateSet(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.dueDate,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that set the due date
   TUser actor;
@@ -3827,22 +3866,23 @@ class TCardDueDateSet implements TTurtleEvent {
 /// Generates a transaction that deducts from customer account and adds to the your account.
 ///
 class TTimeEntryCreated implements TTurtleEvent {
-  TTimeEntryCreated({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.contract,
-    this.contractor,
-    this.entryDate,
-    this.entryDuration,
-    this.entryMemo,
-    this.id,
-    this.project,
-    this.projectId,
-    this.requestId,
-    this.time,
-    this.timeEntry,
-    this.timeEntryId});
+  TTimeEntryCreated(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.contract,
+      this.contractor,
+      this.entryDate,
+      this.entryDuration,
+      this.entryMemo,
+      this.id,
+      this.project,
+      this.projectId,
+      this.requestId,
+      this.time,
+      this.timeEntry,
+      this.timeEntryId});
 
   /// The user that logged the time. (It's possible that this may be different from the user who did the work.)
   TUser actor;
@@ -3931,15 +3971,16 @@ class TTimeEntryCreated implements TTurtleEvent {
 
 /// The name property of a card was changed
 class TCardRenamed implements TTurtleEvent {
-  TCardRenamed({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.cardName,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TCardRenamed(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.cardName,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user who renamed the card
   TUser actor;
@@ -3988,12 +4029,13 @@ class TCardRenamed implements TTurtleEvent {
 /// Used for debugging when (and if) a user is receiving notifiations.
 ///
 class TNotificationDelivery {
-  TNotificationDelivery({this.deliveredAt,
-    this.feed,
-    this.feedEvent,
-    this.id,
-    this.recipient,
-    this.type});
+  TNotificationDelivery(
+      {this.deliveredAt,
+      this.feed,
+      this.feedEvent,
+      this.id,
+      this.recipient,
+      this.type});
 
   /// When the message about the notification was delivered
   String deliveredAt;
@@ -4031,11 +4073,12 @@ class TNotificationDelivery {
 }
 
 class THubspotContact {
-  THubspotContact({this.coreSkills,
-    this.githubUsername,
-    this.hourlyRate,
-    this.id,
-    this.recruitingStage});
+  THubspotContact(
+      {this.coreSkills,
+      this.githubUsername,
+      this.hourlyRate,
+      this.id,
+      this.recruitingStage});
 
   List<String> coreSkills;
 
@@ -4050,7 +4093,7 @@ class THubspotContact {
   factory THubspotContact.fromJson(Map<String, dynamic> json) {
     return THubspotContact(
       coreSkills:
-      (json['coreSkills'] as List)?.map((e) => e as String)?.toList(),
+          (json['coreSkills'] as List)?.map((e) => e as String)?.toList(),
       githubUsername: json['githubUsername'] as String,
       hourlyRate: json['hourlyRate'] == null
           ? null
@@ -4059,19 +4102,20 @@ class THubspotContact {
       recruitingStage: json['recruitingStage'] == null
           ? null
           : THubspotDealStage.fromJson(
-          json['recruitingStage'] as Map<String, dynamic>),
+              json['recruitingStage'] as Map<String, dynamic>),
     );
   }
 }
 
 class TMeetingRecording {
-  TMeetingRecording({this.downloadUrl,
-    this.duration,
-    this.fileSize,
-    this.format,
-    this.id,
-    this.resolution,
-    this.status});
+  TMeetingRecording(
+      {this.downloadUrl,
+      this.duration,
+      this.fileSize,
+      this.format,
+      this.id,
+      this.resolution,
+      this.status});
 
   /// A CDN link to the video file for downloading/playing the video.
   String downloadUrl;
@@ -4150,13 +4194,14 @@ class TReaction {
 /// (A user sees all subscribed feeds in their conversation list.)
 ///
 class TFeedSubscriptionUpdated implements TTurtleEvent {
-  TFeedSubscriptionUpdated({this.actorId,
-    this.feedId,
-    this.id,
-    this.projectId,
-    this.requestId,
-    this.subscriptionType,
-    this.time});
+  TFeedSubscriptionUpdated(
+      {this.actorId,
+      this.feedId,
+      this.id,
+      this.projectId,
+      this.requestId,
+      this.subscriptionType,
+      this.time});
 
   /// The user that the subscription belongs to
   String actorId;
@@ -4190,12 +4235,13 @@ class TFeedSubscriptionUpdated implements TTurtleEvent {
 }
 
 class TCommand {
-  TCommand({this.actor,
-    this.executedAt,
-    this.id,
-    this.input,
-    this.requestId,
-    this.type});
+  TCommand(
+      {this.actor,
+      this.executedAt,
+      this.id,
+      this.input,
+      this.requestId,
+      this.type});
 
   TUser actor;
 
@@ -4227,16 +4273,17 @@ class TCommand {
 /// Very similar to reactions work in popular work apps like Slack/Hipchat.
 ///
 class TReactionAdded implements TTurtleEvent {
-  TReactionAdded({this.actorId,
-    this.cardId,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.projectId,
-    this.reaction,
-    this.receiverId,
-    this.requestId,
-    this.time});
+  TReactionAdded(
+      {this.actorId,
+      this.cardId,
+      this.feedEventId,
+      this.feedId,
+      this.id,
+      this.projectId,
+      this.reaction,
+      this.receiverId,
+      this.requestId,
+      this.time});
 
   /// The user that left the reaction
   String actorId;
@@ -4282,22 +4329,23 @@ class TReactionAdded implements TTurtleEvent {
 }
 
 class TProject {
-  TProject({this.balance,
-    this.budget,
-    this.contracts,
-    this.estimatedHourlyRate,
-    this.feeds,
-    this.id,
-    this.lastActivity,
-    this.lastChargedCard,
-    this.managerOverdueCards,
-    this.managers,
-    this.members,
-    this.meta,
-    this.name,
-    this.projectStatusTags,
-    this.rootCard,
-    this.timeEntries});
+  TProject(
+      {this.balance,
+      this.budget,
+      this.contracts,
+      this.estimatedHourlyRate,
+      this.feeds,
+      this.id,
+      this.lastActivity,
+      this.lastChargedCard,
+      this.managerOverdueCards,
+      this.managers,
+      this.members,
+      this.meta,
+      this.name,
+      this.projectStatusTags,
+      this.rootCard,
+      this.timeEntries});
 
   TMoney balance;
 
@@ -4342,33 +4390,33 @@ class TProject {
           : TMoney.fromJson(json['budget'] as Map<String, dynamic>),
       contracts: (json['contracts'] as List)
           ?.map((e) =>
-      e == null ? null : TContract.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TContract.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       estimatedHourlyRate: json['estimatedHourlyRate'] == null
           ? null
           : TMoney.fromJson(
-          json['estimatedHourlyRate'] as Map<String, dynamic>),
+              json['estimatedHourlyRate'] as Map<String, dynamic>),
       feeds: (json['feeds'] as List)
           ?.map((e) =>
-      e == null ? null : TFeed.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TFeed.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       id: json['id'] as int,
       lastActivity: json['lastActivity'] as String,
       lastChargedCard: json['lastChargedCard'] == null
           ? null
           : TCreditCard.fromJson(
-          json['lastChargedCard'] as Map<String, dynamic>),
+              json['lastChargedCard'] as Map<String, dynamic>),
       managerOverdueCards: (json['managerOverdueCards'] as List)
           ?.map((e) =>
-      e == null ? null : TCard.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TCard.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       managers: (json['managers'] as List)
           ?.map((e) =>
-      e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       members: (json['members'] as List)
           ?.map((e) =>
-      e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       meta: json['meta'],
       name: json['name'] as String,
@@ -4380,19 +4428,20 @@ class TProject {
           : TCard.fromJson(json['rootCard'] as Map<String, dynamic>),
       timeEntries: (json['timeEntries'] as List)
           ?.map((e) =>
-      e == null ? null : TTimeEntry.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TTimeEntry.fromJson(e as Map<String, dynamic>))
           ?.toList(),
     );
   }
 }
 
 class THubspotDealStage {
-  THubspotDealStage({this.active,
-    this.closedWon,
-    this.displayOrder,
-    this.id,
-    this.label,
-    this.probability});
+  THubspotDealStage(
+      {this.active,
+      this.closedWon,
+      this.displayOrder,
+      this.id,
+      this.label,
+      this.probability});
 
   bool active;
 
@@ -4423,15 +4472,16 @@ class THubspotDealStage {
 /// Contains user written messages and also activity-related messages like time tracking and task completion.
 ///
 class TFeed {
-  TFeed({this.card,
-    this.feedEvents,
-    this.feedSubscription,
-    this.id,
-    this.lastFeedEvent,
-    this.otherUser,
-    this.project,
-    this.source,
-    this.version});
+  TFeed(
+      {this.card,
+      this.feedEvents,
+      this.feedSubscription,
+      this.id,
+      this.lastFeedEvent,
+      this.otherUser,
+      this.project,
+      this.source,
+      this.version});
 
   @Deprecated('use source instead')
   TCard card;
@@ -4471,12 +4521,12 @@ class TFeed {
           : TCard.fromJson(json['card'] as Map<String, dynamic>),
       feedEvents: (json['feedEvents'] as List)
           ?.map((e) =>
-      e == null ? null : TFeedEvent.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TFeedEvent.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       feedSubscription: json['feedSubscription'] == null
           ? null
           : TFeedSubscription.fromJson(
-          json['feedSubscription'] as Map<String, dynamic>),
+              json['feedSubscription'] as Map<String, dynamic>),
       id: json['id'] as int,
       lastFeedEvent: json['lastFeedEvent'] == null
           ? null
@@ -4497,15 +4547,16 @@ class TFeed {
 
 /// A file stored on S3 that was uploaded by a user.
 class TFile implements TDocumentToken {
-  TFile({this.contentType,
-    this.downloadUri,
-    this.id,
-    this.name,
-    this.path,
-    this.size,
-    this.thumbnailUri,
-    this.uri,
-    this.userId});
+  TFile(
+      {this.contentType,
+      this.downloadUri,
+      this.id,
+      this.name,
+      this.path,
+      this.size,
+      this.thumbnailUri,
+      this.uri,
+      this.userId});
 
   /// The mime content type
   String contentType;
@@ -4552,35 +4603,36 @@ class TFile implements TDocumentToken {
 }
 
 class TRootQueryType {
-  TRootQueryType({this.account,
-    this.accounts,
-    this.activeProjects,
-    this.apiVersion,
-    this.availabilityEntries,
-    this.card,
-    this.cards,
-    this.cardsCount,
-    this.command,
-    this.feed,
-    this.feedEvent,
-    this.feedEvents,
-    this.feedEventsCount,
-    this.feedSubscriptions,
-    this.feedSubscriptionsCount,
-    this.feeds,
-    this.feedsCount,
-    this.hubspotPipeline,
-    this.me,
-    this.meeting,
-    this.meetings,
-    this.notificationDeliveries,
-    this.project,
-    this.projects,
-    this.timeEntries,
-    this.timeEntriesCount,
-    this.timeEntry,
-    this.user,
-    this.users});
+  TRootQueryType(
+      {this.account,
+      this.accounts,
+      this.activeProjects,
+      this.apiVersion,
+      this.availabilityEntries,
+      this.card,
+      this.cards,
+      this.cardsCount,
+      this.command,
+      this.feed,
+      this.feedEvent,
+      this.feedEvents,
+      this.feedEventsCount,
+      this.feedSubscriptions,
+      this.feedSubscriptionsCount,
+      this.feeds,
+      this.feedsCount,
+      this.hubspotPipeline,
+      this.me,
+      this.meeting,
+      this.meetings,
+      this.notificationDeliveries,
+      this.project,
+      this.projects,
+      this.timeEntries,
+      this.timeEntriesCount,
+      this.timeEntry,
+      this.user,
+      this.users});
 
   /// Fetch an account by its id
   TAccount account;
@@ -4675,25 +4727,24 @@ class TRootQueryType {
           : TAccount.fromJson(json['account'] as Map<String, dynamic>),
       accounts: (json['accounts'] as List)
           ?.map((e) =>
-      e == null ? null : TAccount.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TAccount.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       activeProjects: (json['activeProjects'] as List)
           ?.map((e) =>
-      e == null ? null : TProject.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TProject.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       apiVersion: json['apiVersion'] as String,
       availabilityEntries: (json['availabilityEntries'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : TAvailabilityEntry.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : TAvailabilityEntry.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       card: json['card'] == null
           ? null
           : TCard.fromJson(json['card'] as Map<String, dynamic>),
       cards: (json['cards'] as List)
           ?.map((e) =>
-      e == null ? null : TCard.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TCard.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       cardsCount: json['cardsCount'] as int,
       command: json['command'] == null
@@ -4707,25 +4758,24 @@ class TRootQueryType {
           : TFeedEvent.fromJson(json['feedEvent'] as Map<String, dynamic>),
       feedEvents: (json['feedEvents'] as List)
           ?.map((e) =>
-      e == null ? null : TFeedEvent.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TFeedEvent.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       feedEventsCount: json['feedEventsCount'] as int,
       feedSubscriptions: (json['feedSubscriptions'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : TFeedSubscription.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : TFeedSubscription.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       feedSubscriptionsCount: json['feedSubscriptionsCount'] as int,
       feeds: (json['feeds'] as List)
           ?.map((e) =>
-      e == null ? null : TFeed.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TFeed.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       feedsCount: json['feedsCount'] as int,
       hubspotPipeline: json['hubspotPipeline'] == null
           ? null
           : THubspotPipeline.fromJson(
-          json['hubspotPipeline'] as Map<String, dynamic>),
+              json['hubspotPipeline'] as Map<String, dynamic>),
       me: json['me'] == null
           ? null
           : TMe.fromJson(json['me'] as Map<String, dynamic>),
@@ -4734,24 +4784,23 @@ class TRootQueryType {
           : TMeeting.fromJson(json['meeting'] as Map<String, dynamic>),
       meetings: (json['meetings'] as List)
           ?.map((e) =>
-      e == null ? null : TMeeting.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TMeeting.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       notificationDeliveries: (json['notificationDeliveries'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : TNotificationDelivery.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : TNotificationDelivery.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       project: json['project'] == null
           ? null
           : TProject.fromJson(json['project'] as Map<String, dynamic>),
       projects: (json['projects'] as List)
           ?.map((e) =>
-      e == null ? null : TProject.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TProject.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       timeEntries: (json['timeEntries'] as List)
           ?.map((e) =>
-      e == null ? null : TTimeEntry.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TTimeEntry.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       timeEntriesCount: json['timeEntriesCount'] as int,
       timeEntry: json['timeEntry'] == null
@@ -4762,7 +4811,7 @@ class TRootQueryType {
           : TUser.fromJson(json['user'] as Map<String, dynamic>),
       users: (json['users'] as List)
           ?.map((e) =>
-      e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TUser.fromJson(e as Map<String, dynamic>))
           ?.toList(),
     );
   }
@@ -4793,16 +4842,17 @@ class TLink implements TDocumentToken {
 /// A user removed their reaction from a feed event (message) in an activity feed
 ///
 class TReactionRemoved implements TTurtleEvent {
-  TReactionRemoved({this.actorId,
-    this.cardId,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.projectId,
-    this.reaction,
-    this.receiverId,
-    this.requestId,
-    this.time});
+  TReactionRemoved(
+      {this.actorId,
+      this.cardId,
+      this.feedEventId,
+      this.feedId,
+      this.id,
+      this.projectId,
+      this.reaction,
+      this.receiverId,
+      this.requestId,
+      this.time});
 
   /// The user that removed the reaction
   String actorId;
@@ -4848,19 +4898,20 @@ class TReactionRemoved implements TTurtleEvent {
 }
 
 class TUser implements TDocumentToken, TAccountSource, TFeedSource {
-  TUser({this.activeContractsCount,
-    this.contracts,
-    this.email,
-    this.feeds,
-    this.hubspotContact,
-    this.id,
-    this.name,
-    this.photo,
-    this.projects,
-    this.roles,
-    this.status,
-    this.timeEntries,
-    this.timezone});
+  TUser(
+      {this.activeContractsCount,
+      this.contracts,
+      this.email,
+      this.feeds,
+      this.hubspotContact,
+      this.id,
+      this.name,
+      this.photo,
+      this.projects,
+      this.roles,
+      this.status,
+      this.timeEntries,
+      this.timezone});
 
   /// The number of contracts the user currently has active.
   int activeContractsCount;
@@ -4903,29 +4954,29 @@ class TUser implements TDocumentToken, TAccountSource, TFeedSource {
       activeContractsCount: json['activeContractsCount'] as int,
       contracts: (json['contracts'] as List)
           ?.map((e) =>
-      e == null ? null : TContract.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TContract.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       email: json['email'] as String,
       feeds: (json['feeds'] as List)
           ?.map((e) =>
-      e == null ? null : TFeed.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TFeed.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       hubspotContact: json['hubspotContact'] == null
           ? null
           : THubspotContact.fromJson(
-          json['hubspotContact'] as Map<String, dynamic>),
+              json['hubspotContact'] as Map<String, dynamic>),
       id: json['id'] as int,
       name: json['name'] as String,
       photo: json['photo'] as String,
       projects: (json['projects'] as List)
           ?.map((e) =>
-      e == null ? null : TProject.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TProject.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       roles: (json['roles'] as List)?.map((e) => TRoleValues[e])?.toList(),
       status: json['status'] as String,
       timeEntries: (json['timeEntries'] as List)
           ?.map((e) =>
-      e == null ? null : TTimeEntry.fromJson(e as Map<String, dynamic>))
+              e == null ? null : TTimeEntry.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       timezone: json['timezone'] as String,
     );
@@ -4937,20 +4988,21 @@ class TUser implements TDocumentToken, TAccountSource, TFeedSource {
 /// This generates an adjustment for the contractor to refund Turtle and Turtle to refund the customer.
 ///
 class TTimeEntryDeleted implements TTurtleEvent {
-  TTimeEntryDeleted({this.actor,
-    this.actorId,
-    this.card,
-    this.cardId,
-    this.contract,
-    this.contractor,
-    this.id,
-    this.prevEntryDuration,
-    this.project,
-    this.projectId,
-    this.requestId,
-    this.time,
-    this.timeEntry,
-    this.timeEntryId});
+  TTimeEntryDeleted(
+      {this.actor,
+      this.actorId,
+      this.card,
+      this.cardId,
+      this.contract,
+      this.contractor,
+      this.id,
+      this.prevEntryDuration,
+      this.project,
+      this.projectId,
+      this.requestId,
+      this.time,
+      this.timeEntry,
+      this.timeEntryId});
 
   /// The user that deleted the time entry. (It's possible that this may be different from the user who did the work.)
   TUser actor;
@@ -5057,15 +5109,16 @@ class TCardLink {
 
 /// Money was transferred between two accounts
 class TAccountTransfer implements TTurtleEvent {
-  TAccountTransfer({this.actor,
-    this.actorId,
-    this.amount,
-    this.destAccountId,
-    this.id,
-    this.memo,
-    this.requestId,
-    this.sourceAccountId,
-    this.time});
+  TAccountTransfer(
+      {this.actor,
+      this.actorId,
+      this.amount,
+      this.destAccountId,
+      this.id,
+      this.memo,
+      this.requestId,
+      this.sourceAccountId,
+      this.time});
 
   /// The user that performed the action
   TUser actor;
@@ -5112,16 +5165,17 @@ class TAccountTransfer implements TTurtleEvent {
 
 /// A user edited the content of an existing message in a feed.
 class TFeedMessageEdited implements TTurtleEvent {
-  TFeedMessageEdited({this.actor,
-    this.actorId,
-    this.feed,
-    this.feedEventId,
-    this.feedId,
-    this.id,
-    this.messageBody,
-    this.projectId,
-    this.requestId,
-    this.time});
+  TFeedMessageEdited(
+      {this.actor,
+      this.actorId,
+      this.feed,
+      this.feedEventId,
+      this.feedId,
+      this.id,
+      this.messageBody,
+      this.projectId,
+      this.requestId,
+      this.time});
 
   /// The user that edited the message
   TUser actor;
@@ -5187,12 +5241,13 @@ class TCardBudget {
 }
 
 class T__Field {
-  T__Field({this.args,
-    this.deprecationReason,
-    this.description,
-    this.isDeprecated,
-    this.name,
-    this.type});
+  T__Field(
+      {this.args,
+      this.deprecationReason,
+      this.description,
+      this.isDeprecated,
+      this.name,
+      this.type});
 
   List<T__InputValue> args;
 
@@ -5209,10 +5264,9 @@ class T__Field {
   factory T__Field.fromJson(Map<String, dynamic> json) {
     return T__Field(
       args: (json['args'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : T__InputValue.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : T__InputValue.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       deprecationReason: json['deprecationReason'] as String,
       description: json['description'] as String,
@@ -5227,11 +5281,12 @@ class T__Field {
 
 /// Represents a schema
 class T__Schema {
-  T__Schema({this.directives,
-    this.mutationType,
-    this.queryType,
-    this.subscriptionType,
-    this.types});
+  T__Schema(
+      {this.directives,
+      this.mutationType,
+      this.queryType,
+      this.subscriptionType,
+      this.types});
 
   List<T__Directive> directives;
 
@@ -5246,10 +5301,9 @@ class T__Schema {
   factory T__Schema.fromJson(Map<String, dynamic> json) {
     return T__Schema(
       directives: (json['directives'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : T__Directive.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : T__Directive.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       mutationType: json['mutationType'] == null
           ? null
@@ -5262,7 +5316,7 @@ class T__Schema {
           : T__Type.fromJson(json['subscriptionType'] as Map<String, dynamic>),
       types: (json['types'] as List)
           ?.map((e) =>
-      e == null ? null : T__Type.fromJson(e as Map<String, dynamic>))
+              e == null ? null : T__Type.fromJson(e as Map<String, dynamic>))
           ?.toList(),
     );
   }
@@ -5292,13 +5346,14 @@ class T__EnumValue {
 
 /// Represents a directive
 class T__Directive {
-  T__Directive({this.args,
-    this.description,
-    this.locations,
-    this.name,
-    this.onField,
-    this.onFragment,
-    this.onOperation});
+  T__Directive(
+      {this.args,
+      this.description,
+      this.locations,
+      this.name,
+      this.onField,
+      this.onFragment,
+      this.onOperation});
 
   List<T__InputValue> args;
 
@@ -5320,10 +5375,9 @@ class T__Directive {
   factory T__Directive.fromJson(Map<String, dynamic> json) {
     return T__Directive(
       args: (json['args'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : T__InputValue.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : T__InputValue.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       description: json['description'] as String,
       locations: (json['locations'] as List)
@@ -5339,15 +5393,16 @@ class T__Directive {
 
 /// Represents scalars, interfaces, object types, unions, enums in the system
 class T__Type {
-  T__Type({this.description,
-    this.enumValues,
-    this.fields,
-    this.inputFields,
-    this.interfaces,
-    this.kind,
-    this.name,
-    this.ofType,
-    this.possibleTypes});
+  T__Type(
+      {this.description,
+      this.enumValues,
+      this.fields,
+      this.inputFields,
+      this.interfaces,
+      this.kind,
+      this.name,
+      this.ofType,
+      this.possibleTypes});
 
   String description;
 
@@ -5371,24 +5426,22 @@ class T__Type {
     return T__Type(
       description: json['description'] as String,
       enumValues: (json['enumValues'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : T__EnumValue.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : T__EnumValue.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       fields: (json['fields'] as List)
           ?.map((e) =>
-      e == null ? null : T__Field.fromJson(e as Map<String, dynamic>))
+              e == null ? null : T__Field.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       inputFields: (json['inputFields'] as List)
-          ?.map((e) =>
-      e == null
-          ? null
-          : T__InputValue.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => e == null
+              ? null
+              : T__InputValue.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       interfaces: (json['interfaces'] as List)
           ?.map((e) =>
-      e == null ? null : T__Type.fromJson(e as Map<String, dynamic>))
+              e == null ? null : T__Type.fromJson(e as Map<String, dynamic>))
           ?.toList(),
       kind: json['kind'] as String,
       name: json['name'] as String,
@@ -5397,7 +5450,7 @@ class T__Type {
           : T__Type.fromJson(json['ofType'] as Map<String, dynamic>),
       possibleTypes: (json['possibleTypes'] as List)
           ?.map((e) =>
-      e == null ? null : T__Type.fromJson(e as Map<String, dynamic>))
+              e == null ? null : T__Type.fromJson(e as Map<String, dynamic>))
           ?.toList(),
     );
   }
@@ -5423,834 +5476,6 @@ class T__InputValue {
           ? null
           : T__Type.fromJson(json['type'] as Map<String, dynamic>),
     );
-  }
-}
-
-abstract class TMutation {
-  Future<Map<String, dynamic>> query(
-      {String document, Map<String, dynamic> variables});
-  String _extractFragmentName(String fragment) {
-    if (fragment != null) {
-      RegExp exp = new RegExp("fragment (\w+) on (\w+)", caseSensitive: true);
-      Iterable<Match> matches = exp.allMatches(fragment);
-      if (matches.length > 0)
-        return matches.elementAt(0).group(0).split(" ")[1];
-      else
-        return "";
-    } else {
-      return "";
-    }
-  }
-
-  Future<dynamic> timeEntryDelete({@required entryId}) async {
-    TTimeEntryDeleteInput input = new TTimeEntryDeleteInput(
-      entryId: entryId,
-    );
-    var result = await query(document: """
-	mutation
-		timeEntryDelete(\$input: TimeEntryDeleteInput! ) {
-			timeEntryDelete(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['timeEntryDelete'];
-  }
-
-  Future<dynamic> accountTransfer({@required amount,
-    @required destAccount,
-    memo,
-    @required sourceAccount}) async {
-    TAccountTransferInput input = new TAccountTransferInput(
-      amount: amount,
-      destAccount: destAccount,
-      memo: memo,
-      sourceAccount: sourceAccount,
-    );
-    var result = await query(document: """
-	mutation
-		accountTransfer(\$input: AccountTransferInput! ) {
-			accountTransfer(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['accountTransfer'];
-  }
-
-  Future<dynamic> feedMarkAsRead({feedId}) async {
-    TFeedMarkAsReadInput input = new TFeedMarkAsReadInput(
-      feedId: feedId,
-    );
-    var result = await query(document: """
-	mutation
-		feedMarkAsRead(\$input: FeedMarkAsReadInput! ) {
-			feedMarkAsRead(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['feedMarkAsRead'];
-  }
-
-  Future<dynamic> cardTagsSet({@required cardId, tagGroup, tags}) async {
-    TCardTagsSetInput input = new TCardTagsSetInput(
-      cardId: cardId,
-      tagGroup: tagGroup,
-      tags: tags,
-    );
-    var result = await query(document: """
-	mutation
-		cardTagsSet(\$input: CardTagsSetInput! ) {
-			cardTagsSet(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['cardTagsSet'];
-  }
-
-  Future<dynamic> updateAvailability({@required endDate,
-    projectId,
-    @required startDate,
-    @required timePerWeek,
-    userId}) async {
-    TUpdateAvailabilityInput input = new TUpdateAvailabilityInput(
-      endDate: endDate,
-      projectId: projectId,
-      startDate: startDate,
-      timePerWeek: timePerWeek,
-      userId: userId,
-    );
-    var result = await query(document: """
-	mutation
-		updateAvailability(\$input: UpdateAvailabilityInput! ) {
-			updateAvailability(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['updateAvailability'];
-  }
-
-  Future<TCard> cardComplete({@required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardCompleteInput input = new TCardCompleteInput(
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardComplete(\$input: CardCompleteInput! ) {
-			cardComplete(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardComplete'] as Map<String, dynamic>);
-  }
-
-  Future<dynamic> profileNameSet({name}) async {
-    TProfileNameSetInput input = new TProfileNameSetInput(
-      name: name,
-    );
-    var result = await query(document: """
-	mutation
-		profileNameSet(\$input: ProfileNameSetInput! ) {
-			profileNameSet(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['profileNameSet'];
-  }
-
-  Future<dynamic> sendLowBalanceReminder({projectId, userId}) async {
-    TSendLowBalanceReminderInput input = new TSendLowBalanceReminderInput(
-      projectId: projectId,
-      userId: userId,
-    );
-    var result = await query(document: """
-	mutation
-		sendLowBalanceReminder(\$input: SendLowBalanceReminderInput! ) {
-			sendLowBalanceReminder(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['sendLowBalanceReminder'];
-  }
-
-  Future<dynamic> feedEditMessage({feedEventId, messageBody}) async {
-    TFeedEditMessageInput input = new TFeedEditMessageInput(
-      feedEventId: feedEventId,
-      messageBody: messageBody,
-    );
-    var result = await query(document: """
-	mutation
-		feedEditMessage(\$input: FeedEditMessageInput! ) {
-			feedEditMessage(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['feedEditMessage'];
-  }
-
-  Future<TUser> cardInviteUser({cardId,
-    @required email,
-    String fragment =
-    'fragment UserFragment on User { activeContractsCount email id name photo status timezone  }'}) async {
-    TCardInviteUserInput input = new TCardInviteUserInput(
-      cardId: cardId,
-      email: email,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardInviteUser(\$input: CardInviteUserInput! ) {
-			cardInviteUser(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TUser.fromJson(
-        result['data']['cardInviteUser'] as Map<String, dynamic>);
-  }
-
-  Future<dynamic> cardAddMember({@required cardId, @required memberId}) async {
-    TCardAddMemberInput input = new TCardAddMemberInput(
-      cardId: cardId,
-      memberId: memberId,
-    );
-    var result = await query(document: """
-	mutation
-		cardAddMember(\$input: CardAddMemberInput! ) {
-			cardAddMember(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['cardAddMember'];
-  }
-
-  Future<TCard> cardAssign({@required assigneeId,
-    @required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardAssignInput input = new TCardAssignInput(
-      assigneeId: assigneeId,
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardAssign(\$input: CardAssignInput! ) {
-			cardAssign(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(result['data']['cardAssign'] as Map<String, dynamic>);
-  }
-
-  Future<TCard> cardBudgetDecrease({@required budgetDuration,
-    @required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardBudgetDecreaseInput input = new TCardBudgetDecreaseInput(
-      budgetDuration: budgetDuration,
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardBudgetDecrease(\$input: CardBudgetDecreaseInput! ) {
-			cardBudgetDecrease(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardBudgetDecrease'] as Map<String, dynamic>);
-  }
-
-  Future<dynamic> userSetSkills({skills, @required userId}) async {
-    TUserSetSkillsInput input = new TUserSetSkillsInput(
-      skills: skills,
-      userId: userId,
-    );
-    var result = await query(document: """
-	mutation
-		userSetSkills(\$input: UserSetSkillsInput! ) {
-			userSetSkills(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['userSetSkills'];
-  }
-
-  Future<TCard> cardDueDateSet({@required cardId,
-    @required dueDate,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardDueDateSetInput input = new TCardDueDateSetInput(
-      cardId: cardId,
-      dueDate: dueDate,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardDueDateSet(\$input: CardDueDateSetInput! ) {
-			cardDueDateSet(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardDueDateSet'] as Map<String, dynamic>);
-  }
-
-  Future<TTwilioAuth> meetingRoomJoin(String projectId,
-      {String fragment =
-      'fragment TwilioAuthFragment on TwilioAuth { token  }'}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		meetingRoomJoin(\$projectId: String! ) {
-			meetingRoomJoin(projectId:\$projectId){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"projectId": projectId});
-    return TTwilioAuth.fromJson(
-        result['data']['meetingRoomJoin'] as Map<String, dynamic>);
-  }
-
-  Future<TCard> cardEstimateUnset({@required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardEstimateUnsetInput input = new TCardEstimateUnsetInput(
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardEstimateUnset(\$input: CardEstimateUnsetInput! ) {
-			cardEstimateUnset(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardEstimateUnset'] as Map<String, dynamic>);
-  }
-
-  Future<dynamic> removeReaction({feedEventId, reaction}) async {
-    TRemoveReactionInput input = new TRemoveReactionInput(
-      feedEventId: feedEventId,
-      reaction: reaction,
-    );
-    var result = await query(document: """
-	mutation
-		removeReaction(\$input: RemoveReactionInput! ) {
-			removeReaction(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['removeReaction'];
-  }
-
-  Future<dynamic> accountOpen({@required accountId}) async {
-    TAccountOpenInput input = new TAccountOpenInput(
-      accountId: accountId,
-    );
-    var result = await query(document: """
-	mutation
-		accountOpen(\$input: AccountOpenInput! ) {
-			accountOpen(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['accountOpen'];
-  }
-
-  Future<TCard> cardDelete({@required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardDeleteInput input = new TCardDeleteInput(
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardDelete(\$input: CardDeleteInput! ) {
-			cardDelete(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(result['data']['cardDelete'] as Map<String, dynamic>);
-  }
-
-  Future<TCard> cardDueDateUnset({@required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardDueDateUnsetInput input = new TCardDueDateUnsetInput(
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardDueDateUnset(\$input: CardDueDateUnsetInput! ) {
-			cardDueDateUnset(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardDueDateUnset'] as Map<String, dynamic>);
-  }
-
-  Future<TCard> cardEstimateSet({@required cardId,
-    @required estimate,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardEstimateSetInput input = new TCardEstimateSetInput(
-      cardId: cardId,
-      estimate: estimate,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardEstimateSet(\$input: CardEstimateSetInput! ) {
-			cardEstimateSet(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardEstimateSet'] as Map<String, dynamic>);
-  }
-
-  Future<dynamic> cardRemoveMember(
-      {@required cardId, @required memberId}) async {
-    TCardRemoveMemberInput input = new TCardRemoveMemberInput(
-      cardId: cardId,
-      memberId: memberId,
-    );
-    var result = await query(document: """
-	mutation
-		cardRemoveMember(\$input: CardRemoveMemberInput! ) {
-			cardRemoveMember(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['cardRemoveMember'];
-  }
-
-  Future<dynamic> timeEntryEdit(
-      {entryDate, entryDuration, @required entryId, entryMemo}) async {
-    TTimeEntryEditInput input = new TTimeEntryEditInput(
-      entryDate: entryDate,
-      entryDuration: entryDuration,
-      entryId: entryId,
-      entryMemo: entryMemo,
-    );
-    var result = await query(document: """
-	mutation
-		timeEntryEdit(\$input: TimeEntryEditInput! ) {
-			timeEntryEdit(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['timeEntryEdit'];
-  }
-
-  Future<TCard> cardUndelete({@required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardUndeleteInput input = new TCardUndeleteInput(
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardUndelete(\$input: CardUndeleteInput! ) {
-			cardUndelete(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardUndelete'] as Map<String, dynamic>);
-  }
-
-  Future<TCard> cardBudgetUnset({@required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardBudgetUnsetInput input = new TCardBudgetUnsetInput(
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardBudgetUnset(\$input: CardBudgetUnsetInput! ) {
-			cardBudgetUnset(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardBudgetUnset'] as Map<String, dynamic>);
-  }
-
-  Future<dynamic> projectAddBalanceWithStripe(
-      {@required amount, cardToken, creditCardId, @required projectId}) async {
-    TProjectAddBalanceWithStripeInput input =
-    new TProjectAddBalanceWithStripeInput(
-      amount: amount,
-      cardToken: cardToken,
-      creditCardId: creditCardId,
-      projectId: projectId,
-    );
-    var result = await query(document: """
-	mutation
-		projectAddBalanceWithStripe(\$input: ProjectAddBalanceWithStripeInput! ) {
-			projectAddBalanceWithStripe(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['projectAddBalanceWithStripe'];
-  }
-
-  Future<dynamic> cardLinkCreate(
-      {@required fromId, @required linkType, @required toId}) async {
-    TCardLinkCreateInput input = new TCardLinkCreateInput(
-      fromId: fromId,
-      linkType: linkType,
-      toId: toId,
-    );
-    var result = await query(document: """
-	mutation
-		cardLinkCreate(\$input: CardLinkCreateInput! ) {
-			cardLinkCreate(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['cardLinkCreate'];
-  }
-
-  Future<TCard> cardUncomplete({@required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardUncompleteInput input = new TCardUncompleteInput(
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardUncomplete(\$input: CardUncompleteInput! ) {
-			cardUncomplete(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardUncomplete'] as Map<String, dynamic>);
-  }
-
-  Future<dynamic> feedPostMessage(
-      {@required feedId, @required messageBody}) async {
-    TFeedPostMessageInput input = new TFeedPostMessageInput(
-      feedId: feedId,
-      messageBody: messageBody,
-    );
-    var result = await query(document: """
-	mutation
-		feedPostMessage(\$input: FeedPostMessageInput! ) {
-			feedPostMessage(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['feedPostMessage'];
-  }
-
-  Future<dynamic> recordPayout({@required amount,
-    @required date,
-    @required fee,
-    memo,
-    @required method,
-    payoutId,
-    @required userId}) async {
-    TRecordPayoutInput input = new TRecordPayoutInput(
-      amount: amount,
-      date: date,
-      fee: fee,
-      memo: memo,
-      method: method,
-      payoutId: payoutId,
-      userId: userId,
-    );
-    var result = await query(document: """
-	mutation
-		recordPayout(\$input: RecordPayoutInput! ) {
-			recordPayout(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['recordPayout'];
-  }
-
-  Future<TCard> cardRename({@required cardId,
-    @required cardName,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardRenameInput input = new TCardRenameInput(
-      cardId: cardId,
-      cardName: cardName,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardRename(\$input: CardRenameInput! ) {
-			cardRename(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(result['data']['cardRename'] as Map<String, dynamic>);
-  }
-
-  Future<TCard> cardMove({afterId,
-    beforeId,
-    @required cardId,
-    @required toId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardMoveInput input = new TCardMoveInput(
-      afterId: afterId,
-      beforeId: beforeId,
-      cardId: cardId,
-      toId: toId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardMove(\$input: CardMoveInput! ) {
-			cardMove(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(result['data']['cardMove'] as Map<String, dynamic>);
-  }
-
-  Future<dynamic> userSetRoles({roles, @required userId}) async {
-    TUserSetRolesInput input = new TUserSetRolesInput(
-      roles: roles,
-      userId: userId,
-    );
-    var result = await query(document: """
-	mutation
-		userSetRoles(\$input: UserSetRolesInput! ) {
-			userSetRoles(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['userSetRoles'];
-  }
-
-  Future<dynamic> cardLinkDelete(
-      {@required fromId, @required linkType, @required toId}) async {
-    TCardLinkDeleteInput input = new TCardLinkDeleteInput(
-      fromId: fromId,
-      linkType: linkType,
-      toId: toId,
-    );
-    var result = await query(document: """
-	mutation
-		cardLinkDelete(\$input: CardLinkDeleteInput! ) {
-			cardLinkDelete(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['cardLinkDelete'];
-  }
-
-  Future<dynamic> addReaction({feedEventId, reaction}) async {
-    TAddReactionInput input = new TAddReactionInput(
-      feedEventId: feedEventId,
-      reaction: reaction,
-    );
-    var result = await query(document: """
-	mutation
-		addReaction(\$input: AddReactionInput! ) {
-			addReaction(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['addReaction'];
-  }
-
-  Future<dynamic> timeEntryCreate({@required cardId,
-    @required entryDate,
-    @required entryDuration,
-    entryId,
-    entryMemo}) async {
-    TTimeEntryCreateInput input = new TTimeEntryCreateInput(
-      cardId: cardId,
-      entryDate: entryDate,
-      entryDuration: entryDuration,
-      entryId: entryId,
-      entryMemo: entryMemo,
-    );
-    var result = await query(document: """
-	mutation
-		timeEntryCreate(\$input: TimeEntryCreateInput! ) {
-			timeEntryCreate(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['timeEntryCreate'];
-  }
-
-  Future<dynamic> contractStart({contractId,
-    @required contractorHourlyRate,
-    @required contractorId,
-    @required customerHourlyRate,
-    @required projectId}) async {
-    TContractStartInput input = new TContractStartInput(
-      contractId: contractId,
-      contractorHourlyRate: contractorHourlyRate,
-      contractorId: contractorId,
-      customerHourlyRate: customerHourlyRate,
-      projectId: projectId,
-    );
-    var result = await query(document: """
-	mutation
-		contractStart(\$input: ContractStartInput! ) {
-			contractStart(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['contractStart'];
-  }
-
-  Future<dynamic> profileTimezoneSet({timezone}) async {
-    TProfileTimezoneSetInput input = new TProfileTimezoneSetInput(
-      timezone: timezone,
-    );
-    var result = await query(document: """
-	mutation
-		profileTimezoneSet(\$input: ProfileTimezoneSetInput! ) {
-			profileTimezoneSet(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['profileTimezoneSet'];
-  }
-
-  Future<dynamic> contractEnd({@required contractId}) async {
-    TContractEndInput input = new TContractEndInput(
-      contractId: contractId,
-    );
-    var result = await query(document: """
-	mutation
-		contractEnd(\$input: ContractEndInput! ) {
-			contractEnd(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['contractEnd'];
-  }
-
-  Future<TCard> cardUnassign({@required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardUnassignInput input = new TCardUnassignInput(
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardUnassign(\$input: CardUnassignInput! ) {
-			cardUnassign(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardUnassign'] as Map<String, dynamic>);
-  }
-
-  Future<THubspotContact> linkOrCreateHubSpotContact(String userId,
-      {String fragment =
-      'fragment HubspotContactFragment on HubspotContact { githubUsername id  }'}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		linkOrCreateHubSpotContact(\$userId: String! ) {
-			linkOrCreateHubSpotContact(userId:\$userId){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"userId": userId});
-    return THubspotContact.fromJson(
-        result['data']['linkOrCreateHubSpotContact'] as Map<String, dynamic>);
-  }
-
-  Future<TCard> cardBudgetIncrease({@required budgetDuration,
-    @required cardId,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardBudgetIncreaseInput input = new TCardBudgetIncreaseInput(
-      budgetDuration: budgetDuration,
-      cardId: cardId,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardBudgetIncrease(\$input: CardBudgetIncreaseInput! ) {
-			cardBudgetIncrease(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardBudgetIncrease'] as Map<String, dynamic>);
-  }
-
-  Future<dynamic> feedDeleteMessage({feedEventId}) async {
-    TFeedDeleteMessageInput input = new TFeedDeleteMessageInput(
-      feedEventId: feedEventId,
-    );
-    var result = await query(document: """
-	mutation
-		feedDeleteMessage(\$input: FeedDeleteMessageInput! ) {
-			feedDeleteMessage(input:\$input)
-		}
-	""", variables: {"input": input.toJson()});
-    return result['data']['feedDeleteMessage'];
-  }
-
-  Future<TCard> cardCreate({afterId,
-    assigneeId,
-    beforeId,
-    cardId,
-    @required cardName,
-    meta,
-    parentId,
-    quickAdd,
-    String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    TCardCreateInput input = new TCardCreateInput(
-      afterId: afterId,
-      assigneeId: assigneeId,
-      beforeId: beforeId,
-      cardId: cardId,
-      cardName: cardName,
-      meta: meta,
-      parentId: parentId,
-      quickAdd: quickAdd,
-    );
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-	mutation
-		cardCreate(\$input: CardCreateInput! ) {
-			cardCreate(input:\$input){
-				...$fragmentName
-			}
-		}
-	$fragment
-	""", variables: {"input": input.toJson()});
-    return TCard.fromJson(result['data']['cardCreate'] as Map<String, dynamic>);
   }
 }
 

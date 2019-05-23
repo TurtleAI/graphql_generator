@@ -1,8 +1,15 @@
 import 'package:analyzer/dart/element/type.dart';
+import 'package:code_builder/code_builder.dart';
+import 'package:dart_style/dart_style.dart';
 
+import 'enumaration.dart';
+import 'input_object.dart';
+import 'interface.dart';
 import 'model.dart';
+import 'objects.dart';
+import 'union.dart';
 
-class GraphQLGenerator {
+class GraphQLGenerators {
   String namespace;
   Map<String, DartType> types = {};
   Map<String, String> fragments = {};
@@ -14,24 +21,24 @@ class GraphQLGenerator {
   List<TypeA> objectTypes = [];
   List<TypeA> inputObjectTypes = [];
 
-  static final GraphQLGenerator _singleton = new GraphQLGenerator._internal();
+  static final GraphQLGenerators _singleton = new GraphQLGenerators._internal();
 
-  factory GraphQLGenerator() {
+  factory GraphQLGenerators() {
     return _singleton;
   }
 
-  GraphQLGenerator._internal();
+  GraphQLGenerators._internal();
 
-  String graphQLGenerate(List<TypeA> responseTypes, Map<String, DartType> types,
-      Map<String, String> fragments) {
+  graphQLGenerate(List<TypeA> responseTypes,String namespace, Map<String, DartType> types, Map<String, String> fragments) {
+    this.namespace = namespace;
     this.responseTypes = responseTypes;
     this.types = types;
     this.fragments = fragments;
-    generateModels();
-
+    splitTypes();
+    return generateTypes();
   }
 
-  generateModels() {
+  splitTypes() {
     enumTypes = responseTypes.where((type) => type.kind == Kind.ENUM).toList();
     interfaceTypes =
         responseTypes.where((type) => type.kind == Kind.INTERFACE).toList();
@@ -41,5 +48,31 @@ class GraphQLGenerator {
         responseTypes.where((type) => type.kind == Kind.INPUT_OBJECT).toList();
     objectTypes =
         responseTypes.where((type) => type.kind == Kind.OBJECT).toList();
+  }
+
+  generateTypes() {
+    var result = '';
+    var emitter = DartEmitter(Allocator());
+    List<String> enumString = EnumGenerator().enumGenerator(enumTypes);
+    Map<String, Class> interfaces = InterfaceGenerator().interfaceGenerator(interfaceTypes);
+    Map<String, Class> unions = UnionGenerator().unionGenerator(unionTypes);
+    Map<String, Class> inputs = InputObjectGenerator().inputObjectGenerator(inputObjectTypes);
+    Map<String,Class> objects = ObjectClassGenerator().objectClassGenerator(objectTypes);
+
+    print("Parsing");
+    Map<String,Class> classes  = {};
+    classes.addAll(interfaces);
+    classes.addAll(unions);
+    classes.addAll(inputs);
+    classes.addAll(objects);
+
+    print("Parsing done $classes");
+    Library library = new Library((lib) => lib.body.addAll(classes.values));
+    result += DartFormatter().format('${library.accept(emitter)}');
+    enumString.forEach((enumString) {
+      result += DartFormatter().format(enumString);
+    });
+
+    return result;
   }
 }
