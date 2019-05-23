@@ -168,11 +168,9 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
             p.name = "fragment";
             p.type = Reference("String");
           }));
-          m.body = new Code('if (fragment != null) { '
-              'RegExp exp = new RegExp("fragment (\\w+) on (\\w+)", caseSensitive: true);'
-              'Iterable<Match> matches = exp.allMatches(fragment);'
-              'if (matches.length > 0)return matches.elementAt(0).group(0).split(" ")[1]; else return "";} '
-              'else {return "";}');
+          m.body = new Code(
+              'RegExp exp = new RegExp(r"\\s*fragment\\s+(\\w+)\\s+on\\s+(\\w+)", caseSensitive: true);'
+              'return exp.firstMatch(fragment)?.group(1);');
         }));
       mutation.fields.forEach((field) {
         mutationClassBuilder.methods.add(Method((m) {
@@ -198,9 +196,6 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
                 p.defaultTo = Code(_generateDefaultFragment(field.type.name));
               }));
 
-            // \nmutation ${field.name}(\\\$${f.name}: ${findFieldType(f.type).contains(namespace) ? findFieldType(f.type).substring(namespace.length) : findFieldType(f.type)}!) {'
-            //  ' \n\t\t${field.name}(${f.name}:\\\$${f.name})${_generateMutationFields(namespace + field.type.name)}\n
-
             var mutationName = field.name;
             var inputName = f.name;
             var inputType = findFieldType(f.type).contains(namespace)
@@ -208,10 +203,12 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
                 : findFieldType(f.type);
             var mutationFields =
                 _generateMutationFields(namespace + field.type.name);
+            var mutationFragments =
+                _generateMutationFragments(namespace + field.type.name);
             var graphql = """
-              mutation $mutationName($inputName:$inputType!) {
+              mutation $mutationName(\\\$$inputName:$inputType!) {
                 $mutationName($inputName:\\\$$inputName)$mutationFields
-              }
+              }$mutationFragments
               """;
 
             m.body = Code(
@@ -334,10 +331,9 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     }
   }
 
-  _generateMutationFields(String name) {
-    bool isFound = false;
+  bool _mutationHasFields(String name) {
     if (classes.containsKey(name)) {
-      isFound = classes[name].fields.any((field) {
+      return classes[name].fields.any((field) {
         switch (field.type.symbol) {
           case "String":
           case "int":
@@ -350,15 +346,21 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
         }
       });
     }
-    if (isFound) {
-      return "{\n\t\t\t\t...\$fragmentName\n\t\t\t}\n\t\t}"
-          "\n\t\$fragment";
-    } else {
-      return "\n\t\t}";
+    return false;
+  }
+
+  _generateMutationFields(String name) {
+    if (_mutationHasFields(name)) {
+      return " { ...\$fragmentName }";
     }
-//    result += "\n\t\t\t}";
-//    if (result.compareTo("{\n\t\t\t}") == 0) return "\n\t}";
-//    return result + "\n\t}";
+    return "";
+  }
+
+  _generateMutationFragments(String name) {
+    if (_mutationHasFields(name)) {
+      return "\n\t\$fragment";
+    }
+    return "";
   }
 
   classBuilder(ClassBuilder builder, TypeA type) {
