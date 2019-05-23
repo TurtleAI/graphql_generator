@@ -40,20 +40,12 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     url = annotation.read('url').stringValue;
     headerToken = annotation.read('headerToken').stringValue;
     namespace = annotation.read('namespace').stringValue;
-    if (!annotation
-        .read('types')
-        .isNull) {
-      types = _convertDartObjectMap(annotation
-          .read('types')
-          .mapValue);
+    if (!annotation.read('types').isNull) {
+      types = _convertDartObjectMap(annotation.read('types').mapValue);
     }
-    if (!annotation
-        .read('fragments')
-        .isNull) {
+    if (!annotation.read('fragments').isNull) {
       fragments =
-          _convertDartObjectMapToString(annotation
-              .read('fragments')
-              .mapValue);
+          _convertDartObjectMapToString(annotation.read('fragments').mapValue);
     }
     var response = await getSchema();
     List<TypeA> typesFromResponse = getTypeList(getTypesFromResponse(response));
@@ -205,21 +197,28 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
                 p.named = true;
                 p.defaultTo = Code(_generateDefaultFragment(field.type.name));
               }));
+
+            // \nmutation ${field.name}(\\\$${f.name}: ${findFieldType(f.type).contains(namespace) ? findFieldType(f.type).substring(namespace.length) : findFieldType(f.type)}!) {'
+            //  ' \n\t\t${field.name}(${f.name}:\\\$${f.name})${_generateMutationFields(namespace + field.type.name)}\n
+
+            var mutationName = field.name;
+            var inputName = f.name;
+            var inputType = findFieldType(f.type).contains(namespace)
+                ? findFieldType(f.type).substring(namespace.length)
+                : findFieldType(f.type);
+            var mutationFields =
+                _generateMutationFields(namespace + field.type.name);
+            var graphql = """
+              mutation $mutationName($inputName:$inputType!) {
+                $mutationName($inputName:\\\$$inputName)$mutationFields
+              }
+              """;
+
             m.body = Code(
                 '${_generateObjectFromParameters(findFieldType(f.type))}'
-                    ' ${_mutationHasFragments(mapFieldType(field.type.name))
-                    ? 'var fragmentName = _extractFragmentName(fragment);'
-                    : ''}'
-                    ' var result =  await query(document:"""\n\tmutation\n\t\t${field
-                    .name}(\\\$${f.name}: ${findFieldType(f.type).contains(
-                    namespace) ? findFieldType(f.type).substring(
-                    namespace.length) : findFieldType(f.type)}! )'
-                    ' {\n\t\t\t${field.name}(${f.name}:\\\$${f
-                    .name})${_generateMutationFields(
-                    namespace + field.type.name)}\n\t""",variables:{\n\t"${f
-                    .name}":${f.name}${_mutationHasFragments(
-                    findFieldType(f.type)) ? ".toJson()" : ""}\n\t});'
-                    '${_generateMutationReturn(field.type.name, field.name)}');
+                ' ${_mutationHasFragments(mapFieldType(field.type.name)) ? 'var fragmentName = _extractFragmentName(fragment);' : ''}'
+                ' var result =  await query(document:"""\n$graphql\n""",variables:{\n\t"${f.name}":${f.name}${_mutationHasFragments(findFieldType(f.type)) ? ".toJson()" : ""}\n\t});'
+                '${_generateMutationReturn(field.type.name, field.name)}');
           });
         }));
       });
@@ -258,8 +257,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
             .first
             .optionalParameters
             .forEach((parameter) {
-          ParameterBuilder builder = parameter.toBuilder()
-            ..toThis = false;
+          ParameterBuilder builder = parameter.toBuilder()..toThis = false;
           parameters.add(builder.build());
         });
       }
@@ -330,9 +328,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
           return "return (result['data']['$nname'] as List)?.map((e) => e as $split)?.toList();";
       }
 
-      return "return (result['data']['$nname'] as List)?.map((e) => e == null? null : ${mapFieldTypes
-          .split('<')[1].split(
-          '>')[0]}.fromJson(e as Map<String,dynamic>))?.toList();";
+      return "return (result['data']['$nname'] as List)?.map((e) => e == null? null : ${mapFieldTypes.split('<')[1].split('>')[0]}.fromJson(e as Map<String,dynamic>))?.toList();";
     } else {
       return "return $mapFieldTypes.fromJson(result['data']['$nname'] as Map<String,dynamic>);";
     }
@@ -378,8 +374,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
         builder.fields.add(Field((f) {
           if (field.isDeprecated)
             f.annotations.add(Reference(
-                "Deprecated('${field.deprecationReason.replaceAll(
-                    '\n', '')}')"));
+                "Deprecated('${field.deprecationReason.replaceAll('\n', '')}')"));
           f.name = field.name;
           f.type = Reference(findFieldType(field.type));
           if (field.description != null)
@@ -499,22 +494,16 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
         case "bool":
         case "double":
         case "dynamic":
-          return "${f.name} : (json['${f
-              .name}'] as List)?.map((e) => e as $split)?.toList(),";
+          return "${f.name} : (json['${f.name}'] as List)?.map((e) => e as $split)?.toList(),";
         default:
           if (enumTypes.any((type) => '$namespace${type.name}' == split)) {
-            return "${f.name} : (json['${f
-                .name}'] as List)?.map((e) => ${split}Values[e])?.toList(),";
+            return "${f.name} : (json['${f.name}'] as List)?.map((e) => ${split}Values[e])?.toList(),";
           }
       }
 
-      return "${f.name} : (json['${f
-          .name}'] as List)?.map((e) => e == null? null : ${f.type.symbol.split(
-          '<')[1].split(
-          '>')[0]}.fromJson(e as Map<String,dynamic>))?.toList(),";
+      return "${f.name} : (json['${f.name}'] as List)?.map((e) => e == null? null : ${f.type.symbol.split('<')[1].split('>')[0]}.fromJson(e as Map<String,dynamic>))?.toList(),";
     } else {
-      return "${f.name} : json['${f.name}'] == null ? null : ${f.type
-          .symbol}.fromJson(json['${f.name}'] as Map<String,dynamic>),";
+      return "${f.name} : json['${f.name}'] == null ? null : ${f.type.symbol}.fromJson(json['${f.name}'] as Map<String,dynamic>),";
     }
   }
 
@@ -570,8 +559,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
       enumString
           .add(" enum $namespace${enumType.name} {${_getEnumArray(enumType)}}");
       enumString.add(
-          " const $namespace${enumType.name}Values = {${_getEnumMapValues(
-              enumType)}};");
+          " const $namespace${enumType.name}Values = {${_getEnumMapValues(enumType)}};");
     });
   }
 
@@ -616,8 +604,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
             fromJsonBody += "switch(json['__typename']){";
             interfaceType.possibleTypes.forEach((type) {
               fromJsonBody +=
-              'case "${type.name}" : return $namespace${type
-                  .name}.fromJson(json);';
+                  'case "${type.name}" : return $namespace${type.name}.fromJson(json);';
             });
             fromJsonBody += "} return null;";
             m.body = Code(fromJsonBody);
@@ -644,8 +631,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
             fromJsonBody += "switch(json['__typename']){";
             unionType.possibleTypes.forEach((type) {
               fromJsonBody +=
-              'case "${type.name}" : return $namespace${type
-                  .name}.fromJson(json);';
+                  'case "${type.name}" : return $namespace${type.name}.fromJson(json);';
             });
             fromJsonBody += "} return null;";
             m.body = Code(fromJsonBody);
