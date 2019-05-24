@@ -1,9 +1,10 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:code_builder/code_builder.dart';
+import 'package:graphql_generator/generator.dart';
+import 'package:graphql_generator/helper.dart';
+import 'package:graphql_generator/model.dart';
 
-import 'generator.dart';
-import 'model.dart';
 
 class InputObjectGenerator {
   static final InputObjectGenerator _singleton =
@@ -16,10 +17,9 @@ class InputObjectGenerator {
   InputObjectGenerator._internal();
 
   inputObjectGenerator(List<TypeA> inputObjectTypes) {
-    print("INPUT START");
     Map<String, Class> classes = {};
     inputObjectTypes.forEach((typeObject) {
-      classes.putIfAbsent(typeObject.name, () {
+      classes.putIfAbsent('${GraphQLGenerators().namespace}${typeObject.name}', () {
         return _generateClass(typeObject);
       });
     });
@@ -43,7 +43,7 @@ class InputObjectGenerator {
     inputFields.forEach((field) {
       fields.add(Field((f) {
         f.name = field.name;
-        f.type = Reference(_findFieldType(field.type));
+        f.type = Reference(Helper.findFieldType(field.type));
         if (field.description != null)
           f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
       }));
@@ -120,55 +120,6 @@ class InputObjectGenerator {
       return "${f.name} : (json['${f.name}'] as List)?.map((e) => e == null? null : ${f.type.symbol.split('<')[1].split('>')[0]}.fromJson(e as Map<String,dynamic>))?.toList(),";
     } else {
       return "${f.name} : json['${f.name}'] == null ? null : ${f.type.symbol}.fromJson(json['${f.name}'] as Map<String,dynamic>),";
-    }
-  }
-
-  _findFieldType(InterfaceA type, {bool isList}) {
-    if (type.name != null) {
-      return _mapFieldType(type.name);
-    }
-    if (type.kind != null) {
-      if (type.kind == Kind.LIST) {
-        return "List<${_findFieldType(type.ofType)}>";
-      }
-    }
-    return _findFieldType(type.ofType);
-  }
-
-  _mapFieldType(String name) {
-    Map<String, DartType> types = new GraphQLGenerators().types;
-    if (types.containsKey(name)) {
-      if (types[name].name.compareTo('Map') == 0) {
-        return "Map<String,dynamic>";
-      }
-      if (types[name].name.compareTo('List') == 0) {
-        return "List<dynamic>";
-      }
-      return types[name].toString();
-    }
-
-    switch (name) {
-      case 'Boolean':
-        return 'bool';
-      case 'Int':
-        return 'int';
-      case 'Float':
-        return 'double';
-      case 'String':
-        return 'String';
-      default:
-        if (GraphQLGenerators().enumTypes.any((type) => type.name == name) ||
-            GraphQLGenerators()
-                .interfaceTypes
-                .any((type) => type.name == name) ||
-            GraphQLGenerators().unionTypes.any((type) => type.name == name) ||
-            GraphQLGenerators().objectTypes.any((type) => type.name == name) ||
-            GraphQLGenerators()
-                .inputObjectTypes
-                .any((type) => type.name == name))
-          return '${GraphQLGenerators().namespace}$name';
-        else
-          return 'String';
     }
   }
 

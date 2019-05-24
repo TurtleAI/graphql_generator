@@ -15,7 +15,7 @@ class UnionGenerator {
   unionGenerator(List<TypeA> unionTypes) {
     Map<String, Class> classes = {};
     unionTypes.forEach((unionType) {
-      classes.putIfAbsent(unionType.name, () {
+      classes.putIfAbsent('${GraphQLGenerators().namespace}${unionType.name}', () {
         return _generateClass(unionType);
       });
     });

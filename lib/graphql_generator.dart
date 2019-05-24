@@ -51,7 +51,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
     var response = await getSchema();
     List<TypeA> typesFromResponse = getTypeList(getTypesFromResponse(response));
 
-    return GraphQLGenerators().graphQLGenerate(typesFromResponse,namespace, types, fragments);
+    return GraphQLGenerators().graphQLGenerate(typesFromResponse,namespace, types, fragments,mutationType);
 //    enumTypes =
 //        typesFromResponse.where((type) => type.kind == Kind.ENUM).toList();
 //    parseEnumType(enumTypes);
@@ -190,7 +190,6 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
                 p.name = f.name;
                 p.type = Reference(findFieldType(f.type));
               }));
-            print("ENTRY ${f.type} MUTATION START");
             if (_mutationHasFragments(mapFieldType(field.type.name)))
               m.optionalParameters.add(Parameter((p) {
                 p.name = "fragment";
@@ -513,7 +512,7 @@ class GraphQLGenerator extends GeneratorForAnnotation<GQLGenerator> {
   }
 
   /// Loop to find the field types
-  String findFieldType(InterfaceA type, {bool isList}) {
+  String findFieldType(InterfaceA type) {
     if (type.name != null) {
       return mapFieldType(type.name);
     }
