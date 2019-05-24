@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9e28eb5-a515-45ba-b1e2-a2245c21c3bd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/lib/builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/enumaration.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/enumaration.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generator.dart" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/code_generator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/graphql_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/graphql_generator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/helper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/helper.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/input_object.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/input_object.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/interface.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/interface.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/model.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/model.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/mutation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/mutation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/objects.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/objects.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/union.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/union.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -30,11 +19,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/graphql_generator.dart">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
               <caret line="23" selection-start-line="23" selection-end-line="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/example/lib/test_model.graphql.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="5490" column="13" selection-start-line="5490" selection-start-column="13" selection-end-line="5490" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -80,15 +78,6 @@
               <folding>
                 <element signature="e#0#56#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/lib/test_model.graphql.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="5490" column="13" selection-start-line="5490" selection-start-column="13" selection-end-line="5490" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -970,13 +959,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/lib/test_model.graphql.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="5490" column="13" selection-start-line="5490" selection-start-column="13" selection-end-line="5490" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/generator/code_generator.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1292">
@@ -991,6 +973,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="23" selection-start-line="23" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/lib/test_model.graphql.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5490" column="13" selection-start-line="5490" selection-start-column="13" selection-end-line="5490" selection-end-column="13" />
         </state>
       </provider>
     </entry>
