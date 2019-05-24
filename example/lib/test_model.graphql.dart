@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// GraphQLGenerator
+// Generator: GraphQLGenerators
 // **************************************************************************
 
 import 'package:meta/meta.dart';
@@ -189,7 +189,6 @@ class TTimeEntryDeleteInput {
   }
 }
 
-/// A key-value pair
 class TKv {
   TKv({this.k, this.v});
 
@@ -5489,7 +5488,8 @@ abstract class TMutation {
     return exp.firstMatch(fragment)?.group(1);
   }
 
-  Future<dynamic> timeEntryDelete({@required entryId}) async {
+  /// [entryId]  The time entry to delete
+  Future<dynamic> timeEntryDelete({String entryId}) async {
     TTimeEntryDeleteInput input = new TTimeEntryDeleteInput(
       entryId: entryId,
     );
@@ -5502,11 +5502,15 @@ abstract class TMutation {
     return result['data']['timeEntryDelete'];
   }
 
+  /// [amount]  The amount of money to transfer
+  /// [destAccount]  The account to put money in
+  /// [memo]  Some notes about the transaction. A customer may see this in their transactions screen.
+  /// [sourceAccount]  The account to take money from
   Future<dynamic> accountTransfer(
-      {@required amount,
-      @required destAccount,
-      memo,
-      @required sourceAccount}) async {
+      {String amount,
+      String destAccount,
+      String memo,
+      String sourceAccount}) async {
     TAccountTransferInput input = new TAccountTransferInput(
       amount: amount,
       destAccount: destAccount,
@@ -5522,7 +5526,8 @@ abstract class TMutation {
     return result['data']['accountTransfer'];
   }
 
-  Future<dynamic> feedMarkAsRead({feedId}) async {
+  /// [feedId]  The feed you want to mark as read. (Unread feed events in this feed will be marked as read.)
+  Future<dynamic> feedMarkAsRead({String feedId}) async {
     TFeedMarkAsReadInput input = new TFeedMarkAsReadInput(
       feedId: feedId,
     );
@@ -5535,7 +5540,13 @@ abstract class TMutation {
     return result['data']['feedMarkAsRead'];
   }
 
-  Future<dynamic> cardTagsSet({@required cardId, tagGroup, tags}) async {
+  /// [cardId]  The card to set the tags for
+  /// [tagGroup]  The tag group (namespae) of tags. Currently only 'project_status' is supported.
+  /// Once we introduce tagging on the client-app or add other management features, other tags may be added.
+  ///
+  /// [tags]  The tags to set
+  Future<dynamic> cardTagsSet(
+      {String cardId, String tagGroup, List<String> tags}) async {
     TCardTagsSetInput input = new TCardTagsSetInput(
       cardId: cardId,
       tagGroup: tagGroup,
@@ -5550,12 +5561,22 @@ abstract class TMutation {
     return result['data']['cardTagsSet'];
   }
 
+  /// [endDate]  The end date when the user has this availability.
+  /// Must be a Sunday to confirm to the US calendar week.
+  ///
+  /// [projectId]  The project the user is committing the hours to. Leave this out to submit overall availability.
+  /// [startDate]  The start period when the user has this availability.
+  /// Must be a Sunday to confirm to the US calendar week.
+  ///
+  /// [timePerWeek]  The amount of time per week the user has available to from startDate to endDate (inclusive)
+  ///
+  /// [userId]  The user to update the availabiltiy for
   Future<dynamic> updateAvailability(
-      {@required endDate,
-      projectId,
-      @required startDate,
-      @required timePerWeek,
-      userId}) async {
+      {String endDate,
+      String projectId,
+      String startDate,
+      bool timePerWeek,
+      String userId}) async {
     TUpdateAvailabilityInput input = new TUpdateAvailabilityInput(
       endDate: endDate,
       projectId: projectId,
@@ -5572,8 +5593,9 @@ abstract class TMutation {
     return result['data']['updateAvailability'];
   }
 
+  /// [cardId]  The card to mark as complete
   Future<TCard> cardComplete(
-      {@required cardId,
+      {String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardCompleteInput input = new TCardCompleteInput(
@@ -5591,7 +5613,8 @@ abstract class TMutation {
         result['data']['cardComplete'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> profileNameSet({name}) async {
+  /// [name]  The name you want publicly displayed throughout Turtle.
+  Future<dynamic> profileNameSet({String name}) async {
     TProfileNameSetInput input = new TProfileNameSetInput(
       name: name,
     );
@@ -5604,7 +5627,10 @@ abstract class TMutation {
     return result['data']['profileNameSet'];
   }
 
-  Future<dynamic> sendLowBalanceReminder({projectId, userId}) async {
+  /// [projectId]  The project that has the low balance
+  /// [userId]  The user to send the reminder e-mail to
+  Future<dynamic> sendLowBalanceReminder(
+      {String projectId, String userId}) async {
     TSendLowBalanceReminderInput input = new TSendLowBalanceReminderInput(
       projectId: projectId,
       userId: userId,
@@ -5618,7 +5644,13 @@ abstract class TMutation {
     return result['data']['sendLowBalanceReminder'];
   }
 
-  Future<dynamic> feedEditMessage({feedEventId, messageBody}) async {
+  /// [feedEventId]  The feed event to edit the message body for
+  /// [messageBody]  The new message body
+  ///
+  /// Message format: see [FeedPostMessage] mutation.
+  ///
+  Future<dynamic> feedEditMessage(
+      {String feedEventId, String messageBody}) async {
     TFeedEditMessageInput input = new TFeedEditMessageInput(
       feedEventId: feedEventId,
       messageBody: messageBody,
@@ -5632,9 +5664,13 @@ abstract class TMutation {
     return result['data']['feedEditMessage'];
   }
 
+  /// [cardId]  The project to add the user to.
+  /// If left out, a user will be created for the e-mail (if one doesn't already exist).
+  ///
+  /// [email]  The e-mail of the user to invite to the project. If the user with this e-mail exists, the
   Future<TUser> cardInviteUser(
-      {cardId,
-      @required email,
+      {String cardId,
+      String email,
       String fragment =
           'fragment UserFragment on User { activeContractsCount email id name photo status timezone  }'}) async {
     TCardInviteUserInput input = new TCardInviteUserInput(
@@ -5653,7 +5689,9 @@ abstract class TMutation {
         result['data']['cardInviteUser'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> cardAddMember({@required cardId, @required memberId}) async {
+  /// [cardId]  The id of the project
+  /// [memberId]  The id of the user to add to the project
+  Future<dynamic> cardAddMember({String cardId, String memberId}) async {
     TCardAddMemberInput input = new TCardAddMemberInput(
       cardId: cardId,
       memberId: memberId,
@@ -5667,9 +5705,11 @@ abstract class TMutation {
     return result['data']['cardAddMember'];
   }
 
+  /// [assigneeId]  The user to assign the card to. Self-assign by passing in the current user id.
+  /// [cardId]  The card to assign
   Future<TCard> cardAssign(
-      {@required assigneeId,
-      @required cardId,
+      {String assigneeId,
+      String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardAssignInput input = new TCardAssignInput(
@@ -5687,9 +5727,13 @@ abstract class TMutation {
     return TCard.fromJson(result['data']['cardAssign'] as Map<String, dynamic>);
   }
 
+  /// [budgetDuration]  The duration of work to increase the budget by.
+  /// Budgets may support money in the future but currently only duration is supported.
+  ///
+  /// [cardId]  The card to increase the budget for
   Future<TCard> cardBudgetDecrease(
-      {@required budgetDuration,
-      @required cardId,
+      {bool budgetDuration,
+      String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardBudgetDecreaseInput input = new TCardBudgetDecreaseInput(
@@ -5708,7 +5752,11 @@ abstract class TMutation {
         result['data']['cardBudgetDecrease'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> userSetSkills({skills, @required userId}) async {
+  /// [skills]  THe list of tags to give a user. For example react, ios, android, ml.
+  /// This overwrites teh entire list. So if you want to add a skill, you must pass in the full list with the new tags added.
+  ///
+  /// [userId]  The user to set the skill tags for
+  Future<dynamic> userSetSkills({List<String> skills, String userId}) async {
     TUserSetSkillsInput input = new TUserSetSkillsInput(
       skills: skills,
       userId: userId,
@@ -5722,9 +5770,11 @@ abstract class TMutation {
     return result['data']['userSetSkills'];
   }
 
+  /// [cardId]  The card to set the due date of
+  /// [dueDate]  The due date to set it to
   Future<TCard> cardDueDateSet(
-      {@required cardId,
-      @required dueDate,
+      {String cardId,
+      String dueDate,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardDueDateSetInput input = new TCardDueDateSetInput(
@@ -5758,8 +5808,9 @@ abstract class TMutation {
         result['data']['meetingRoomJoin'] as Map<String, dynamic>);
   }
 
+  /// [cardId]  The card to remove the estimate for
   Future<TCard> cardEstimateUnset(
-      {@required cardId,
+      {String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardEstimateUnsetInput input = new TCardEstimateUnsetInput(
@@ -5777,7 +5828,9 @@ abstract class TMutation {
         result['data']['cardEstimateUnset'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> removeReaction({feedEventId, reaction}) async {
+  /// [feedEventId]  The feed event remove the reaction from
+  /// [reaction]  The reaction to remove. Should be an emoji like 👍
+  Future<dynamic> removeReaction({String feedEventId, String reaction}) async {
     TRemoveReactionInput input = new TRemoveReactionInput(
       feedEventId: feedEventId,
       reaction: reaction,
@@ -5791,7 +5844,8 @@ abstract class TMutation {
     return result['data']['removeReaction'];
   }
 
-  Future<dynamic> accountOpen({@required accountId}) async {
+  /// [accountId]  Identifier for the account. Must be of the form like turtle:idofacct or external:idofacct
+  Future<dynamic> accountOpen({String accountId}) async {
     TAccountOpenInput input = new TAccountOpenInput(
       accountId: accountId,
     );
@@ -5804,8 +5858,9 @@ abstract class TMutation {
     return result['data']['accountOpen'];
   }
 
+  /// [cardId]  The id of the project/task to delete
   Future<TCard> cardDelete(
-      {@required cardId,
+      {String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardDeleteInput input = new TCardDeleteInput(
@@ -5822,8 +5877,9 @@ abstract class TMutation {
     return TCard.fromJson(result['data']['cardDelete'] as Map<String, dynamic>);
   }
 
+  /// [cardId]  The card of the due date to clear
   Future<TCard> cardDueDateUnset(
-      {@required cardId,
+      {String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardDueDateUnsetInput input = new TCardDueDateUnsetInput(
@@ -5841,9 +5897,11 @@ abstract class TMutation {
         result['data']['cardDueDateUnset'] as Map<String, dynamic>);
   }
 
+  /// [cardId]  The card to set the estimate for
+  /// [estimate]  how long you think this card (task) will take to complete
   Future<TCard> cardEstimateSet(
-      {@required cardId,
-      @required estimate,
+      {String cardId,
+      String estimate,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardEstimateSetInput input = new TCardEstimateSetInput(
@@ -5862,8 +5920,9 @@ abstract class TMutation {
         result['data']['cardEstimateSet'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> cardRemoveMember(
-      {@required cardId, @required memberId}) async {
+  /// [cardId]  The project to remove the user from
+  /// [memberId]  The user to remove from the project
+  Future<dynamic> cardRemoveMember({String cardId, String memberId}) async {
     TCardRemoveMemberInput input = new TCardRemoveMemberInput(
       cardId: cardId,
       memberId: memberId,
@@ -5877,8 +5936,15 @@ abstract class TMutation {
     return result['data']['cardRemoveMember'];
   }
 
+  /// [entryDate]  The date the work was done (if modified)
+  /// [entryDuration]  The amount of work done (if modified)
+  /// [entryId]  The time entry to modify
+  /// [entryMemo]  Details about the work done (if modified)
   Future<dynamic> timeEntryEdit(
-      {entryDate, entryDuration, @required entryId, entryMemo}) async {
+      {String entryDate,
+      bool entryDuration,
+      String entryId,
+      String entryMemo}) async {
     TTimeEntryEditInput input = new TTimeEntryEditInput(
       entryDate: entryDate,
       entryDuration: entryDuration,
@@ -5894,8 +5960,9 @@ abstract class TMutation {
     return result['data']['timeEntryEdit'];
   }
 
+  /// [cardId]  The deleted card to restore
   Future<TCard> cardUndelete(
-      {@required cardId,
+      {String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardUndeleteInput input = new TCardUndeleteInput(
@@ -5913,8 +5980,9 @@ abstract class TMutation {
         result['data']['cardUndelete'] as Map<String, dynamic>);
   }
 
+  /// [cardId]  The card to remove the budget for
   Future<TCard> cardBudgetUnset(
-      {@required cardId,
+      {String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardBudgetUnsetInput input = new TCardBudgetUnsetInput(
@@ -5932,8 +6000,20 @@ abstract class TMutation {
         result['data']['cardBudgetUnset'] as Map<String, dynamic>);
   }
 
+  /// [amount]  The amount of money to add to the project account
+  /// [cardToken]  The token from the client that represents the credit card details.
+  /// Either cardToken or creditCardId must be provided.
+  ///
+  /// [creditCardId]  The id of an existing credit card on file to charge.
+  /// Credit card must belong to you for security purposes unless you are a manager or admin.
+  /// Either cardToken or creditCardId must be provided.
+  ///
+  /// [projectId]  The project to refill
   Future<dynamic> projectAddBalanceWithStripe(
-      {@required amount, cardToken, creditCardId, @required projectId}) async {
+      {String amount,
+      String cardToken,
+      String creditCardId,
+      String projectId}) async {
     TProjectAddBalanceWithStripeInput input =
         new TProjectAddBalanceWithStripeInput(
       amount: amount,
@@ -5950,8 +6030,11 @@ abstract class TMutation {
     return result['data']['projectAddBalanceWithStripe'];
   }
 
+  /// [fromId]  The card the link will come from
+  /// [linkType]  The type of link. For example management or turtle_support.
+  /// [toId]  The card the link will go to
   Future<dynamic> cardLinkCreate(
-      {@required fromId, @required linkType, @required toId}) async {
+      {String fromId, String linkType, String toId}) async {
     TCardLinkCreateInput input = new TCardLinkCreateInput(
       fromId: fromId,
       linkType: linkType,
@@ -5966,8 +6049,9 @@ abstract class TMutation {
     return result['data']['cardLinkCreate'];
   }
 
+  /// [cardId]  The card to mark as incomplete
   Future<TCard> cardUncomplete(
-      {@required cardId,
+      {String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardUncompleteInput input = new TCardUncompleteInput(
@@ -5985,8 +6069,16 @@ abstract class TMutation {
         result['data']['cardUncomplete'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> feedPostMessage(
-      {@required feedId, @required messageBody}) async {
+  /// [feedId]  The feed to post the message to
+  /// [messageBody]  The contents of the message.
+  ///
+  /// Message format:
+  /// Just plain text
+  /// User mentions in the format <user:27156949188089024041474864119808>
+  /// Card references in the format <card:27156949188089024041474864119808>
+  /// Files in the format <file.s3:2309j_f23fdf2fdf>
+  ///
+  Future<dynamic> feedPostMessage({String feedId, String messageBody}) async {
     TFeedPostMessageInput input = new TFeedPostMessageInput(
       feedId: feedId,
       messageBody: messageBody,
@@ -6000,14 +6092,21 @@ abstract class TMutation {
     return result['data']['feedPostMessage'];
   }
 
+  /// [amount]  The amount that the user got paid
+  /// [date]  The date the payment was made. Just used for record keeping.
+  /// [fee]  The transaction fee involved. May differ between payment providers.
+  /// [memo]  The memo fo the payout. The user who got paid will see this in their statement.
+  /// [method]  The way the user got paid. Usually the name of 3rd party service. Currently can be payoneer, paypal, popmoney, wire, square, transferwise, check, adjustment
+  /// [payoutId]  A unique identifier of the payout. Depends on the 3rd party service that was used to pay.
+  /// [userId]  The user that got paid
   Future<dynamic> recordPayout(
-      {@required amount,
-      @required date,
-      @required fee,
-      memo,
-      @required method,
-      payoutId,
-      @required userId}) async {
+      {String amount,
+      String date,
+      String fee,
+      String memo,
+      String method,
+      String payoutId,
+      String userId}) async {
     TRecordPayoutInput input = new TRecordPayoutInput(
       amount: amount,
       date: date,
@@ -6026,9 +6125,11 @@ abstract class TMutation {
     return result['data']['recordPayout'];
   }
 
+  /// [cardId]  The card to rename
+  /// [cardName]  The new name to give the card
   Future<TCard> cardRename(
-      {@required cardId,
-      @required cardName,
+      {String cardId,
+      String cardName,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardRenameInput input = new TCardRenameInput(
@@ -6046,11 +6147,21 @@ abstract class TMutation {
     return TCard.fromJson(result['data']['cardRename'] as Map<String, dynamic>);
   }
 
+  /// [afterId]  The sibling to move the card right after.
+  /// Can't pass in beforeId and afterId together.
+  ///
+  /// [beforeId]  The sibling to move the card right before.
+  /// Can't pass in beforeId and afterId together.
+  ///
+  /// [cardId]  The card to move
+  /// [toId]  The new parent to move the card under.
+  /// If you're just reordering the list relative to siblings, set this to the current parent.
+  ///
   Future<TCard> cardMove(
-      {afterId,
-      beforeId,
-      @required cardId,
-      @required toId,
+      {String afterId,
+      String beforeId,
+      String cardId,
+      String toId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardMoveInput input = new TCardMoveInput(
@@ -6070,7 +6181,11 @@ abstract class TMutation {
     return TCard.fromJson(result['data']['cardMove'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> userSetRoles({roles, @required userId}) async {
+  /// [roles]  THe list of roles to give a user.
+  /// This overwrites teh entire list. So if you want to add a role, you must pass in the full list with the new role added.
+  ///
+  /// [userId]  The user to update the roles for.
+  Future<dynamic> userSetRoles({List<TRole> roles, String userId}) async {
     TUserSetRolesInput input = new TUserSetRolesInput(
       roles: roles,
       userId: userId,
@@ -6084,8 +6199,11 @@ abstract class TMutation {
     return result['data']['userSetRoles'];
   }
 
+  /// [fromId]  The card the link to delete is coming from
+  /// [linkType]  The type of the link to be deleted
+  /// [toId]  The card the link to delete is going to
   Future<dynamic> cardLinkDelete(
-      {@required fromId, @required linkType, @required toId}) async {
+      {String fromId, String linkType, String toId}) async {
     TCardLinkDeleteInput input = new TCardLinkDeleteInput(
       fromId: fromId,
       linkType: linkType,
@@ -6100,7 +6218,9 @@ abstract class TMutation {
     return result['data']['cardLinkDelete'];
   }
 
-  Future<dynamic> addReaction({feedEventId, reaction}) async {
+  /// [feedEventId]  The feed event to add the reaction to
+  /// [reaction]  The reaction to add. Should be an emoji like 👍
+  Future<dynamic> addReaction({String feedEventId, String reaction}) async {
     TAddReactionInput input = new TAddReactionInput(
       feedEventId: feedEventId,
       reaction: reaction,
@@ -6114,12 +6234,17 @@ abstract class TMutation {
     return result['data']['addReaction'];
   }
 
+  /// [cardId]  The card (task) the work was done on
+  /// [entryDate]  The date the work was done
+  /// [entryDuration]  How long the work took
+  /// [entryId]  The id of the time entry. You must pass in 'new' and it will get generated server-side.
+  /// [entryMemo]  More detailed notes about the work done
   Future<dynamic> timeEntryCreate(
-      {@required cardId,
-      @required entryDate,
-      @required entryDuration,
-      entryId,
-      entryMemo}) async {
+      {String cardId,
+      String entryDate,
+      bool entryDuration,
+      String entryId,
+      String entryMemo}) async {
     TTimeEntryCreateInput input = new TTimeEntryCreateInput(
       cardId: cardId,
       entryDate: entryDate,
@@ -6136,12 +6261,17 @@ abstract class TMutation {
     return result['data']['timeEntryCreate'];
   }
 
+  /// [contractId]  Pass in 'new' on the client. The server will replace with a generated id.
+  /// [contractorHourlyRate]  How much the contractor earns per hour when they track time
+  /// [contractorId]  The contractor the contract is tied to
+  /// [customerHourlyRate]  How much the customer gets billed per hour when the contractor tracks time
+  /// [projectId]  The project the contract is tied to
   Future<dynamic> contractStart(
-      {contractId,
-      @required contractorHourlyRate,
-      @required contractorId,
-      @required customerHourlyRate,
-      @required projectId}) async {
+      {String contractId,
+      String contractorHourlyRate,
+      String contractorId,
+      String customerHourlyRate,
+      String projectId}) async {
     TContractStartInput input = new TContractStartInput(
       contractId: contractId,
       contractorHourlyRate: contractorHourlyRate,
@@ -6158,7 +6288,8 @@ abstract class TMutation {
     return result['data']['contractStart'];
   }
 
-  Future<dynamic> profileTimezoneSet({timezone}) async {
+  /// [timezone]  The timezone you are currently in
+  Future<dynamic> profileTimezoneSet({String timezone}) async {
     TProfileTimezoneSetInput input = new TProfileTimezoneSetInput(
       timezone: timezone,
     );
@@ -6171,7 +6302,10 @@ abstract class TMutation {
     return result['data']['profileTimezoneSet'];
   }
 
-  Future<dynamic> contractEnd({@required contractId}) async {
+  /// [contractId]  The contract to end.
+  /// A user can have a max of one contract per project.
+  ///
+  Future<dynamic> contractEnd({String contractId}) async {
     TContractEndInput input = new TContractEndInput(
       contractId: contractId,
     );
@@ -6184,8 +6318,9 @@ abstract class TMutation {
     return result['data']['contractEnd'];
   }
 
+  /// [cardId]  The card to remove the assignee for
   Future<TCard> cardUnassign(
-      {@required cardId,
+      {String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardUnassignInput input = new TCardUnassignInput(
@@ -6218,9 +6353,13 @@ abstract class TMutation {
         result['data']['linkOrCreateHubSpotContact'] as Map<String, dynamic>);
   }
 
+  /// [budgetDuration]  The duration of work to increase the budget by.
+  /// Budgets may support money in the future but currently only duration is supported.
+  ///
+  /// [cardId]  The card to increase the budget for
   Future<TCard> cardBudgetIncrease(
-      {@required budgetDuration,
-      @required cardId,
+      {bool budgetDuration,
+      String cardId,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardBudgetIncreaseInput input = new TCardBudgetIncreaseInput(
@@ -6239,7 +6378,8 @@ abstract class TMutation {
         result['data']['cardBudgetIncrease'] as Map<String, dynamic>);
   }
 
-  Future<dynamic> feedDeleteMessage({feedEventId}) async {
+  /// [feedEventId]  The feed event to delete
+  Future<dynamic> feedDeleteMessage({String feedEventId}) async {
     TFeedDeleteMessageInput input = new TFeedDeleteMessageInput(
       feedEventId: feedEventId,
     );
@@ -6252,15 +6392,23 @@ abstract class TMutation {
     return result['data']['feedDeleteMessage'];
   }
 
+  /// [afterId]  The sibling card to place the new card after.
+  /// [assigneeId]  The user to assign the task to.
+  /// [beforeId]  The sibling card to place the new card before.
+  /// [cardId]  The id of the card. This is server-generated so pass in 'new' as the paramter.
+  /// [cardName]  The name to give the card. This is what will show up in task lists.
+  ///
+  /// [meta]  General purpose meta data for keeping track of anything you desire. For example, the source of the task.
+  /// [parentId]  The parent id of the card to place the card under. Omit if you are creating a project.
   Future<TCard> cardCreate(
-      {afterId,
-      assigneeId,
-      beforeId,
-      cardId,
-      @required cardName,
-      meta,
-      parentId,
-      quickAdd,
+      {String afterId,
+      String assigneeId,
+      String beforeId,
+      String cardId,
+      String cardName,
+      String meta,
+      String parentId,
+      bool quickAdd,
       String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     TCardCreateInput input = new TCardCreateInput(
