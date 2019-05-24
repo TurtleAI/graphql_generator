@@ -1,7 +1,7 @@
 
 
-import 'package:graphql_generator/generator.dart';
-import 'package:graphql_generator/model.dart';
+import 'package:graphql_generator/generator/code_generator.dart';
+import 'package:graphql_generator/generator/model.dart';
 
 class EnumGenerator {
   static final EnumGenerator _singleton = new EnumGenerator._internal();

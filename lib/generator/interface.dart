@@ -1,8 +1,8 @@
 import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:graphql_generator/generator.dart';
-import 'package:graphql_generator/helper.dart';
-import 'package:graphql_generator/model.dart';
+import 'package:graphql_generator/generator/code_generator.dart';
+import 'package:graphql_generator/generator/helper.dart';
+import 'package:graphql_generator/generator/model.dart';
 
 class InterfaceGenerator {
   static final InterfaceGenerator _singleton =

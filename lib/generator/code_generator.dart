@@ -2,12 +2,12 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:dart_style/dart_style.dart';
 import 'package:graphql_generator/enumaration.dart';
-import 'package:graphql_generator/input_object.dart';
-import 'package:graphql_generator/interface.dart';
-import 'package:graphql_generator/model.dart';
-import 'package:graphql_generator/mutation.dart';
-import 'package:graphql_generator/objects.dart';
-import 'package:graphql_generator/union.dart';
+import 'package:graphql_generator/generator/input_object.dart';
+import 'package:graphql_generator/generator/interface.dart';
+import 'package:graphql_generator/generator/model.dart';
+import 'package:graphql_generator/generator/mutation.dart';
+import 'package:graphql_generator/generator/objects.dart';
+import 'package:graphql_generator/generator/union.dart';
 
 class GraphQLGenerators {
   static final GraphQLGenerators _singleton = new GraphQLGenerators._internal();

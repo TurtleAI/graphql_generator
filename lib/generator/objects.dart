@@ -1,24 +1,22 @@
-import 'package:analyzer/dart/element/type.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:graphql_generator/generator.dart';
-import 'package:graphql_generator/helper.dart';
-import 'package:graphql_generator/model.dart';
+import 'package:graphql_generator/generator/code_generator.dart';
+import 'package:graphql_generator/generator/helper.dart';
+import 'package:graphql_generator/generator/model.dart';
 
+class ObjectClassGenerator {
+  static final ObjectClassGenerator _singleton =
+      new ObjectClassGenerator._internal();
 
-class InputObjectGenerator {
-  static final InputObjectGenerator _singleton =
-      new InputObjectGenerator._internal();
-
-  factory InputObjectGenerator() {
+  factory ObjectClassGenerator() {
     return _singleton;
   }
 
-  InputObjectGenerator._internal();
+  ObjectClassGenerator._internal();
 
-  inputObjectGenerator(List<TypeA> inputObjectTypes) {
+  objectClassGenerator(List<TypeA> objectTypes) {
     Map<String, Class> classes = {};
-    inputObjectTypes.forEach((typeObject) {
+    objectTypes.forEach((typeObject) {
       classes.putIfAbsent('${GraphQLGenerators().namespace}${typeObject.name}', () {
         return _generateClass(typeObject);
       });
@@ -29,19 +27,27 @@ class InputObjectGenerator {
   _generateClass(TypeA type) {
     ClassBuilder builder = new ClassBuilder();
     builder.name = '${GraphQLGenerators().namespace}${type.name}';
-    builder.fields.addAll(_generateFields(type.inputFields));
+
+    if (type.description != null) {
+      String documentation = type.description.replaceAll('\n', '\n/// ');
+      builder.docs.add('/// $documentation');
+    }
+
+    builder.fields.addAll(_generateFields(type.fields));
     builder.constructors.add(_generateConstruction(type));
-    builder.methods.add(_createFromJsonMethod(
+    builder.methods.add(_createFromJson(
         '${GraphQLGenerators().namespace}${type.name}', builder.fields));
-    builder.methods.add(_createToJsonMethod(
-        '${GraphQLGenerators().namespace}${type.name}', builder.fields));
+    builder.implements.addAll(_generateInterfaces(type));
     return builder.build();
   }
 
-  _generateFields(List<InputField> inputFields) {
+  _generateFields(List<Fields> inputFields) {
     List<Field> fields = [];
     inputFields.forEach((field) {
       fields.add(Field((f) {
+        if (field.isDeprecated)
+          f.annotations.add(Reference(
+              "Deprecated('${field.deprecationReason.replaceAll('\n', '')}')"));
         f.name = field.name;
         f.type = Reference(Helper.findFieldType(field.type));
         if (field.description != null)
@@ -51,40 +57,24 @@ class InputObjectGenerator {
     return fields;
   }
 
-  _createFromJsonMethod(String name, ListBuilder<Field> fields) {
+  _createFromJson(String name, ListBuilder<Field> fields) {
     MethodBuilder fromJsonBuilder = new MethodBuilder();
+    String fromJsonBody = "return $name (";
     fromJsonBuilder.returns = Reference("factory");
     fromJsonBuilder.name = '$name.fromJson';
     fromJsonBuilder.requiredParameters.add(Parameter((p) {
       p.name = "json";
       p.type = Reference("Map<String,dynamic>");
     }));
-
-    String fromJsonBody = "return $name (";
     fields.build().forEach((f) {
-      fromJsonBody += createFromJSONString(f);
+      fromJsonBody += _createFromJSONString(f);
     });
     fromJsonBody += ");";
     fromJsonBuilder.body = Code(fromJsonBody);
     return fromJsonBuilder.build();
   }
 
-  _createToJsonMethod(String name, ListBuilder<Field> fields) {
-    MethodBuilder toJSONBuilder = new MethodBuilder();
-
-    toJSONBuilder.name = "toJson";
-    toJSONBuilder.returns = Reference("Map<String,dynamic>");
-
-    String toJsonBody = "return <String,dynamic> {";
-    fields.build().forEach((f) {
-      toJsonBody += "'${f.name}' : ${f.name},";
-    });
-    toJsonBody += "};";
-    toJSONBuilder.body = Code(toJsonBody);
-    return toJSONBuilder.build();
-  }
-
-  String createFromJSONString(Field f) {
+  _createFromJSONString(Field f) {
     switch (f.type.symbol) {
       case "String":
       case "int":
@@ -123,19 +113,33 @@ class InputObjectGenerator {
     }
   }
 
-  _generateConstruction(TypeA interfaceType) {
+  _generateConstruction(TypeA objectType) {
     ConstructorBuilder constructorBuilder = new ConstructorBuilder();
-    if (interfaceType.inputFields != null) {
-      interfaceType.inputFields.forEach((field) {
-        constructorBuilder.optionalParameters.add(new Parameter((p) {
-          p.name = "${field.name}";
-          p.named = true;
-          p.toThis = true;
-          if (field.type.kind == Kind.NON_NULL)
-            p.annotations.add(refer('required', 'package:meta/meta.dart'));
-        }));
-      });
-    }
+    objectType.fields.forEach((field) {
+      constructorBuilder.optionalParameters.add(new Parameter((p) {
+        p.name = "${field.name}";
+        p.named = true;
+        p.toThis = true;
+        if (field.type.kind == Kind.NON_NULL)
+          p.annotations.add(refer('required', 'package:meta/meta.dart'));
+      }));
+    });
     return constructorBuilder.build();
+  }
+
+  _generateInterfaces(TypeA objectType) {
+    List<Reference> references = [];
+    objectType.interfaces.forEach((interface) {
+      references
+          .add(Reference('${GraphQLGenerators().namespace}${interface.name}'));
+    });
+    GraphQLGenerators().unionTypes.forEach((unionType) {
+      if (unionType.possibleTypes
+          .any((possibleType) => possibleType.name == objectType.name))
+        references
+            .add(Reference('${GraphQLGenerators().namespace}${unionType.name}'));
+    });
+
+    return references;
   }
 }

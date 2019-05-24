@@ -1,8 +1,8 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:graphql_generator/helper.dart';
+import 'package:graphql_generator/generator/helper.dart';
 
-import 'generator.dart';
-import 'model.dart';
+import 'package:graphql_generator/generator/code_generator.dart';
+import 'package:graphql_generator/generator/model.dart';
 
 class MutationClassGenerator {
   static final MutationClassGenerator _singleton =

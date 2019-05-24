@@ -1,6 +1,6 @@
 import 'package:analyzer/dart/element/type.dart';
-import 'package:graphql_generator/generator.dart';
-import 'package:graphql_generator/model.dart';
+import 'package:graphql_generator/generator/code_generator.dart';
+import 'package:graphql_generator/generator/model.dart';
 
 class Helper {
 

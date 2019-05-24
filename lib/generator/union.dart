@@ -1,7 +1,7 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:graphql_generator/model.dart';
+import 'package:graphql_generator/generator/model.dart';
 
-import 'generator.dart';
+import 'package:graphql_generator/generator/code_generator.dart';
 
 class UnionGenerator {
   static final UnionGenerator _singleton = new UnionGenerator._internal();
