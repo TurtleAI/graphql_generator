@@ -9,8 +9,8 @@ import 'package:graphql_generator/generator/mutation.dart';
 import 'package:graphql_generator/generator/objects.dart';
 import 'package:graphql_generator/generator/union.dart';
 
-class GraphQLGenerators {
-  static final GraphQLGenerators _singleton = new GraphQLGenerators._internal();
+class GraphQLCodeGenerators {
+  static final GraphQLCodeGenerators _singleton = new GraphQLCodeGenerators._internal();
   String namespace;
   Map<String, DartType> types = {};
   Map<String, String> fragments = {};
@@ -27,11 +27,11 @@ class GraphQLGenerators {
 
   Map<String,Class> classes = {};
 
-  factory GraphQLGenerators() {
+  factory GraphQLCodeGenerators() {
     return _singleton;
   }
 
-  GraphQLGenerators._internal();
+  GraphQLCodeGenerators._internal();
 
   graphQLGenerate(
       List<TypeA> responseTypes,

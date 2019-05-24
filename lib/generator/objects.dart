@@ -17,7 +17,7 @@ class ObjectClassGenerator {
   objectClassGenerator(List<TypeA> objectTypes) {
     Map<String, Class> classes = {};
     objectTypes.forEach((typeObject) {
-      classes.putIfAbsent('${GraphQLGenerators().namespace}${typeObject.name}', () {
+      classes.putIfAbsent('${GraphQLCodeGenerators().namespace}${typeObject.name}', () {
         return _generateClass(typeObject);
       });
     });
@@ -26,7 +26,7 @@ class ObjectClassGenerator {
 
   _generateClass(TypeA type) {
     ClassBuilder builder = new ClassBuilder();
-    builder.name = '${GraphQLGenerators().namespace}${type.name}';
+    builder.name = '${GraphQLCodeGenerators().namespace}${type.name}';
 
     if (type.description != null) {
       String documentation = type.description.replaceAll('\n', '\n/// ');
@@ -36,7 +36,7 @@ class ObjectClassGenerator {
     builder.fields.addAll(_generateFields(type.fields));
     builder.constructors.add(_generateConstruction(type));
     builder.methods.add(_createFromJson(
-        '${GraphQLGenerators().namespace}${type.name}', builder.fields));
+        '${GraphQLCodeGenerators().namespace}${type.name}', builder.fields));
     builder.implements.addAll(_generateInterfaces(type));
     return builder.build();
   }
@@ -85,8 +85,8 @@ class ObjectClassGenerator {
       case "dynamic":
         return "${f.name} : json['${f.name}'],";
       default:
-        if (GraphQLGenerators().enumTypes.any((type) =>
-            '${GraphQLGenerators().namespace}${type.name}' == f.type.symbol)) {
+        if (GraphQLCodeGenerators().enumTypes.any((type) =>
+            '${GraphQLCodeGenerators().namespace}${type.name}' == f.type.symbol)) {
           return "${f.name} : ${f.type.symbol}Values[json['${f.name}']],";
         }
     }
@@ -101,8 +101,8 @@ class ObjectClassGenerator {
         case "dynamic":
           return "${f.name} : (json['${f.name}'] as List)?.map((e) => e as $split)?.toList(),";
         default:
-          if (GraphQLGenerators().enumTypes.any((type) =>
-              '${GraphQLGenerators().namespace}${type.name}' == split)) {
+          if (GraphQLCodeGenerators().enumTypes.any((type) =>
+              '${GraphQLCodeGenerators().namespace}${type.name}' == split)) {
             return "${f.name} : (json['${f.name}'] as List)?.map((e) => ${split}Values[e])?.toList(),";
           }
       }
@@ -131,13 +131,13 @@ class ObjectClassGenerator {
     List<Reference> references = [];
     objectType.interfaces.forEach((interface) {
       references
-          .add(Reference('${GraphQLGenerators().namespace}${interface.name}'));
+          .add(Reference('${GraphQLCodeGenerators().namespace}${interface.name}'));
     });
-    GraphQLGenerators().unionTypes.forEach((unionType) {
+    GraphQLCodeGenerators().unionTypes.forEach((unionType) {
       if (unionType.possibleTypes
           .any((possibleType) => possibleType.name == objectType.name))
         references
-            .add(Reference('${GraphQLGenerators().namespace}${unionType.name}'));
+            .add(Reference('${GraphQLCodeGenerators().namespace}${unionType.name}'));
     });
 
     return references;

@@ -17,9 +17,9 @@ class EnumGenerator {
     List<String> enumString = [];
     enumTypes.forEach((enumType) {
       enumString.add(
-          " enum ${GraphQLGenerators().namespace}${enumType.name} {${_getEnumArray(enumType)}}");
+          " enum ${GraphQLCodeGenerators().namespace}${enumType.name} {${_getEnumArray(enumType)}}");
       enumString.add(
-          " const ${GraphQLGenerators().namespace}${enumType.name}Values = {${_getEnumMapValues(enumType)}};");
+          " const ${GraphQLCodeGenerators().namespace}${enumType.name}Values = {${_getEnumMapValues(enumType)}};");
     });
     return enumString;
   }
@@ -36,7 +36,7 @@ class EnumGenerator {
   _getEnumMapValues(TypeA type) {
     String result = '';
     type.enumValues.forEach((e) {
-      result += '"${e.name}" : ${GraphQLGenerators().namespace}${type.name}.${e.name},';
+      result += '"${e.name}" : ${GraphQLCodeGenerators().namespace}${type.name}.${e.name},';
     });
     return result;
   }

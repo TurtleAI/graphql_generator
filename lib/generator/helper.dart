@@ -17,7 +17,7 @@ class Helper {
   }
 
   static String _mapFieldType(String name) {
-    Map<String, DartType> types = new GraphQLGenerators().types;
+    Map<String, DartType> types = new GraphQLCodeGenerators().types;
     if (types.containsKey(name)) {
       if (types[name].name.compareTo('Map') == 0) {
         return "Map<String,dynamic>";
@@ -38,16 +38,16 @@ class Helper {
       case 'String':
         return 'String';
       default:
-        if (GraphQLGenerators().enumTypes.any((type) => type.name == name) ||
-            GraphQLGenerators()
+        if (GraphQLCodeGenerators().enumTypes.any((type) => type.name == name) ||
+            GraphQLCodeGenerators()
                 .interfaceTypes
                 .any((type) => type.name == name) ||
-            GraphQLGenerators().unionTypes.any((type) => type.name == name) ||
-            GraphQLGenerators().objectTypes.any((type) => type.name == name) ||
-            GraphQLGenerators()
+            GraphQLCodeGenerators().unionTypes.any((type) => type.name == name) ||
+            GraphQLCodeGenerators().objectTypes.any((type) => type.name == name) ||
+            GraphQLCodeGenerators()
                 .inputObjectTypes
                 .any((type) => type.name == name))
-          return '${GraphQLGenerators().namespace}$name';
+          return '${GraphQLCodeGenerators().namespace}$name';
         else
           return 'String';
     }

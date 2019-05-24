@@ -6,16 +6,14 @@ import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
-import 'package:code_builder/code_builder.dart';
-import 'package:dart_style/dart_style.dart';
+import 'package:graphql_generator/annotation.dart';
+import 'package:graphql_generator/generator/code_generator.dart';
 import 'package:http/http.dart' as http;
 import 'package:source_gen/source_gen.dart';
 
-import 'annotation.dart';
-import 'package:graphql_generator/generator/code_generator.dart';
 import 'package:graphql_generator/generator/model.dart';
 
-class GraphQLCodeGenerator extends GeneratorForAnnotation<GQLGenerator> {
+class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
   var url;
   var headerToken;
   String namespace = 'T';
@@ -44,7 +42,7 @@ class GraphQLCodeGenerator extends GeneratorForAnnotation<GQLGenerator> {
     var response = await getSchema();
     List<TypeA> typesFromResponse = getTypeList(getTypesFromResponse(response));
 
-    return GraphQLGenerators().graphQLGenerate(
+    return GraphQLCodeGenerators().graphQLGenerate(
         typesFromResponse, namespace, types, fragments, mutationType);
   }
 

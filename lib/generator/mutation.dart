@@ -6,7 +6,7 @@ import 'package:graphql_generator/generator/model.dart';
 
 class MutationClassGenerator {
   static final MutationClassGenerator _singleton =
-  new MutationClassGenerator._internal();
+      new MutationClassGenerator._internal();
   TypeA mutationType;
 
   factory MutationClassGenerator() {
@@ -16,14 +16,14 @@ class MutationClassGenerator {
   MutationClassGenerator._internal();
 
   mutationClassGenerator() {
-    mutationType = GraphQLGenerators().mutation;
+    mutationType = GraphQLCodeGenerators().mutation;
     return _generateClass();
   }
 
   _generateClass() {
     Map<String, Class> classes = {};
     ClassBuilder mutationClassBuilder = new ClassBuilder();
-    mutationClassBuilder.name = '${GraphQLGenerators().namespace}Mutation';
+    mutationClassBuilder.name = '${GraphQLCodeGenerators().namespace}Mutation';
     mutationClassBuilder.abstract = true;
     if (mutationType != null && mutationType.fields != null) {
       mutationClassBuilder.methods.add(_generateQueryMethod());
@@ -31,8 +31,8 @@ class MutationClassGenerator {
       mutationType.fields.forEach((field) {
         mutationClassBuilder.methods.add(_generateMutationMethod(field));
       });
-      classes.putIfAbsent('${GraphQLGenerators().namespace}Mutation', () =>
-          mutationClassBuilder.build());
+      classes.putIfAbsent('${GraphQLCodeGenerators().namespace}Mutation',
+          () => mutationClassBuilder.build());
     }
     return classes;
   }
@@ -66,7 +66,7 @@ class MutationClassGenerator {
     }));
     nameExtractMethodBuilder.body = new Code(
         'RegExp exp = new RegExp(r"\\s*fragment\\s+(\\w+)\\s+on\\s+(\\w+)", caseSensitive: true);'
-            'return exp.firstMatch(fragment)?.group(1);');
+        'return exp.firstMatch(fragment)?.group(1);');
     return nameExtractMethodBuilder.build();
   }
 
@@ -78,6 +78,7 @@ class MutationClassGenerator {
     mutationMethodBuilder.returns = Reference('Future<$methodReturn>');
     field.args.forEach((arg) {
       var argType = Helper.findFieldType(arg.type);
+      mutationMethodBuilder.docs.addAll(_generateComments(argType));
       if (_isObject(argType))
         mutationMethodBuilder.optionalParameters
             .addAll(_generateOptionalParameters(argType));
@@ -96,13 +97,13 @@ class MutationClassGenerator {
 
       var mutationName = field.name;
       var inputName = arg.name;
-      var inputType = argType.contains(GraphQLGenerators().namespace)
-          ? argType.substring(GraphQLGenerators().namespace.length)
+      var inputType = argType.contains(GraphQLCodeGenerators().namespace)
+          ? argType.substring(GraphQLCodeGenerators().namespace.length)
           : argType;
       var mutationFields = _generateMutationFields(
-          GraphQLGenerators().namespace + field.type.name);
+          GraphQLCodeGenerators().namespace + field.type.name);
       var mutationFragments = _generateMutationFragments(
-          GraphQLGenerators().namespace + field.type.name);
+          GraphQLCodeGenerators().namespace + field.type.name);
       var graphql = """
               mutation $mutationName(\\\$$inputName:$inputType!) {
                 $mutationName($inputName:\\\$$inputName)$mutationFields
@@ -111,14 +112,9 @@ class MutationClassGenerator {
 
       mutationMethodBuilder.body = Code(
           '${_generateObjectFromParameters(argType)}'
-              ' ${_isObject(methodReturn)
-              ? 'var fragmentName = _extractFragmentName(fragment);'
-              : ''}'
-              ' var result =  await query(document:"""\n$graphql\n""",variables:{\n\t"${arg
-              .name}":${arg.name}${_isObject(argType)
-              ? ".toJson()"
-              : ""}\n\t});'
-              '${_generateMutationReturn(methodReturn, field.name)}');
+          ' ${_isObject(methodReturn) ? 'var fragmentName = _extractFragmentName(fragment);' : ''}'
+          ' var result =  await query(document:"""\n$graphql\n""",variables:{\n  "${arg.name}":${arg.name}${_isObject(argType) ? ".toJson()" : ""}\n  });'
+          '${_generateMutationReturn(methodReturn, field.name)}');
     });
     return mutationMethodBuilder.build();
   }
@@ -128,9 +124,9 @@ class MutationClassGenerator {
     if (_isObject(type)) {
       print("YESSSSSSSSSSSSSSSS $type");
       result += '$type input = new  $type(';
-      if (GraphQLGenerators().classes.containsKey(type)) {
+      if (GraphQLCodeGenerators().classes.containsKey(type)) {
         print("AVAILABLE");
-        GraphQLGenerators().classes[type].fields.forEach((f) {
+        GraphQLCodeGenerators().classes[type].fields.forEach((f) {
           result += '${f.name} : ${f.name},';
         });
       }
@@ -142,20 +138,30 @@ class MutationClassGenerator {
   _generateOptionalParameters(String type) {
     List<Parameter> parameters = [];
     if (_isObject(type)) {
-      if (GraphQLGenerators().classes.containsKey(type)) {
-        GraphQLGenerators()
-            .classes[type]
-            .constructors
-            .first
-            .optionalParameters
-            .forEach((parameter) {
-          ParameterBuilder builder = parameter.toBuilder()
-            ..toThis = false;
-          parameters.add(builder.build());
+      if (GraphQLCodeGenerators().classes.containsKey(type)) {
+        GraphQLCodeGenerators().classes[type].fields.forEach((field) {
+          parameters.add(Parameter((parameter) {
+            parameter.type = field.type;
+            parameter.name = field.name;
+            parameter.named = true;
+          }));
         });
       }
     }
     return parameters;
+  }
+
+  _generateComments(String type) {
+    List<String> result = [];
+    if (_isObject(type)) {
+      if (GraphQLCodeGenerators().classes.containsKey(type)) {
+        GraphQLCodeGenerators().classes[type].fields.forEach((field) {
+          if (field.docs != null && field.docs.length>0)
+            result.add('${field.docs.first.replaceFirst('///', '/// [${field.name}] ')}');
+        });
+      }
+    }
+    return result;
   }
 
   _isObject(String name) {
@@ -174,13 +180,13 @@ class MutationClassGenerator {
   _generateDefaultFragment(String name) {
     String result = '';
     bool hasValue = false;
-    if (GraphQLGenerators().fragments.containsKey(name)) {
-      return '"""${GraphQLGenerators().fragments[name]}"""';
-    } else if (GraphQLGenerators()
+    if (GraphQLCodeGenerators().fragments.containsKey(name)) {
+      return '"""${GraphQLCodeGenerators().fragments[name]}"""';
+    } else if (GraphQLCodeGenerators()
         .classes
-        .containsKey(GraphQLGenerators().namespace + name)) {
-      GraphQLGenerators()
-          .classes[GraphQLGenerators().namespace + name]
+        .containsKey(GraphQLCodeGenerators().namespace + name)) {
+      GraphQLCodeGenerators()
+          .classes[GraphQLCodeGenerators().namespace + name]
           .fields
           .forEach((fields) {
         switch (fields.type.symbol) {
@@ -225,17 +231,15 @@ class MutationClassGenerator {
           return "return (result['data']['$fieldName'] as List)?.map((e) => e as $split)?.toList();";
       }
 
-      return "return (result['data']['$fieldName'] as List)?.map((e) => e == null? null : ${methodReturn
-          .split('<')[1].split(
-          '>')[0]}.fromJson(e as Map<String,dynamic>))?.toList();";
+      return "return (result['data']['$fieldName'] as List)?.map((e) => e == null? null : ${methodReturn.split('<')[1].split('>')[0]}.fromJson(e as Map<String,dynamic>))?.toList();";
     } else {
       return "return $methodReturn.fromJson(result['data']['$fieldName'] as Map<String,dynamic>);";
     }
   }
 
   bool _mutationHasFields(String name) {
-    if (GraphQLGenerators().classes.containsKey(name)) {
-      return GraphQLGenerators().classes[name].fields.any((field) {
+    if (GraphQLCodeGenerators().classes.containsKey(name)) {
+      return GraphQLCodeGenerators().classes[name].fields.any((field) {
         switch (field.type.symbol) {
           case "String":
           case "int":
@@ -260,7 +264,7 @@ class MutationClassGenerator {
 
   _generateMutationFragments(String name) {
     if (_mutationHasFields(name)) {
-      return "\n\t\$fragment";
+      return "\n  \$fragment";
     }
     return "";
   }

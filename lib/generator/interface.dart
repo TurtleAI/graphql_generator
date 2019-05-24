@@ -24,7 +24,7 @@ class InterfaceGenerator {
   _parseInterface() {
     Map<String, Class> classes = {};
     interfaceTypes.forEach((interfaceType) {
-      classes.putIfAbsent('${GraphQLGenerators().namespace}${interfaceType.name}', () {
+      classes.putIfAbsent('${GraphQLCodeGenerators().namespace}${interfaceType.name}', () {
         return _generateClass(interfaceType);
       });
     });
@@ -34,7 +34,7 @@ class InterfaceGenerator {
   _generateClass(TypeA interfaceType) {
     ClassBuilder classBuilder = new ClassBuilder();
     classBuilder.abstract = true;
-    classBuilder.name = '${GraphQLGenerators().namespace}${interfaceType.name}';
+    classBuilder.name = '${GraphQLCodeGenerators().namespace}${interfaceType.name}';
     classBuilder.fields.addAll(_generateFields(interfaceType.fields));
     classBuilder.methods.add(_generateMethod(interfaceType));
     return classBuilder.build();
@@ -55,7 +55,7 @@ class InterfaceGenerator {
     MethodBuilder methodBuilder = new MethodBuilder();
     String fromJsonBody = "";
     methodBuilder.name =
-        '${GraphQLGenerators().namespace}${interfaceType.name}.fromJson';
+        '${GraphQLCodeGenerators().namespace}${interfaceType.name}.fromJson';
     methodBuilder.returns = Reference("factory");
     methodBuilder.requiredParameters.add(Parameter((p) {
       p.name = "json";
@@ -64,7 +64,7 @@ class InterfaceGenerator {
     fromJsonBody += "switch(json['__typename']){";
     interfaceType.possibleTypes.forEach((type) {
       fromJsonBody +=
-          'case "${type.name}" : return ${GraphQLGenerators().namespace}${type.name}.fromJson(json);';
+          'case "${type.name}" : return ${GraphQLCodeGenerators().namespace}${type.name}.fromJson(json);';
     });
     fromJsonBody += "} return null;";
     methodBuilder.body = Code(fromJsonBody);

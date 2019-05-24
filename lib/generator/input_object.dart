@@ -19,7 +19,7 @@ class InputObjectGenerator {
   inputObjectGenerator(List<TypeA> inputObjectTypes) {
     Map<String, Class> classes = {};
     inputObjectTypes.forEach((typeObject) {
-      classes.putIfAbsent('${GraphQLGenerators().namespace}${typeObject.name}', () {
+      classes.putIfAbsent('${GraphQLCodeGenerators().namespace}${typeObject.name}', () {
         return _generateClass(typeObject);
       });
     });
@@ -28,13 +28,13 @@ class InputObjectGenerator {
 
   _generateClass(TypeA type) {
     ClassBuilder builder = new ClassBuilder();
-    builder.name = '${GraphQLGenerators().namespace}${type.name}';
+    builder.name = '${GraphQLCodeGenerators().namespace}${type.name}';
     builder.fields.addAll(_generateFields(type.inputFields));
     builder.constructors.add(_generateConstruction(type));
     builder.methods.add(_createFromJsonMethod(
-        '${GraphQLGenerators().namespace}${type.name}', builder.fields));
+        '${GraphQLCodeGenerators().namespace}${type.name}', builder.fields));
     builder.methods.add(_createToJsonMethod(
-        '${GraphQLGenerators().namespace}${type.name}', builder.fields));
+        '${GraphQLCodeGenerators().namespace}${type.name}', builder.fields));
     return builder.build();
   }
 
@@ -95,8 +95,8 @@ class InputObjectGenerator {
       case "dynamic":
         return "${f.name} : json['${f.name}'],";
       default:
-        if (GraphQLGenerators().enumTypes.any((type) =>
-            '${GraphQLGenerators().namespace}${type.name}' == f.type.symbol)) {
+        if (GraphQLCodeGenerators().enumTypes.any((type) =>
+            '${GraphQLCodeGenerators().namespace}${type.name}' == f.type.symbol)) {
           return "${f.name} : ${f.type.symbol}Values[json['${f.name}']],";
         }
     }
@@ -111,8 +111,8 @@ class InputObjectGenerator {
         case "dynamic":
           return "${f.name} : (json['${f.name}'] as List)?.map((e) => e as $split)?.toList(),";
         default:
-          if (GraphQLGenerators().enumTypes.any((type) =>
-              '${GraphQLGenerators().namespace}${type.name}' == split)) {
+          if (GraphQLCodeGenerators().enumTypes.any((type) =>
+              '${GraphQLCodeGenerators().namespace}${type.name}' == split)) {
             return "${f.name} : (json['${f.name}'] as List)?.map((e) => ${split}Values[e])?.toList(),";
           }
       }

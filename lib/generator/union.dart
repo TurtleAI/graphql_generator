@@ -15,7 +15,7 @@ class UnionGenerator {
   unionGenerator(List<TypeA> unionTypes) {
     Map<String, Class> classes = {};
     unionTypes.forEach((unionType) {
-      classes.putIfAbsent('${GraphQLGenerators().namespace}${unionType.name}', () {
+      classes.putIfAbsent('${GraphQLCodeGenerators().namespace}${unionType.name}', () {
         return _generateClass(unionType);
       });
     });
@@ -25,7 +25,7 @@ class UnionGenerator {
   _generateClass(TypeA unionType) {
     ClassBuilder classBuilder = new ClassBuilder();
     classBuilder.abstract = true;
-    classBuilder.name = '${GraphQLGenerators().namespace}${unionType.name}';
+    classBuilder.name = '${GraphQLCodeGenerators().namespace}${unionType.name}';
     classBuilder.methods.add(_generateMethod(unionType));
     return classBuilder.build();
   }
@@ -34,7 +34,7 @@ class UnionGenerator {
     MethodBuilder methodBuilder = new MethodBuilder();
     String fromJsonBody = "";
     methodBuilder.name =
-        '${GraphQLGenerators().namespace}${unionType.name}.fromJson';
+        '${GraphQLCodeGenerators().namespace}${unionType.name}.fromJson';
     methodBuilder.returns = Reference("factory");
     methodBuilder.requiredParameters.add(Parameter((p) {
       p.name = "json";
@@ -43,7 +43,7 @@ class UnionGenerator {
     fromJsonBody += "switch(json['__typename']){";
     unionType.possibleTypes.forEach((type) {
       fromJsonBody +=
-          'case "${type.name}" : return ${GraphQLGenerators().namespace}${type.name}.fromJson(json);';
+          'case "${type.name}" : return ${GraphQLCodeGenerators().namespace}${type.name}.fromJson(json);';
     });
     fromJsonBody += "} return null;";
     methodBuilder.body = Code(fromJsonBody);
