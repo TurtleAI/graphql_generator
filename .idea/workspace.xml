@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d9e28eb5-a515-45ba-b1e2-a2245c21c3bd" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/lib/test_model.graphql.dart" beforeDir="false" afterPath="$PROJECT_DIR$/example/lib/test_model.graphql.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/builder.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/builder.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/enumaration.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/enumaration.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generator/code_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/code_generator.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generator/helper.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/helper.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/lib/test_model.graphql.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphql_generator.iml" beforeDir="false" afterPath="$PROJECT_DIR$/graphql_generator.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/generator/input_object.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/input_object.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generator/interface.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/interface.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/generator/mutation.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/mutation.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generator/objects.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/objects.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/generator/union.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/generator/union.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/graphql_generator.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/graphql_generator.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.dart_tool/" />
     <ignored path="$PROJECT_DIR$/.idea/" />
@@ -31,46 +27,23 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/graphql_generator.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-510">
-              <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-              <folding>
-                <element signature="e#28#58#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/generator/mutation.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="167">
-              <caret line="162" column="5" lean-forward="true" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
+            <state relative-caret-position="1391">
+              <caret line="158" column="11" lean-forward="true" selection-start-line="158" selection-start-column="11" selection-end-line="158" selection-end-column="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/generator/input_object.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="254">
+              <caret line="100" column="134" selection-start-line="100" selection-start-column="134" selection-end-line="100" selection-end-column="134" />
               <folding>
-                <element signature="e#7261#8215#0" />
-                <element signature="e#7964#8389#0" />
-                <element signature="e#8430#8531#0" />
-                <element signature="e#8575#8668#0" />
+                <element signature="e#0#49#0" expanded="true" />
+                <element signature="e#3696#5194#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../Applications/flutter/.pub-cache/hosted/pub.dartlang.org/code_builder-3.2.0/lib/src/specs/field.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../Applications/flutter/.pub-cache/hosted/pub.dartlang.org/built_collection-4.1.0/lib/src/list/built_list.dart">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="233" column="8" selection-start-line="233" selection-start-column="8" selection-end-line="233" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -78,8 +51,112 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/example/lib/test_model.graphql.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4674">
-              <caret line="6549" selection-start-line="6549" selection-end-line="6549" />
+            <state relative-caret-position="-54">
+              <caret line="417" column="35" lean-forward="true" selection-start-line="417" selection-start-column="35" selection-end-line="417" selection-end-column="35" />
+              <folding>
+                <element signature="e#294#2839#0" />
+                <element signature="e#403#2837#0" />
+                <element signature="e#509#515#0" />
+                <element signature="e#581#587#0" />
+                <element signature="e#667#673#0" />
+                <element signature="e#753#759#0" />
+                <element signature="e#831#837#0" />
+                <element signature="e#905#911#0" />
+                <element signature="e#975#981#0" />
+                <element signature="e#1051#1057#0" />
+                <element signature="e#1131#1137#0" />
+                <element signature="e#1209#1215#0" />
+                <element signature="e#1291#1297#0" />
+                <element signature="e#1369#1375#0" />
+                <element signature="e#1451#1457#0" />
+                <element signature="e#1517#1523#0" />
+                <element signature="e#1587#1593#0" />
+                <element signature="e#1663#1669#0" />
+                <element signature="e#1741#1747#0" />
+                <element signature="e#1825#1831#0" />
+                <element signature="e#1907#1913#0" />
+                <element signature="e#1989#1995#0" />
+                <element signature="e#2083#2089#0" />
+                <element signature="e#2159#2165#0" />
+                <element signature="e#2233#2239#0" />
+                <element signature="e#2311#2317#0" />
+                <element signature="e#2397#2403#0" />
+                <element signature="e#2477#2483#0" />
+                <element signature="e#2557#2563#0" />
+                <element signature="e#2635#2641#0" />
+                <element signature="e#2717#2723#0" />
+                <element signature="e#2803#2809#0" />
+                <element signature="e#2868#3104#0" />
+                <element signature="e#2928#3102#0" />
+                <element signature="e#3012#3018#0" />
+                <element signature="e#3068#3074#0" />
+                <element signature="e#3136#3767#0" />
+                <element signature="e#3199#3765#0" />
+                <element signature="e#3283#3289#0" />
+                <element signature="e#3351#3357#0" />
+                <element signature="e#3425#3431#0" />
+                <element signature="e#3481#3487#0" />
+                <element signature="e#3537#3543#0" />
+                <element signature="e#3609#3615#0" />
+                <element signature="e#3675#3681#0" />
+                <element signature="e#3731#3737#0" />
+                <element signature="e#3799#4038#0" />
+                <element signature="e#3862#4036#0" />
+                <element signature="e#3946#3952#0" />
+                <element signature="e#4002#4008#0" />
+                <element signature="e#4063#5662#0" />
+                <element signature="e#4571#4642#0" />
+                <element signature="e#4990#5371#0" />
+                <element signature="e#5019#5366#0" />
+                <element signature="e#5404#5660#0" />
+                <element signature="e#5417#5655#0" />
+                <element signature="e#5695#6376#0" />
+                <element signature="e#5791#5842#0" />
+                <element signature="e#6092#6235#0" />
+                <element signature="e#6129#6230#0" />
+                <element signature="e#6268#6374#0" />
+                <element signature="e#6281#6369#0" />
+                <element signature="e#6388#6715#0" />
+                <element signature="e#6522#6610#0" />
+                <element signature="e#6538#6605#0" />
+                <element signature="e#6643#6713#0" />
+                <element signature="e#6656#6708#0" />
+                <element signature="e#6742#7101#0" />
+                <element signature="e#6917#7000#0" />
+                <element signature="e#6948#6995#0" />
+                <element signature="e#7033#7099#0" />
+                <element signature="e#7046#7094#0" />
+                <element signature="e#7129#8438#0" />
+                <element signature="e#7841#8163#0" />
+                <element signature="e#7873#8158#0" />
+                <element signature="e#8196#8436#0" />
+                <element signature="e#8209#8431#0" />
+                <element signature="e#8468#9550#0" />
+                <element signature="e#9053#9325#0" />
+                <element signature="e#9087#9320#0" />
+                <element signature="e#9358#9548#0" />
+                <element signature="e#9371#9543#0" />
+                <element signature="e#9576#10115#0" />
+                <element signature="e#9840#9976#0" />
+                <element signature="e#9870#9971#0" />
+                <element signature="e#10009#10113#0" />
+                <element signature="e#10022#10108#0" />
+                <element signature="e#10144#10820#0" />
+                <element signature="e#10506#10671#0" />
+                <element signature="e#10539#10666#0" />
+                <element signature="e#10704#10818#0" />
+                <element signature="e#10717#10813#0" />
+                <element signature="e#10911#10948#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="85">
+              <caret line="5" column="49" selection-start-line="5" selection-start-column="49" selection-end-line="5" selection-end-column="49" />
             </state>
           </provider>
         </entry>
@@ -87,7 +164,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/enumaration.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
+            <state relative-caret-position="238">
               <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
             </state>
           </provider>
@@ -96,8 +173,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/example/lib/test_model.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="12" lean-forward="true" selection-start-column="12" selection-end-column="12" />
+            <state relative-caret-position="221">
+              <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -114,8 +191,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/builder.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+            <state relative-caret-position="102">
+              <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
               <folding>
                 <element signature="e#643#677#0" expanded="true" />
               </folding>
@@ -135,6 +212,15 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/generator/model.dart">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="97" column="48" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="48" />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -148,10 +234,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>TUser.fromJson</find>
-      <find>licenseInfo</find>
-      <find>TCard</find>
-      <find>classBuilderMutation</find>
       <find>cardTagsSet</find>
       <find>userSetRoles</find>
       <find>prin</find>
@@ -178,6 +260,10 @@
       <find>INPUT START</find>
       <find>fields</find>
       <find>print</find>
+      <find>YESS</find>
+      <find>enum</find>
+      <find>enum</find>
+      <find>'roles'</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -215,8 +301,9 @@
         <option value="$PROJECT_DIR$/example/lib/test_model.dart" />
         <option value="$PROJECT_DIR$/lib/generator/code_generator.dart" />
         <option value="$PROJECT_DIR$/lib/graphql_generator.dart" />
-        <option value="$PROJECT_DIR$/example/lib/test_model.graphql.dart" />
         <option value="$PROJECT_DIR$/lib/generator/mutation.dart" />
+        <option value="$PROJECT_DIR$/example/lib/test_model.graphql.dart" />
+        <option value="$PROJECT_DIR$/lib/generator/input_object.dart" />
       </list>
     </option>
   </component>
@@ -233,92 +320,41 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="graphql_generator" type="462c0819:PsiDirectoryNode" />
+              <item name="graphql-type-gen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="graphql-type-gen" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="graphql_generator" type="462c0819:PsiDirectoryNode" />
+              <item name="graphql-type-gen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="graphql-type-gen" type="462c0819:PsiDirectoryNode" />
               <item name="example" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="graphql_generator" type="462c0819:PsiDirectoryNode" />
+              <item name="graphql-type-gen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="graphql-type-gen" type="462c0819:PsiDirectoryNode" />
               <item name="example" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="graphql_generator" type="462c0819:PsiDirectoryNode" />
+              <item name="graphql-type-gen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="graphql-type-gen" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="graphql_generator" type="462c0819:PsiDirectoryNode" />
+              <item name="graphql-type-gen" type="b2602c69:ProjectViewProjectNode" />
+              <item name="graphql-type-gen" type="462c0819:PsiDirectoryNode" />
               <item name="lib" type="462c0819:PsiDirectoryNode" />
               <item name="generator" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
-              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
-            </path>
-            <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
-              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
-              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="list" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
-              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
-            </path>
-            <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
-              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="graphql_generator" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Dart Packages" type="3dd79eb:DartTreeStructureProvider$1" />
-              <item name="lib" type="e6ad2126:DartTreeStructureProvider$DartSdkOrLibraryRootNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="specs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -326,7 +362,7 @@
     <property name="add_unversioned_files" value="true" />
     <property name="dart.analysis.tool.window.force.activate" value="false" />
     <property name="io.flutter.reload.alreadyRun" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../turtle-mobile/management" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/example" />
     <property name="settings.editor.selected.configurable" value="flutter.settings" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -515,9 +551,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49725273" visible="true" weight="0.22314675" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49725273" visible="true" weight="0.22314675" />
       <window_info id="Structure" order="1" sideWeight="0.50274724" side_tool="true" weight="0.22314675" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -530,10 +565,10 @@
       <window_info anchor="bottom" id="Run" order="1" weight="0.32872504" />
       <window_info anchor="bottom" id="TODO" order="2" weight="0.32872504" />
       <window_info anchor="bottom" id="Debug" order="3" />
-      <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49319214" visible="true" weight="0.4408602" />
+      <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49319214" weight="0.4408602" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50680786" side_tool="true" weight="0.4439324" />
       <window_info anchor="bottom" id="Flutter Performance" order="6" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49848714" weight="0.58371735" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49848714" visible="true" weight="0.58371735" />
       <window_info anchor="bottom" id="Find" order="8" />
       <window_info anchor="bottom" id="Messages" order="9" weight="0.32565284" />
       <window_info anchor="bottom" id="Logcat" order="10" weight="0.32872504" />
@@ -656,13 +691,6 @@
     <option name="REARRANGE_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" column="1" selection-start-line="16" selection-start-column="1" selection-end-line="16" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/.gitignore">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -908,23 +936,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/generator/model.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/generator/input_object.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="21" column="75" selection-start-line="21" selection-start-column="75" selection-end-line="21" selection-end-column="75" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/generator/objects.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -965,10 +976,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/generator.java">
+    <entry file="file://$PROJECT_DIR$/lib/generator.java" />
+    <entry file="file://$PROJECT_DIR$/lib/graphql_generator.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="22" selection-start-column="22" selection-end-column="22" />
+        <state relative-caret-position="170">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="e#28#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Applications/flutter/.pub-cache/hosted/pub.dartlang.org/code_builder-3.2.0/lib/src/specs/field.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../Applications/flutter/.pub-cache/hosted/pub.dartlang.org/built_collection-4.1.0/lib/src/list/built_list.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="8" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/enumaration.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/annotation.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/builder.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+          <folding>
+            <element signature="e#643#677#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/lib/main.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="49" selection-start-line="5" selection-start-column="49" selection-end-line="5" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/lib/test_model.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/generator/mutation.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1391">
+          <caret line="158" column="11" lean-forward="true" selection-start-line="158" selection-start-column="11" selection-end-line="158" selection-end-column="11" />
         </state>
       </provider>
     </entry>
@@ -982,78 +1056,123 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/builder.dart">
+    <entry file="file://$PROJECT_DIR$/lib/generator/model.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="20" column="30" lean-forward="true" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+        <state relative-caret-position="300">
+          <caret line="97" column="48" selection-start-line="97" selection-start-column="38" selection-end-line="97" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/generator/input_object.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="100" column="134" selection-start-line="100" selection-start-column="134" selection-end-line="100" selection-end-column="134" />
           <folding>
-            <element signature="e#643#677#0" expanded="true" />
+            <element signature="e#0#49#0" expanded="true" />
+            <element signature="e#3696#5194#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/enumaration.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="15" column="37" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/annotation.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="37" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/lib/test_model.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" lean-forward="true" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/graphql_generator.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-510">
-          <caret line="21" lean-forward="true" selection-start-line="21" selection-end-line="21" />
-          <folding>
-            <element signature="e#28#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Applications/flutter/.pub-cache/hosted/pub.dartlang.org/code_builder-3.2.0/lib/src/specs/field.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="30" column="24" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/generator/mutation.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="167">
-          <caret line="162" column="5" lean-forward="true" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
-          <folding>
-            <element signature="e#7261#8215#0" />
-            <element signature="e#7964#8389#0" />
-            <element signature="e#8430#8531#0" />
-            <element signature="e#8575#8668#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../Applications/flutter/.pub-cache/hosted/pub.dartlang.org/built_collection-4.1.0/lib/src/list/built_list.dart">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="233" column="8" selection-start-line="233" selection-start-column="8" selection-end-line="233" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/example/lib/test_model.graphql.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4674">
-          <caret line="6549" selection-start-line="6549" selection-end-line="6549" />
+        <state relative-caret-position="-54">
+          <caret line="417" column="35" lean-forward="true" selection-start-line="417" selection-start-column="35" selection-end-line="417" selection-end-column="35" />
+          <folding>
+            <element signature="e#294#2839#0" />
+            <element signature="e#403#2837#0" />
+            <element signature="e#509#515#0" />
+            <element signature="e#581#587#0" />
+            <element signature="e#667#673#0" />
+            <element signature="e#753#759#0" />
+            <element signature="e#831#837#0" />
+            <element signature="e#905#911#0" />
+            <element signature="e#975#981#0" />
+            <element signature="e#1051#1057#0" />
+            <element signature="e#1131#1137#0" />
+            <element signature="e#1209#1215#0" />
+            <element signature="e#1291#1297#0" />
+            <element signature="e#1369#1375#0" />
+            <element signature="e#1451#1457#0" />
+            <element signature="e#1517#1523#0" />
+            <element signature="e#1587#1593#0" />
+            <element signature="e#1663#1669#0" />
+            <element signature="e#1741#1747#0" />
+            <element signature="e#1825#1831#0" />
+            <element signature="e#1907#1913#0" />
+            <element signature="e#1989#1995#0" />
+            <element signature="e#2083#2089#0" />
+            <element signature="e#2159#2165#0" />
+            <element signature="e#2233#2239#0" />
+            <element signature="e#2311#2317#0" />
+            <element signature="e#2397#2403#0" />
+            <element signature="e#2477#2483#0" />
+            <element signature="e#2557#2563#0" />
+            <element signature="e#2635#2641#0" />
+            <element signature="e#2717#2723#0" />
+            <element signature="e#2803#2809#0" />
+            <element signature="e#2868#3104#0" />
+            <element signature="e#2928#3102#0" />
+            <element signature="e#3012#3018#0" />
+            <element signature="e#3068#3074#0" />
+            <element signature="e#3136#3767#0" />
+            <element signature="e#3199#3765#0" />
+            <element signature="e#3283#3289#0" />
+            <element signature="e#3351#3357#0" />
+            <element signature="e#3425#3431#0" />
+            <element signature="e#3481#3487#0" />
+            <element signature="e#3537#3543#0" />
+            <element signature="e#3609#3615#0" />
+            <element signature="e#3675#3681#0" />
+            <element signature="e#3731#3737#0" />
+            <element signature="e#3799#4038#0" />
+            <element signature="e#3862#4036#0" />
+            <element signature="e#3946#3952#0" />
+            <element signature="e#4002#4008#0" />
+            <element signature="e#4063#5662#0" />
+            <element signature="e#4571#4642#0" />
+            <element signature="e#4990#5371#0" />
+            <element signature="e#5019#5366#0" />
+            <element signature="e#5404#5660#0" />
+            <element signature="e#5417#5655#0" />
+            <element signature="e#5695#6376#0" />
+            <element signature="e#5791#5842#0" />
+            <element signature="e#6092#6235#0" />
+            <element signature="e#6129#6230#0" />
+            <element signature="e#6268#6374#0" />
+            <element signature="e#6281#6369#0" />
+            <element signature="e#6388#6715#0" />
+            <element signature="e#6522#6610#0" />
+            <element signature="e#6538#6605#0" />
+            <element signature="e#6643#6713#0" />
+            <element signature="e#6656#6708#0" />
+            <element signature="e#6742#7101#0" />
+            <element signature="e#6917#7000#0" />
+            <element signature="e#6948#6995#0" />
+            <element signature="e#7033#7099#0" />
+            <element signature="e#7046#7094#0" />
+            <element signature="e#7129#8438#0" />
+            <element signature="e#7841#8163#0" />
+            <element signature="e#7873#8158#0" />
+            <element signature="e#8196#8436#0" />
+            <element signature="e#8209#8431#0" />
+            <element signature="e#8468#9550#0" />
+            <element signature="e#9053#9325#0" />
+            <element signature="e#9087#9320#0" />
+            <element signature="e#9358#9548#0" />
+            <element signature="e#9371#9543#0" />
+            <element signature="e#9576#10115#0" />
+            <element signature="e#9840#9976#0" />
+            <element signature="e#9870#9971#0" />
+            <element signature="e#10009#10113#0" />
+            <element signature="e#10022#10108#0" />
+            <element signature="e#10144#10820#0" />
+            <element signature="e#10506#10671#0" />
+            <element signature="e#10539#10666#0" />
+            <element signature="e#10704#10818#0" />
+            <element signature="e#10717#10813#0" />
+            <element signature="e#10911#10948#0" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -1,7 +1,6 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:graphql_generator/generator/helper.dart';
-
 import 'package:graphql_generator/generator/code_generator.dart';
+import 'package:graphql_generator/generator/helper.dart';
 import 'package:graphql_generator/generator/model.dart';
 
 class MutationClassGenerator {
@@ -122,10 +121,8 @@ class MutationClassGenerator {
   _generateObjectFromParameters(String type) {
     String result = '';
     if (_isObject(type)) {
-      print("YESSSSSSSSSSSSSSSS $type");
       result += '$type input = new  $type(';
       if (GraphQLCodeGenerators().classes.containsKey(type)) {
-        print("AVAILABLE");
         GraphQLCodeGenerators().classes[type].fields.forEach((f) {
           result += '${f.name} : ${f.name},';
         });

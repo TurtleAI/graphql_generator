@@ -1,10 +1,8 @@
-import 'package:analyzer/dart/element/type.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:code_builder/code_builder.dart';
 import 'package:graphql_generator/generator/code_generator.dart';
 import 'package:graphql_generator/generator/helper.dart';
 import 'package:graphql_generator/generator/model.dart';
-
 
 class InputObjectGenerator {
   static final InputObjectGenerator _singleton =
@@ -19,7 +17,8 @@ class InputObjectGenerator {
   inputObjectGenerator(List<TypeA> inputObjectTypes) {
     Map<String, Class> classes = {};
     inputObjectTypes.forEach((typeObject) {
-      classes.putIfAbsent('${GraphQLCodeGenerators().namespace}${typeObject.name}', () {
+      classes.putIfAbsent(
+          '${GraphQLCodeGenerators().namespace}${typeObject.name}', () {
         return _generateClass(typeObject);
       });
     });
@@ -77,11 +76,36 @@ class InputObjectGenerator {
 
     String toJsonBody = "return <String,dynamic> {";
     fields.build().forEach((f) {
-      toJsonBody += "'${f.name}' : ${f.name},";
+      print(f.type.symbol);
+      toJsonBody += toJsonReturnString(f);
     });
     toJsonBody += "};";
     toJSONBuilder.body = Code(toJsonBody);
     return toJSONBuilder.build();
+  }
+
+  String toJsonReturnString(Field f) {
+    if (f.type.symbol.contains('List<')) {
+      String split = f.type.symbol.split('<')[1].split('>')[0];
+      switch (split) {
+        case "String":
+        case "int":
+        case "bool":
+        case "double":
+        case "dynamic":
+          return "'${f.name}' : ${f.name},";
+        default:
+          if (GraphQLCodeGenerators().enumTypes.any((type) =>
+          '${GraphQLCodeGenerators().namespace}${type.name}' == split)) {
+            return "'${f.name}' : ${f
+                .name} == null  ? null : new List<dynamic>.from(${f
+                .name}.map((x) => x.toString().split('.').last)),";
+          }
+      }
+    } else {
+      return "'${f.name}' : ${f.name},";
+    }
+    return "'${f.name}' : ${f.name},";
   }
 
   String createFromJSONString(Field f) {
@@ -96,7 +120,8 @@ class InputObjectGenerator {
         return "${f.name} : json['${f.name}'],";
       default:
         if (GraphQLCodeGenerators().enumTypes.any((type) =>
-            '${GraphQLCodeGenerators().namespace}${type.name}' == f.type.symbol)) {
+        '${GraphQLCodeGenerators().namespace}${type.name}' ==
+            f.type.symbol)) {
           return "${f.name} : ${f.type.symbol}Values[json['${f.name}']],";
         }
     }
