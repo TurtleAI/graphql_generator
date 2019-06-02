@@ -4,7 +4,7 @@ import 'package:graphql_generator/annotation.dart';
   // graphiql doesn't require a token for introspection schema
     url: "https://turtle-api.herokuapp.com/graphiql",
     headerToken: "",
-    namespace: "T",
+    namespace: "",
     types: {
       "Duration": bool,
       "ID": int,

@@ -8,22 +8,21 @@ import 'package:analyzer/dart/element/type.dart';
 import 'package:build/build.dart';
 import 'package:graphql_generator/annotation.dart';
 import 'package:graphql_generator/generator/code_generator.dart';
+import 'package:graphql_generator/generator/model.dart';
 import 'package:http/http.dart' as http;
 import 'package:source_gen/source_gen.dart';
-
-import 'package:graphql_generator/generator/model.dart';
 
 class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
   var url;
   var headerToken;
-  String namespace = 'T';
+  String namespace = "";
 
   String mutationType = "";
 
   Map<String, DartType> types = {};
   Map<String, String> fragments = {};
 
-  TypeA mutation = new TypeA();
+  ObjectType mutation = new ObjectType();
 
   @override
   Future<String> generateForAnnotatedElement(
@@ -40,7 +39,8 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
           _convertDartObjectMapToString(annotation.read('fragments').mapValue);
 
     var response = await getSchema();
-    List<TypeA> typesFromResponse = getTypeList(getTypesFromResponse(response));
+    List<ObjectType> typesFromResponse = getTypeList(
+        getTypesFromResponse(response));
 
     return GraphQLCodeGenerators().graphQLGenerate(
         typesFromResponse, namespace, types, fragments, mutationType);
@@ -75,8 +75,15 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
                   }
                 : {'Content-type': 'application/json'},
             body:
-                '{"query" : "fragment FullType on __Type { kind name description fields(includeDeprecated: true) { name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) { name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } } fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue } fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } } query IntrospectionQuery { __schema { queryType { name } mutationType { name } types { ...FullType } directives { name description locations args { ...InputValue } } } } "}')
-        .whenComplete(() => print('completed'));
+            '{"query" : "fragment FullType on __Type { kind name description fields(includeDeprecated: true) '
+                '{ name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } '
+                'inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) '
+                '{ name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } } '
+                'fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue } '
+                'fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType '
+                '{ kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } } '
+                'query IntrospectionQuery { __schema { queryType { name } mutationType { name } types { ...FullType } '
+                'directives { name description locations args { ...InputValue } } } } "}');
     return response;
   }
 

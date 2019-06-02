@@ -4,7 +4,7 @@ import 'package:graphql_generator/generator/model.dart';
 
 class Helper {
 
-  static String findFieldType(InterfaceA type) {
+  static String findFieldType(Interface type) {
     if (type.name != null) {
       return _mapFieldType(type.name);
     }

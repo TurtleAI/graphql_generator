@@ -1,5 +1,5 @@
-List<TypeA> getTypeList(List<dynamic> types) {
-  return new List<TypeA>.from(types.map((x) => TypeA.fromJson(x)));
+List<ObjectType> getTypeList(List<dynamic> types) {
+  return new List<ObjectType>.from(types.map((x) => ObjectType.fromJson(x)));
 }
 
 class EnumValue {
@@ -31,17 +31,17 @@ class EnumValue {
   };
 }
 
-class TypeA {
+class ObjectType {
   String description;
   List<EnumValue> enumValues;
   List<Fields> fields;
   List<InputField> inputFields;
-  List<InterfaceA> interfaces;
+  List<Interface> interfaces;
   Kind kind;
   String name;
-  List<InterfaceA> possibleTypes;
+  List<Interface> possibleTypes;
 
-  TypeA({
+  ObjectType({
     this.description,
     this.enumValues,
     this.fields,
@@ -52,8 +52,8 @@ class TypeA {
     this.possibleTypes,
   });
 
-  factory TypeA.fromJson(Map<String, dynamic> json) =>
-      new TypeA(
+  factory ObjectType.fromJson(Map<String, dynamic> json) =>
+      new ObjectType(
         // ignore: unnecessary_new, unnecessary_new, unnecessary_new
         description: json["description"] == null ? null : json["description"],
         enumValues: json["enumValues"] == null
@@ -70,14 +70,14 @@ class TypeA {
             json["inputFields"].map((x) => InputField.fromJson(x))),
         interfaces: json["interfaces"] == null
             ? null
-            : new List<InterfaceA>.from(
-            json["interfaces"].map((x) => InterfaceA.fromJson(x))),
+            : new List<Interface>.from(
+            json["interfaces"].map((x) => Interface.fromJson(x))),
         kind: json["kind"] == null ? null : kindValues.map[json["kind"]],
         name: json["name"] == null ? null : json["name"],
         possibleTypes: json["possibleTypes"] == null
             ? null
-            : new List<InterfaceA>.from(
-            json["possibleTypes"].map((x) => InterfaceA.fromJson(x))),
+            : new List<Interface>.from(
+            json["possibleTypes"].map((x) => Interface.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() =>
@@ -109,7 +109,7 @@ class Fields {
   String description;
   bool isDeprecated;
   String name;
-  InterfaceA type;
+  Interface type;
 
   Fields({
     this.args,
@@ -132,7 +132,7 @@ class Fields {
     isDeprecated:
     json["isDeprecated"] == null ? null : json["isDeprecated"],
     name: json["name"] == null ? null : json["name"],
-    type: json["type"] == null ? null : InterfaceA.fromJson(json["type"]),
+    type: json["type"] == null ? null : Interface.fromJson(json["type"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -152,7 +152,7 @@ class InputField {
   String defaultValue;
   String description;
   String name;
-  InterfaceA type;
+  Interface type;
 
   InputField({
     this.defaultValue,
@@ -166,7 +166,7 @@ class InputField {
     json["defaultValue"] == null ? null : json["defaultValue"],
     description: json["description"] == null ? null : json["description"],
     name: json["name"] == null ? null : json["name"],
-    type: json["type"] == null ? null : InterfaceA.fromJson(json["type"]),
+    type: json["type"] == null ? null : Interface.fromJson(json["type"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -177,23 +177,23 @@ class InputField {
   };
 }
 
-class InterfaceA {
+class Interface {
   Kind kind;
   String name;
-  InterfaceA ofType;
+  Interface ofType;
 
-  InterfaceA({
+  Interface({
     this.kind,
     this.name,
     this.ofType,
   });
 
-  factory InterfaceA.fromJson(Map<String, dynamic> json) =>
-      new InterfaceA(
+  factory Interface.fromJson(Map<String, dynamic> json) =>
+      new Interface(
         kind: json["kind"] == null ? null : kindValues.map[json["kind"]],
         name: json["name"] == null ? null : json["name"],
         ofType:
-        json["ofType"] == null ? null : InterfaceA.fromJson(json["ofType"]),
+        json["ofType"] == null ? null : Interface.fromJson(json["ofType"]),
       );
 
   Map<String, dynamic> toJson() => {

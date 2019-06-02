@@ -1,40 +1,35 @@
-import 'package:analyzer/dart/element/type.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:graphql_generator/generator/code_generator.dart';
 import 'package:graphql_generator/generator/helper.dart';
 import 'package:graphql_generator/generator/model.dart';
 
 class InterfaceGenerator {
-  static final InterfaceGenerator _singleton =
-      new InterfaceGenerator._internal();
-  List<TypeA> interfaceTypes = [];
+  List<ObjectType> interfaceTypes = [];
   Map<String, Class> interfaces = {};
+  String namespace = "";
 
-  factory InterfaceGenerator() {
-    return _singleton;
+  InterfaceGenerator() {
   }
 
-  InterfaceGenerator._internal();
-
-  interfaceGenerator(List<TypeA> interfaceTypes) {
+  interfaceGenerator(List<ObjectType> interfaceTypes, String namespace) {
     this.interfaceTypes = interfaceTypes;
+    this.namespace = namespace;
     return _parseInterface();
   }
 
   _parseInterface() {
     Map<String, Class> classes = {};
     interfaceTypes.forEach((interfaceType) {
-      classes.putIfAbsent('${GraphQLCodeGenerators().namespace}${interfaceType.name}', () {
+      classes.putIfAbsent('$namespace${interfaceType.name}', () {
         return _generateClass(interfaceType);
       });
     });
     return classes;
   }
 
-  _generateClass(TypeA interfaceType) {
+  _generateClass(ObjectType interfaceType) {
     ClassBuilder classBuilder = new ClassBuilder();
     classBuilder.abstract = true;
-    classBuilder.name = '${GraphQLCodeGenerators().namespace}${interfaceType.name}';
+    classBuilder.name = '$namespace${interfaceType.name}';
     classBuilder.fields.addAll(_generateFields(interfaceType.fields));
     classBuilder.methods.add(_generateMethod(interfaceType));
     return classBuilder.build();
@@ -51,11 +46,11 @@ class InterfaceGenerator {
     return fields;
   }
 
-  _generateMethod(TypeA interfaceType) {
+  _generateMethod(ObjectType interfaceType) {
     MethodBuilder methodBuilder = new MethodBuilder();
     String fromJsonBody = "";
     methodBuilder.name =
-        '${GraphQLCodeGenerators().namespace}${interfaceType.name}.fromJson';
+    '$namespace${interfaceType.name}.fromJson';
     methodBuilder.returns = Reference("factory");
     methodBuilder.requiredParameters.add(Parameter((p) {
       p.name = "json";
@@ -64,7 +59,7 @@ class InterfaceGenerator {
     fromJsonBody += "switch(json['__typename']){";
     interfaceType.possibleTypes.forEach((type) {
       fromJsonBody +=
-          'case "${type.name}" : return ${GraphQLCodeGenerators().namespace}${type.name}.fromJson(json);';
+      'case "${type.name}" : return $namespace${type.name}.fromJson(json);';
     });
     fromJsonBody += "} return null;";
     methodBuilder.body = Code(fromJsonBody);

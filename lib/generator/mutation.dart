@@ -1,28 +1,29 @@
 import 'package:code_builder/code_builder.dart';
-import 'package:graphql_generator/generator/code_generator.dart';
 import 'package:graphql_generator/generator/helper.dart';
 import 'package:graphql_generator/generator/model.dart';
 
 class MutationClassGenerator {
-  static final MutationClassGenerator _singleton =
-      new MutationClassGenerator._internal();
-  TypeA mutationType;
+  ObjectType mutationType;
+  String namespace;
+  Map<String, Class> classes = {};
+  Map<String, String> fragments = {};
 
-  factory MutationClassGenerator() {
-    return _singleton;
+  MutationClassGenerator() {
   }
 
-  MutationClassGenerator._internal();
-
-  mutationClassGenerator() {
-    mutationType = GraphQLCodeGenerators().mutation;
+  mutationClassGenerator(String namespace, Map<String, Class> classes,
+      Map<String, String> fragments, ObjectType mutation) {
+    this.namespace = namespace;
+    this.classes = classes;
+    this.fragments = fragments;
+    this.mutationType = mutation;
     return _generateClass();
   }
 
   _generateClass() {
     Map<String, Class> classes = {};
     ClassBuilder mutationClassBuilder = new ClassBuilder();
-    mutationClassBuilder.name = '${GraphQLCodeGenerators().namespace}Mutation';
+    mutationClassBuilder.name = '${namespace}Mutation';
     mutationClassBuilder.abstract = true;
     if (mutationType != null && mutationType.fields != null) {
       mutationClassBuilder.methods.add(_generateQueryMethod());
@@ -30,8 +31,8 @@ class MutationClassGenerator {
       mutationType.fields.forEach((field) {
         mutationClassBuilder.methods.add(_generateMutationMethod(field));
       });
-      classes.putIfAbsent('${GraphQLCodeGenerators().namespace}Mutation',
-          () => mutationClassBuilder.build());
+      classes.putIfAbsent(
+          '${namespace}Mutation', () => mutationClassBuilder.build());
     }
     return classes;
   }
@@ -96,13 +97,12 @@ class MutationClassGenerator {
 
       var mutationName = field.name;
       var inputName = arg.name;
-      var inputType = argType.contains(GraphQLCodeGenerators().namespace)
-          ? argType.substring(GraphQLCodeGenerators().namespace.length)
+      var inputType = argType.contains(namespace)
+          ? argType.substring(namespace.length)
           : argType;
-      var mutationFields = _generateMutationFields(
-          GraphQLCodeGenerators().namespace + field.type.name);
-      var mutationFragments = _generateMutationFragments(
-          GraphQLCodeGenerators().namespace + field.type.name);
+      var mutationFields = _generateMutationFields(namespace + field.type.name);
+      var mutationFragments =
+      _generateMutationFragments(namespace + field.type.name);
       var graphql = """
               mutation $mutationName(\\\$$inputName:$inputType!) {
                 $mutationName($inputName:\\\$$inputName)$mutationFields
@@ -122,8 +122,8 @@ class MutationClassGenerator {
     String result = '';
     if (_isObject(type)) {
       result += '$type input = new  $type(';
-      if (GraphQLCodeGenerators().classes.containsKey(type)) {
-        GraphQLCodeGenerators().classes[type].fields.forEach((f) {
+      if (classes.containsKey(type)) {
+        classes[type].fields.forEach((f) {
           result += '${f.name} : ${f.name},';
         });
       }
@@ -135,8 +135,8 @@ class MutationClassGenerator {
   _generateOptionalParameters(String type) {
     List<Parameter> parameters = [];
     if (_isObject(type)) {
-      if (GraphQLCodeGenerators().classes.containsKey(type)) {
-        GraphQLCodeGenerators().classes[type].fields.forEach((field) {
+      if (classes.containsKey(type)) {
+        classes[type].fields.forEach((field) {
           parameters.add(Parameter((parameter) {
             parameter.type = field.type;
             parameter.name = field.name;
@@ -151,10 +151,12 @@ class MutationClassGenerator {
   _generateComments(String type) {
     List<String> result = [];
     if (_isObject(type)) {
-      if (GraphQLCodeGenerators().classes.containsKey(type)) {
-        GraphQLCodeGenerators().classes[type].fields.forEach((field) {
-          if (field.docs != null && field.docs.length>0)
-            result.add('${field.docs.first.replaceFirst('///', '/// [${field.name}] ')}');
+      if (classes.containsKey(type)) {
+        classes[type].fields.forEach((field) {
+          if (field.docs != null && field.docs.length > 0)
+            result.add(
+                '${field.docs.first.replaceFirst(
+                    '///', '/// [${field.name}] ')}');
         });
       }
     }
@@ -177,15 +179,10 @@ class MutationClassGenerator {
   _generateDefaultFragment(String name) {
     String result = '';
     bool hasValue = false;
-    if (GraphQLCodeGenerators().fragments.containsKey(name)) {
-      return '"""${GraphQLCodeGenerators().fragments[name]}"""';
-    } else if (GraphQLCodeGenerators()
-        .classes
-        .containsKey(GraphQLCodeGenerators().namespace + name)) {
-      GraphQLCodeGenerators()
-          .classes[GraphQLCodeGenerators().namespace + name]
-          .fields
-          .forEach((fields) {
+    if (fragments.containsKey(name)) {
+      return '"""${fragments[name]}"""';
+    } else if (classes.containsKey(namespace + name)) {
+      classes[namespace + name].fields.forEach((fields) {
         switch (fields.type.symbol) {
           case "String":
           case "int":
@@ -235,8 +232,8 @@ class MutationClassGenerator {
   }
 
   bool _mutationHasFields(String name) {
-    if (GraphQLCodeGenerators().classes.containsKey(name)) {
-      return GraphQLCodeGenerators().classes[name].fields.any((field) {
+    if (classes.containsKey(name)) {
+      return classes[name].fields.any((field) {
         switch (field.type.symbol) {
           case "String":
           case "int":

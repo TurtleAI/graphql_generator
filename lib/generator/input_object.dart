@@ -1,39 +1,39 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:graphql_generator/generator/code_generator.dart';
 import 'package:graphql_generator/generator/helper.dart';
 import 'package:graphql_generator/generator/model.dart';
 
 class InputObjectGenerator {
-  static final InputObjectGenerator _singleton =
-      new InputObjectGenerator._internal();
 
-  factory InputObjectGenerator() {
-    return _singleton;
+  String namespace = '';
+  List<ObjectType> enumTypes = [];
+
+  InputObjectGenerator() {
   }
 
-  InputObjectGenerator._internal();
-
-  inputObjectGenerator(List<TypeA> inputObjectTypes) {
+  inputObjectGenerator(List<ObjectType> inputObjectTypes, String namespace,
+      List<ObjectType> enumTypes) {
+    this.namespace = namespace;
+    this.enumTypes = enumTypes;
     Map<String, Class> classes = {};
     inputObjectTypes.forEach((typeObject) {
       classes.putIfAbsent(
-          '${GraphQLCodeGenerators().namespace}${typeObject.name}', () {
+          '$namespace${typeObject.name}', () {
         return _generateClass(typeObject);
       });
     });
     return classes;
   }
 
-  _generateClass(TypeA type) {
+  _generateClass(ObjectType type) {
     ClassBuilder builder = new ClassBuilder();
-    builder.name = '${GraphQLCodeGenerators().namespace}${type.name}';
+    builder.name = '$namespace${type.name}';
     builder.fields.addAll(_generateFields(type.inputFields));
     builder.constructors.add(_generateConstruction(type));
     builder.methods.add(_createFromJsonMethod(
-        '${GraphQLCodeGenerators().namespace}${type.name}', builder.fields));
+        '$namespace${type.name}', builder.fields));
     builder.methods.add(_createToJsonMethod(
-        '${GraphQLCodeGenerators().namespace}${type.name}', builder.fields));
+        '$namespace${type.name}', builder.fields));
     return builder.build();
   }
 
@@ -76,7 +76,6 @@ class InputObjectGenerator {
 
     String toJsonBody = "return <String,dynamic> {";
     fields.build().forEach((f) {
-      print(f.type.symbol);
       toJsonBody += toJsonReturnString(f);
     });
     toJsonBody += "};";
@@ -95,8 +94,8 @@ class InputObjectGenerator {
         case "dynamic":
           return "'${f.name}' : ${f.name},";
         default:
-          if (GraphQLCodeGenerators().enumTypes.any((type) =>
-          '${GraphQLCodeGenerators().namespace}${type.name}' == split)) {
+          if (enumTypes.any((type) =>
+          '$namespace${type.name}' == split)) {
             return "'${f.name}' : ${f
                 .name} == null  ? null : new List<dynamic>.from(${f
                 .name}.map((x) => x.toString().split('.').last)),";
@@ -119,8 +118,8 @@ class InputObjectGenerator {
       case "dynamic":
         return "${f.name} : json['${f.name}'],";
       default:
-        if (GraphQLCodeGenerators().enumTypes.any((type) =>
-        '${GraphQLCodeGenerators().namespace}${type.name}' ==
+        if (enumTypes.any((type) =>
+        '$namespace${type.name}' ==
             f.type.symbol)) {
           return "${f.name} : ${f.type.symbol}Values[json['${f.name}']],";
         }
@@ -136,8 +135,8 @@ class InputObjectGenerator {
         case "dynamic":
           return "${f.name} : (json['${f.name}'] as List)?.map((e) => e as $split)?.toList(),";
         default:
-          if (GraphQLCodeGenerators().enumTypes.any((type) =>
-              '${GraphQLCodeGenerators().namespace}${type.name}' == split)) {
+          if (enumTypes.any((type) =>
+          '$namespace${type.name}' == split)) {
             return "${f.name} : (json['${f.name}'] as List)?.map((e) => ${split}Values[e])?.toList(),";
           }
       }
@@ -148,7 +147,7 @@ class InputObjectGenerator {
     }
   }
 
-  _generateConstruction(TypeA interfaceType) {
+  _generateConstruction(ObjectType interfaceType) {
     ConstructorBuilder constructorBuilder = new ConstructorBuilder();
     if (interfaceType.inputFields != null) {
       interfaceType.inputFields.forEach((field) {

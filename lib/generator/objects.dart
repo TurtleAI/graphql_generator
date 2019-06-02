@@ -1,32 +1,32 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:code_builder/code_builder.dart';
-import 'package:graphql_generator/generator/code_generator.dart';
 import 'package:graphql_generator/generator/helper.dart';
 import 'package:graphql_generator/generator/model.dart';
 
 class ObjectClassGenerator {
-  static final ObjectClassGenerator _singleton =
-      new ObjectClassGenerator._internal();
+  String namespace = "";
+  List<ObjectType> enumTypes = [];
+  List<ObjectType> unionTypes = [];
 
-  factory ObjectClassGenerator() {
-    return _singleton;
-  }
+  ObjectClassGenerator() {}
 
-  ObjectClassGenerator._internal();
-
-  objectClassGenerator(List<TypeA> objectTypes) {
+  objectClassGenerator(List<ObjectType> objectTypes, String namespace,
+      List<ObjectType> enumTypes, List<ObjectType> unionTypes) {
+    this.namespace = namespace;
+    this.enumTypes = enumTypes;
+    this.unionTypes = unionTypes;
     Map<String, Class> classes = {};
     objectTypes.forEach((typeObject) {
-      classes.putIfAbsent('${GraphQLCodeGenerators().namespace}${typeObject.name}', () {
+      classes.putIfAbsent('$namespace${typeObject.name}', () {
         return _generateClass(typeObject);
       });
     });
     return classes;
   }
 
-  _generateClass(TypeA type) {
+  _generateClass(ObjectType type) {
     ClassBuilder builder = new ClassBuilder();
-    builder.name = '${GraphQLCodeGenerators().namespace}${type.name}';
+    builder.name = '$namespace${type.name}';
 
     if (type.description != null) {
       String documentation = type.description.replaceAll('\n', '\n/// ');
@@ -35,8 +35,8 @@ class ObjectClassGenerator {
 
     builder.fields.addAll(_generateFields(type.fields));
     builder.constructors.add(_generateConstruction(type));
-    builder.methods.add(_createFromJson(
-        '${GraphQLCodeGenerators().namespace}${type.name}', builder.fields));
+    builder.methods
+        .add(_createFromJson('$namespace${type.name}', builder.fields));
     builder.implements.addAll(_generateInterfaces(type));
     return builder.build();
   }
@@ -85,8 +85,8 @@ class ObjectClassGenerator {
       case "dynamic":
         return "${f.name} : json['${f.name}'],";
       default:
-        if (GraphQLCodeGenerators().enumTypes.any((type) =>
-            '${GraphQLCodeGenerators().namespace}${type.name}' == f.type.symbol)) {
+        if (enumTypes
+            .any((type) => '$namespace${type.name}' == f.type.symbol)) {
           return "${f.name} : ${f.type.symbol}Values[json['${f.name}']],";
         }
     }
@@ -101,8 +101,7 @@ class ObjectClassGenerator {
         case "dynamic":
           return "${f.name} : (json['${f.name}'] as List)?.map((e) => e as $split)?.toList(),";
         default:
-          if (GraphQLCodeGenerators().enumTypes.any((type) =>
-              '${GraphQLCodeGenerators().namespace}${type.name}' == split)) {
+          if (enumTypes.any((type) => '$namespace${type.name}' == split)) {
             return "${f.name} : (json['${f.name}'] as List)?.map((e) => ${split}Values[e])?.toList(),";
           }
       }
@@ -113,7 +112,7 @@ class ObjectClassGenerator {
     }
   }
 
-  _generateConstruction(TypeA objectType) {
+  _generateConstruction(ObjectType objectType) {
     ConstructorBuilder constructorBuilder = new ConstructorBuilder();
     objectType.fields.forEach((field) {
       constructorBuilder.optionalParameters.add(new Parameter((p) {
@@ -127,17 +126,15 @@ class ObjectClassGenerator {
     return constructorBuilder.build();
   }
 
-  _generateInterfaces(TypeA objectType) {
+  _generateInterfaces(ObjectType objectType) {
     List<Reference> references = [];
     objectType.interfaces.forEach((interface) {
-      references
-          .add(Reference('${GraphQLCodeGenerators().namespace}${interface.name}'));
+      references.add(Reference('$namespace${interface.name}'));
     });
-    GraphQLCodeGenerators().unionTypes.forEach((unionType) {
+    unionTypes.forEach((unionType) {
       if (unionType.possibleTypes
           .any((possibleType) => possibleType.name == objectType.name))
-        references
-            .add(Reference('${GraphQLCodeGenerators().namespace}${unionType.name}'));
+        references.add(Reference('$namespace${unionType.name}'));
     });
 
     return references;
