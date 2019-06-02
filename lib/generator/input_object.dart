@@ -98,7 +98,7 @@ class InputObjectGenerator {
           '$namespace${type.name}' == split)) {
             return "'${f.name}' : ${f
                 .name} == null  ? null : new List<dynamic>.from(${f
-                .name}.map((x) => x.toString().split('.').last)),";
+                .name}.map((x) => ${split}Enum[x])),";
           }
       }
     } else {

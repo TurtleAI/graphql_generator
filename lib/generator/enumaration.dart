@@ -16,6 +16,9 @@ class EnumGenerator {
       enumString.add(
           " const $namespace${enumType.name}Values = {${_getEnumMapValues(
               enumType)}};");
+      enumString.add(
+          "const $namespace${enumType.name}Enum = {${_getEnumMapString(
+              enumType)}};");
     });
     return enumString;
   }
@@ -33,6 +36,14 @@ class EnumGenerator {
     String result = '';
     type.enumValues.forEach((e) {
       result += '"${e.name}" : $namespace${type.name}.${e.name},';
+    });
+    return result;
+  }
+
+  _getEnumMapString(ObjectType type) {
+    String result = '';
+    type.enumValues.forEach((e) {
+      result += '$namespace${type.name}.${e.name} : "${e.name}",';
     });
     return result;
   }

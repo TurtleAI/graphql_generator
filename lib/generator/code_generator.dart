@@ -10,6 +10,15 @@ import 'package:graphql_generator/generator/objects.dart';
 import 'package:graphql_generator/generator/union.dart';
 
 class GraphQLCodeGenerators {
+  static final GraphQLCodeGenerators _singleton = new GraphQLCodeGenerators
+      ._internal();
+
+  factory GraphQLCodeGenerators() {
+    return _singleton;
+  }
+
+  GraphQLCodeGenerators._internal();
+
   String namespace;
   Map<String, DartType> types = {};
   Map<String, String> fragments = {};
@@ -26,7 +35,6 @@ class GraphQLCodeGenerators {
 
   Map<String, Class> classes = {};
 
-  GraphQLCodeGenerators() {}
 
   graphQLGenerate(List<ObjectType> responseTypes,
       String namespace,
@@ -43,7 +51,6 @@ class GraphQLCodeGenerators {
   }
 
   splitTypes() {
-    print(responseTypes);
     enumTypes = responseTypes.where((type) => type.kind == Kind.ENUM).toList();
     interfaceTypes =
         responseTypes.where((type) => type.kind == Kind.INTERFACE).toList();
