@@ -39,11 +39,14 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
           _convertDartObjectMapToString(annotation.read('fragments').mapValue);
 
     var response = await getSchema();
-    List<ObjectType> typesFromResponse = getTypeList(
-        getTypesFromResponse(response));
+
+    List<ObjectType> typesFromResponse =
+        getTypeList(getTypesFromResponse(response));
+
+    String mutationTypeName = getMutationTypeNameFromResponse(response);
 
     return GraphQLCodeGenerators().graphQLGenerate(
-        typesFromResponse, namespace, types, fragments, mutationType);
+        typesFromResponse, namespace, types, fragments, mutationTypeName);
   }
 
   _convertDartObjectMap(Map<DartObject, DartObject> dartMap) {
@@ -66,24 +69,20 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
 
   /// Fetch the schema from the given url and header.
   Future<http.Response> getSchema() async {
-    http.Response response = await new http.Client()
-        .post(url,
-            headers: headerToken != null
-                ? {
-                    'Content-type': 'application/json',
-                    'Authorization': headerToken
-                  }
-                : {'Content-type': 'application/json'},
-            body:
+    http.Response response = await new http.Client().post(url,
+        headers: headerToken != null
+            ? {'Content-type': 'application/json', 'Authorization': headerToken}
+            : {'Content-type': 'application/json'},
+        body:
             '{"query" : "fragment FullType on __Type { kind name description fields(includeDeprecated: true) '
-                '{ name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } '
-                'inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) '
-                '{ name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } } '
-                'fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue } '
-                'fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType '
-                '{ kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } } '
-                'query IntrospectionQuery { __schema { queryType { name } mutationType { name } types { ...FullType } '
-                'directives { name description locations args { ...InputValue } } } } "}');
+            '{ name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } '
+            'inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) '
+            '{ name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } } '
+            'fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue } '
+            'fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType '
+            '{ kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } } '
+            'query IntrospectionQuery { __schema { queryType { name } mutationType { name } types { ...FullType } '
+            'directives { name description locations args { ...InputValue } } } } "}');
     return response;
   }
 
@@ -92,9 +91,14 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
     Map<String, dynamic> json = JSON.jsonDecode(response.body);
     Map<String, dynamic> jsonData = json['data'];
     Map<String, dynamic> jsonSchema = jsonData['__schema'];
-    mutationType = jsonSchema['mutationType']['name'] ??
-        jsonSchema['mutationType']['name'];
     List<dynamic> types = jsonSchema["types"];
     return types;
+  }
+  /// Get the MutationType class Name
+  String getMutationTypeNameFromResponse(http.Response response) {
+    Map<String, dynamic> json = JSON.jsonDecode(response.body);
+    Map<String, dynamic> jsonData = json['data'];
+    Map<String, dynamic> jsonSchema = jsonData['__schema'];
+    return jsonSchema['mutationType']['name'];
   }
 }
