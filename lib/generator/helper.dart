@@ -1,23 +1,38 @@
 import 'package:analyzer/dart/element/type.dart';
-import 'package:graphql_generator/generator/code_generator.dart';
 import 'package:graphql_generator/generator/model.dart';
 
 class Helper {
-
-  static String findFieldType(Interface type) {
+  static String findFieldType(
+      Interface type,
+      Map<String, DartType> types,
+      List<ObjectType> enumTypes,
+      List<ObjectType> interfaceTypes,
+      List<ObjectType> unionTypes,
+      List<ObjectType> objectTypes,
+      List<ObjectType> inputObjectTypes,
+      String namespace) {
     if (type.name != null) {
-      return _mapFieldType(type.name);
+      return _mapFieldType(type.name, types, enumTypes, interfaceTypes,
+          unionTypes, objectTypes, inputObjectTypes, namespace);
     }
     if (type.kind != null) {
       if (type.kind == Kind.LIST) {
-        return "List<${findFieldType(type.ofType)}>";
+        return "List<${findFieldType(type.ofType, types, enumTypes, interfaceTypes, unionTypes, objectTypes, inputObjectTypes, namespace)}>";
       }
     }
-    return findFieldType(type.ofType);
+    return findFieldType(type.ofType, types, enumTypes, interfaceTypes,
+        objectTypes, unionTypes, inputObjectTypes, namespace);
   }
 
-  static String _mapFieldType(String name) {
-    Map<String, DartType> types = new GraphQLCodeGenerators().types;
+  static String _mapFieldType(
+      String name,
+      Map<String, DartType> types,
+      List<ObjectType> enumTypes,
+      List<ObjectType> interfaceTypes,
+      List<ObjectType> unionTypes,
+      List<ObjectType> objectTypes,
+      List<ObjectType> inputObjectTypes,
+      String namespace) {
     if (types.containsKey(name)) {
       if (types[name].name.compareTo('Map') == 0) {
         return "Map<String,dynamic>";
@@ -38,16 +53,12 @@ class Helper {
       case 'String':
         return 'String';
       default:
-        if (GraphQLCodeGenerators().enumTypes.any((type) => type.name == name) ||
-            GraphQLCodeGenerators()
-                .interfaceTypes
-                .any((type) => type.name == name) ||
-            GraphQLCodeGenerators().unionTypes.any((type) => type.name == name) ||
-            GraphQLCodeGenerators().objectTypes.any((type) => type.name == name) ||
-            GraphQLCodeGenerators()
-                .inputObjectTypes
-                .any((type) => type.name == name))
-          return '${GraphQLCodeGenerators().namespace}$name';
+        if (enumTypes.any((type) => type.name == name) ||
+            interfaceTypes.any((type) => type.name == name) ||
+            unionTypes.any((type) => type.name == name) ||
+            objectTypes.any((type) => type.name == name) ||
+            inputObjectTypes.any((type) => type.name == name))
+          return '${namespace}$name';
         else
           return 'String';
     }

@@ -45,7 +45,7 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
 
     String mutationTypeName = getMutationTypeNameFromResponse(response);
 
-    return GraphQLCodeGenerators().graphQLGenerate(
+    return GraphQLCodeGenerators().generate(
         typesFromResponse, namespace, types, fragments, mutationTypeName);
   }
 

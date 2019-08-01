@@ -10,83 +10,109 @@ import 'package:graphql_generator/generator/objects.dart';
 import 'package:graphql_generator/generator/union.dart';
 
 class GraphQLCodeGenerators {
-  static final GraphQLCodeGenerators _singleton = new GraphQLCodeGenerators
-      ._internal();
-
-  factory GraphQLCodeGenerators() {
-    return _singleton;
-  }
-
-  GraphQLCodeGenerators._internal();
-
-  String namespace;
-  Map<String, DartType> types = {};
-  Map<String, String> fragments = {};
-
-  List<ObjectType> responseTypes;
-  List<ObjectType> enumTypes = [];
-  List<ObjectType> interfaceTypes = [];
-  List<ObjectType> unionTypes = [];
-  List<ObjectType> objectTypes = [];
-  List<ObjectType> inputObjectTypes = [];
-
-  ObjectType mutation;
-  String mutationClassName;
-
-  Map<String, Class> classes = {};
-
-
-  graphQLGenerate(List<ObjectType> responseTypes,
+  generate(
+      List<ObjectType> responseTypes,
       String namespace,
       Map<String, DartType> types,
       Map<String, String> fragments,
       String mutationClassName) {
-    this.namespace = namespace;
-    this.responseTypes = responseTypes;
-    this.types = types;
-    this.fragments = fragments;
-    this.mutationClassName = mutationClassName;
-    splitTypes();
-    return generateTypes();
+    List<ObjectType> enumObjectTypes =
+        getTypesFromList(responseTypes, Kind.ENUM);
+    List<ObjectType> interfaceObjectTypes =
+        getTypesFromList(responseTypes, Kind.INTERFACE);
+    List<ObjectType> unionObjectTypes =
+        getTypesFromList(responseTypes, Kind.UNION);
+    List<ObjectType> objectObjectTypes =
+        getTypesFromList(responseTypes, Kind.OBJECT);
+    List<ObjectType> inputObjectTypes =
+        getTypesFromList(responseTypes, Kind.INPUT_OBJECT);
+    ObjectType mutationObjectType =
+        getMutationObjectType(responseTypes, mutationClassName);
+
+    return generateTypes(
+        namespace,
+        fragments,
+        types,
+        enumObjectTypes,
+        interfaceObjectTypes,
+        unionObjectTypes,
+        objectObjectTypes,
+        inputObjectTypes,
+        mutationObjectType);
   }
 
-  splitTypes() {
-    enumTypes = responseTypes.where((type) => type.kind == Kind.ENUM).toList();
-    interfaceTypes =
-        responseTypes.where((type) => type.kind == Kind.INTERFACE).toList();
-    unionTypes =
-        responseTypes.where((type) => type.kind == Kind.UNION).toList();
-    inputObjectTypes =
-        responseTypes.where((type) => type.kind == Kind.INPUT_OBJECT).toList();
-    objectTypes =
-        responseTypes.where((type) => type.kind == Kind.OBJECT).toList();
-    mutation = responseTypes
+  List<ObjectType> getTypesFromList(
+      List<ObjectType> responseTypes, Kind typeKind) {
+    List<ObjectType> typeList =
+        responseTypes.where((type) => type.kind == typeKind).toList();
+    return typeList;
+  }
+
+  ObjectType getMutationObjectType(
+      List<ObjectType> responseTypes, String mutationClassName) {
+    ObjectType mutationObjectType = responseTypes
         .where((type) => type.name == mutationClassName)
         .toList()
         .first;
+    return mutationObjectType;
   }
 
-  generateTypes() {
+  generateTypes(
+      String namespace,
+      Map<String, String> fragments,
+      Map<String, DartType> types,
+      List<ObjectType> enumObjectTypes,
+      List<ObjectType> interfaceObjectTypes,
+      List<ObjectType> unionObjectTypes,
+      List<ObjectType> objectObjectTypes,
+      List<ObjectType> inputObjectTypes,
+      ObjectType mutationObjectType) {
     var result = '';
     var emitter = DartEmitter(Allocator());
+    Map<String, Class> classes = {};
+
     List<String> enumString =
-    EnumGenerator().enumGenerator(enumTypes, namespace);
-    Map<String, Class> interfaces =
-    InterfaceGenerator().interfaceGenerator(interfaceTypes, namespace);
+        EnumGenerator().enumGenerator(enumObjectTypes, namespace);
+    Map<String, Class> interfaces = InterfaceGenerator().generate(
+        types,
+        enumObjectTypes,
+        interfaceObjectTypes,
+        unionObjectTypes,
+        objectObjectTypes,
+        inputObjectTypes,
+        namespace: namespace);
     Map<String, Class> unions =
-    UnionGenerator().unionGenerator(unionTypes, namespace);
-    Map<String, Class> inputs = InputObjectGenerator()
-        .inputObjectGenerator(inputObjectTypes, namespace, enumTypes);
-    Map<String, Class> objects = ObjectClassGenerator()
-        .objectClassGenerator(objectTypes, namespace, enumTypes, unionTypes);
+        UnionGenerator().generate(unionObjectTypes, namespace: namespace);
+    Map<String, Class> inputs = InputObjectGenerator().generate(
+        types,
+        enumObjectTypes,
+        interfaceObjectTypes,
+        unionObjectTypes,
+        objectObjectTypes,
+        inputObjectTypes,
+        namespace: namespace);
+    Map<String, Class> objects = ObjectClassGenerator().generate(
+        types,
+        enumObjectTypes,
+        interfaceObjectTypes,
+        unionObjectTypes,
+        objectObjectTypes,
+        inputObjectTypes,
+        namespace: namespace);
 
     classes.addAll(interfaces);
     classes.addAll(unions);
     classes.addAll(inputs);
     classes.addAll(objects);
 
-    classes.addAll(MutationClassGenerator()
-        .mutationClassGenerator(namespace, classes, fragments, mutation));
+    classes.addAll(MutationClassGenerator().generate(
+        classes, fragments, mutationObjectType,types,
+        enumObjectTypes,
+        interfaceObjectTypes,
+        unionObjectTypes,
+        objectObjectTypes,
+        inputObjectTypes,
+        namespace: namespace));
     Library library = new Library((lib) => lib.body.addAll(classes.values));
     result += DartFormatter().format('${library.accept(emitter)}');
     enumString.forEach((enumString) {
