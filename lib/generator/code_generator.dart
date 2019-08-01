@@ -72,7 +72,7 @@ class GraphQLCodeGenerators {
     Map<String, Class> classes = {};
 
     List<String> enumString =
-        EnumGenerator().enumGenerator(enumObjectTypes, namespace);
+        EnumGenerator().enumGenerator(enumObjectTypes, namespace: namespace);
     Map<String, Class> interfaces = InterfaceGenerator().generate(
         types,
         enumObjectTypes,
@@ -106,7 +106,10 @@ class GraphQLCodeGenerators {
     classes.addAll(objects);
 
     classes.addAll(MutationClassGenerator().generate(
-        classes, fragments, mutationObjectType,types,
+        classes,
+        fragments,
+        mutationObjectType,
+        types,
         enumObjectTypes,
         interfaceObjectTypes,
         unionObjectTypes,
