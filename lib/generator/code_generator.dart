@@ -16,36 +16,11 @@ class GraphQLCodeGenerators {
       Map<String, DartType> types,
       Map<String, String> fragments,
       String mutationClassName) {
-    List<ObjectType> enumObjectTypes =
-        getTypesFromList(responseTypes, Kind.ENUM);
-    List<ObjectType> interfaceObjectTypes =
-        getTypesFromList(responseTypes, Kind.INTERFACE);
-    List<ObjectType> unionObjectTypes =
-        getTypesFromList(responseTypes, Kind.UNION);
-    List<ObjectType> objectObjectTypes =
-        getTypesFromList(responseTypes, Kind.OBJECT);
-    List<ObjectType> inputObjectTypes =
-        getTypesFromList(responseTypes, Kind.INPUT_OBJECT);
     ObjectType mutationObjectType =
         getMutationObjectType(responseTypes, mutationClassName);
 
     return generateTypes(
-        namespace,
-        fragments,
-        types,
-        enumObjectTypes,
-        interfaceObjectTypes,
-        unionObjectTypes,
-        objectObjectTypes,
-        inputObjectTypes,
-        mutationObjectType);
-  }
-
-  List<ObjectType> getTypesFromList(
-      List<ObjectType> responseTypes, Kind typeKind) {
-    List<ObjectType> typeList =
-        responseTypes.where((type) => type.kind == typeKind).toList();
-    return typeList;
+        namespace, fragments, types, responseTypes, mutationObjectType);
   }
 
   ObjectType getMutationObjectType(
@@ -61,61 +36,32 @@ class GraphQLCodeGenerators {
       String namespace,
       Map<String, String> fragments,
       Map<String, DartType> types,
-      List<ObjectType> enumObjectTypes,
-      List<ObjectType> interfaceObjectTypes,
-      List<ObjectType> unionObjectTypes,
-      List<ObjectType> objectObjectTypes,
-      List<ObjectType> inputObjectTypes,
+      List<ObjectType> responseTypes,
       ObjectType mutationObjectType) {
     var result = '';
     var emitter = DartEmitter(Allocator());
     Map<String, Class> classes = {};
 
     List<String> enumString =
-        EnumGenerator().enumGenerator(enumObjectTypes, namespace: namespace);
-    Map<String, Class> interfaces = InterfaceGenerator().generate(
-        types,
-        enumObjectTypes,
-        interfaceObjectTypes,
-        unionObjectTypes,
-        objectObjectTypes,
-        inputObjectTypes,
-        namespace: namespace);
+        EnumGenerator().enumGenerator(responseTypes, namespace: namespace);
+    Map<String, Class> interfaces = InterfaceGenerator()
+        .generate(types, responseTypes, namespace: namespace);
     Map<String, Class> unions =
-        UnionGenerator().generate(unionObjectTypes, namespace: namespace);
-    Map<String, Class> inputs = InputObjectGenerator().generate(
-        types,
-        enumObjectTypes,
-        interfaceObjectTypes,
-        unionObjectTypes,
-        objectObjectTypes,
-        inputObjectTypes,
-        namespace: namespace);
-    Map<String, Class> objects = ObjectClassGenerator().generate(
-        types,
-        enumObjectTypes,
-        interfaceObjectTypes,
-        unionObjectTypes,
-        objectObjectTypes,
-        inputObjectTypes,
-        namespace: namespace);
+        UnionGenerator().generate(responseTypes, namespace: namespace);
+    Map<String, Class> inputs = InputObjectGenerator()
+        .generate(types, responseTypes, namespace: namespace);
+    Map<String, Class> objects = ObjectClassGenerator()
+        .generate(types, responseTypes, namespace: namespace);
 
     classes.addAll(interfaces);
     classes.addAll(unions);
     classes.addAll(inputs);
     classes.addAll(objects);
-
     classes.addAll(MutationClassGenerator().generate(
-        classes,
-        fragments,
-        mutationObjectType,
-        types,
-        enumObjectTypes,
-        interfaceObjectTypes,
-        unionObjectTypes,
-        objectObjectTypes,
-        inputObjectTypes,
+        classes, fragments, mutationObjectType, types, responseTypes,
         namespace: namespace));
+    // var sortedKeys = classes.keys.toList()..sort();
+
     Library library = new Library((lib) => lib.body.addAll(classes.values));
     result += DartFormatter().format('${library.accept(emitter)}');
     enumString.forEach((enumString) {

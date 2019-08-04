@@ -3,8 +3,11 @@ import 'package:graphql_generator/generator/model.dart';
 class EnumGenerator {
   EnumGenerator() {}
 
-  List<String> enumGenerator(List<ObjectType> enumTypes,
+  List<String> enumGenerator(
+  List<ObjectType> responseTypes,
       {String namespace = ""}) {
+
+    List<ObjectType> enumTypes = responseTypes.where((type) => type.kind == Kind.ENUM).toList();
     List<String> enumString = [];
     enumTypes.forEach((enumType) {
       enumString

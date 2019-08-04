@@ -157,7 +157,7 @@ class TCardAddMemberInput {
   /// The id of the project
   String cardId;
 
-  /// The id of the user to add to the project
+  /// The id of the user's to add to the project
   String memberId;
 
   factory TCardAddMemberInput.fromJson(Map<String, dynamic> json) {
@@ -3302,7 +3302,7 @@ class TCardRenamed implements TTurtleEvent {
 class TReaction {
   TReaction({this.emoji, this.reaction, this.userId});
 
-  /// The emoji of the reaction like "🐢"
+  /// The emoji of the reaction like '🐢'
   String emoji;
 
   @Deprecated('Internal use')
@@ -4778,7 +4778,7 @@ class TCommand {
 /// This, in combination with [UserUnreadFeedEvent], can be used to generate unread counts per feed.
 /// Note: UserReadFeedEvent is guaranteed to be unique and may not be balanced with [UserReadFeedEvent].
 /// So make sure you process the events in an idempotent way. We intend to change this behavior in the future.
-/// The meaning of "read" is determined by the client.
+/// The meaning of 'read' is determined by the client.
 /// For example, it could be when a user clicks on an activity feed. Or when could be a user scrolls to see the message.
 ///
 class TUserReadFeedEvent implements TTurtleEvent {
@@ -5407,7 +5407,7 @@ class TFeedEvent {
   TUser actor;
 
   /// A string that represents the message that was posted or a text-summary of the event.
-  /// Such as "set due date to @date"
+  /// Such as 'set due date to @date'
   ///
   @Deprecated(
       'It is recommended to use the event field when rendering domain events in the activity feed.It is recommended to use body_tokens when rendering messages')
@@ -6722,7 +6722,7 @@ abstract class TMutation {
   }
 
   /// [cardId]  The id of the project
-  /// [memberId]  The id of the user to add to the project
+  /// [memberId]  The id of the user's to add to the project
   Future<dynamic> cardAddMember({String cardId, String memberId}) async {
     TCardAddMemberInput input = new TCardAddMemberInput(
       cardId: cardId,

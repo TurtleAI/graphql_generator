@@ -5,8 +5,9 @@ import 'package:analyzer/dart/element/type.dart';
 class UnionGenerator {
   UnionGenerator() {}
 
-  generate(List<ObjectType> unionTypes, {String namespace = ""}) {
+  generate(List<ObjectType> responseTypes, {String namespace = ""}) {
     Map<String, Class> classes = {};
+    List<ObjectType> unionTypes = responseTypes.where((type) => type.kind == Kind.UNION).toList();
     unionTypes.forEach((unionType) {
       classes.putIfAbsent('$namespace${unionType.name}', () {
         return _generateClass(unionType, namespace);

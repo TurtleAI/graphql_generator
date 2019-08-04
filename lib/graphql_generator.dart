@@ -37,7 +37,7 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
     if (!annotation.read('fragments').isNull)
       fragments =
           _convertDartObjectMapToString(annotation.read('fragments').mapValue);
-
+    
     var response = await getSchema();
 
     List<ObjectType> typesFromResponse =

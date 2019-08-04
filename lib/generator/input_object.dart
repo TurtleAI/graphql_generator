@@ -5,40 +5,29 @@ import 'package:graphql_generator/generator/model.dart';
 import 'package:analyzer/dart/element/type.dart';
 
 class InputObjectGenerator {
-
   InputObjectGenerator() {}
 
-  generate(
-      Map<String, DartType> types,
-      List<ObjectType> enumTypes,
-      List<ObjectType> interfaceTypes,
-      List<ObjectType> unionTypes,
-      List<ObjectType> objectTypes,
-      List<ObjectType> inputObjectTypes,
+  generate(Map<String, DartType> types, List<ObjectType> responseTypes,
       {String namespace = ""}) {
     Map<String, Class> classes = {};
+    List<ObjectType> inputObjectTypes =
+        responseTypes.where((type) => type.kind == Kind.INPUT_OBJECT).toList();
     inputObjectTypes.forEach((typeObject) {
       classes.putIfAbsent('$namespace${typeObject.name}', () {
-        return _generateClass(typeObject, types, enumTypes, interfaceTypes,
-            unionTypes, objectTypes, inputObjectTypes, namespace);
+        return _generateClass(typeObject, types, responseTypes, namespace);
       });
     });
     return classes;
   }
 
-  _generateClass(
-      ObjectType type,
-      Map<String, DartType> types,
-      List<ObjectType> enumTypes,
-      List<ObjectType> interfaceTypes,
-      List<ObjectType> unionTypes,
-      List<ObjectType> objectTypes,
-      List<ObjectType> inputObjectTypes,
-      String namespace) {
+  _generateClass(ObjectType type, Map<String, DartType> types,
+      List<ObjectType> responseTypes, String namespace) {
+    List<ObjectType> enumTypes =
+        responseTypes.where((type) => type.kind == Kind.ENUM).toList();
     ClassBuilder builder = new ClassBuilder();
     builder.name = '$namespace${type.name}';
-    builder.fields.addAll(_generateFields(type.inputFields, types, enumTypes,
-        interfaceTypes, unionTypes, objectTypes, inputObjectTypes, namespace));
+    builder.fields.addAll(
+        _generateFields(type.inputFields, types, responseTypes, namespace));
     builder.constructors.add(_generateConstruction(type));
     builder.methods.add(_createFromJsonMethod(
         '$namespace${type.name}', builder.fields, enumTypes,
@@ -48,28 +37,14 @@ class InputObjectGenerator {
     return builder.build();
   }
 
-  _generateFields(
-      List<InputField> inputFields,
-      Map<String, DartType> types,
-      List<ObjectType> enumTypes,
-      List<ObjectType> interfaceTypes,
-      List<ObjectType> unionTypes,
-      List<ObjectType> objectTypes,
-      List<ObjectType> inputObjectTypes,
-      String namespace) {
+  _generateFields(List<InputField> inputFields, Map<String, DartType> types,
+      List<ObjectType> responseTypes, String namespace) {
     List<Field> fields = [];
     inputFields.forEach((field) {
       fields.add(Field((f) {
         f.name = field.name;
-        f.type = Reference(Helper.findFieldType(
-            field.type,
-            types,
-            enumTypes,
-            interfaceTypes,
-            unionTypes,
-            objectTypes,
-            inputObjectTypes,
-            namespace));
+        f.type = Reference(
+            Helper.findFieldType(field.type, types, responseTypes, namespace));
         if (field.description != null)
           f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
       }));

@@ -5,36 +5,23 @@ import 'package:graphql_generator/generator/model.dart';
 import 'package:analyzer/dart/element/type.dart';
 
 class ObjectClassGenerator {
-
   ObjectClassGenerator() {}
 
-  generate(
-      Map<String, DartType> types,
-      List<ObjectType> enumTypes,
-      List<ObjectType> interfaceTypes,
-      List<ObjectType> unionTypes,
-      List<ObjectType> objectTypes,
-      List<ObjectType> inputObjectTypes,
+  generate(Map<String, DartType> types, List<ObjectType> responseTypes,
       {String namespace = ""}) {
     Map<String, Class> classes = {};
+    List<ObjectType> objectTypes =
+        responseTypes.where((type) => type.kind == Kind.OBJECT).toList();
     objectTypes.forEach((typeObject) {
       classes.putIfAbsent('$namespace${typeObject.name}', () {
-        return _generateClass(typeObject, types, enumTypes, interfaceTypes,
-            unionTypes, objectTypes, inputObjectTypes, namespace);
+        return _generateClass(typeObject, types, responseTypes, namespace);
       });
     });
     return classes;
   }
 
-  _generateClass(
-      ObjectType type,
-      Map<String, DartType> types,
-      List<ObjectType> enumTypes,
-      List<ObjectType> interfaceTypes,
-      List<ObjectType> unionTypes,
-      List<ObjectType> objectTypes,
-      List<ObjectType> inputObjectTypes,
-      String namespace) {
+  _generateClass(ObjectType type, Map<String, DartType> types,
+      List<ObjectType> responseTypes, String namespace) {
     ClassBuilder builder = new ClassBuilder();
     builder.name = '$namespace${type.name}';
 
@@ -43,24 +30,17 @@ class ObjectClassGenerator {
       builder.docs.add('/// $documentation');
     }
 
-    builder.fields.addAll(_generateFields(type.fields, types, enumTypes,
-        interfaceTypes, unionTypes, objectTypes, inputObjectTypes, namespace));
+    builder.fields
+        .addAll(_generateFields(type.fields, types, responseTypes, namespace));
     builder.constructors.add(_generateConstruction(type));
     builder.methods.add(_createFromJson(
-        '$namespace${type.name}', builder.fields, enumTypes, namespace));
-    builder.implements.addAll(_generateInterfaces(type, unionTypes, namespace));
+        '$namespace${type.name}', builder.fields, responseTypes, namespace));
+    builder.implements.addAll(_generateInterfaces(type, responseTypes, namespace));
     return builder.build();
   }
 
-  _generateFields(
-      List<Fields> inputFields,
-      Map<String, DartType> types,
-      List<ObjectType> enumTypes,
-      List<ObjectType> interfaceTypes,
-      List<ObjectType> unionTypes,
-      List<ObjectType> objectTypes,
-      List<ObjectType> inputObjectTypes,
-      String namespace) {
+  _generateFields(List<Fields> inputFields, Map<String, DartType> types,
+      List<ObjectType> responseTypes, String namespace) {
     List<Field> fields = [];
     inputFields.forEach((field) {
       fields.add(Field((f) {
@@ -68,15 +48,8 @@ class ObjectClassGenerator {
           f.annotations.add(Reference(
               "Deprecated('${field.deprecationReason.replaceAll('\n', '')}')"));
         f.name = field.name;
-        f.type = Reference(Helper.findFieldType(
-            field.type,
-            types,
-            enumTypes,
-            interfaceTypes,
-            unionTypes,
-            objectTypes,
-            inputObjectTypes,
-            namespace));
+        f.type = Reference(
+            Helper.findFieldType(field.type, types, responseTypes, namespace));
         if (field.description != null)
           f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
       }));
@@ -85,7 +58,9 @@ class ObjectClassGenerator {
   }
 
   _createFromJson(String name, ListBuilder<Field> fields,
-      List<ObjectType> enumTypes, String namespace) {
+      List<ObjectType> responseTypes, String namespace) {
+    List<ObjectType> enumTypes =
+        responseTypes.where((type) => type.kind == Kind.ENUM).toList();
     MethodBuilder fromJsonBuilder = new MethodBuilder();
     String fromJsonBody = "return $name (";
     fromJsonBuilder.returns = Reference("factory");
@@ -155,7 +130,9 @@ class ObjectClassGenerator {
   }
 
   _generateInterfaces(
-      ObjectType objectType, List<ObjectType> unionTypes, String namespace) {
+      ObjectType objectType, List<ObjectType> responseTypes, String namespace) {
+    List<ObjectType> unionTypes =
+        responseTypes.where((type) => type.kind == Kind.UNION).toList();
     List<Reference> references = [];
     objectType.interfaces.forEach((interface) {
       references.add(Reference('$namespace${interface.name}'));
