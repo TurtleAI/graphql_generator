@@ -1,24 +1,21 @@
 import 'package:graphql_generator/generator/model.dart';
 
 class EnumGenerator {
-  List<ObjectType> enumTypes = [];
-  String namespace = '';
+  EnumGenerator() {}
 
-  EnumGenerator() {
-  }
+  List<String> enumGenerator(
+  List<ObjectType> responseTypes,
+      {String namespace = ""}) {
 
-  List<String> enumGenerator(List<ObjectType> enumTypes, String namespace) {
-    this.namespace = namespace;
+    List<ObjectType> enumTypes = responseTypes.where((type) => type.kind == Kind.ENUM).toList();
     List<String> enumString = [];
     enumTypes.forEach((enumType) {
+      enumString
+          .add(" enum $namespace${enumType.name} {${_getEnumArray(enumType)}}");
       enumString.add(
-          " enum $namespace${enumType.name} {${_getEnumArray(enumType)}}");
+          " const $namespace${enumType.name}Values = {${_getEnumMapValues(enumType, namespace)}};");
       enumString.add(
-          " const $namespace${enumType.name}Values = {${_getEnumMapValues(
-              enumType)}};");
-      enumString.add(
-          "const $namespace${enumType.name}Enum = {${_getEnumMapString(
-              enumType)}};");
+          "const $namespace${enumType.name}Enum = {${_getEnumMapString(enumType, namespace)}};");
     });
     return enumString;
   }
@@ -32,7 +29,7 @@ class EnumGenerator {
     return result;
   }
 
-  _getEnumMapValues(ObjectType type) {
+  _getEnumMapValues(ObjectType type, String namespace) {
     String result = '';
     type.enumValues.forEach((e) {
       result += '"${e.name}" : $namespace${type.name}.${e.name},';
@@ -40,7 +37,7 @@ class EnumGenerator {
     return result;
   }
 
-  _getEnumMapString(ObjectType type) {
+  _getEnumMapString(ObjectType type, String namespace) {
     String result = '';
     type.enumValues.forEach((e) {
       result += '$namespace${type.name}.${e.name} : "${e.name}",';

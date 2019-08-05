@@ -1,27 +1,19 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:graphql_generator/generator/helper.dart';
 import 'package:graphql_generator/generator/model.dart';
+import 'package:analyzer/dart/element/type.dart';
 
 class MutationClassGenerator {
-  ObjectType mutationType;
-  String namespace;
-  Map<String, Class> classes = {};
-  Map<String, String> fragments = {};
+  MutationClassGenerator() {}
 
-  MutationClassGenerator() {
-  }
-
-  mutationClassGenerator(String namespace, Map<String, Class> classes,
-      Map<String, String> fragments, ObjectType mutation) {
-    this.namespace = namespace;
-    this.classes = classes;
-    this.fragments = fragments;
-    this.mutationType = mutation;
-    return _generateClass();
-  }
-
-  _generateClass() {
-    Map<String, Class> classes = {};
+  generate(
+      Map<String, Class> classes,
+      Map<String, String> fragments,
+      ObjectType mutationType,
+      Map<String, DartType> types,
+      List<ObjectType> responseTypes,
+      {String namespace = ""}) {
+    Map<String, Class> classesMap = {};
     ClassBuilder mutationClassBuilder = new ClassBuilder();
     mutationClassBuilder.name = '${namespace}Mutation';
     mutationClassBuilder.abstract = true;
@@ -29,13 +21,16 @@ class MutationClassGenerator {
       mutationClassBuilder.methods.add(_generateQueryMethod());
       mutationClassBuilder.methods.add(_generateFragmentNameExtractMethod());
       mutationType.fields.forEach((field) {
-        mutationClassBuilder.methods.add(_generateMutationMethod(field));
+        mutationClassBuilder.methods.add(_generateMutationMethod(
+            field, classes, fragments, types, responseTypes, namespace));
       });
-      classes.putIfAbsent(
+      classesMap.putIfAbsent(
           '${namespace}Mutation', () => mutationClassBuilder.build());
     }
-    return classes;
+    return classesMap;
   }
+
+  _generateClass(ObjectType mutationType, String namespace) {}
 
   _generateQueryMethod() {
     MethodBuilder queryMethodBuilder = MethodBuilder();
@@ -70,18 +65,26 @@ class MutationClassGenerator {
     return nameExtractMethodBuilder.build();
   }
 
-  _generateMutationMethod(Fields field) {
-    String methodReturn = Helper.findFieldType(field.type);
+  _generateMutationMethod(
+      Fields field,
+      Map<String, Class> classes,
+      Map<String, String> fragments,
+      Map<String, DartType> types,
+      List<ObjectType> responseTypes,
+      String namespace) {
+    String methodReturn =
+        Helper.findFieldType(field.type, types, responseTypes, namespace);
     MethodBuilder mutationMethodBuilder = new MethodBuilder();
     mutationMethodBuilder.modifier = MethodModifier.async;
     mutationMethodBuilder.name = field.name;
     mutationMethodBuilder.returns = Reference('Future<$methodReturn>');
     field.args.forEach((arg) {
-      var argType = Helper.findFieldType(arg.type);
-      mutationMethodBuilder.docs.addAll(_generateComments(argType));
+      var argType =
+          Helper.findFieldType(arg.type, types, responseTypes, namespace);
+      mutationMethodBuilder.docs.addAll(_generateComments(argType, classes));
       if (_isObject(argType))
         mutationMethodBuilder.optionalParameters
-            .addAll(_generateOptionalParameters(argType));
+            .addAll(_generateOptionalParameters(argType, classes));
       else
         mutationMethodBuilder.requiredParameters.add(Parameter((p) {
           p.name = arg.name;
@@ -92,7 +95,8 @@ class MutationClassGenerator {
           p.name = "fragment";
           p.type = Reference("String");
           p.named = true;
-          p.defaultTo = Code(_generateDefaultFragment(field.type.name));
+          p.defaultTo = Code(_generateDefaultFragment(
+              field.type.name, classes, fragments, namespace));
         }));
 
       var mutationName = field.name;
@@ -100,9 +104,10 @@ class MutationClassGenerator {
       var inputType = argType.contains(namespace)
           ? argType.substring(namespace.length)
           : argType;
-      var mutationFields = _generateMutationFields(namespace + field.type.name);
+      var mutationFields =
+          _generateMutationFields(namespace + field.type.name, classes);
       var mutationFragments =
-      _generateMutationFragments(namespace + field.type.name);
+          _generateMutationFragments(namespace + field.type.name, classes);
       var graphql = """
               mutation $mutationName(\\\$$inputName:$inputType!) {
                 $mutationName($inputName:\\\$$inputName)$mutationFields
@@ -110,7 +115,7 @@ class MutationClassGenerator {
               """;
 
       mutationMethodBuilder.body = Code(
-          '${_generateObjectFromParameters(argType)}'
+          '${_generateObjectFromParameters(argType, classes)}'
           ' ${_isObject(methodReturn) ? 'var fragmentName = _extractFragmentName(fragment);' : ''}'
           ' var result =  await query(document:"""\n$graphql\n""",variables:{\n  "${arg.name}":${arg.name}${_isObject(argType) ? ".toJson()" : ""}\n  });'
           '${_generateMutationReturn(methodReturn, field.name)}');
@@ -118,7 +123,7 @@ class MutationClassGenerator {
     return mutationMethodBuilder.build();
   }
 
-  _generateObjectFromParameters(String type) {
+  _generateObjectFromParameters(String type, Map<String, Class> classes) {
     String result = '';
     if (_isObject(type)) {
       result += '$type input = new  $type(';
@@ -132,7 +137,7 @@ class MutationClassGenerator {
     return result;
   }
 
-  _generateOptionalParameters(String type) {
+  _generateOptionalParameters(String type, Map<String, Class> classes) {
     List<Parameter> parameters = [];
     if (_isObject(type)) {
       if (classes.containsKey(type)) {
@@ -148,15 +153,14 @@ class MutationClassGenerator {
     return parameters;
   }
 
-  _generateComments(String type) {
+  _generateComments(String type, Map<String, Class> classes) {
     List<String> result = [];
     if (_isObject(type)) {
       if (classes.containsKey(type)) {
         classes[type].fields.forEach((field) {
           if (field.docs != null && field.docs.length > 0)
             result.add(
-                '${field.docs.first.replaceFirst(
-                    '///', '/// [${field.name}] ')}');
+                '${field.docs.first.replaceFirst('///', '/// [${field.name}] ')}');
         });
       }
     }
@@ -176,7 +180,8 @@ class MutationClassGenerator {
     }
   }
 
-  _generateDefaultFragment(String name) {
+  _generateDefaultFragment(String name, Map<String, Class> classes,
+      Map<String, String> fragments, String namespace) {
     String result = '';
     bool hasValue = false;
     if (fragments.containsKey(name)) {
@@ -231,7 +236,7 @@ class MutationClassGenerator {
     }
   }
 
-  bool _mutationHasFields(String name) {
+  bool _mutationHasFields(String name, Map<String, Class> classes) {
     if (classes.containsKey(name)) {
       return classes[name].fields.any((field) {
         switch (field.type.symbol) {
@@ -249,15 +254,15 @@ class MutationClassGenerator {
     return false;
   }
 
-  _generateMutationFields(String name) {
-    if (_mutationHasFields(name)) {
+  _generateMutationFields(String name, Map<String, Class> classes) {
+    if (_mutationHasFields(name, classes)) {
       return " { ...\$fragmentName }";
     }
     return "";
   }
 
-  _generateMutationFragments(String name) {
-    if (_mutationHasFields(name)) {
+  _generateMutationFragments(String name, Map<String, Class> classes) {
+    if (_mutationHasFields(name, classes)) {
       return "\n  \$fragment";
     }
     return "";

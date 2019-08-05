@@ -1,56 +1,53 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:graphql_generator/generator/helper.dart';
 import 'package:graphql_generator/generator/model.dart';
+import 'package:analyzer/dart/element/type.dart';
 
 class InterfaceGenerator {
-  List<ObjectType> interfaceTypes = [];
-  Map<String, Class> interfaces = {};
-  String namespace = "";
+  InterfaceGenerator() {}
 
-  InterfaceGenerator() {
-  }
-
-  interfaceGenerator(List<ObjectType> interfaceTypes, String namespace) {
-    this.interfaceTypes = interfaceTypes;
-    this.namespace = namespace;
-    return _parseInterface();
-  }
-
-  _parseInterface() {
+  generate(Map<String, DartType> types, List<ObjectType> responseTypes,
+      {String namespace = ""}) {
     Map<String, Class> classes = {};
+    List<ObjectType> interfaceTypes =
+        responseTypes.where((type) => type.kind == Kind.INTERFACE).toList();
     interfaceTypes.forEach((interfaceType) {
       classes.putIfAbsent('$namespace${interfaceType.name}', () {
-        return _generateClass(interfaceType);
+        return _generateClass(interfaceType, types, responseTypes, namespace);
       });
     });
     return classes;
   }
 
-  _generateClass(ObjectType interfaceType) {
+  _generateClass(ObjectType interfaceType, Map<String, DartType> types,
+      List<ObjectType> responseTypes, String namespace) {
     ClassBuilder classBuilder = new ClassBuilder();
     classBuilder.abstract = true;
     classBuilder.name = '$namespace${interfaceType.name}';
-    classBuilder.fields.addAll(_generateFields(interfaceType.fields));
-    classBuilder.methods.add(_generateMethod(interfaceType));
+    classBuilder.fields.addAll(
+        _generateFields(interfaceType.fields, types, responseTypes, namespace));
+    classBuilder.methods
+        .add(_generateMethod(interfaceType, namespace: namespace));
     return classBuilder.build();
   }
 
-  _generateFields(List<Fields> interfaceFields) {
+  _generateFields(List<Fields> interfaceFields, Map<String, DartType> types,
+      List<ObjectType> responseTypes, String namespace) {
     List<Field> fields = [];
     interfaceFields.forEach((field) {
       fields.add(Field((f) {
         f.name = field.name;
-        f.type = Reference(Helper.findFieldType(field.type));
+        f.type = Reference(
+            Helper.findFieldType(field.type, types, responseTypes, namespace));
       }));
     });
     return fields;
   }
 
-  _generateMethod(ObjectType interfaceType) {
+  _generateMethod(ObjectType interfaceType, {String namespace = ""}) {
     MethodBuilder methodBuilder = new MethodBuilder();
     String fromJsonBody = "";
-    methodBuilder.name =
-    '$namespace${interfaceType.name}.fromJson';
+    methodBuilder.name = '$namespace${interfaceType.name}.fromJson';
     methodBuilder.returns = Reference("factory");
     methodBuilder.requiredParameters.add(Parameter((p) {
       p.name = "json";
@@ -59,7 +56,7 @@ class InterfaceGenerator {
     fromJsonBody += "switch(json['__typename']){";
     interfaceType.possibleTypes.forEach((type) {
       fromJsonBody +=
-      'case "${type.name}" : return $namespace${type.name}.fromJson(json);';
+          'case "${type.name}" : return $namespace${type.name}.fromJson(json);';
     });
     fromJsonBody += "} return null;";
     methodBuilder.body = Code(fromJsonBody);
