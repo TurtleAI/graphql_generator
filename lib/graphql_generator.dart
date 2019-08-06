@@ -36,7 +36,6 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
     if (!annotation.read('schemaFetcher').isNull) {
       print(annotation.read('schemaFetcher'));
       var constantReader = annotation.read('schemaFetcher');
-      print(constantReader);
     }
 
     var response = await getSchema(url, headerToken);

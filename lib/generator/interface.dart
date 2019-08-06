@@ -6,17 +6,16 @@ import 'package:analyzer/dart/element/type.dart';
 class InterfaceGenerator {
   InterfaceGenerator() {}
 
-  generate(Map<String, DartType> types, List<ObjectType> responseTypes,
+  List<Class> generate(Map<String, DartType> types, List<ObjectType> responseTypes,
       {String namespace = ""}) {
-    Map<String, Class> classes = {};
+    List<Class> classList = [];
     List<ObjectType> interfaceTypes =
         responseTypes.where((type) => type.kind == Kind.INTERFACE).toList();
     interfaceTypes.forEach((interfaceType) {
-      classes.putIfAbsent('$namespace${interfaceType.name}', () {
-        return _generateClass(interfaceType, types, responseTypes, namespace);
-      });
+      classList
+          .add(_generateClass(interfaceType, types, responseTypes, namespace));
     });
-    return classes;
+    return classList;
   }
 
   _generateClass(ObjectType interfaceType, Map<String, DartType> types,

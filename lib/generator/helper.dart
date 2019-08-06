@@ -57,4 +57,14 @@ class Helper {
           return 'String';
     }
   }
+
+  static Map<String, T> keyBy<T>(Iterable<T> list, Function(T) s){
+    var iterator = list.iterator;
+    Map<String,T> result = {};
+    while(iterator.moveNext()){
+      String key  = s(iterator.current); 
+      result[key] = iterator.current;
+    }
+    return result;
+  }
 }
