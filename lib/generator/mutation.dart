@@ -7,7 +7,7 @@ class MutationClassGenerator {
   MutationClassGenerator() {}
 
   generate(
-      Map<String, Class> classes,
+       Map<String, Class> classes,
       Map<String, String> fragments,
       ObjectType mutationType,
       Map<String, DartType> types,
@@ -29,8 +29,6 @@ class MutationClassGenerator {
     }
     return classesMap;
   }
-
-  _generateClass(ObjectType mutationType, String namespace) {}
 
   _generateQueryMethod() {
     MethodBuilder queryMethodBuilder = MethodBuilder();
@@ -207,7 +205,7 @@ class MutationClassGenerator {
     }
   }
 
-  _generateMutationReturn(String methodReturn, String fieldName) {
+_generateMutationReturn(String methodReturn, String fieldName) {
     switch (methodReturn) {
       case "String":
       case "int":
