@@ -10,7 +10,7 @@ import 'package:graphql_generator/generator/objects.dart';
 import 'package:graphql_generator/generator/union.dart';
 
 class GraphQLCodeGenerators {
-  String generate(
+  String generateDartCode(
       List<ObjectType> responseTypes,
       String namespace,
       Map<String, DartType> types,
@@ -40,7 +40,6 @@ class GraphQLCodeGenerators {
       ObjectType mutationObjectType) {
     var result = '';
     var emitter = DartEmitter(Allocator());
-    var classes = <Class>[];
 
     var enumString =
         EnumGenerator().enumGenerator(responseTypes, namespace: namespace);
@@ -52,13 +51,16 @@ class GraphQLCodeGenerators {
     var objects = ObjectClassGenerator()
         .generate(types, responseTypes, namespace: namespace);
 
-    classes.addAll(interfaces);
-    classes.addAll(unions);
-    classes.addAll(inputs);
-    classes.addAll(objects);
-    classes.add(MutationClassGenerator().generate(
+    var classes = [
+      ...interfaces,
+      ...inputs,
+      ...unions,
+      ...objects,
+    ];
+    var mutationClass = MutationClassGenerator().generate(
         classes, fragments, mutationObjectType, types, responseTypes,
-        namespace: namespace));
+        namespace: namespace);
+    classes.add(mutationClass);
     classes.sort((a, b) => a.name.compareTo(b.name));
     Library library = new Library((lib) => lib.body.addAll(classes));
     result += DartFormatter().format('${library.accept(emitter)}');

@@ -9,7 +9,6 @@ import 'package:build/build.dart';
 import 'package:graphql_generator/annotation.dart';
 import 'package:graphql_generator/generator/code_generator.dart';
 import 'package:graphql_generator/generator/model.dart';
-import 'package:graphql_generator/schema_fetcher.dart';
 import 'package:http/http.dart' as http;
 import 'package:source_gen/source_gen.dart';
 
@@ -33,10 +32,6 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
     if (!annotation.read('fragments').isNull)
       fragments =
           _convertDartObjectMapToString(annotation.read('fragments').mapValue);
-    if (!annotation.read('schemaFetcher').isNull) {
-      print(annotation.read('schemaFetcher'));
-      var constantReader = annotation.read('schemaFetcher');
-    }
 
     var response = await getSchema(url, headerToken);
 
@@ -44,7 +39,7 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
 
     var mutationTypeName = getMutationTypeNameFromResponse(response);
 
-    return GraphQLCodeGenerators().generate(
+    return GraphQLCodeGenerators().generateDartCode(
         typesFromResponse, namespace, types, fragments, mutationTypeName);
   }
 
