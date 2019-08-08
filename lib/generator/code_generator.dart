@@ -10,7 +10,7 @@ import 'package:graphql_generator/generator/objects.dart';
 import 'package:graphql_generator/generator/union.dart';
 
 class GraphQLCodeGenerators {
-  generate(
+  String generateDartCode(
       List<ObjectType> responseTypes,
       String namespace,
       Map<String, DartType> types,
@@ -32,7 +32,7 @@ class GraphQLCodeGenerators {
     return mutationObjectType;
   }
 
-  generateTypes(
+  String generateTypes(
       String namespace,
       Map<String, String> fragments,
       Map<String, DartType> types,
@@ -40,29 +40,29 @@ class GraphQLCodeGenerators {
       ObjectType mutationObjectType) {
     var result = '';
     var emitter = DartEmitter(Allocator());
-    Map<String, Class> classes = {};
 
-    List<String> enumString =
+    var enumString =
         EnumGenerator().enumGenerator(responseTypes, namespace: namespace);
-    Map<String, Class> interfaces = InterfaceGenerator()
+    var interfaces = InterfaceGenerator()
         .generate(types, responseTypes, namespace: namespace);
-    Map<String, Class> unions =
-        UnionGenerator().generate(responseTypes, namespace: namespace);
-    Map<String, Class> inputs = InputObjectGenerator()
+    var unions = UnionGenerator().generate(responseTypes, namespace: namespace);
+    var inputs = InputObjectGenerator()
         .generate(types, responseTypes, namespace: namespace);
-    Map<String, Class> objects = ObjectClassGenerator()
+    var objects = ObjectClassGenerator()
         .generate(types, responseTypes, namespace: namespace);
 
-    classes.addAll(interfaces);
-    classes.addAll(unions);
-    classes.addAll(inputs);
-    classes.addAll(objects);
-    classes.addAll(MutationClassGenerator().generate(
+    var classes = [
+      ...interfaces,
+      ...inputs,
+      ...unions,
+      ...objects,
+    ];
+    var mutationClass = MutationClassGenerator().generate(
         classes, fragments, mutationObjectType, types, responseTypes,
-        namespace: namespace));
-    // var sortedKeys = classes.keys.toList()..sort();
-
-    Library library = new Library((lib) => lib.body.addAll(classes.values));
+        namespace: namespace);
+    classes.add(mutationClass);
+    classes.sort((a, b) => a.name.compareTo(b.name));
+    Library library = new Library((lib) => lib.body.addAll(classes));
     result += DartFormatter().format('${library.accept(emitter)}');
     enumString.forEach((enumString) {
       result += DartFormatter().format(enumString);

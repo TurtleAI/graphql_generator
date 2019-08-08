@@ -7,17 +7,11 @@ import 'package:analyzer/dart/element/type.dart';
 class InputObjectGenerator {
   InputObjectGenerator() {}
 
-  generate(Map<String, DartType> types, List<ObjectType> responseTypes,
+  Iterable<Class> generate(Map<String, DartType> types, List<ObjectType> responseTypes,
       {String namespace = ""}) {
-    Map<String, Class> classes = {};
     List<ObjectType> inputObjectTypes =
         responseTypes.where((type) => type.kind == Kind.INPUT_OBJECT).toList();
-    inputObjectTypes.forEach((typeObject) {
-      classes.putIfAbsent('$namespace${typeObject.name}', () {
-        return _generateClass(typeObject, types, responseTypes, namespace);
-      });
-    });
-    return classes;
+    return inputObjectTypes.map((type) => _generateClass(type, types, responseTypes, namespace));
   }
 
   _generateClass(ObjectType type, Map<String, DartType> types,

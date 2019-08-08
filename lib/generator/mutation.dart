@@ -6,14 +6,16 @@ import 'package:analyzer/dart/element/type.dart';
 class MutationClassGenerator {
   MutationClassGenerator() {}
 
-  generate(
-      Map<String, Class> classes,
+  Class generate(
+       List<Class> classList,
       Map<String, String> fragments,
       ObjectType mutationType,
       Map<String, DartType> types,
       List<ObjectType> responseTypes,
       {String namespace = ""}) {
-    Map<String, Class> classesMap = {};
+    Map<String,Class> classes = Helper.keyBy(classList, (Class classObject){
+      return classObject.name;
+    });
     ClassBuilder mutationClassBuilder = new ClassBuilder();
     mutationClassBuilder.name = '${namespace}Mutation';
     mutationClassBuilder.abstract = true;
@@ -24,13 +26,11 @@ class MutationClassGenerator {
         mutationClassBuilder.methods.add(_generateMutationMethod(
             field, classes, fragments, types, responseTypes, namespace));
       });
-      classesMap.putIfAbsent(
-          '${namespace}Mutation', () => mutationClassBuilder.build());
     }
-    return classesMap;
+    return mutationClassBuilder.build();
   }
 
-  _generateClass(ObjectType mutationType, String namespace) {}
+  
 
   _generateQueryMethod() {
     MethodBuilder queryMethodBuilder = MethodBuilder();
@@ -207,7 +207,7 @@ class MutationClassGenerator {
     }
   }
 
-  _generateMutationReturn(String methodReturn, String fieldName) {
+_generateMutationReturn(String methodReturn, String fieldName) {
     switch (methodReturn) {
       case "String":
       case "int":

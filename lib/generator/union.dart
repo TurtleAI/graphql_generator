@@ -1,19 +1,12 @@
 import 'package:code_builder/code_builder.dart';
 import 'package:graphql_generator/generator/model.dart';
-import 'package:analyzer/dart/element/type.dart';
 
 class UnionGenerator {
   UnionGenerator() {}
 
-  generate(List<ObjectType> responseTypes, {String namespace = ""}) {
-    Map<String, Class> classes = {};
+  Iterable<Class> generate(List<ObjectType> responseTypes, {String namespace = ""}) {
     List<ObjectType> unionTypes = responseTypes.where((type) => type.kind == Kind.UNION).toList();
-    unionTypes.forEach((unionType) {
-      classes.putIfAbsent('$namespace${unionType.name}', () {
-        return _generateClass(unionType, namespace);
-      });
-    });
-    return classes;
+    return unionTypes.map((type) => _generateClass(type, namespace));
   }
 
   _generateClass(ObjectType unionType, String namespace) {

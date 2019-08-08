@@ -13,21 +13,16 @@ import 'package:http/http.dart' as http;
 import 'package:source_gen/source_gen.dart';
 
 class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
-  var url;
-  var headerToken;
-  String namespace = "";
-
-  String mutationType = "";
-
-  Map<String, DartType> types = {};
-  Map<String, String> fragments = {};
-
   ObjectType mutation = new ObjectType();
 
   @override
   Future<String> generateForAnnotatedElement(
       Element element, ConstantReader annotation, BuildStep buildStep) async {
-    url = annotation.read('url').stringValue;
+    var url = annotation.read('url').stringValue;
+    var headerToken = '';
+    var namespace = '';
+    Map<String, DartType> types = {};
+    Map<String, String> fragments = {};
     if (!annotation.read('headerToken').isNull)
       headerToken = annotation.read('headerToken').stringValue;
     if (!annotation.read('namespace').isNull)
@@ -37,15 +32,14 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
     if (!annotation.read('fragments').isNull)
       fragments =
           _convertDartObjectMapToString(annotation.read('fragments').mapValue);
-    
-    var response = await getSchema();
 
-    List<ObjectType> typesFromResponse =
-        getTypeList(getTypesFromResponse(response));
+    var response = await getSchema(url, headerToken);
 
-    String mutationTypeName = getMutationTypeNameFromResponse(response);
+    var typesFromResponse = getTypeList(getTypesFromResponse(response));
 
-    return GraphQLCodeGenerators().generate(
+    var mutationTypeName = getMutationTypeNameFromResponse(response);
+
+    return GraphQLCodeGenerators().generateDartCode(
         typesFromResponse, namespace, types, fragments, mutationTypeName);
   }
 
@@ -68,8 +62,8 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
   }
 
   /// Fetch the schema from the given url and header.
-  Future<http.Response> getSchema() async {
-    http.Response response = await new http.Client().post(url,
+  Future<http.Response> getSchema(String url, String headerToken) async {
+    final response = await new http.Client().post(url,
         headers: headerToken != null
             ? {'Content-type': 'application/json', 'Authorization': headerToken}
             : {'Content-type': 'application/json'},
@@ -94,6 +88,7 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
     List<dynamic> types = jsonSchema["types"];
     return types;
   }
+
   /// Get the MutationType class Name
   String getMutationTypeNameFromResponse(http.Response response) {
     Map<String, dynamic> json = JSON.jsonDecode(response.body);

@@ -1,5 +1,4 @@
 import 'package:graphql_generator/annotation.dart';
-
 @GQLGenerator(
   // graphiql doesn't require a token for introspection schema
     url: "https://turtle-api.herokuapp.com/graphiql",
@@ -14,5 +13,6 @@ import 'package:graphql_generator/annotation.dart';
       "Card":
       """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """
-    })
+    },)
 String value;
+
