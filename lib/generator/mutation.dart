@@ -7,17 +7,17 @@ class MutationClassGenerator {
   MutationClassGenerator() {}
 
   Class generate(
-       List<Class> classList,
+      List<Class> classList,
       Map<String, String> fragments,
       ObjectType mutationType,
       Map<String, DartType> types,
       List<ObjectType> responseTypes,
       {String namespace = ""}) {
-    Map<String,Class> classes = Helper.keyBy(classList, (Class classObject){
+    Map<String, Class> classes = Helper.keyBy(classList, (Class classObject) {
       return classObject.name;
     });
     ClassBuilder mutationClassBuilder = new ClassBuilder();
-    mutationClassBuilder.name = '${namespace}Mutation';
+    mutationClassBuilder.name = '${namespace}MutationBase';
     mutationClassBuilder.abstract = true;
     if (mutationType != null && mutationType.fields != null) {
       mutationClassBuilder.methods.add(_generateQueryMethod());
@@ -29,8 +29,6 @@ class MutationClassGenerator {
     }
     return mutationClassBuilder.build();
   }
-
-  
 
   _generateQueryMethod() {
     MethodBuilder queryMethodBuilder = MethodBuilder();
@@ -114,9 +112,12 @@ class MutationClassGenerator {
               }$mutationFragments
               """;
 
+      var hasReturnFields =
+          _mutationHasFields(namespace + field.type.name, classes);
+
       mutationMethodBuilder.body = Code(
           '${_generateObjectFromParameters(argType, classes)}'
-          ' ${_isObject(methodReturn) ? 'var fragmentName = _extractFragmentName(fragment);' : ''}'
+          ' ${hasReturnFields ? 'var fragmentName = _extractFragmentName(fragment);' : ''}'
           ' var result =  await query(document:"""\n$graphql\n""",variables:{\n  "${arg.name}":${arg.name}${_isObject(argType) ? ".toJson()" : ""}\n  });'
           '${_generateMutationReturn(methodReturn, field.name)}');
     });
@@ -207,7 +208,7 @@ class MutationClassGenerator {
     }
   }
 
-_generateMutationReturn(String methodReturn, String fieldName) {
+  _generateMutationReturn(String methodReturn, String fieldName) {
     switch (methodReturn) {
       case "String":
       case "int":
