@@ -1,6 +1,7 @@
 library graphql_generator;
 
 import 'dart:convert' as JSON;
+import 'dart:io';
 
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
@@ -34,13 +35,16 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
           _convertDartObjectMapToString(annotation.read('fragments').mapValue);
 
     var response = await getSchema(url, headerToken);
+    if (response != null) {
+      var typesFromResponse = getTypeList(getTypesFromResponse(response));
 
-    var typesFromResponse = getTypeList(getTypesFromResponse(response));
+      var mutationTypeName = getMutationTypeNameFromResponse(response);
 
-    var mutationTypeName = getMutationTypeNameFromResponse(response);
-
-    return GraphQLCodeGenerators().generateDartCode(
-        typesFromResponse, namespace, types, fragments, mutationTypeName);
+      return GraphQLCodeGenerators().generateDartCode(
+          typesFromResponse, namespace, types, fragments, mutationTypeName);
+    } else {
+      return null;
+    }
   }
 
   _convertDartObjectMap(Map<DartObject, DartObject> dartMap) {
@@ -63,21 +67,29 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
 
   /// Fetch the schema from the given url and header.
   Future<http.Response> getSchema(String url, String headerToken) async {
-    final response = await new http.Client().post(url,
-        headers: headerToken != null
-            ? {'Content-type': 'application/json', 'Authorization': headerToken}
-            : {'Content-type': 'application/json'},
-        body:
-            '{"query" : "fragment FullType on __Type { kind name description fields(includeDeprecated: true) '
-            '{ name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } '
-            'inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) '
-            '{ name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } } '
-            'fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue } '
-            'fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType '
-            '{ kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } } '
-            'query IntrospectionQuery { __schema { queryType { name } mutationType { name } types { ...FullType } '
-            'directives { name description locations args { ...InputValue } } } } "}');
-    return response;
+    try {
+      final response = await new http.Client().post(url,
+          headers: headerToken != null
+              ? {
+                  'Content-type': 'application/json',
+                  'Authorization': headerToken
+                }
+              : {'Content-type': 'application/json'},
+          body:
+              '{"query" : "fragment FullType on __Type { kind name description fields(includeDeprecated: true) '
+              '{ name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } '
+              'inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) '
+              '{ name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } } '
+              'fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue } '
+              'fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType '
+              '{ kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } } '
+              'query IntrospectionQuery { __schema { queryType { name } mutationType { name } types { ...FullType } '
+              'directives { name description locations args { ...InputValue } } } } "}');
+      return response;
+    } on Exception catch (e) {
+      print(e);
+      return null;
+    }
   }
 
   /// Get all the types array from the response.
