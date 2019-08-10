@@ -1,7 +1,6 @@
 library graphql_generator;
 
 import 'dart:convert' as JSON;
-import 'dart:io';
 
 import 'package:analyzer/dart/constant/value.dart';
 import 'package:analyzer/dart/element/element.dart';
