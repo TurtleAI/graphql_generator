@@ -1,0 +1,229 @@
+import 'package:meta/meta.dart';
+
+class TCardCreateInput {
+  TCardCreateInput(
+      {this.afterId,
+      this.assigneeId,
+      this.beforeId,
+      this.cardId,
+      @required this.cardName,
+      this.meta,
+      this.parentId,
+      this.quickAdd});
+
+  /// The sibling card to place the new card after.
+  String afterId;
+
+  /// The user to assign the task to.
+  String assigneeId;
+
+  /// The sibling card to place the new card before.
+  String beforeId;
+
+  /// The id of the card. This is server-generated so pass in 'new' as the paramter.
+  String cardId;
+
+  /// The name to give the card. This is what will show up in task lists.
+  ///
+  String cardName;
+
+  /// General purpose meta data for keeping track of anything you desire. For example, the source of the task.
+  String meta;
+
+  /// The parent id of the card to place the card under. Omit if you are creating a project.
+  String parentId;
+
+  bool quickAdd;
+
+  factory TCardCreateInput.fromJson(Map<String, dynamic> json) {
+    return TCardCreateInput(
+      afterId: json['afterId'] as String,
+      assigneeId: json['assigneeId'] as String,
+      beforeId: json['beforeId'] as String,
+      cardId: json['cardId'] as String,
+      cardName: json['cardName'] as String,
+      meta: json['meta'] as String,
+      parentId: json['parentId'] as String,
+      quickAdd: json['quickAdd'] as bool,
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'afterId': afterId,
+      'assigneeId': assigneeId,
+      'beforeId': beforeId,
+      'cardId': cardId,
+      'cardName': cardName,
+      'meta': meta,
+      'parentId': parentId,
+      'quickAdd': quickAdd,
+    };
+  }
+}
+
+abstract class TDocumentToken {
+  factory TDocumentToken.fromJson(Map<String, dynamic> json) {
+    switch (json['__typename']) {
+      case "Card":
+        return TCard.fromJson(json);
+      case "DateObject":
+        return TDateObject.fromJson(json);
+      case "DurationRange":
+        return TDurationRange.fromJson(json);
+      case "File":
+        return TFile.fromJson(json);
+      case "Link":
+        return TLink.fromJson(json);
+      case "StringObject":
+        return TStringObject.fromJson(json);
+      case "TimeEntry":
+        return TTimeEntry.fromJson(json);
+      case "User":
+        return TUser.fromJson(json);
+    }
+    return null;
+  }
+}
+
+/// A user edited the content of an existing message in a feed.
+class TFeedMessageEdited implements TTurtleEvent {
+  TFeedMessageEdited(
+      {this.actor,
+      this.actorId,
+      this.feed,
+      this.feedEventId,
+      this.feedId,
+      this.id,
+      this.messageBody,
+      this.projectId,
+      this.requestId,
+      this.time});
+
+  /// The user that edited the message
+  String actor;
+
+  /// The user that edited the message
+  String actorId;
+
+  /// The feed the edited message belongs to
+  String feed;
+
+  /// The id of the edited message
+  String feedEventId;
+
+  /// The feed the edited message belongs to
+  String feedId;
+
+  String id;
+
+  /// The new body of the message
+  String messageBody;
+
+  /// The project the feed belongs to.
+  /// (Direct messages don't belong to projects so it will be null for direct messages.)
+  ///
+  String projectId;
+
+  String requestId;
+
+  String time;
+
+  factory TFeedMessageEdited.fromJson(Map<String, dynamic> json) {
+    return TFeedMessageEdited(
+      actor: json['actor'] as String,
+      actorId: json['actorId'] as String,
+      feed: json['feed'] as String,
+      feedEventId: json['feedEventId'] as String,
+      feedId: json['feedId'] as String,
+      id: json['id'] as String,
+      messageBody: json['messageBody'] as String,
+      projectId: json['projectId'] as String,
+      requestId: json['requestId'] as String,
+      time: json['time'] as String,
+    );
+  }
+}
+
+abstract class TMutationBase {
+  Future<Map<String, dynamic>> query(
+      {String document, Map<String, dynamic> variables});
+  String _extractFragmentName(String fragment) {
+    RegExp exp =
+        new RegExp(r"\s*fragment\s+(\w+)\s+on\s+(\w+)", caseSensitive: true);
+    return exp.firstMatch(fragment)?.group(1);
+  }
+
+  Future<String> feedPostMessage2(String input) async {
+    var result = await query(document: """
+              mutation feedPostMessage2(\$input:String!) {
+                feedPostMessage2(input:\$input)
+              }
+              
+""", variables: {"input": input});
+    return result['data']['feedPostMessage2'] as String;
+  }
+
+  Future<String> cardBudgetIncrease(String input) async {
+    var result = await query(document: """
+              mutation cardBudgetIncrease(\$input:String!) {
+                cardBudgetIncrease(input:\$input)
+              }
+              
+""", variables: {"input": input});
+    return result['data']['cardBudgetIncrease'] as String;
+  }
+}
+
+class TReaction {
+  TReaction({this.emoji, this.reaction, this.userId});
+
+  /// The emoji of the reaction like "🐢"
+  String emoji;
+
+  @Deprecated('Internal use')
+  String reaction;
+
+  /// The id of the user that added the reaction
+  String userId;
+
+  factory TReaction.fromJson(Map<String, dynamic> json) {
+    return TReaction(
+      emoji: json['emoji'] as String,
+      reaction: json['reaction'] as String,
+      userId: json['userId'] as String,
+    );
+  }
+}
+
+class TRootMutationType {
+  TRootMutationType({this.feedPostMessage2, this.cardBudgetIncrease});
+
+  /// Post a message to a feed. Similar to posting a message in Slack or HipChat.
+  String feedPostMessage2;
+
+  /// Decrease the budget of a card. To set the initial budget of a card, use this command.
+  /// Every card can have a budget. This is used so a customer can budget a feature.
+  /// For example, a customer could limit the cost of a feature to 100h.
+  /// Budgets operations are relative so the user can work relative to the current budget.
+  ///
+  String cardBudgetIncrease;
+
+  factory TRootMutationType.fromJson(Map<String, dynamic> json) {
+    return TRootMutationType(
+      feedPostMessage2: json['feedPostMessage2'] as String,
+      cardBudgetIncrease: json['cardBudgetIncrease'] as String,
+    );
+  }
+}
+enum TMeetingParticipantFilter {
+  ALL,
+  CONNECTED,
+}
+const TMeetingParticipantFilterValues = {
+  "ALL": TMeetingParticipantFilter.ALL,
+  "CONNECTED": TMeetingParticipantFilter.CONNECTED,
+};
+const TMeetingParticipantFilterEnum = {
+  TMeetingParticipantFilter.ALL: "ALL",
+  TMeetingParticipantFilter.CONNECTED: "CONNECTED",
+};

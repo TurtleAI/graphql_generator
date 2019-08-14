@@ -59,257 +59,426 @@
       "queryType": {
         "name": "RootQueryType"
       },
-      "types": [
+      "types": [  
         {
-          "description": null,
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
               "description": null,
-              "isDeprecated": false,
-              "name": "active",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "closedWon",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "displayOrder",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "label",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "probability",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Float",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "HubspotDealStage",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": null,
-          "inputFields": [
-            {
-              "defaultValue": null,
-              "description": null,
-              "name": "cardId",
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "CardId",
-                  "ofType": null
-                }
-              }
-            }
-          ],
-          "interfaces": null,
-          "kind": "INPUT_OBJECT",
-          "name": "CardDueDateUnsetInput",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [
+              "enumValues": null,
+              "fields": null,
+              "inputFields": [
                 {
                   "defaultValue": null,
-                  "description": null,
-                  "name": "input",
+                  "description": "The sibling card to place the new card after.",
+                  "name": "afterId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "CardId",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": "The user to assign the task to.",
+                  "name": "assigneeId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "UserId",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": "The sibling card to place the new card before.",
+                  "name": "beforeId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "CardId",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": "The id of the card. This is server-generated so pass in 'new' as the paramter.",
+                  "name": "cardId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "NewId",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": "The name to give the card. This is what will show up in task lists.\n",
+                  "name": "cardName",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "AccountOpenInput",
+                      "kind": "SCALAR",
+                      "name": "String",
                       "ofType": null
                     }
                   }
+                },
+                {
+                  "defaultValue": null,
+                  "description": "General purpose meta data for keeping track of anything you desire. For example, the source of the task.",
+                  "name": "meta",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Json",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": null,
+                  "description": "The parent id of the card to place the card under. Omit if you are creating a project.",
+                  "name": "parentId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "CardId",
+                    "ofType": null
+                  }
+                },
+                {
+                  "defaultValue": "false",
+                  "description": null,
+                  "name": "quickAdd",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  }
                 }
               ],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "accountOpen",
-              "type": {
-                "kind": "SCALAR",
-                "name": "Raw",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": [],
-          "kind": "OBJECT",
-          "name": "RootMutationType",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": [
-            {
-              "deprecationReason": null,
-              "description": "Meeting completed and is in the past. All participants have left.",
-              "isDeprecated": false,
-              "name": "COMPLETED"
+              "interfaces": null,
+              "kind": "INPUT_OBJECT",
+              "name": "CardCreateInput",
+              "possibleTypes": null
             },
             {
-              "deprecationReason": null,
-              "description": "Creating the meeting failed for an unknown reason.",
-              "isDeprecated": false,
-              "name": "FAILED"
-            },
-            {
-              "deprecationReason": null,
-              "description": "Meeting is ongoing with 1+ participants in the call",
-              "isDeprecated": false,
-              "name": "IN_PROGRESS"
-            }
-          ],
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "ENUM",
-          "name": "MeetingStatus",
-          "possibleTypes": null
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": [
-            {
-              "args": [],
-              "deprecationReason": null,
               "description": null,
-              "isDeprecated": false,
-              "name": "id",
-              "type": {
-                "kind": "SCALAR",
-                "name": "ID",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "requestId",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            },
-            {
-              "args": [],
-              "deprecationReason": null,
-              "description": null,
-              "isDeprecated": false,
-              "name": "time",
-              "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
-            }
-          ],
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "INTERFACE",
-          "name": "TurtleEvent",
-          "possibleTypes": [
-            {
+              "enumValues": null,
+              "fields": [
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": "The emoji of the reaction like \"🐢\"",
+                  "isDeprecated": false,
+                  "name": "emoji",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": "Internal use",
+                  "description": null,
+                  "isDeprecated": true,
+                  "name": "reaction",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": "The id of the user that added the reaction",
+                  "isDeprecated": false,
+                  "name": "userId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              ],
+              "inputFields": null,
+              "interfaces": [],
               "kind": "OBJECT",
-              "name": "AccountTransfer",
-              "ofType": null
-            }
-          ]
-        },
-        {
-          "description": null,
-          "enumValues": null,
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "kind": "UNION",
-          "name": "AccountSource",
-          "possibleTypes": [
-            {
-              "kind": "OBJECT",
-              "name": "Card",
-              "ofType": null
+              "name": "Reaction",
+              "possibleTypes": null
             },
             {
+              "description": null,
+              "enumValues": [
+                {
+                  "deprecationReason": null,
+                  "description": "Show all participants including past particpants that have already left",
+                  "isDeprecated": false,
+                  "name": "ALL"
+                },
+                {
+                  "deprecationReason": null,
+                  "description": "Show participants that are only currently in the meeting",
+                  "isDeprecated": false,
+                  "name": "CONNECTED"
+                }
+              ],
+              "fields": null,
+              "inputFields": null,
+              "interfaces": null,
+              "kind": "ENUM",
+              "name": "MeetingParticipantFilter",
+              "possibleTypes": null
+            },
+            {
+              "description": "A user edited the content of an existing message in a feed.",
+              "enumValues": null,
+              "fields": [
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": "The user that edited the message",
+                  "isDeprecated": false,
+                  "name": "actor",
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "User",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": "The user that edited the message",
+                  "isDeprecated": false,
+                  "name": "actorId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": "The feed the edited message belongs to",
+                  "isDeprecated": false,
+                  "name": "feed",
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "Feed",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": "The id of the edited message",
+                  "isDeprecated": false,
+                  "name": "feedEventId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": "The feed the edited message belongs to",
+                  "isDeprecated": false,
+                  "name": "feedId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": null,
+                  "isDeprecated": false,
+                  "name": "id",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": "The new body of the message",
+                  "isDeprecated": false,
+                  "name": "messageBody",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": "The project the feed belongs to.\n(Direct messages don't belong to projects so it will be null for direct messages.)\n",
+                  "isDeprecated": false,
+                  "name": "projectId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": null,
+                  "isDeprecated": false,
+                  "name": "requestId",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [],
+                  "deprecationReason": null,
+                  "description": null,
+                  "isDeprecated": false,
+                  "name": "time",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              ],
+              "inputFields": null,
+              "interfaces": [
+                {
+                  "kind": "INTERFACE",
+                  "name": "TurtleEvent",
+                  "ofType": null
+                }
+              ],
               "kind": "OBJECT",
-              "name": "User",
-              "ofType": null
+              "name": "FeedMessageEdited",
+              "possibleTypes": null
+            },
+            {
+              "description": "In chat messages, the body of messages is represented as an array of tokens.\nThese 'rich' tokens can be of differnet types like strings, dates, files, users, and so on.\nOn the client, one can render the body of a message by mapping over the tokens and rendering an array of components.\n",
+              "enumValues": null,
+              "fields": null,
+              "inputFields": null,
+              "interfaces": null,
+              "kind": "UNION",
+              "name": "DocumentToken",
+              "possibleTypes": [
+                {
+                  "kind": "OBJECT",
+                  "name": "Card",
+                  "ofType": null
+                },
+                {
+                  "kind": "OBJECT",
+                  "name": "DateObject",
+                  "ofType": null
+                },
+                {
+                  "kind": "OBJECT",
+                  "name": "DurationRange",
+                  "ofType": null
+                },
+                {
+                  "kind": "OBJECT",
+                  "name": "File",
+                  "ofType": null
+                },
+                {
+                  "kind": "OBJECT",
+                  "name": "Link",
+                  "ofType": null
+                },
+                {
+                  "kind": "OBJECT",
+                  "name": "StringObject",
+                  "ofType": null
+                },
+                {
+                  "kind": "OBJECT",
+                  "name": "TimeEntry",
+                  "ofType": null
+                },
+                {
+                  "kind": "OBJECT",
+                  "name": "User",
+                  "ofType": null
+                }
+              ]
+            },
+            {
+              "description": null,
+              "enumValues": null,
+              "fields": [
+                {
+                  "args": [
+                    {
+                      "defaultValue": null,
+                      "description": null,
+                      "name": "input",
+                      "type": {
+                        "kind": "NON_NULL",
+                        "name": null,
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "FeedPostMessage2Input",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  ],
+                  "deprecationReason": null,
+                  "description": "Post a message to a feed. Similar to posting a message in Slack or HipChat.",
+                  "isDeprecated": false,
+                  "name": "feedPostMessage2",
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "FeedEvent",
+                    "ofType": null
+                  }
+                },
+                {
+                  "args": [
+                    {
+                      "defaultValue": null,
+                      "description": null,
+                      "name": "input",
+                      "type": {
+                        "kind": "NON_NULL",
+                        "name": null,
+                        "ofType": {
+                          "kind": "INPUT_OBJECT",
+                          "name": "CardBudgetIncreaseInput",
+                          "ofType": null
+                        }
+                      }
+                    }
+                  ],
+                  "deprecationReason": null,
+                  "description": "Decrease the budget of a card. To set the initial budget of a card, use this command.\nEvery card can have a budget. This is used so a customer can budget a feature.\nFor example, a customer could limit the cost of a feature to 100h.\nBudgets operations are relative so the user can work relative to the current budget.\n",
+                  "isDeprecated": false,
+                  "name": "cardBudgetIncrease",
+                  "type": {
+                    "kind": "OBJECT",
+                    "name": "Card",
+                    "ofType": null
+                  }
+                }
+              ],
+              "inputFields": null,
+              "interfaces": [],
+              "kind": "OBJECT",
+              "name": "RootMutationType",
+              "possibleTypes": null
             }
-          ]
-        }
-      ]
+            ]
     }
   }
 }
