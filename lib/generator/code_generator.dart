@@ -25,11 +25,14 @@ class GraphQLCodeGenerators {
 
   ObjectType getMutationObjectType(
       List<ObjectType> responseTypes, String mutationClassName) {
-    ObjectType mutationObjectType = responseTypes
-        .where((type) => type.name == mutationClassName)
-        .toList()
-        .first;
-    return mutationObjectType;
+    if (mutationClassName != '') {
+      ObjectType mutationObjectType = responseTypes
+          .where((type) => type.name == mutationClassName)
+          .toList()
+          .first;
+      return mutationObjectType;
+    } else
+      return null;
   }
 
   String generateTypes(
