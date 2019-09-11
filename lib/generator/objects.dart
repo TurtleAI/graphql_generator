@@ -19,7 +19,7 @@ class ObjectClassGenerator {
     ClassBuilder builder = new ClassBuilder();
     builder.name = '$namespace${type.name}';
 
-    if (type.description != null) {
+    if (type.description != null && type.description.isNotEmpty) {
       String documentation = type.description.replaceAll('\n', '\n/// ');
       builder.docs.add('/// $documentation');
     }
@@ -44,7 +44,7 @@ class ObjectClassGenerator {
         f.name = field.name;
         f.type = Reference(
             Helper.findFieldType(field.type, types, responseTypes, namespace));
-        if (field.description != null)
+        if (field.description != null && field.description.isNotEmpty)
           f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
       }));
     });

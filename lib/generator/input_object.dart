@@ -39,7 +39,7 @@ class InputObjectGenerator {
         f.name = field.name;
         f.type = Reference(
             Helper.findFieldType(field.type, types, responseTypes, namespace));
-        if (field.description != null)
+        if (field.description != null && field.description.isNotEmpty)
           f.docs.add('/// ${field.description.replaceAll('\n', '\n/// ')}');
       }));
     });
