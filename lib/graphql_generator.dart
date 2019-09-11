@@ -35,9 +35,11 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
 
     var response = await getSchema(url, headerToken);
     if (response != null) {
-      var typesFromResponse = getTypeList(getTypesFromResponse(response:response));
+      var typesFromResponse =
+          getTypeList(getTypesFromResponse(response: response));
 
-      var mutationTypeName = getMutationTypeNameFromResponse(response:response);
+      var mutationTypeName =
+          getMutationTypeNameFromResponse(response: response);
 
       return GraphQLCodeGenerators().generateDartCode(
           typesFromResponse, namespace, types, fragments, mutationTypeName);
@@ -105,9 +107,11 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
   /// Get the MutationType class Name
   String getMutationTypeNameFromResponse(
       {http.Response response, String stringResponse}) {
-    Map<String, dynamic> json = JSON.jsonDecode(response?.body ?? stringResponse);
+    Map<String, dynamic> json =
+        JSON.jsonDecode(response?.body ?? stringResponse);
     Map<String, dynamic> jsonData = json['data'];
     Map<String, dynamic> jsonSchema = jsonData['__schema'];
-    return jsonSchema['mutationType']['name'];
+    return jsonSchema['mutationType'] == null ? ''
+        : jsonSchema['mutationType']['name'];
   }
 }
