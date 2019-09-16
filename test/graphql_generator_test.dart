@@ -77,7 +77,7 @@ void main() {
       resultFile.delete();
     }
 
-    if (FileSystemEntity.typeSync('test/test_data/`user_schema`/user.result.txt') != FileSystemEntityType.notFound) {
+    if (FileSystemEntity.typeSync('test/test_data/user_schema/user.result.txt') != FileSystemEntityType.notFound) {
       var resultFile = await File('test/test_data/user_schema/user.result.txt');
       resultFile.delete();
     }
@@ -86,16 +86,103 @@ void main() {
 test('GraphQL generation', () async {
     /// Read the test response from the file.
     var graphQLGenerator = GraphQLGenerators();
-    var response = await graphQLGenerator.getSchema("https://turtle-api.herokuapp.com/graphiql", "", introspectionQuery:
-    '{"query" : "fragment FullType on __Type { kind name description fields(includeDeprecated: true) '
-              '{ name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } '
-              'inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) '
-              '{ name description isDeprecated deprecationReason } possibleTypes { ...TypeRef } } '
-              'fragment InputValue on __InputValue { name description type { ...TypeRef } defaultValue } '
-              'fragment TypeRef on __Type { kind name ofType { kind name ofType { kind name ofType '
-              '{ kind name ofType { kind name ofType { kind name ofType { kind name ofType { kind name } } } } } } } } '
-              'query IntrospectionQuery { __schema { queryType { name } mutationType { name } types { ...FullType } '
-              'directives { name description locations args { ...InputValue } } } } "}');
+    var query = '''
+    fragment FullType on __Type {
+      kind name description
+      fields(includeDeprecated: true) {
+        name description
+        args {
+          ...InputValue
+        }
+        type {
+          ...TypeRef
+        }
+        isDeprecated
+        deprecationReason
+      }
+      inputFields {
+        ...InputValue
+      }
+      interfaces {
+        ...TypeRef
+      }
+      enumValues(includeDeprecated: true) {
+        name
+        description
+        isDeprecated
+        deprecationReason
+      }
+      possibleTypes {
+        ...TypeRef
+      }
+    }
+
+  fragment InputValue on __InputValue {
+    name
+    description
+    type {
+      ...TypeRef
+    }
+    defaultValue
+  }
+
+  fragment TypeRef on __Type {
+    kind
+    name
+    ofType {
+      kind
+      name
+      ofType {
+        kind
+        name
+        ofType {
+          kind
+          name
+          ofType {
+            kind
+            name
+            ofType {
+              kind
+              name
+              ofType {
+                kind
+                name
+                ofType {
+                  kind
+                  name
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  query IntrospectionQuery {
+    __schema {
+      queryType {
+        name
+      }
+      mutationType {
+        name
+      }
+      types {
+        ...FullType
+      }
+      directives {
+        name
+        description
+        locations
+        args {
+          ...InputValue
+        }
+      }
+    }
+  }
+    ''';
+    var response = await graphQLGenerator.getSchema("https://turtle-api.herokuapp.com/graphiql", "", introspectionQuery: query);
+    print(response.body);
     var typesFromResponse = getTypeList(
         graphQLGenerator.getTypesFromResponse(response:response));
     var mutationTypeName = graphQLGenerator.getMutationTypeNameFromResponse(
