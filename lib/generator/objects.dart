@@ -7,15 +7,19 @@ import 'package:analyzer/dart/element/type.dart';
 class ObjectClassGenerator {
   ObjectClassGenerator() {}
 
-  Iterable<Class> generate(Map<String, DartType> types, List<ObjectType> responseTypes,
+  Iterable<Class> generate(
+      Map<String, DartType> types, List<ObjectType> responseTypes,
       {String namespace = ""}) {
     List<ObjectType> objectTypes =
         responseTypes.where((type) => type.kind == Kind.OBJECT).toList();
-    return objectTypes.map((type) =>_generateClass(type, types, responseTypes, namespace));
+    return objectTypes
+        .map((type) => _generateClass(type, types, responseTypes, namespace));
   }
 
   _generateClass(ObjectType type, Map<String, DartType> types,
       List<ObjectType> responseTypes, String namespace) {
+    List<ObjectType> enumTypes =
+        responseTypes.where((type) => type.kind == Kind.ENUM).toList();
     ClassBuilder builder = new ClassBuilder();
     builder.name = '$namespace${type.name}';
 
@@ -27,9 +31,14 @@ class ObjectClassGenerator {
     builder.fields
         .addAll(_generateFields(type.fields, types, responseTypes, namespace));
     builder.constructors.add(_generateConstruction(type));
+    builder.implements
+        .addAll(_generateInterfaces(type, responseTypes, namespace));
+
     builder.methods.add(_createFromJson(
         '$namespace${type.name}', builder.fields, responseTypes, namespace));
-    builder.implements.addAll(_generateInterfaces(type, responseTypes, namespace));
+    builder.methods.add(_createToJsonMethod(
+        '$namespace${type.name}', builder, enumTypes, namespace));
+
     return builder.build();
   }
 
@@ -102,10 +111,61 @@ class ObjectClassGenerator {
             return "${f.name} : (json['${f.name}'] as List)?.map((e) => ${split}Values[e])?.toList(),";
           }
       }
-
       return "${f.name} : (json['${f.name}'] as List)?.map((e) => e == null? null : ${f.type.symbol.split('<')[1].split('>')[0]}.fromJson(e as Map<String,dynamic>))?.toList(),";
     } else {
       return "${f.name} : json['${f.name}'] == null ? null : ${f.type.symbol}.fromJson(json['${f.name}'] as Map<String,dynamic>),";
+    }
+  }
+
+  _createToJsonMethod(String name, ClassBuilder classBuilder,
+      List<ObjectType> enumTypes, String namespace) {
+    MethodBuilder toJSONBuilder = new MethodBuilder();
+    toJSONBuilder.name = "toJson";
+    toJSONBuilder.returns = Reference("Map<String,dynamic>");
+
+    String toJsonBody = "return <String,dynamic> {";
+    classBuilder.fields.build().forEach((f) {
+      toJsonBody += toJsonReturnString(f, enumTypes, namespace);
+    });
+    toJsonBody += "};";
+    toJSONBuilder.body = Code(toJsonBody);
+    return toJSONBuilder.build();
+  }
+
+  String toJsonReturnString(
+      Field f, List<ObjectType> enumTypes, String namespace) {
+    switch (f.type.symbol) {
+      case "String":
+      case "int":
+      case "bool":
+      case "double":
+      case "Map<String,dynamic>":
+        return "'${f.name}' : ${f.name},";
+      case "dynamic":
+        return "'${f.name}' : ${f.name},";
+      default:
+        if (enumTypes
+            .any((type) => '$namespace${type.name}' == f.type.symbol)) {
+          return "'${f.name}' : ${f.type.symbol}Enum[${f.name}],";
+        }
+    }
+    if (f.type.symbol.contains('List<')) {
+      String split = f.type.symbol.split('<')[1].split('>')[0];
+      switch (split) {
+        case "String":
+        case "int":
+        case "bool":
+        case "double":
+        case "dynamic":
+          return "'${f.name}' : ${f.name},";
+        default:
+          if (enumTypes.any((type) => '$namespace${type.name}' == split)) {
+            return "'${f.name}' : ${f.name} == null  ? null : new List<dynamic>.from(${f.name}.map((x) => ${split}Enum[x])),";
+          }
+      }
+      return "'${f.name}' : List<dynamic>.from(${f.name}.map((x) => x.toJson())),";
+    } else {
+      return "'${f.name}' : ${f.name}.toJson(),";
     }
   }
 
