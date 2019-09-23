@@ -83,6 +83,9 @@ abstract class TDocumentToken {
     }
     return null;
   }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{};
+  }
 }
 
 /// A user edited the content of an existing message in a feed.
@@ -142,6 +145,20 @@ class TFeedMessageEdited implements TTurtleEvent {
       time: json['time'] as String,
     );
   }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'actor': actor,
+      'actorId': actorId,
+      'feed': feed,
+      'feedEventId': feedEventId,
+      'feedId': feedId,
+      'id': id,
+      'messageBody': messageBody,
+      'projectId': projectId,
+      'requestId': requestId,
+      'time': time,
+    };
+  }
 }
 
 abstract class TMutationBase {
@@ -193,6 +210,13 @@ class TReaction {
       userId: json['userId'] as String,
     );
   }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'emoji': emoji,
+      'reaction': reaction,
+      'userId': userId,
+    };
+  }
 }
 
 class TRootMutationType {
@@ -213,6 +237,12 @@ class TRootMutationType {
       feedPostMessage2: json['feedPostMessage2'] as String,
       cardBudgetIncrease: json['cardBudgetIncrease'] as String,
     );
+  }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'feedPostMessage2': feedPostMessage2,
+      'cardBudgetIncrease': cardBudgetIncrease,
+    };
   }
 }
 enum TMeetingParticipantFilter {
