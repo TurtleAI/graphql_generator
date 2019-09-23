@@ -67,7 +67,7 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
   }
 
   /// Fetch the schema from the given url and header.
-  Future<http.Response> getSchema(String url, String headerToken) async {
+  Future<http.Response> getSchema(String url, String headerToken,{String introspectionQuery}) async {
     try {
       final response = await new http.Client().post(url,
           headers: headerToken != null
@@ -76,7 +76,7 @@ class GraphQLGenerators extends GeneratorForAnnotation<GQLGenerator> {
                   'Authorization': headerToken
                 }
               : {'Content-type': 'application/json'},
-          body:
+          body:introspectionQuery??
               '{"query" : "fragment FullType on __Type { kind name description fields(includeDeprecated: true) '
               '{ name description args { ...InputValue } type { ...TypeRef } isDeprecated deprecationReason } '
               'inputFields { ...InputValue } interfaces { ...TypeRef } enumValues(includeDeprecated: true) '
