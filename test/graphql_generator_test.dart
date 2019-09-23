@@ -77,7 +77,7 @@ void main() {
       resultFile.delete();
     }
 
-    if (FileSystemEntity.typeSync('test/test_data/`user_schema`/user.result.txt') != FileSystemEntityType.notFound) {
+    if (FileSystemEntity.typeSync('test/test_data/user_schema/user.result.txt') != FileSystemEntityType.notFound) {
       var resultFile = await File('test/test_data/user_schema/user.result.txt');
       resultFile.delete();
     }

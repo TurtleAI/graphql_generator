@@ -84,6 +84,21 @@ class InputObjectGenerator {
 
   String toJsonReturnString(
       Field f, List<ObjectType> enumTypes, String namespace) {
+    switch (f.type.symbol) {
+      case "String":
+      case "int":
+      case "bool":
+      case "double":
+      case "Map<String,dynamic>":
+        return "'${f.name}' : ${f.name},";
+      case "dynamic":
+        return "'${f.name}' : ${f.name},";
+      default:
+        if (enumTypes
+            .any((type) => '$namespace${type.name}' == f.type.symbol)) {
+          return "'${f.name}' : ${f.type.symbol}Enum[${f.name}],";
+        }
+    }
     if (f.type.symbol.contains('List<')) {
       String split = f.type.symbol.split('<')[1].split('>')[0];
       switch (split) {
@@ -98,10 +113,10 @@ class InputObjectGenerator {
             return "'${f.name}' : ${f.name} == null  ? null : new List<dynamic>.from(${f.name}.map((x) => ${split}Enum[x])),";
           }
       }
+      return "'${f.name}' : List<dynamic>.from(${f.name}.map((x) => x.toJson())),";
     } else {
-      return "'${f.name}' : ${f.name},";
+      return "'${f.name}' : ${f.name}.toJson(),";
     }
-    return "'${f.name}' : ${f.name},";
   }
 
   String createFromJSONString(
