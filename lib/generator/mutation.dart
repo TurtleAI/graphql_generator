@@ -79,10 +79,13 @@ class MutationClassGenerator {
     field.args.forEach((arg) {
       var argType =
           Helper.findFieldType(arg.type, types, responseTypes, namespace);
-      mutationMethodBuilder.docs.addAll(_generateComments(argType, classes));
+      if (field.description != null)
+        mutationMethodBuilder.docs.add('/// ${_generateCommands(field)}');
       if (_isObject(argType))
-        mutationMethodBuilder.optionalParameters
-            .addAll(_generateOptionalParameters(argType, classes));
+        mutationMethodBuilder.requiredParameters.add(Parameter((p) {
+          p.name = arg.name;
+          p.type = Reference(argType);
+        }));
       else
         mutationMethodBuilder.requiredParameters.add(Parameter((p) {
           p.name = arg.name;
@@ -96,7 +99,7 @@ class MutationClassGenerator {
           p.defaultTo = Code(_generateDefaultFragment(
               field.type.name, classes, fragments, namespace));
         }));
-
+      
       var mutationName = field.name;
       var inputName = arg.name;
       var inputType = argType.contains(namespace)
@@ -107,16 +110,15 @@ class MutationClassGenerator {
       var mutationFragments =
           _generateMutationFragments(namespace + field.type.name, classes);
       var graphql = """
-              mutation $mutationName(\\\$$inputName:$inputType!) {
-                $mutationName($inputName:\\\$$inputName)$mutationFields
-              }$mutationFragments
-              """;
+                        mutation $mutationName(\\\$$inputName:$inputType!) {
+                          $mutationName($inputName:\\\$$inputName)$mutationFields
+                        }$mutationFragments
+                        """;
 
       var hasReturnFields =
           _mutationHasFields(namespace + field.type.name, classes);
 
       mutationMethodBuilder.body = Code(
-          '${_generateObjectFromParameters(argType, classes)}'
           ' ${hasReturnFields ? 'var fragmentName = _extractFragmentName(fragment);' : ''}'
           ' var result =  await query(document:"""\n$graphql\n""",variables:{\n  "${arg.name}":${arg.name}${_isObject(argType) ? ".toJson()" : ""}\n  });'
           '${_generateMutationReturn(methodReturn, field.name)}');
@@ -124,48 +126,15 @@ class MutationClassGenerator {
     return mutationMethodBuilder.build();
   }
 
-  _generateObjectFromParameters(String type, Map<String, Class> classes) {
-    String result = '';
-    if (_isObject(type)) {
-      result += '$type input = new  $type(';
-      if (classes.containsKey(type)) {
-        classes[type].fields.forEach((f) {
-          result += '${f.name} : ${f.name},';
-        });
+  _generateCommands(Fields field) {
+    String comment = field.description;
+      if (comment.endsWith("\n")) {
+        return comment
+            .substring(0,comment.lastIndexOf("\n"))
+            .replaceAll("\n", "\n/// ");
+      } else {
+        return comment.replaceAll("\n", "\n/// ");
       }
-      result += ');';
-    }
-    return result;
-  }
-
-  _generateOptionalParameters(String type, Map<String, Class> classes) {
-    List<Parameter> parameters = [];
-    if (_isObject(type)) {
-      if (classes.containsKey(type)) {
-        classes[type].fields.forEach((field) {
-          parameters.add(Parameter((parameter) {
-            parameter.type = field.type;
-            parameter.name = field.name;
-            parameter.named = true;
-          }));
-        });
-      }
-    }
-    return parameters;
-  }
-
-  _generateComments(String type, Map<String, Class> classes) {
-    List<String> result = [];
-    if (_isObject(type)) {
-      if (classes.containsKey(type)) {
-        classes[type].fields.forEach((field) {
-          if (field.docs != null && field.docs.length > 0)
-            result.add(
-                '${field.docs.first.replaceFirst('///', '/// [${field.name}] ')}');
-        });
-      }
-    }
-    return result;
   }
 
   _isObject(String name) {
