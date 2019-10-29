@@ -120,7 +120,7 @@ class MutationClassGenerator {
 
       mutationMethodBuilder.body = Code(
           ' ${hasReturnFields ? 'var fragmentName = _extractFragmentName(fragment);' : ''}'
-          ' var result =  await query(document:"""\n$graphql\n""",variables:{\n  "${arg.name}":${arg.name}${_isObject(argType) ? ".toJson()" : ""}\n  });'
+          ' var result =  await query(document:"""\n$graphql\n""",variables:{\n  "${arg.name}":${arg.name}${_isObject(argType) ? "?.toJson()" : ""}\n  });'
           '${_generateMutationReturn(methodReturn, field.name)}');
     });
     return mutationMethodBuilder.build();
