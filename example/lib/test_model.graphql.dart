@@ -64,12 +64,12 @@ class TAccount {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'balance': balance.toJson(),
-      'balancePending': balancePending.toJson(),
-      'balanceSettled': balanceSettled.toJson(),
-      'entries': List<dynamic>.from(entries.map((x) => x.toJson())),
+      'balance': balance?.toJson(),
+      'balancePending': balancePending?.toJson(),
+      'balanceSettled': balanceSettled?.toJson(),
+      'entries': List<dynamic>.from(entries.map((x) => x?.toJson())),
       'id': id,
-      'source': source.toJson(),
+      'source': source?.toJson(),
       'type': TAccountTypeEnum[type],
     };
   }
@@ -118,11 +118,11 @@ class TAccountEntry {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'balanceSnapshot': balanceSnapshot.toJson(),
+      'balanceSnapshot': balanceSnapshot?.toJson(),
       'createdAt': createdAt,
-      'delta': delta.toJson(),
+      'delta': delta?.toJson(),
       'memo': memo,
-      'sourceEvent': sourceEvent.toJson(),
+      'sourceEvent': sourceEvent?.toJson(),
     };
   }
 }
@@ -216,9 +216,9 @@ class TAccountTransfer implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'amount': amount.toJson(),
+      'amount': amount?.toJson(),
       'destAccountId': destAccountId,
       'id': id,
       'memo': memo,
@@ -391,15 +391,15 @@ class TAvailabilityEntry {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'author': author.toJson(),
+      'author': author?.toJson(),
       'authorId': authorId,
       'endDate': endDate,
-      'project': project.toJson(),
+      'project': project?.toJson(),
       'projectId': projectId,
       'startDate': startDate,
       'timePerWeek': timePerWeek,
       'updatedAt': updatedAt,
-      'user': user.toJson(),
+      'user': user?.toJson(),
       'userId': userId,
     };
   }
@@ -559,28 +559,29 @@ class TCard implements TDocumentToken, TFeedSource, TAccountSource {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'assignee': assignee.toJson(),
+      'assignee': assignee?.toJson(),
       'assigneeId': assigneeId,
-      'budget': budget.toJson(),
+      'budget': budget?.toJson(),
       'completed': completed,
       'completedAt': completedAt,
       'createdAt': createdAt,
       'deleted': deleted,
-      'descendants': List<dynamic>.from(descendants.map((x) => x.toJson())),
+      'descendants': List<dynamic>.from(descendants.map((x) => x?.toJson())),
       'dueDate': dueDate,
-      'estimate': estimate.toJson(),
-      'feed': feed.toJson(),
+      'estimate': estimate?.toJson(),
+      'feed': feed?.toJson(),
       'feedId': feedId,
       'id': id,
-      'members': List<dynamic>.from(members.map((x) => x.toJson())),
+      'members': List<dynamic>.from(members.map((x) => x?.toJson())),
       'meta': meta,
       'name': name,
-      'outgoingLinks': List<dynamic>.from(outgoingLinks.map((x) => x.toJson())),
+      'outgoingLinks':
+          List<dynamic>.from(outgoingLinks.map((x) => x?.toJson())),
       'parentId': parentId,
       'position': position,
-      'project': project.toJson(),
+      'project': project?.toJson(),
       'projectId': projectId,
-      'timeEntries': List<dynamic>.from(timeEntries.map((x) => x.toJson())),
+      'timeEntries': List<dynamic>.from(timeEntries.map((x) => x?.toJson())),
       'timeTracked': timeTracked,
       'version': version,
     };
@@ -696,11 +697,11 @@ class TCardAssigned implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'assignee': assignee.toJson(),
+      'assignee': assignee?.toJson(),
       'assigneeId': assigneeId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
@@ -816,10 +817,10 @@ class TCardBudgetDecreased implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'budget': budget.toJson(),
-      'card': card.toJson(),
+      'budget': budget?.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
@@ -916,10 +917,10 @@ class TCardBudgetIncreased implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'budget': budget.toJson(),
-      'card': card.toJson(),
+      'budget': budget?.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
@@ -982,9 +983,9 @@ class TCardBudgetUnset implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
@@ -1081,9 +1082,9 @@ class TCardCompleted implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
@@ -1228,13 +1229,13 @@ class TCardCreated implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'cardName': cardName,
       'id': id,
-      'parent': parent.toJson(),
+      'parent': parent?.toJson(),
       'parentId': parentId,
       'projectId': projectId,
       'requestId': requestId,
@@ -1318,9 +1319,9 @@ class TCardDueDateSet implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'dueDate': dueDate,
       'id': id,
@@ -1406,9 +1407,9 @@ class TCardDueDateUnset implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
@@ -1496,11 +1497,11 @@ class TCardEstimateSet implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
-      'estimate': estimate.toJson(),
+      'estimate': estimate?.toJson(),
       'id': id,
       'projectId': projectId,
       'requestId': requestId,
@@ -1583,9 +1584,9 @@ class TCardEstimateUnset implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
@@ -1666,8 +1667,8 @@ class TCardLink {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'from': from.toJson(),
-      'to': to.toJson(),
+      'from': from?.toJson(),
+      'to': to?.toJson(),
       'type': type,
     };
   }
@@ -1791,12 +1792,12 @@ class TCardMemberAdded implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
-      'member': member.toJson(),
+      'member': member?.toJson(),
       'projectId': projectId,
       'requestId': requestId,
       'time': time,
@@ -1863,12 +1864,12 @@ class TCardMemberRemoved implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
-      'member': member.toJson(),
+      'member': member?.toJson(),
       'projectId': projectId,
       'requestId': requestId,
       'time': time,
@@ -1982,15 +1983,15 @@ class TCardMoved implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
       'requestId': requestId,
       'time': time,
-      'to': to.toJson(),
+      'to': to?.toJson(),
       'toId': toId,
     };
   }
@@ -2098,9 +2099,9 @@ class TCardRenamed implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'cardName': cardName,
       'id': id,
@@ -2210,9 +2211,9 @@ class TCardUnassigned implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
@@ -2291,9 +2292,9 @@ class TCardUncompleted implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
       'id': id,
       'projectId': projectId,
@@ -2378,11 +2379,11 @@ class TChatMessage {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'content': content,
-      'conversation': conversation.toJson(),
+      'conversation': conversation?.toJson(),
       'conversationId': conversationId,
       'createdAt': createdAt,
       'id': id,
-      'user': user.toJson(),
+      'user': user?.toJson(),
       'userId': userId,
     };
   }
@@ -2423,7 +2424,7 @@ class TCommand {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'executedAt': executedAt,
       'id': id,
       'input': input,
@@ -2494,12 +2495,12 @@ class TContract {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'active': active,
-      'contractor': contractor.toJson(),
-      'contractorHourlyRate': contractorHourlyRate.toJson(),
-      'customerHourlyRate': customerHourlyRate.toJson(),
+      'contractor': contractor?.toJson(),
+      'contractorHourlyRate': contractorHourlyRate?.toJson(),
+      'customerHourlyRate': customerHourlyRate?.toJson(),
       'endedAt': endedAt,
       'id': id,
-      'project': project.toJson(),
+      'project': project?.toJson(),
       'startedAt': startedAt,
     };
   }
@@ -2623,8 +2624,8 @@ class TConversation {
     return <String, dynamic>{
       'createdAt': createdAt,
       'id': id,
-      'messages': List<dynamic>.from(messages.map((x) => x.toJson())),
-      'participants': List<dynamic>.from(participants.map((x) => x.toJson())),
+      'messages': List<dynamic>.from(messages.map((x) => x?.toJson())),
+      'participants': List<dynamic>.from(participants.map((x) => x?.toJson())),
       'topic': topic,
       'updatedAt': updatedAt,
     };
@@ -2704,7 +2705,7 @@ class TCreditCard {
       'expYear': expYear,
       'id': id,
       'last4': last4,
-      'owner': owner.toJson(),
+      'owner': owner?.toJson(),
     };
   }
 }
@@ -2884,14 +2885,14 @@ class TFeed {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'card': card.toJson(),
-      'feedEvents': List<dynamic>.from(feedEvents.map((x) => x.toJson())),
-      'feedSubscription': feedSubscription.toJson(),
+      'card': card?.toJson(),
+      'feedEvents': List<dynamic>.from(feedEvents.map((x) => x?.toJson())),
+      'feedSubscription': feedSubscription?.toJson(),
       'id': id,
-      'lastFeedEvent': lastFeedEvent.toJson(),
-      'otherUser': otherUser.toJson(),
-      'project': project.toJson(),
-      'source': source.toJson(),
+      'lastFeedEvent': lastFeedEvent?.toJson(),
+      'otherUser': otherUser?.toJson(),
+      'project': project?.toJson(),
+      'source': source?.toJson(),
       'version': version,
     };
   }
@@ -3059,17 +3060,17 @@ class TFeedEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'body': body,
-      'bodyTokens': List<dynamic>.from(bodyTokens.map((x) => x.toJson())),
+      'bodyTokens': List<dynamic>.from(bodyTokens.map((x) => x?.toJson())),
       'createdAt': createdAt,
       'deleted': deleted,
       'edited': edited,
       'editedAt': editedAt,
-      'event': event.toJson(),
+      'event': event?.toJson(),
       'feedId': feedId,
       'id': id,
-      'reactions': List<dynamic>.from(reactions.map((x) => x.toJson())),
+      'reactions': List<dynamic>.from(reactions.map((x) => x?.toJson())),
       'requestId': requestId,
       'version': version,
     };
@@ -3152,9 +3153,9 @@ class TFeedMessageDeleted implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'feed': feed.toJson(),
+      'feed': feed?.toJson(),
       'feedEventId': feedEventId,
       'feedId': feedId,
       'id': id,
@@ -3228,9 +3229,9 @@ class TFeedMessageEdited implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'feed': feed.toJson(),
+      'feed': feed?.toJson(),
       'feedEventId': feedEventId,
       'feedId': feedId,
       'id': id,
@@ -3305,9 +3306,9 @@ class TFeedMessagePosted implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'feed': feed.toJson(),
+      'feed': feed?.toJson(),
       'feedEventId': feedEventId,
       'feedId': feedId,
       'id': id,
@@ -3619,9 +3620,9 @@ class THubspotContact {
     return <String, dynamic>{
       'coreSkills': coreSkills,
       'githubUsername': githubUsername,
-      'hourlyRate': hourlyRate.toJson(),
+      'hourlyRate': hourlyRate?.toJson(),
       'id': id,
-      'recruitingStage': recruitingStage.toJson(),
+      'recruitingStage': recruitingStage?.toJson(),
     };
   }
 }
@@ -3693,7 +3694,7 @@ class THubspotPipeline {
     return <String, dynamic>{
       'id': id,
       'label': label,
-      'stages': List<dynamic>.from(stages.map((x) => x.toJson())),
+      'stages': List<dynamic>.from(stages.map((x) => x?.toJson())),
     };
   }
 }
@@ -3816,16 +3817,16 @@ class TMe {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'accessibleUsers':
-          List<dynamic>.from(accessibleUsers.map((x) => x.toJson())),
-      'events': List<dynamic>.from(events.map((x) => x.toJson())),
+          List<dynamic>.from(accessibleUsers.map((x) => x?.toJson())),
+      'events': List<dynamic>.from(events.map((x) => x?.toJson())),
       'eventsCount': eventsCount,
-      'feeds': List<dynamic>.from(feeds.map((x) => x.toJson())),
+      'feeds': List<dynamic>.from(feeds.map((x) => x?.toJson())),
       'permissions': permissions == null
           ? null
           : new List<dynamic>.from(permissions.map((x) => TPermissionEnum[x])),
-      'projects': List<dynamic>.from(projects.map((x) => x.toJson())),
+      'projects': List<dynamic>.from(projects.map((x) => x?.toJson())),
       'unreadCount': unreadCount,
-      'user': user.toJson(),
+      'user': user?.toJson(),
     };
   }
 }
@@ -3896,8 +3897,8 @@ class TMeeting {
       'duration': duration,
       'endedAt': endedAt,
       'id': id,
-      'participants': List<dynamic>.from(participants.map((x) => x.toJson())),
-      'recording': recording.toJson(),
+      'participants': List<dynamic>.from(participants.map((x) => x?.toJson())),
+      'recording': recording?.toJson(),
       'roomId': roomId,
       'startedAt': startedAt,
       'status': TMeetingStatusEnum[status],
@@ -3989,32 +3990,263 @@ abstract class TMutationBase {
     return exp.firstMatch(fragment)?.group(1);
   }
 
-  /// Set your full name.
-  ///This will override whatever is taken from your auth account (like google).
-  ///This will also affect mentions in chat.
-  Future<dynamic> profileNameSet(TProfileNameSetInput input) async {
-    var result = await query(document: """
-                        mutation profileNameSet(\$input:ProfileNameSetInput!) {
-                          profileNameSet(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['profileNameSet'];
-  }
-
-  /// Assign a card to a user
-  Future<TCard> cardAssign(TCardAssignInput input,
+  /// Restore a deleted card and all of its subtasks.
+  Future<TCard> cardUndelete(TCardUndeleteInput input,
       {String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
-                        mutation cardAssign(\$input:CardAssignInput!) {
-                          cardAssign(input:\$input) { ...$fragmentName }
+                        mutation cardUndelete(\$input:CardUndeleteInput!) {
+                          cardUndelete(input:\$input) { ...$fragmentName }
                         }
   $fragment
                         
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(result['data']['cardAssign'] as Map<String, dynamic>);
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(
+        result['data']['cardUndelete'] as Map<String, dynamic>);
+  }
+
+  /// Creates a new conversation and adds its creator as a participant.
+  Future<TConversation> createConversation(TCreateConversationInput input,
+      {String fragment =
+          'fragment ConversationFragment on Conversation { createdAt id topic updatedAt  }'}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation createConversation(\$input:CreateConversationInput!) {
+                          createConversation(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TConversation.fromJson(
+        result['data']['createConversation'] as Map<String, dynamic>);
+  }
+
+  /// Set the due date of a card.
+  /// Use CardDueDateUnset to remove the due date.
+  Future<TCard> cardDueDateSet(TCardDueDateSetInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation cardDueDateSet(\$input:CardDueDateSetInput!) {
+                          cardDueDateSet(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(
+        result['data']['cardDueDateSet'] as Map<String, dynamic>);
+  }
+
+  /// Remove a user from a project.
+  /// They will lose access to everything in the project.
+  Future<dynamic> cardRemoveMember(TCardRemoveMemberInput input) async {
+    var result = await query(document: """
+                        mutation cardRemoveMember(\$input:CardRemoveMemberInput!) {
+                          cardRemoveMember(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['cardRemoveMember'];
+  }
+
+  /// Removes a user from a conversation.
+  Future<dynamic> removeParticipantFromConversation(
+      TRemoveParticipantFromConversationInput input) async {
+    var result = await query(document: """
+                        mutation removeParticipantFromConversation(\$input:RemoveParticipantFromConversationInput!) {
+                          removeParticipantFromConversation(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['removeParticipantFromConversation'];
+  }
+
+  /// Mark all unread feed events (unread by you) in a feed as read.
+  /// If all feed events have already been read, this results in a no-op.
+  Future<dynamic> feedMarkAsRead(TFeedMarkAsReadInput input) async {
+    var result = await query(document: """
+                        mutation feedMarkAsRead(\$input:FeedMarkAsReadInput!) {
+                          feedMarkAsRead(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['feedMarkAsRead'];
+  }
+
+  /// Track logs for work that you have done.
+  /// Generates a transaction that deducts from customer account and adds to the your account.
+  Future<dynamic> timeEntryCreate(TTimeEntryCreateInput input) async {
+    var result = await query(document: """
+                        mutation timeEntryCreate(\$input:TimeEntryCreateInput!) {
+                          timeEntryCreate(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['timeEntryCreate'];
+  }
+
+  /// Decrease the budget of a card.
+  /// Every card can have a budget. This is used so a customer can budget a feature.
+  /// For example, a customer could limit the cost of a feature to 100h.
+  /// Budgets operations are relative so the user can work relative to the current budget.
+  Future<TCard> cardBudgetDecrease(TCardBudgetDecreaseInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation cardBudgetDecrease(\$input:CardBudgetDecreaseInput!) {
+                          cardBudgetDecrease(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(
+        result['data']['cardBudgetDecrease'] as Map<String, dynamic>);
+  }
+
+  /// Open an account if one doesn't already exist
+  Future<dynamic> accountOpen(TAccountOpenInput input) async {
+    var result = await query(document: """
+                        mutation accountOpen(\$input:AccountOpenInput!) {
+                          accountOpen(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['accountOpen'];
+  }
+
+  /// Move a card (task) from one location to another.
+  /// Currently only possible to move cards that belong to a project within their own project.
+  Future<TCard> cardMove(TCardMoveInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation cardMove(\$input:CardMoveInput!) {
+                          cardMove(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(result['data']['cardMove'] as Map<String, dynamic>);
+  }
+
+  /// Transfer money from one account to another.
+  Future<dynamic> accountTransfer(TAccountTransferInput input) async {
+    var result = await query(document: """
+                        mutation accountTransfer(\$input:AccountTransferInput!) {
+                          accountTransfer(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['accountTransfer'];
+  }
+
+  /// Update a user's availability based on how many hours/week they are free to work on Turtle.
+  /// This can be used to compare their desired workload with actual workload from time entries.
+  ///
+  /// Currently, availability is based on week-blocks (Sun-Sat) to keep things simple.
+  ///
+  /// For example, this is a visual representation of an availability calendar for a user gets filled:
+  ///
+  /// May 2019                timePerWeek
+  /// Su Mo Tu We Th Fr Sa
+  ///          1  2  3  4     10h
+  /// 5  6  7  8  9 10 11     15h
+  /// 12 13 14 15 16 17 18    20h
+  /// 19 20 21 22 23 24 25    10h
+  /// 26 27 28 29 30 31       10h
+  Future<dynamic> updateAvailability(TUpdateAvailabilityInput input) async {
+    var result = await query(document: """
+                        mutation updateAvailability(\$input:UpdateAvailabilityInput!) {
+                          updateAvailability(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['updateAvailability'];
+  }
+
+  /// Set the skills a user has. Used by Turtle internally to match contractors to new projects.
+  Future<dynamic> userSetSkills(TUserSetSkillsInput input) async {
+    var result = await query(document: """
+                        mutation userSetSkills(\$input:UserSetSkillsInput!) {
+                          userSetSkills(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['userSetSkills'];
+  }
+
+  /// Adds a user to a conversation.
+  Future<dynamic> addParticipantToConversation(
+      TAddParticipantToConversationInput input) async {
+    var result = await query(document: """
+                        mutation addParticipantToConversation(\$input:AddParticipantToConversationInput!) {
+                          addParticipantToConversation(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['addParticipantToConversation'];
+  }
+
+  /// Add a user to a project and send them an e-mail notification saying they were invited to the project.
+  ///
+  /// If the user exists by e-mail, this user will be invited.
+  /// If the user doesn't exist by e-mail, an account will be created for the user.
+  Future<TUser> cardInviteUser(TCardInviteUserInput input,
+      {String fragment =
+          'fragment UserFragment on User { activeContractsCount email id name photo status timezone  }'}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation cardInviteUser(\$input:CardInviteUserInput!) {
+                          cardInviteUser(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TUser.fromJson(
+        result['data']['cardInviteUser'] as Map<String, dynamic>);
+  }
+
+  /// Add a user to a project.
+  Future<dynamic> cardAddMember(TCardAddMemberInput input) async {
+    var result = await query(document: """
+                        mutation cardAddMember(\$input:CardAddMemberInput!) {
+                          cardAddMember(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['cardAddMember'];
+  }
+
+  /// Edit the message body of a feed event
+  Future<TFeedEvent> feedEditMessage2(TFeedEditMessage2Input input,
+      {String fragment =
+          'fragment FeedEventFragment on FeedEvent { body createdAt editedAt feedId id requestId version  }'}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation feedEditMessage2(\$input:FeedEditMessage2Input!) {
+                          feedEditMessage2(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TFeedEvent.fromJson(
+        result['data']['feedEditMessage2'] as Map<String, dynamic>);
+  }
+
+  /// Sets a key/value to a user's profile
+  Future<dynamic> userProfileSetCustomField(
+      TUserProfileSetCustomFieldInput input) async {
+    var result = await query(document: """
+                        mutation userProfileSetCustomField(\$input:UserProfileSetCustomFieldInput!) {
+                          userProfileSetCustomField(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['userProfileSetCustomField'];
   }
 
   /// Remove an estimate a card (task).
@@ -4028,7 +4260,7 @@ abstract class TMutationBase {
                         }
   $fragment
                         
-""", variables: {"input": input.toJson()});
+""", variables: {"input": input?.toJson()});
     return TCard.fromJson(
         result['data']['cardEstimateUnset'] as Map<String, dynamic>);
   }
@@ -4044,25 +4276,239 @@ abstract class TMutationBase {
                         }
   $fragment
                         
-""", variables: {"input": input.toJson()});
+""", variables: {"input": input?.toJson()});
     return TCard.fromJson(
         result['data']['cardDueDateUnset'] as Map<String, dynamic>);
   }
 
-  /// Track logs for work that you have done.
-  ///Generates a transaction that deducts from customer account and adds to the your account.
-  Future<dynamic> timeEntryCreate(TTimeEntryCreateInput input) async {
+  /// Set the tags of a card. Overwrites the previous list of tags.
+  /// If you want to add a tag, make sure to pass the entire list of tags with the new tag.
+  Future<dynamic> cardTagsSet(TCardTagsSetInput input) async {
     var result = await query(document: """
-                        mutation timeEntryCreate(\$input:TimeEntryCreateInput!) {
-                          timeEntryCreate(input:\$input)
+                        mutation cardTagsSet(\$input:CardTagsSetInput!) {
+                          cardTagsSet(input:\$input)
                         }
                         
-""", variables: {"input": input.toJson()});
-    return result['data']['timeEntryCreate'];
+""", variables: {"input": input?.toJson()});
+    return result['data']['cardTagsSet'];
+  }
+
+  /// Sends a message to a conversation.
+  Future<dynamic> sendMessageToConversation(
+      TSendMessageToConversationInput input) async {
+    var result = await query(document: """
+                        mutation sendMessageToConversation(\$input:SendMessageToConversationInput!) {
+                          sendMessageToConversation(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['sendMessageToConversation'];
+  }
+
+  /// Remove the assignee for a card (task)
+  Future<TCard> cardUnassign(TCardUnassignInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation cardUnassign(\$input:CardUnassignInput!) {
+                          cardUnassign(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(
+        result['data']['cardUnassign'] as Map<String, dynamic>);
+  }
+
+  /// Change the name of a card (or project)
+  Future<TCard> cardRename(TCardRenameInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation cardRename(\$input:CardRenameInput!) {
+                          cardRename(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(result['data']['cardRename'] as Map<String, dynamic>);
+  }
+
+  /// Record a payout to a user.
+  /// Each user has an acccount with a balance. When time is billed, send a referral, etc, their balance increasses.
+  /// Once a payout is recorded, their balance decreases by the amount they were paid.
+  ///
+  /// Imagine a contractor has $500 in their account. They get paid $400. Their balance will now be $100.
+  Future<dynamic> recordPayout(TRecordPayoutInput input) async {
+    var result = await query(document: """
+                        mutation recordPayout(\$input:RecordPayoutInput!) {
+                          recordPayout(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['recordPayout'];
+  }
+
+  /// Edit the message body of a feed event
+  Future<dynamic> feedEditMessage(TFeedEditMessageInput input) async {
+    var result = await query(document: """
+                        mutation feedEditMessage(\$input:FeedEditMessageInput!) {
+                          feedEditMessage(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['feedEditMessage'];
+  }
+
+  /// Deletes the time entry for work that was done.
+  /// Generates a transaction that takes money from your account and gives it back to the customer.
+  Future<dynamic> timeEntryDelete(TTimeEntryDeleteInput input) async {
+    var result = await query(document: """
+                        mutation timeEntryDelete(\$input:TimeEntryDeleteInput!) {
+                          timeEntryDelete(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['timeEntryDelete'];
+  }
+
+  /// Set (or update) an estimated for how long you think a card (task) will take to complete. For example 5-10h.
+  Future<TCard> cardEstimateSet(TCardEstimateSetInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation cardEstimateSet(\$input:CardEstimateSetInput!) {
+                          cardEstimateSet(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(
+        result['data']['cardEstimateSet'] as Map<String, dynamic>);
+  }
+
+  /// Add a reaction to a feed event.
+  /// All feed events within a feed can have reactions. Just like Slack, HipChat, etc.
+  Future<dynamic> addReaction(TAddReactionInput input) async {
+    var result = await query(document: """
+                        mutation addReaction(\$input:AddReactionInput!) {
+                          addReaction(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['addReaction'];
+  }
+
+  /// Assign a card to a user
+  Future<TCard> cardAssign(TCardAssignInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation cardAssign(\$input:CardAssignInput!) {
+                          cardAssign(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(result['data']['cardAssign'] as Map<String, dynamic>);
+  }
+
+  /// Mark a card as complete
+  Future<TCard> cardComplete(TCardCompleteInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
+    var result = await query(document: """
+                        mutation cardComplete(\$input:CardCompleteInput!) {
+                          cardComplete(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(
+        result['data']['cardComplete'] as Map<String, dynamic>);
+  }
+
+  /// Start a contract between a person and a project.
+  /// This is required for a contractor to start billing time and working on a project so the accounting system can generate the proper transactions when time is tracked.
+  /// Note: contracts are immutable. To change a contractor's rate, you must end a contract and start a new one.
+  /// A user can have a max of one contract per project.
+  Future<dynamic> contractStart(TContractStartInput input) async {
+    var result = await query(document: """
+                        mutation contractStart(\$input:ContractStartInput!) {
+                          contractStart(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['contractStart'];
+  }
+
+  /// Set the roles of a user. Overwrites the previous list of roles.
+  Future<dynamic> userSetRoles(TUserSetRolesInput input) async {
+    var result = await query(document: """
+                        mutation userSetRoles(\$input:UserSetRolesInput!) {
+                          userSetRoles(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['userSetRoles'];
+  }
+
+  /// Set your full name.
+  /// This will override whatever is taken from your auth account (like google).
+  /// This will also affect mentions in chat.
+  Future<dynamic> profileNameSet(TProfileNameSetInput input) async {
+    var result = await query(document: """
+                        mutation profileNameSet(\$input:ProfileNameSetInput!) {
+                          profileNameSet(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['profileNameSet'];
+  }
+
+  /// Refill your project balance by paying with Stripe.
+  /// Each project has an associated project:idofproject account which the balance will get deposited into.
+  Future<dynamic> projectAddBalanceWithStripe(
+      TProjectAddBalanceWithStripeInput input) async {
+    var result = await query(document: """
+                        mutation projectAddBalanceWithStripe(\$input:ProjectAddBalanceWithStripeInput!) {
+                          projectAddBalanceWithStripe(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['projectAddBalanceWithStripe'];
+  }
+
+  /// Remove a directional link between two cards.
+  Future<dynamic> cardLinkDelete(TCardLinkDeleteInput input) async {
+    var result = await query(document: """
+                        mutation cardLinkDelete(\$input:CardLinkDeleteInput!) {
+                          cardLinkDelete(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['cardLinkDelete'];
+  }
+
+  /// Updates a conversation topic.
+  Future<dynamic> updateConversationTopic(
+      TUpdateConversationTopicInput input) async {
+    var result = await query(document: """
+                        mutation updateConversationTopic(\$input:UpdateConversationTopicInput!) {
+                          updateConversationTopic(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['updateConversationTopic'];
   }
 
   /// Completely remove the budget for a card.
-  ///Usually used if a customer decides they don't want a budget anymore.
+  /// Usually used if a customer decides they don't want a budget anymore.
   Future<TCard> cardBudgetUnset(TCardBudgetUnsetInput input,
       {String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
@@ -4073,74 +4519,9 @@ abstract class TMutationBase {
                         }
   $fragment
                         
-""", variables: {"input": input.toJson()});
+""", variables: {"input": input?.toJson()});
     return TCard.fromJson(
         result['data']['cardBudgetUnset'] as Map<String, dynamic>);
-  }
-
-  /// Edit the message body of a feed event
-  Future<TFeedEvent> feedEditMessage2(TFeedEditMessage2Input input,
-      {String fragment =
-          'fragment FeedEventFragment on FeedEvent { body createdAt editedAt feedId id requestId version  }'}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation feedEditMessage2(\$input:FeedEditMessage2Input!) {
-                          feedEditMessage2(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TFeedEvent.fromJson(
-        result['data']['feedEditMessage2'] as Map<String, dynamic>);
-  }
-
-  /// Remove a directional link between two cards.
-  Future<dynamic> cardLinkDelete(TCardLinkDeleteInput input) async {
-    var result = await query(document: """
-                        mutation cardLinkDelete(\$input:CardLinkDeleteInput!) {
-                          cardLinkDelete(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['cardLinkDelete'];
-  }
-
-  /// Open an account if one doesn't already exist
-  Future<dynamic> accountOpen(TAccountOpenInput input) async {
-    var result = await query(document: """
-                        mutation accountOpen(\$input:AccountOpenInput!) {
-                          accountOpen(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['accountOpen'];
-  }
-
-  /// Delete a feed event (message) in a feed.
-  Future<dynamic> feedDeleteMessage(TFeedDeleteMessageInput input) async {
-    var result = await query(document: """
-                        mutation feedDeleteMessage(\$input:FeedDeleteMessageInput!) {
-                          feedDeleteMessage(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['feedDeleteMessage'];
-  }
-
-  /// Post a message to a feed. Similar to posting a message in Slack or HipChat.
-  Future<TFeedEvent> feedPostMessage2(TFeedPostMessage2Input input,
-      {String fragment =
-          'fragment FeedEventFragment on FeedEvent { body createdAt editedAt feedId id requestId version  }'}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation feedPostMessage2(\$input:FeedPostMessage2Input!) {
-                          feedPostMessage2(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TFeedEvent.fromJson(
-        result['data']['feedPostMessage2'] as Map<String, dynamic>);
   }
 
   Future<TTwilioAuth> meetingRoomJoin(String projectId,
@@ -4158,49 +4539,103 @@ abstract class TMutationBase {
         result['data']['meetingRoomJoin'] as Map<String, dynamic>);
   }
 
-  /// Sends a message to a conversation.
-  Future<dynamic> sendMessageToConversation(
-      TSendMessageToConversationInput input) async {
+  /// Send a reminder to a customer about their project once their balance becomes low.
+  /// Because of the nuances around timing when to send these e-mails, this is currently a manual operation.
+  ///
+  /// The e-mail says something like this:
+  ///
+  /// Hi John,
+  ///
+  /// This is a friendly reminder that your Turtle balance for ACME is now ___.
+  /// ...
+  Future<dynamic> sendLowBalanceReminder(
+      TSendLowBalanceReminderInput input) async {
     var result = await query(document: """
-                        mutation sendMessageToConversation(\$input:SendMessageToConversationInput!) {
-                          sendMessageToConversation(input:\$input)
+                        mutation sendLowBalanceReminder(\$input:SendLowBalanceReminderInput!) {
+                          sendLowBalanceReminder(input:\$input)
                         }
                         
-""", variables: {"input": input.toJson()});
-    return result['data']['sendMessageToConversation'];
+""", variables: {"input": input?.toJson()});
+    return result['data']['sendLowBalanceReminder'];
   }
 
-  /// Mark a card as complete
-  Future<TCard> cardComplete(TCardCompleteInput input,
+  /// Set your current timezone.
+  /// Will be used by managers and the Turtle platform to help with coordinating meetings/communication.
+  Future<dynamic> profileTimezoneSet(TProfileTimezoneSetInput input) async {
+    var result = await query(document: """
+                        mutation profileTimezoneSet(\$input:ProfileTimezoneSetInput!) {
+                          profileTimezoneSet(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['profileTimezoneSet'];
+  }
+
+  /// Delete a feed event (message) in a feed.
+  Future<dynamic> feedDeleteMessage(TFeedDeleteMessageInput input) async {
+    var result = await query(document: """
+                        mutation feedDeleteMessage(\$input:FeedDeleteMessageInput!) {
+                          feedDeleteMessage(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['feedDeleteMessage'];
+  }
+
+  /// End a contract.
+  /// This means time can no longer be tracked by a contractor to this project without a new contract being started.
+  Future<dynamic> contractEnd(TContractEndInput input) async {
+    var result = await query(document: """
+                        mutation contractEnd(\$input:ContractEndInput!) {
+                          contractEnd(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['contractEnd'];
+  }
+
+  /// Remove a reaction from a feed event.
+  /// All feed events within a feed can have reactions. Just like Slack, HipChat, etc.
+  Future<dynamic> removeReaction(TRemoveReactionInput input) async {
+    var result = await query(document: """
+                        mutation removeReaction(\$input:RemoveReactionInput!) {
+                          removeReaction(input:\$input)
+                        }
+                        
+""", variables: {"input": input?.toJson()});
+    return result['data']['removeReaction'];
+  }
+
+  /// Mark a completed task as incomplete again
+  Future<TCard> cardUncomplete(TCardUncompleteInput input,
       {String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
     var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
-                        mutation cardComplete(\$input:CardCompleteInput!) {
-                          cardComplete(input:\$input) { ...$fragmentName }
+                        mutation cardUncomplete(\$input:CardUncompleteInput!) {
+                          cardUncomplete(input:\$input) { ...$fragmentName }
                         }
   $fragment
                         
-""", variables: {"input": input.toJson()});
+""", variables: {"input": input?.toJson()});
     return TCard.fromJson(
-        result['data']['cardComplete'] as Map<String, dynamic>);
+        result['data']['cardUncomplete'] as Map<String, dynamic>);
   }
 
-  /// Set the tags of a card. Overwrites the previous list of tags.
-  ///If you want to add a tag, make sure to pass the entire list of tags with the new tag.
-  Future<dynamic> cardTagsSet(TCardTagsSetInput input) async {
+  /// Post a message to a feed. Similar to posting a message in Slack or HipChat.
+  Future<dynamic> feedPostMessage(TFeedPostMessageInput input) async {
     var result = await query(document: """
-                        mutation cardTagsSet(\$input:CardTagsSetInput!) {
-                          cardTagsSet(input:\$input)
+                        mutation feedPostMessage(\$input:FeedPostMessageInput!) {
+                          feedPostMessage(input:\$input)
                         }
                         
-""", variables: {"input": input.toJson()});
-    return result['data']['cardTagsSet'];
+""", variables: {"input": input?.toJson()});
+    return result['data']['feedPostMessage'];
   }
 
   /// Delete a card (project/task)
-  ///Deleting a card which has subtasks will also mark those subtasks as deleted.
-  ///Rsetoring those tasks with [CardUndelete] will also restore those subtasks.
+  /// Deleting a card which has subtasks will also mark those subtasks as deleted.
+  /// Rsetoring those tasks with [CardUndelete] will also restore those subtasks.
   Future<TCard> cardDelete(TCardDeleteInput input,
       {String fragment = """fragment DemoCard on Card { assigneeId budget 
       completed completedAt } """}) async {
@@ -4211,125 +4646,85 @@ abstract class TMutationBase {
                         }
   $fragment
                         
-""", variables: {"input": input.toJson()});
+""", variables: {"input": input?.toJson()});
     return TCard.fromJson(result['data']['cardDelete'] as Map<String, dynamic>);
   }
 
-  /// Adds a user to a conversation.
-  Future<dynamic> addParticipantToConversation(
-      TAddParticipantToConversationInput input) async {
+  /// Create a new card. This could either mean creating a project or a task.
+  Future<TCard> cardCreate(TCardCreateInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
-                        mutation addParticipantToConversation(\$input:AddParticipantToConversationInput!) {
-                          addParticipantToConversation(input:\$input)
+                        mutation cardCreate(\$input:CardCreateInput!) {
+                          cardCreate(input:\$input) { ...$fragmentName }
                         }
+  $fragment
                         
-""", variables: {"input": input.toJson()});
-    return result['data']['addParticipantToConversation'];
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(result['data']['cardCreate'] as Map<String, dynamic>);
   }
 
-  /// Deletes the time entry for work that was done.
-  ///Generates a transaction that takes money from your account and gives it back to the customer.
-  Future<dynamic> timeEntryDelete(TTimeEntryDeleteInput input) async {
+  /// Post a message to a feed. Similar to posting a message in Slack or HipChat.
+  Future<TFeedEvent> feedPostMessage2(TFeedPostMessage2Input input,
+      {String fragment =
+          'fragment FeedEventFragment on FeedEvent { body createdAt editedAt feedId id requestId version  }'}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
-                        mutation timeEntryDelete(\$input:TimeEntryDeleteInput!) {
-                          timeEntryDelete(input:\$input)
+                        mutation feedPostMessage2(\$input:FeedPostMessage2Input!) {
+                          feedPostMessage2(input:\$input) { ...$fragmentName }
                         }
+  $fragment
                         
-""", variables: {"input": input.toJson()});
-    return result['data']['timeEntryDelete'];
+""", variables: {"input": input?.toJson()});
+    return TFeedEvent.fromJson(
+        result['data']['feedPostMessage2'] as Map<String, dynamic>);
   }
 
-  /// Set the skills a user has. Used by Turtle internally to match contractors to new projects.
-  Future<dynamic> userSetSkills(TUserSetSkillsInput input) async {
+  /// Decrease the budget of a card. To set the initial budget of a card, use this command.
+  /// Every card can have a budget. This is used so a customer can budget a feature.
+  /// For example, a customer could limit the cost of a feature to 100h.
+  /// Budgets operations are relative so the user can work relative to the current budget.
+  Future<TCard> cardBudgetIncrease(TCardBudgetIncreaseInput input,
+      {String fragment = """fragment DemoCard on Card { assigneeId budget 
+      completed completedAt } """}) async {
+    var fragmentName = _extractFragmentName(fragment);
     var result = await query(document: """
-                        mutation userSetSkills(\$input:UserSetSkillsInput!) {
-                          userSetSkills(input:\$input)
+                        mutation cardBudgetIncrease(\$input:CardBudgetIncreaseInput!) {
+                          cardBudgetIncrease(input:\$input) { ...$fragmentName }
+                        }
+  $fragment
+                        
+""", variables: {"input": input?.toJson()});
+    return TCard.fromJson(
+        result['data']['cardBudgetIncrease'] as Map<String, dynamic>);
+  }
+
+  /// Modify one or more attributes of a time entry.
+  /// If the duration is modified, an adjustment transaction is generated to make sure customer/user balances are accurate.
+  Future<dynamic> timeEntryEdit(TTimeEntryEditInput input) async {
+    var result = await query(document: """
+                        mutation timeEntryEdit(\$input:TimeEntryEditInput!) {
+                          timeEntryEdit(input:\$input)
                         }
                         
-""", variables: {"input": input.toJson()});
-    return result['data']['userSetSkills'];
+""", variables: {"input": input?.toJson()});
+    return result['data']['timeEntryEdit'];
   }
 
   /// Create a directional link between two cards. This is kind of like a hyperlink.
-  ///Used for things like tying an internal management project to a customer project.
+  /// Used for things like tying an internal management project to a customer project.
   ///
-  ///Currently, links are unique by link_type, from_id, and to_id.
-  ///Trying to create two links with all of these the same will result in an error.
+  /// Currently, links are unique by link_type, from_id, and to_id.
+  /// Trying to create two links with all of these the same will result in an error.
   Future<dynamic> cardLinkCreate(TCardLinkCreateInput input) async {
     var result = await query(document: """
                         mutation cardLinkCreate(\$input:CardLinkCreateInput!) {
                           cardLinkCreate(input:\$input)
                         }
                         
-""", variables: {"input": input.toJson()});
+""", variables: {"input": input?.toJson()});
     return result['data']['cardLinkCreate'];
-  }
-
-  /// Remove a reaction from a feed event.
-  ///All feed events within a feed can have reactions. Just like Slack, HipChat, etc.
-  Future<dynamic> removeReaction(TRemoveReactionInput input) async {
-    var result = await query(document: """
-                        mutation removeReaction(\$input:RemoveReactionInput!) {
-                          removeReaction(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['removeReaction'];
-  }
-
-  /// Transfer money from one account to another.
-  Future<dynamic> accountTransfer(TAccountTransferInput input) async {
-    var result = await query(document: """
-                        mutation accountTransfer(\$input:AccountTransferInput!) {
-                          accountTransfer(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['accountTransfer'];
-  }
-
-  /// Removes a user from a conversation.
-  Future<dynamic> removeParticipantFromConversation(
-      TRemoveParticipantFromConversationInput input) async {
-    var result = await query(document: """
-                        mutation removeParticipantFromConversation(\$input:RemoveParticipantFromConversationInput!) {
-                          removeParticipantFromConversation(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['removeParticipantFromConversation'];
-  }
-
-  /// Send a reminder to a customer about their project once their balance becomes low.
-  ///Because of the nuances around timing when to send these e-mails, this is currently a manual operation.
-  ///
-  ///The e-mail says something like this:
-  ///
-  ///Hi John,
-  ///
-  ///This is a friendly reminder that your Turtle balance for ACME is now ___.
-  ///...
-  Future<dynamic> sendLowBalanceReminder(
-      TSendLowBalanceReminderInput input) async {
-    var result = await query(document: """
-                        mutation sendLowBalanceReminder(\$input:SendLowBalanceReminderInput!) {
-                          sendLowBalanceReminder(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['sendLowBalanceReminder'];
-  }
-
-  /// Remove a user from a project.
-  ///They will lose access to everything in the project.
-  Future<dynamic> cardRemoveMember(TCardRemoveMemberInput input) async {
-    var result = await query(document: """
-                        mutation cardRemoveMember(\$input:CardRemoveMemberInput!) {
-                          cardRemoveMember(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['cardRemoveMember'];
   }
 
   /// Link or create HubSpot contact
@@ -4346,388 +4741,6 @@ abstract class TMutationBase {
 """, variables: {"userId": userId});
     return THubspotContact.fromJson(
         result['data']['linkOrCreateHubSpotContact'] as Map<String, dynamic>);
-  }
-
-  /// Creates a new conversation and adds its creator as a participant.
-  Future<TConversation> createConversation(TCreateConversationInput input,
-      {String fragment =
-          'fragment ConversationFragment on Conversation { createdAt id topic updatedAt  }'}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation createConversation(\$input:CreateConversationInput!) {
-                          createConversation(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TConversation.fromJson(
-        result['data']['createConversation'] as Map<String, dynamic>);
-  }
-
-  /// Set the roles of a user. Overwrites the previous list of roles.
-  Future<dynamic> userSetRoles(TUserSetRolesInput input) async {
-    var result = await query(document: """
-                        mutation userSetRoles(\$input:UserSetRolesInput!) {
-                          userSetRoles(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['userSetRoles'];
-  }
-
-  /// Add a user to a project and send them an e-mail notification saying they were invited to the project.
-  ///
-  ///If the user exists by e-mail, this user will be invited.
-  ///If the user doesn't exist by e-mail, an account will be created for the user.
-  Future<TUser> cardInviteUser(TCardInviteUserInput input,
-      {String fragment =
-          'fragment UserFragment on User { activeContractsCount email id name photo status timezone  }'}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardInviteUser(\$input:CardInviteUserInput!) {
-                          cardInviteUser(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TUser.fromJson(
-        result['data']['cardInviteUser'] as Map<String, dynamic>);
-  }
-
-  /// Mark a completed task as incomplete again
-  Future<TCard> cardUncomplete(TCardUncompleteInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardUncomplete(\$input:CardUncompleteInput!) {
-                          cardUncomplete(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardUncomplete'] as Map<String, dynamic>);
-  }
-
-  /// Mark all unread feed events (unread by you) in a feed as read.
-  ///If all feed events have already been read, this results in a no-op.
-  Future<dynamic> feedMarkAsRead(TFeedMarkAsReadInput input) async {
-    var result = await query(document: """
-                        mutation feedMarkAsRead(\$input:FeedMarkAsReadInput!) {
-                          feedMarkAsRead(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['feedMarkAsRead'];
-  }
-
-  /// Add a reaction to a feed event.
-  ///All feed events within a feed can have reactions. Just like Slack, HipChat, etc.
-  Future<dynamic> addReaction(TAddReactionInput input) async {
-    var result = await query(document: """
-                        mutation addReaction(\$input:AddReactionInput!) {
-                          addReaction(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['addReaction'];
-  }
-
-  /// End a contract.
-  ///This means time can no longer be tracked by a contractor to this project without a new contract being started.
-  Future<dynamic> contractEnd(TContractEndInput input) async {
-    var result = await query(document: """
-                        mutation contractEnd(\$input:ContractEndInput!) {
-                          contractEnd(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['contractEnd'];
-  }
-
-  /// Remove the assignee for a card (task)
-  Future<TCard> cardUnassign(TCardUnassignInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardUnassign(\$input:CardUnassignInput!) {
-                          cardUnassign(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardUnassign'] as Map<String, dynamic>);
-  }
-
-  /// Decrease the budget of a card.
-  ///Every card can have a budget. This is used so a customer can budget a feature.
-  ///For example, a customer could limit the cost of a feature to 100h.
-  ///Budgets operations are relative so the user can work relative to the current budget.
-  Future<TCard> cardBudgetDecrease(TCardBudgetDecreaseInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardBudgetDecrease(\$input:CardBudgetDecreaseInput!) {
-                          cardBudgetDecrease(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardBudgetDecrease'] as Map<String, dynamic>);
-  }
-
-  /// Updates a conversation topic.
-  Future<dynamic> updateConversationTopic(
-      TUpdateConversationTopicInput input) async {
-    var result = await query(document: """
-                        mutation updateConversationTopic(\$input:UpdateConversationTopicInput!) {
-                          updateConversationTopic(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['updateConversationTopic'];
-  }
-
-  /// Modify one or more attributes of a time entry.
-  ///If the duration is modified, an adjustment transaction is generated to make sure customer/user balances are accurate.
-  Future<dynamic> timeEntryEdit(TTimeEntryEditInput input) async {
-    var result = await query(document: """
-                        mutation timeEntryEdit(\$input:TimeEntryEditInput!) {
-                          timeEntryEdit(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['timeEntryEdit'];
-  }
-
-  /// Change the name of a card (or project)
-  Future<TCard> cardRename(TCardRenameInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardRename(\$input:CardRenameInput!) {
-                          cardRename(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(result['data']['cardRename'] as Map<String, dynamic>);
-  }
-
-  /// Set your current timezone.
-  ///Will be used by managers and the Turtle platform to help with coordinating meetings/communication.
-  Future<dynamic> profileTimezoneSet(TProfileTimezoneSetInput input) async {
-    var result = await query(document: """
-                        mutation profileTimezoneSet(\$input:ProfileTimezoneSetInput!) {
-                          profileTimezoneSet(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['profileTimezoneSet'];
-  }
-
-  /// Set the due date of a card.
-  ///Use CardDueDateUnset to remove the due date.
-  Future<TCard> cardDueDateSet(TCardDueDateSetInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardDueDateSet(\$input:CardDueDateSetInput!) {
-                          cardDueDateSet(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardDueDateSet'] as Map<String, dynamic>);
-  }
-
-  /// Restore a deleted card and all of its subtasks.
-  Future<TCard> cardUndelete(TCardUndeleteInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardUndelete(\$input:CardUndeleteInput!) {
-                          cardUndelete(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardUndelete'] as Map<String, dynamic>);
-  }
-
-  /// Add a user to a project.
-  Future<dynamic> cardAddMember(TCardAddMemberInput input) async {
-    var result = await query(document: """
-                        mutation cardAddMember(\$input:CardAddMemberInput!) {
-                          cardAddMember(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['cardAddMember'];
-  }
-
-  /// Edit the message body of a feed event
-  Future<dynamic> feedEditMessage(TFeedEditMessageInput input) async {
-    var result = await query(document: """
-                        mutation feedEditMessage(\$input:FeedEditMessageInput!) {
-                          feedEditMessage(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['feedEditMessage'];
-  }
-
-  /// Record a payout to a user.
-  ///Each user has an acccount with a balance. When time is billed, send a referral, etc, their balance increasses.
-  ///Once a payout is recorded, their balance decreases by the amount they were paid.
-  ///
-  ///Imagine a contractor has $500 in their account. They get paid $400. Their balance will now be $100.
-  Future<dynamic> recordPayout(TRecordPayoutInput input) async {
-    var result = await query(document: """
-                        mutation recordPayout(\$input:RecordPayoutInput!) {
-                          recordPayout(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['recordPayout'];
-  }
-
-  /// Decrease the budget of a card. To set the initial budget of a card, use this command.
-  ///Every card can have a budget. This is used so a customer can budget a feature.
-  ///For example, a customer could limit the cost of a feature to 100h.
-  ///Budgets operations are relative so the user can work relative to the current budget.
-  Future<TCard> cardBudgetIncrease(TCardBudgetIncreaseInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardBudgetIncrease(\$input:CardBudgetIncreaseInput!) {
-                          cardBudgetIncrease(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardBudgetIncrease'] as Map<String, dynamic>);
-  }
-
-  /// Post a message to a feed. Similar to posting a message in Slack or HipChat.
-  Future<dynamic> feedPostMessage(TFeedPostMessageInput input) async {
-    var result = await query(document: """
-                        mutation feedPostMessage(\$input:FeedPostMessageInput!) {
-                          feedPostMessage(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['feedPostMessage'];
-  }
-
-  /// Set (or update) an estimated for how long you think a card (task) will take to complete. For example 5-10h.
-  Future<TCard> cardEstimateSet(TCardEstimateSetInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardEstimateSet(\$input:CardEstimateSetInput!) {
-                          cardEstimateSet(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(
-        result['data']['cardEstimateSet'] as Map<String, dynamic>);
-  }
-
-  /// Start a contract between a person and a project.
-  ///This is required for a contractor to start billing time and working on a project so the accounting system can generate the proper transactions when time is tracked.
-  ///Note: contracts are immutable. To change a contractor's rate, you must end a contract and start a new one.
-  ///A user can have a max of one contract per project.
-  Future<dynamic> contractStart(TContractStartInput input) async {
-    var result = await query(document: """
-                        mutation contractStart(\$input:ContractStartInput!) {
-                          contractStart(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['contractStart'];
-  }
-
-  /// Update a user's availability based on how many hours/week they are free to work on Turtle.
-  ///This can be used to compare their desired workload with actual workload from time entries.
-  ///
-  ///Currently, availability is based on week-blocks (Sun-Sat) to keep things simple.
-  ///
-  ///For example, this is a visual representation of an availability calendar for a user gets filled:
-  ///
-  ///May 2019                timePerWeek
-  ///Su Mo Tu We Th Fr Sa
-  ///         1  2  3  4     10h
-  ///5  6  7  8  9 10 11     15h
-  ///12 13 14 15 16 17 18    20h
-  ///19 20 21 22 23 24 25    10h
-  ///26 27 28 29 30 31       10h
-  Future<dynamic> updateAvailability(TUpdateAvailabilityInput input) async {
-    var result = await query(document: """
-                        mutation updateAvailability(\$input:UpdateAvailabilityInput!) {
-                          updateAvailability(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['updateAvailability'];
-  }
-
-  /// Move a card (task) from one location to another.
-  ///Currently only possible to move cards that belong to a project within their own project.
-  Future<TCard> cardMove(TCardMoveInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardMove(\$input:CardMoveInput!) {
-                          cardMove(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(result['data']['cardMove'] as Map<String, dynamic>);
-  }
-
-  /// Create a new card. This could either mean creating a project or a task.
-  Future<TCard> cardCreate(TCardCreateInput input,
-      {String fragment = """fragment DemoCard on Card { assigneeId budget 
-      completed completedAt } """}) async {
-    var fragmentName = _extractFragmentName(fragment);
-    var result = await query(document: """
-                        mutation cardCreate(\$input:CardCreateInput!) {
-                          cardCreate(input:\$input) { ...$fragmentName }
-                        }
-  $fragment
-                        
-""", variables: {"input": input.toJson()});
-    return TCard.fromJson(result['data']['cardCreate'] as Map<String, dynamic>);
-  }
-
-  /// Refill your project balance by paying with Stripe.
-  ///Each project has an associated project:idofproject account which the balance will get deposited into.
-  Future<dynamic> projectAddBalanceWithStripe(
-      TProjectAddBalanceWithStripeInput input) async {
-    var result = await query(document: """
-                        mutation projectAddBalanceWithStripe(\$input:ProjectAddBalanceWithStripeInput!) {
-                          projectAddBalanceWithStripe(input:\$input)
-                        }
-                        
-""", variables: {"input": input.toJson()});
-    return result['data']['projectAddBalanceWithStripe'];
   }
 }
 
@@ -4779,10 +4792,10 @@ class TNotificationDelivery {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'deliveredAt': deliveredAt,
-      'feed': feed.toJson(),
-      'feedEvent': feedEvent.toJson(),
+      'feed': feed?.toJson(),
+      'feedEvent': feedEvent?.toJson(),
       'id': id,
-      'recipient': recipient.toJson(),
+      'recipient': recipient?.toJson(),
       'type': TNotificationDeliveryTypeEnum[type],
     };
   }
@@ -4821,7 +4834,7 @@ class TParticipant {
     return <String, dynamic>{
       'conversationId': conversationId,
       'since': since,
-      'user': user.toJson(),
+      'user': user?.toJson(),
       'userId': userId,
     };
   }
@@ -4910,18 +4923,18 @@ class TPayoutRecorded implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'amount': amount.toJson(),
+      'amount': amount?.toJson(),
       'date': date,
-      'fee': fee.toJson(),
+      'fee': fee?.toJson(),
       'id': id,
       'memo': memo,
       'method': method,
       'payoutId': payoutId,
       'requestId': requestId,
       'time': time,
-      'user': user.toJson(),
+      'user': user?.toJson(),
       'userId': userId,
     };
   }
@@ -5069,23 +5082,23 @@ class TProject {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'balance': balance.toJson(),
-      'budget': budget.toJson(),
-      'contracts': List<dynamic>.from(contracts.map((x) => x.toJson())),
-      'estimatedHourlyRate': estimatedHourlyRate.toJson(),
-      'feeds': List<dynamic>.from(feeds.map((x) => x.toJson())),
+      'balance': balance?.toJson(),
+      'budget': budget?.toJson(),
+      'contracts': List<dynamic>.from(contracts.map((x) => x?.toJson())),
+      'estimatedHourlyRate': estimatedHourlyRate?.toJson(),
+      'feeds': List<dynamic>.from(feeds.map((x) => x?.toJson())),
       'id': id,
       'lastActivity': lastActivity,
-      'lastChargedCard': lastChargedCard.toJson(),
+      'lastChargedCard': lastChargedCard?.toJson(),
       'managerOverdueCards':
-          List<dynamic>.from(managerOverdueCards.map((x) => x.toJson())),
-      'managers': List<dynamic>.from(managers.map((x) => x.toJson())),
-      'members': List<dynamic>.from(members.map((x) => x.toJson())),
+          List<dynamic>.from(managerOverdueCards.map((x) => x?.toJson())),
+      'managers': List<dynamic>.from(managers.map((x) => x?.toJson())),
+      'members': List<dynamic>.from(members.map((x) => x?.toJson())),
       'meta': meta,
       'name': name,
       'projectStatusTags': projectStatusTags,
-      'rootCard': rootCard.toJson(),
-      'timeEntries': List<dynamic>.from(timeEntries.map((x) => x.toJson())),
+      'rootCard': rootCard?.toJson(),
+      'timeEntries': List<dynamic>.from(timeEntries.map((x) => x?.toJson())),
     };
   }
 }
@@ -5413,208 +5426,91 @@ class TRemoveReactionInput {
 
 class TRootMutationType {
   TRootMutationType(
-      {this.profileNameSet,
-      this.cardAssign,
+      {this.cardUndelete,
+      this.createConversation,
+      this.cardDueDateSet,
+      this.cardRemoveMember,
+      this.removeParticipantFromConversation,
+      this.feedMarkAsRead,
+      this.timeEntryCreate,
+      this.cardBudgetDecrease,
+      this.accountOpen,
+      this.cardMove,
+      this.accountTransfer,
+      this.updateAvailability,
+      this.userSetSkills,
+      this.addParticipantToConversation,
+      this.cardInviteUser,
+      this.cardAddMember,
+      this.feedEditMessage2,
+      this.userProfileSetCustomField,
       this.cardEstimateUnset,
       this.cardDueDateUnset,
-      this.timeEntryCreate,
-      this.cardBudgetUnset,
-      this.feedEditMessage2,
-      this.cardLinkDelete,
-      this.accountOpen,
-      this.feedDeleteMessage,
-      this.feedPostMessage2,
-      this.meetingRoomJoin,
-      this.sendMessageToConversation,
-      this.cardComplete,
       this.cardTagsSet,
-      this.cardDelete,
-      this.addParticipantToConversation,
-      this.timeEntryDelete,
-      this.userSetSkills,
-      this.cardLinkCreate,
-      this.removeReaction,
-      this.accountTransfer,
-      this.removeParticipantFromConversation,
-      this.sendLowBalanceReminder,
-      this.cardRemoveMember,
-      this.linkOrCreateHubSpotContact,
-      this.createConversation,
-      this.userSetRoles,
-      this.cardInviteUser,
-      this.cardUncomplete,
-      this.feedMarkAsRead,
-      this.addReaction,
-      this.contractEnd,
+      this.sendMessageToConversation,
       this.cardUnassign,
-      this.cardBudgetDecrease,
-      this.updateConversationTopic,
-      this.timeEntryEdit,
       this.cardRename,
-      this.profileTimezoneSet,
-      this.cardDueDateSet,
-      this.cardUndelete,
-      this.cardAddMember,
-      this.feedEditMessage,
       this.recordPayout,
-      this.cardBudgetIncrease,
-      this.feedPostMessage,
+      this.feedEditMessage,
+      this.timeEntryDelete,
       this.cardEstimateSet,
+      this.addReaction,
+      this.cardAssign,
+      this.cardComplete,
       this.contractStart,
-      this.updateAvailability,
-      this.cardMove,
+      this.userSetRoles,
+      this.profileNameSet,
+      this.projectAddBalanceWithStripe,
+      this.cardLinkDelete,
+      this.updateConversationTopic,
+      this.cardBudgetUnset,
+      this.meetingRoomJoin,
+      this.sendLowBalanceReminder,
+      this.profileTimezoneSet,
+      this.feedDeleteMessage,
+      this.contractEnd,
+      this.removeReaction,
+      this.cardUncomplete,
+      this.feedPostMessage,
+      this.cardDelete,
       this.cardCreate,
-      this.projectAddBalanceWithStripe});
+      this.feedPostMessage2,
+      this.cardBudgetIncrease,
+      this.timeEntryEdit,
+      this.cardLinkCreate,
+      this.linkOrCreateHubSpotContact});
 
-  /// Set your full name.
-  /// This will override whatever is taken from your auth account (like google).
-  /// This will also affect mentions in chat.
+  /// Restore a deleted card and all of its subtasks.
   ///
-  dynamic profileNameSet;
+  TCard cardUndelete;
 
-  /// Assign a card to a user
-  TCard cardAssign;
-
-  /// Remove an estimate a card (task).
+  /// Creates a new conversation and adds its creator as a participant.
   ///
-  TCard cardEstimateUnset;
+  TConversation createConversation;
 
-  /// Clear the due date of a card
-  TCard cardDueDateUnset;
-
-  /// Track logs for work that you have done.
-  /// Generates a transaction that deducts from customer account and adds to the your account.
+  /// Set the due date of a card.
+  /// Use CardDueDateUnset to remove the due date.
   ///
-  dynamic timeEntryCreate;
-
-  /// Completely remove the budget for a card.
-  /// Usually used if a customer decides they don't want a budget anymore.
-  ///
-  TCard cardBudgetUnset;
-
-  /// Edit the message body of a feed event
-  ///
-  TFeedEvent feedEditMessage2;
-
-  /// Remove a directional link between two cards.
-  ///
-  dynamic cardLinkDelete;
-
-  /// Open an account if one doesn't already exist
-  dynamic accountOpen;
-
-  /// Delete a feed event (message) in a feed.
-  dynamic feedDeleteMessage;
-
-  /// Post a message to a feed. Similar to posting a message in Slack or HipChat.
-  TFeedEvent feedPostMessage2;
-
-  TTwilioAuth meetingRoomJoin;
-
-  /// Sends a message to a conversation.
-  ///
-  dynamic sendMessageToConversation;
-
-  /// Mark a card as complete
-  TCard cardComplete;
-
-  /// Set the tags of a card. Overwrites the previous list of tags.
-  /// If you want to add a tag, make sure to pass the entire list of tags with the new tag.
-  ///
-  dynamic cardTagsSet;
-
-  /// Delete a card (project/task)
-  /// Deleting a card which has subtasks will also mark those subtasks as deleted.
-  /// Rsetoring those tasks with [CardUndelete] will also restore those subtasks.
-  ///
-  TCard cardDelete;
-
-  /// Adds a user to a conversation.
-  ///
-  dynamic addParticipantToConversation;
-
-  /// Deletes the time entry for work that was done.
-  /// Generates a transaction that takes money from your account and gives it back to the customer.
-  ///
-  dynamic timeEntryDelete;
-
-  /// Set the skills a user has. Used by Turtle internally to match contractors to new projects.
-  dynamic userSetSkills;
-
-  /// Create a directional link between two cards. This is kind of like a hyperlink.
-  /// Used for things like tying an internal management project to a customer project.
-  ///
-  /// Currently, links are unique by link_type, from_id, and to_id.
-  /// Trying to create two links with all of these the same will result in an error.
-  ///
-  dynamic cardLinkCreate;
-
-  /// Remove a reaction from a feed event.
-  /// All feed events within a feed can have reactions. Just like Slack, HipChat, etc.
-  ///
-  dynamic removeReaction;
-
-  /// Transfer money from one account to another.
-  dynamic accountTransfer;
-
-  /// Removes a user from a conversation.
-  ///
-  dynamic removeParticipantFromConversation;
-
-  /// Send a reminder to a customer about their project once their balance becomes low.
-  /// Because of the nuances around timing when to send these e-mails, this is currently a manual operation.
-  ///
-  /// The e-mail says something like this:
-  ///
-  /// Hi John,
-  ///
-  /// This is a friendly reminder that your Turtle balance for ACME is now ___.
-  /// ...
-  ///
-  dynamic sendLowBalanceReminder;
+  TCard cardDueDateSet;
 
   /// Remove a user from a project.
   /// They will lose access to everything in the project.
   ///
   dynamic cardRemoveMember;
 
-  /// Link or create HubSpot contact
-  THubspotContact linkOrCreateHubSpotContact;
-
-  /// Creates a new conversation and adds its creator as a participant.
+  /// Removes a user from a conversation.
   ///
-  TConversation createConversation;
-
-  /// Set the roles of a user. Overwrites the previous list of roles.
-  dynamic userSetRoles;
-
-  /// Add a user to a project and send them an e-mail notification saying they were invited to the project.
-  ///
-  /// If the user exists by e-mail, this user will be invited.
-  /// If the user doesn't exist by e-mail, an account will be created for the user.
-  ///
-  TUser cardInviteUser;
-
-  /// Mark a completed task as incomplete again
-  TCard cardUncomplete;
+  dynamic removeParticipantFromConversation;
 
   /// Mark all unread feed events (unread by you) in a feed as read.
   /// If all feed events have already been read, this results in a no-op.
   ///
   dynamic feedMarkAsRead;
 
-  /// Add a reaction to a feed event.
-  /// All feed events within a feed can have reactions. Just like Slack, HipChat, etc.
+  /// Track logs for work that you have done.
+  /// Generates a transaction that deducts from customer account and adds to the your account.
   ///
-  dynamic addReaction;
-
-  /// End a contract.
-  /// This means time can no longer be tracked by a contractor to this project without a new contract being started.
-  ///
-  dynamic contractEnd;
-
-  /// Remove the assignee for a card (task)
-  TCard cardUnassign;
+  dynamic timeEntryCreate;
 
   /// Decrease the budget of a card.
   /// Every card can have a budget. This is used so a customer can budget a feature.
@@ -5623,67 +5519,16 @@ class TRootMutationType {
   ///
   TCard cardBudgetDecrease;
 
-  /// Updates a conversation topic.
+  /// Open an account if one doesn't already exist
+  dynamic accountOpen;
+
+  /// Move a card (task) from one location to another.
+  /// Currently only possible to move cards that belong to a project within their own project.
   ///
-  dynamic updateConversationTopic;
+  TCard cardMove;
 
-  /// Modify one or more attributes of a time entry.
-  /// If the duration is modified, an adjustment transaction is generated to make sure customer/user balances are accurate.
-  ///
-  dynamic timeEntryEdit;
-
-  /// Change the name of a card (or project)
-  TCard cardRename;
-
-  /// Set your current timezone.
-  /// Will be used by managers and the Turtle platform to help with coordinating meetings/communication.
-  ///
-  dynamic profileTimezoneSet;
-
-  /// Set the due date of a card.
-  /// Use CardDueDateUnset to remove the due date.
-  ///
-  TCard cardDueDateSet;
-
-  /// Restore a deleted card and all of its subtasks.
-  ///
-  TCard cardUndelete;
-
-  /// Add a user to a project.
-  dynamic cardAddMember;
-
-  /// Edit the message body of a feed event
-  ///
-  dynamic feedEditMessage;
-
-  /// Record a payout to a user.
-  /// Each user has an acccount with a balance. When time is billed, send a referral, etc, their balance increasses.
-  /// Once a payout is recorded, their balance decreases by the amount they were paid.
-  ///
-  /// Imagine a contractor has $500 in their account. They get paid $400. Their balance will now be $100.
-  ///
-  dynamic recordPayout;
-
-  /// Decrease the budget of a card. To set the initial budget of a card, use this command.
-  /// Every card can have a budget. This is used so a customer can budget a feature.
-  /// For example, a customer could limit the cost of a feature to 100h.
-  /// Budgets operations are relative so the user can work relative to the current budget.
-  ///
-  TCard cardBudgetIncrease;
-
-  /// Post a message to a feed. Similar to posting a message in Slack or HipChat.
-  dynamic feedPostMessage;
-
-  /// Set (or update) an estimated for how long you think a card (task) will take to complete. For example 5-10h.
-  ///
-  TCard cardEstimateSet;
-
-  /// Start a contract between a person and a project.
-  /// This is required for a contractor to start billing time and working on a project so the accounting system can generate the proper transactions when time is tracked.
-  /// Note: contracts are immutable. To change a contractor's rate, you must end a contract and start a new one.
-  /// A user can have a max of one contract per project.
-  ///
-  dynamic contractStart;
+  /// Transfer money from one account to another.
+  dynamic accountTransfer;
 
   /// Update a user's availability based on how many hours/week they are free to work on Turtle.
   /// This can be used to compare their desired workload with actual workload from time entries.
@@ -5702,180 +5547,354 @@ class TRootMutationType {
   ///
   dynamic updateAvailability;
 
-  /// Move a card (task) from one location to another.
-  /// Currently only possible to move cards that belong to a project within their own project.
-  ///
-  TCard cardMove;
+  /// Set the skills a user has. Used by Turtle internally to match contractors to new projects.
+  dynamic userSetSkills;
 
-  /// Create a new card. This could either mean creating a project or a task.
+  /// Adds a user to a conversation.
   ///
-  TCard cardCreate;
+  dynamic addParticipantToConversation;
+
+  /// Add a user to a project and send them an e-mail notification saying they were invited to the project.
+  ///
+  /// If the user exists by e-mail, this user will be invited.
+  /// If the user doesn't exist by e-mail, an account will be created for the user.
+  ///
+  TUser cardInviteUser;
+
+  /// Add a user to a project.
+  dynamic cardAddMember;
+
+  /// Edit the message body of a feed event
+  ///
+  TFeedEvent feedEditMessage2;
+
+  /// Sets a key/value to a user's profile
+  dynamic userProfileSetCustomField;
+
+  /// Remove an estimate a card (task).
+  ///
+  TCard cardEstimateUnset;
+
+  /// Clear the due date of a card
+  TCard cardDueDateUnset;
+
+  /// Set the tags of a card. Overwrites the previous list of tags.
+  /// If you want to add a tag, make sure to pass the entire list of tags with the new tag.
+  ///
+  dynamic cardTagsSet;
+
+  /// Sends a message to a conversation.
+  ///
+  dynamic sendMessageToConversation;
+
+  /// Remove the assignee for a card (task)
+  TCard cardUnassign;
+
+  /// Change the name of a card (or project)
+  TCard cardRename;
+
+  /// Record a payout to a user.
+  /// Each user has an acccount with a balance. When time is billed, send a referral, etc, their balance increasses.
+  /// Once a payout is recorded, their balance decreases by the amount they were paid.
+  ///
+  /// Imagine a contractor has $500 in their account. They get paid $400. Their balance will now be $100.
+  ///
+  dynamic recordPayout;
+
+  /// Edit the message body of a feed event
+  ///
+  dynamic feedEditMessage;
+
+  /// Deletes the time entry for work that was done.
+  /// Generates a transaction that takes money from your account and gives it back to the customer.
+  ///
+  dynamic timeEntryDelete;
+
+  /// Set (or update) an estimated for how long you think a card (task) will take to complete. For example 5-10h.
+  ///
+  TCard cardEstimateSet;
+
+  /// Add a reaction to a feed event.
+  /// All feed events within a feed can have reactions. Just like Slack, HipChat, etc.
+  ///
+  dynamic addReaction;
+
+  /// Assign a card to a user
+  TCard cardAssign;
+
+  /// Mark a card as complete
+  TCard cardComplete;
+
+  /// Start a contract between a person and a project.
+  /// This is required for a contractor to start billing time and working on a project so the accounting system can generate the proper transactions when time is tracked.
+  /// Note: contracts are immutable. To change a contractor's rate, you must end a contract and start a new one.
+  /// A user can have a max of one contract per project.
+  ///
+  dynamic contractStart;
+
+  /// Set the roles of a user. Overwrites the previous list of roles.
+  dynamic userSetRoles;
+
+  /// Set your full name.
+  /// This will override whatever is taken from your auth account (like google).
+  /// This will also affect mentions in chat.
+  ///
+  dynamic profileNameSet;
 
   /// Refill your project balance by paying with Stripe.
   /// Each project has an associated project:idofproject account which the balance will get deposited into.
   ///
   dynamic projectAddBalanceWithStripe;
 
+  /// Remove a directional link between two cards.
+  ///
+  dynamic cardLinkDelete;
+
+  /// Updates a conversation topic.
+  ///
+  dynamic updateConversationTopic;
+
+  /// Completely remove the budget for a card.
+  /// Usually used if a customer decides they don't want a budget anymore.
+  ///
+  TCard cardBudgetUnset;
+
+  TTwilioAuth meetingRoomJoin;
+
+  /// Send a reminder to a customer about their project once their balance becomes low.
+  /// Because of the nuances around timing when to send these e-mails, this is currently a manual operation.
+  ///
+  /// The e-mail says something like this:
+  ///
+  /// Hi John,
+  ///
+  /// This is a friendly reminder that your Turtle balance for ACME is now ___.
+  /// ...
+  ///
+  dynamic sendLowBalanceReminder;
+
+  /// Set your current timezone.
+  /// Will be used by managers and the Turtle platform to help with coordinating meetings/communication.
+  ///
+  dynamic profileTimezoneSet;
+
+  /// Delete a feed event (message) in a feed.
+  dynamic feedDeleteMessage;
+
+  /// End a contract.
+  /// This means time can no longer be tracked by a contractor to this project without a new contract being started.
+  ///
+  dynamic contractEnd;
+
+  /// Remove a reaction from a feed event.
+  /// All feed events within a feed can have reactions. Just like Slack, HipChat, etc.
+  ///
+  dynamic removeReaction;
+
+  /// Mark a completed task as incomplete again
+  TCard cardUncomplete;
+
+  /// Post a message to a feed. Similar to posting a message in Slack or HipChat.
+  dynamic feedPostMessage;
+
+  /// Delete a card (project/task)
+  /// Deleting a card which has subtasks will also mark those subtasks as deleted.
+  /// Rsetoring those tasks with [CardUndelete] will also restore those subtasks.
+  ///
+  TCard cardDelete;
+
+  /// Create a new card. This could either mean creating a project or a task.
+  ///
+  TCard cardCreate;
+
+  /// Post a message to a feed. Similar to posting a message in Slack or HipChat.
+  TFeedEvent feedPostMessage2;
+
+  /// Decrease the budget of a card. To set the initial budget of a card, use this command.
+  /// Every card can have a budget. This is used so a customer can budget a feature.
+  /// For example, a customer could limit the cost of a feature to 100h.
+  /// Budgets operations are relative so the user can work relative to the current budget.
+  ///
+  TCard cardBudgetIncrease;
+
+  /// Modify one or more attributes of a time entry.
+  /// If the duration is modified, an adjustment transaction is generated to make sure customer/user balances are accurate.
+  ///
+  dynamic timeEntryEdit;
+
+  /// Create a directional link between two cards. This is kind of like a hyperlink.
+  /// Used for things like tying an internal management project to a customer project.
+  ///
+  /// Currently, links are unique by link_type, from_id, and to_id.
+  /// Trying to create two links with all of these the same will result in an error.
+  ///
+  dynamic cardLinkCreate;
+
+  /// Link or create HubSpot contact
+  THubspotContact linkOrCreateHubSpotContact;
+
   factory TRootMutationType.fromJson(Map<String, dynamic> json) {
     return TRootMutationType(
-      profileNameSet: json['profileNameSet'],
-      cardAssign: json['cardAssign'] == null
+      cardUndelete: json['cardUndelete'] == null
           ? null
-          : TCard.fromJson(json['cardAssign'] as Map<String, dynamic>),
+          : TCard.fromJson(json['cardUndelete'] as Map<String, dynamic>),
+      createConversation: json['createConversation'] == null
+          ? null
+          : TConversation.fromJson(
+              json['createConversation'] as Map<String, dynamic>),
+      cardDueDateSet: json['cardDueDateSet'] == null
+          ? null
+          : TCard.fromJson(json['cardDueDateSet'] as Map<String, dynamic>),
+      cardRemoveMember: json['cardRemoveMember'],
+      removeParticipantFromConversation:
+          json['removeParticipantFromConversation'],
+      feedMarkAsRead: json['feedMarkAsRead'],
+      timeEntryCreate: json['timeEntryCreate'],
+      cardBudgetDecrease: json['cardBudgetDecrease'] == null
+          ? null
+          : TCard.fromJson(json['cardBudgetDecrease'] as Map<String, dynamic>),
+      accountOpen: json['accountOpen'],
+      cardMove: json['cardMove'] == null
+          ? null
+          : TCard.fromJson(json['cardMove'] as Map<String, dynamic>),
+      accountTransfer: json['accountTransfer'],
+      updateAvailability: json['updateAvailability'],
+      userSetSkills: json['userSetSkills'],
+      addParticipantToConversation: json['addParticipantToConversation'],
+      cardInviteUser: json['cardInviteUser'] == null
+          ? null
+          : TUser.fromJson(json['cardInviteUser'] as Map<String, dynamic>),
+      cardAddMember: json['cardAddMember'],
+      feedEditMessage2: json['feedEditMessage2'] == null
+          ? null
+          : TFeedEvent.fromJson(
+              json['feedEditMessage2'] as Map<String, dynamic>),
+      userProfileSetCustomField: json['userProfileSetCustomField'],
       cardEstimateUnset: json['cardEstimateUnset'] == null
           ? null
           : TCard.fromJson(json['cardEstimateUnset'] as Map<String, dynamic>),
       cardDueDateUnset: json['cardDueDateUnset'] == null
           ? null
           : TCard.fromJson(json['cardDueDateUnset'] as Map<String, dynamic>),
-      timeEntryCreate: json['timeEntryCreate'],
+      cardTagsSet: json['cardTagsSet'],
+      sendMessageToConversation: json['sendMessageToConversation'],
+      cardUnassign: json['cardUnassign'] == null
+          ? null
+          : TCard.fromJson(json['cardUnassign'] as Map<String, dynamic>),
+      cardRename: json['cardRename'] == null
+          ? null
+          : TCard.fromJson(json['cardRename'] as Map<String, dynamic>),
+      recordPayout: json['recordPayout'],
+      feedEditMessage: json['feedEditMessage'],
+      timeEntryDelete: json['timeEntryDelete'],
+      cardEstimateSet: json['cardEstimateSet'] == null
+          ? null
+          : TCard.fromJson(json['cardEstimateSet'] as Map<String, dynamic>),
+      addReaction: json['addReaction'],
+      cardAssign: json['cardAssign'] == null
+          ? null
+          : TCard.fromJson(json['cardAssign'] as Map<String, dynamic>),
+      cardComplete: json['cardComplete'] == null
+          ? null
+          : TCard.fromJson(json['cardComplete'] as Map<String, dynamic>),
+      contractStart: json['contractStart'],
+      userSetRoles: json['userSetRoles'],
+      profileNameSet: json['profileNameSet'],
+      projectAddBalanceWithStripe: json['projectAddBalanceWithStripe'],
+      cardLinkDelete: json['cardLinkDelete'],
+      updateConversationTopic: json['updateConversationTopic'],
       cardBudgetUnset: json['cardBudgetUnset'] == null
           ? null
           : TCard.fromJson(json['cardBudgetUnset'] as Map<String, dynamic>),
-      feedEditMessage2: json['feedEditMessage2'] == null
-          ? null
-          : TFeedEvent.fromJson(
-              json['feedEditMessage2'] as Map<String, dynamic>),
-      cardLinkDelete: json['cardLinkDelete'],
-      accountOpen: json['accountOpen'],
-      feedDeleteMessage: json['feedDeleteMessage'],
-      feedPostMessage2: json['feedPostMessage2'] == null
-          ? null
-          : TFeedEvent.fromJson(
-              json['feedPostMessage2'] as Map<String, dynamic>),
       meetingRoomJoin: json['meetingRoomJoin'] == null
           ? null
           : TTwilioAuth.fromJson(
               json['meetingRoomJoin'] as Map<String, dynamic>),
-      sendMessageToConversation: json['sendMessageToConversation'],
-      cardComplete: json['cardComplete'] == null
+      sendLowBalanceReminder: json['sendLowBalanceReminder'],
+      profileTimezoneSet: json['profileTimezoneSet'],
+      feedDeleteMessage: json['feedDeleteMessage'],
+      contractEnd: json['contractEnd'],
+      removeReaction: json['removeReaction'],
+      cardUncomplete: json['cardUncomplete'] == null
           ? null
-          : TCard.fromJson(json['cardComplete'] as Map<String, dynamic>),
-      cardTagsSet: json['cardTagsSet'],
+          : TCard.fromJson(json['cardUncomplete'] as Map<String, dynamic>),
+      feedPostMessage: json['feedPostMessage'],
       cardDelete: json['cardDelete'] == null
           ? null
           : TCard.fromJson(json['cardDelete'] as Map<String, dynamic>),
-      addParticipantToConversation: json['addParticipantToConversation'],
-      timeEntryDelete: json['timeEntryDelete'],
-      userSetSkills: json['userSetSkills'],
+      cardCreate: json['cardCreate'] == null
+          ? null
+          : TCard.fromJson(json['cardCreate'] as Map<String, dynamic>),
+      feedPostMessage2: json['feedPostMessage2'] == null
+          ? null
+          : TFeedEvent.fromJson(
+              json['feedPostMessage2'] as Map<String, dynamic>),
+      cardBudgetIncrease: json['cardBudgetIncrease'] == null
+          ? null
+          : TCard.fromJson(json['cardBudgetIncrease'] as Map<String, dynamic>),
+      timeEntryEdit: json['timeEntryEdit'],
       cardLinkCreate: json['cardLinkCreate'],
-      removeReaction: json['removeReaction'],
-      accountTransfer: json['accountTransfer'],
-      removeParticipantFromConversation:
-          json['removeParticipantFromConversation'],
-      sendLowBalanceReminder: json['sendLowBalanceReminder'],
-      cardRemoveMember: json['cardRemoveMember'],
       linkOrCreateHubSpotContact: json['linkOrCreateHubSpotContact'] == null
           ? null
           : THubspotContact.fromJson(
               json['linkOrCreateHubSpotContact'] as Map<String, dynamic>),
-      createConversation: json['createConversation'] == null
-          ? null
-          : TConversation.fromJson(
-              json['createConversation'] as Map<String, dynamic>),
-      userSetRoles: json['userSetRoles'],
-      cardInviteUser: json['cardInviteUser'] == null
-          ? null
-          : TUser.fromJson(json['cardInviteUser'] as Map<String, dynamic>),
-      cardUncomplete: json['cardUncomplete'] == null
-          ? null
-          : TCard.fromJson(json['cardUncomplete'] as Map<String, dynamic>),
-      feedMarkAsRead: json['feedMarkAsRead'],
-      addReaction: json['addReaction'],
-      contractEnd: json['contractEnd'],
-      cardUnassign: json['cardUnassign'] == null
-          ? null
-          : TCard.fromJson(json['cardUnassign'] as Map<String, dynamic>),
-      cardBudgetDecrease: json['cardBudgetDecrease'] == null
-          ? null
-          : TCard.fromJson(json['cardBudgetDecrease'] as Map<String, dynamic>),
-      updateConversationTopic: json['updateConversationTopic'],
-      timeEntryEdit: json['timeEntryEdit'],
-      cardRename: json['cardRename'] == null
-          ? null
-          : TCard.fromJson(json['cardRename'] as Map<String, dynamic>),
-      profileTimezoneSet: json['profileTimezoneSet'],
-      cardDueDateSet: json['cardDueDateSet'] == null
-          ? null
-          : TCard.fromJson(json['cardDueDateSet'] as Map<String, dynamic>),
-      cardUndelete: json['cardUndelete'] == null
-          ? null
-          : TCard.fromJson(json['cardUndelete'] as Map<String, dynamic>),
-      cardAddMember: json['cardAddMember'],
-      feedEditMessage: json['feedEditMessage'],
-      recordPayout: json['recordPayout'],
-      cardBudgetIncrease: json['cardBudgetIncrease'] == null
-          ? null
-          : TCard.fromJson(json['cardBudgetIncrease'] as Map<String, dynamic>),
-      feedPostMessage: json['feedPostMessage'],
-      cardEstimateSet: json['cardEstimateSet'] == null
-          ? null
-          : TCard.fromJson(json['cardEstimateSet'] as Map<String, dynamic>),
-      contractStart: json['contractStart'],
-      updateAvailability: json['updateAvailability'],
-      cardMove: json['cardMove'] == null
-          ? null
-          : TCard.fromJson(json['cardMove'] as Map<String, dynamic>),
-      cardCreate: json['cardCreate'] == null
-          ? null
-          : TCard.fromJson(json['cardCreate'] as Map<String, dynamic>),
-      projectAddBalanceWithStripe: json['projectAddBalanceWithStripe'],
     );
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'profileNameSet': profileNameSet,
-      'cardAssign': cardAssign.toJson(),
-      'cardEstimateUnset': cardEstimateUnset.toJson(),
-      'cardDueDateUnset': cardDueDateUnset.toJson(),
-      'timeEntryCreate': timeEntryCreate,
-      'cardBudgetUnset': cardBudgetUnset.toJson(),
-      'feedEditMessage2': feedEditMessage2.toJson(),
-      'cardLinkDelete': cardLinkDelete,
-      'accountOpen': accountOpen,
-      'feedDeleteMessage': feedDeleteMessage,
-      'feedPostMessage2': feedPostMessage2.toJson(),
-      'meetingRoomJoin': meetingRoomJoin.toJson(),
-      'sendMessageToConversation': sendMessageToConversation,
-      'cardComplete': cardComplete.toJson(),
-      'cardTagsSet': cardTagsSet,
-      'cardDelete': cardDelete.toJson(),
-      'addParticipantToConversation': addParticipantToConversation,
-      'timeEntryDelete': timeEntryDelete,
-      'userSetSkills': userSetSkills,
-      'cardLinkCreate': cardLinkCreate,
-      'removeReaction': removeReaction,
-      'accountTransfer': accountTransfer,
-      'removeParticipantFromConversation': removeParticipantFromConversation,
-      'sendLowBalanceReminder': sendLowBalanceReminder,
+      'cardUndelete': cardUndelete?.toJson(),
+      'createConversation': createConversation?.toJson(),
+      'cardDueDateSet': cardDueDateSet?.toJson(),
       'cardRemoveMember': cardRemoveMember,
-      'linkOrCreateHubSpotContact': linkOrCreateHubSpotContact.toJson(),
-      'createConversation': createConversation.toJson(),
-      'userSetRoles': userSetRoles,
-      'cardInviteUser': cardInviteUser.toJson(),
-      'cardUncomplete': cardUncomplete.toJson(),
+      'removeParticipantFromConversation': removeParticipantFromConversation,
       'feedMarkAsRead': feedMarkAsRead,
-      'addReaction': addReaction,
-      'contractEnd': contractEnd,
-      'cardUnassign': cardUnassign.toJson(),
-      'cardBudgetDecrease': cardBudgetDecrease.toJson(),
-      'updateConversationTopic': updateConversationTopic,
-      'timeEntryEdit': timeEntryEdit,
-      'cardRename': cardRename.toJson(),
-      'profileTimezoneSet': profileTimezoneSet,
-      'cardDueDateSet': cardDueDateSet.toJson(),
-      'cardUndelete': cardUndelete.toJson(),
-      'cardAddMember': cardAddMember,
-      'feedEditMessage': feedEditMessage,
-      'recordPayout': recordPayout,
-      'cardBudgetIncrease': cardBudgetIncrease.toJson(),
-      'feedPostMessage': feedPostMessage,
-      'cardEstimateSet': cardEstimateSet.toJson(),
-      'contractStart': contractStart,
+      'timeEntryCreate': timeEntryCreate,
+      'cardBudgetDecrease': cardBudgetDecrease?.toJson(),
+      'accountOpen': accountOpen,
+      'cardMove': cardMove?.toJson(),
+      'accountTransfer': accountTransfer,
       'updateAvailability': updateAvailability,
-      'cardMove': cardMove.toJson(),
-      'cardCreate': cardCreate.toJson(),
+      'userSetSkills': userSetSkills,
+      'addParticipantToConversation': addParticipantToConversation,
+      'cardInviteUser': cardInviteUser?.toJson(),
+      'cardAddMember': cardAddMember,
+      'feedEditMessage2': feedEditMessage2?.toJson(),
+      'userProfileSetCustomField': userProfileSetCustomField,
+      'cardEstimateUnset': cardEstimateUnset?.toJson(),
+      'cardDueDateUnset': cardDueDateUnset?.toJson(),
+      'cardTagsSet': cardTagsSet,
+      'sendMessageToConversation': sendMessageToConversation,
+      'cardUnassign': cardUnassign?.toJson(),
+      'cardRename': cardRename?.toJson(),
+      'recordPayout': recordPayout,
+      'feedEditMessage': feedEditMessage,
+      'timeEntryDelete': timeEntryDelete,
+      'cardEstimateSet': cardEstimateSet?.toJson(),
+      'addReaction': addReaction,
+      'cardAssign': cardAssign?.toJson(),
+      'cardComplete': cardComplete?.toJson(),
+      'contractStart': contractStart,
+      'userSetRoles': userSetRoles,
+      'profileNameSet': profileNameSet,
       'projectAddBalanceWithStripe': projectAddBalanceWithStripe,
+      'cardLinkDelete': cardLinkDelete,
+      'updateConversationTopic': updateConversationTopic,
+      'cardBudgetUnset': cardBudgetUnset?.toJson(),
+      'meetingRoomJoin': meetingRoomJoin?.toJson(),
+      'sendLowBalanceReminder': sendLowBalanceReminder,
+      'profileTimezoneSet': profileTimezoneSet,
+      'feedDeleteMessage': feedDeleteMessage,
+      'contractEnd': contractEnd,
+      'removeReaction': removeReaction,
+      'cardUncomplete': cardUncomplete?.toJson(),
+      'feedPostMessage': feedPostMessage,
+      'cardDelete': cardDelete?.toJson(),
+      'cardCreate': cardCreate?.toJson(),
+      'feedPostMessage2': feedPostMessage2?.toJson(),
+      'cardBudgetIncrease': cardBudgetIncrease?.toJson(),
+      'timeEntryEdit': timeEntryEdit,
+      'cardLinkCreate': cardLinkCreate,
+      'linkOrCreateHubSpotContact': linkOrCreateHubSpotContact?.toJson(),
     };
   }
 }
@@ -6111,42 +6130,42 @@ class TRootQueryType {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'account': account.toJson(),
-      'accounts': List<dynamic>.from(accounts.map((x) => x.toJson())),
+      'account': account?.toJson(),
+      'accounts': List<dynamic>.from(accounts.map((x) => x?.toJson())),
       'activeProjects':
-          List<dynamic>.from(activeProjects.map((x) => x.toJson())),
+          List<dynamic>.from(activeProjects.map((x) => x?.toJson())),
       'apiVersion': apiVersion,
       'availabilityEntries':
-          List<dynamic>.from(availabilityEntries.map((x) => x.toJson())),
-      'card': card.toJson(),
-      'cards': List<dynamic>.from(cards.map((x) => x.toJson())),
+          List<dynamic>.from(availabilityEntries.map((x) => x?.toJson())),
+      'card': card?.toJson(),
+      'cards': List<dynamic>.from(cards.map((x) => x?.toJson())),
       'cardsCount': cardsCount,
-      'command': command.toJson(),
-      'conversation': conversation.toJson(),
-      'feed': feed.toJson(),
-      'feedEvent': feedEvent.toJson(),
-      'feedEvents': List<dynamic>.from(feedEvents.map((x) => x.toJson())),
+      'command': command?.toJson(),
+      'conversation': conversation?.toJson(),
+      'feed': feed?.toJson(),
+      'feedEvent': feedEvent?.toJson(),
+      'feedEvents': List<dynamic>.from(feedEvents.map((x) => x?.toJson())),
       'feedEventsCount': feedEventsCount,
       'feedSubscriptions':
-          List<dynamic>.from(feedSubscriptions.map((x) => x.toJson())),
+          List<dynamic>.from(feedSubscriptions.map((x) => x?.toJson())),
       'feedSubscriptionsCount': feedSubscriptionsCount,
-      'feeds': List<dynamic>.from(feeds.map((x) => x.toJson())),
+      'feeds': List<dynamic>.from(feeds.map((x) => x?.toJson())),
       'feedsCount': feedsCount,
-      'hubspotPipeline': hubspotPipeline.toJson(),
-      'me': me.toJson(),
-      'meeting': meeting.toJson(),
-      'meetings': List<dynamic>.from(meetings.map((x) => x.toJson())),
+      'hubspotPipeline': hubspotPipeline?.toJson(),
+      'me': me?.toJson(),
+      'meeting': meeting?.toJson(),
+      'meetings': List<dynamic>.from(meetings.map((x) => x?.toJson())),
       'notificationDeliveries':
-          List<dynamic>.from(notificationDeliveries.map((x) => x.toJson())),
-      'project': project.toJson(),
+          List<dynamic>.from(notificationDeliveries.map((x) => x?.toJson())),
+      'project': project?.toJson(),
       'projectFeedEvents':
-          List<dynamic>.from(projectFeedEvents.map((x) => x.toJson())),
-      'projects': List<dynamic>.from(projects.map((x) => x.toJson())),
-      'timeEntries': List<dynamic>.from(timeEntries.map((x) => x.toJson())),
+          List<dynamic>.from(projectFeedEvents.map((x) => x?.toJson())),
+      'projects': List<dynamic>.from(projects.map((x) => x?.toJson())),
+      'timeEntries': List<dynamic>.from(timeEntries.map((x) => x?.toJson())),
       'timeEntriesCount': timeEntriesCount,
-      'timeEntry': timeEntry.toJson(),
-      'user': user.toJson(),
-      'users': List<dynamic>.from(users.map((x) => x.toJson())),
+      'timeEntry': timeEntry?.toJson(),
+      'user': user?.toJson(),
+      'users': List<dynamic>.from(users.map((x) => x?.toJson())),
     };
   }
 }
@@ -6228,15 +6247,15 @@ class TRootSubscriptionType {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'chatSubscriptionUpdated': chatSubscriptionUpdated.toJson(),
-      'chatUpdated': chatUpdated.toJson(),
-      'feedEventDeleted': feedEventDeleted.toJson(),
-      'feedSubscriptionUpdated': feedSubscriptionUpdated.toJson(),
-      'feedUpdated': feedUpdated.toJson(),
-      'meetingUpdated': meetingUpdated.toJson(),
-      'messageUpdated': messageUpdated.toJson(),
-      'timeEntryUpdated': timeEntryUpdated.toJson(),
-      'unreadCountUpdated': unreadCountUpdated.toJson(),
+      'chatSubscriptionUpdated': chatSubscriptionUpdated?.toJson(),
+      'chatUpdated': chatUpdated?.toJson(),
+      'feedEventDeleted': feedEventDeleted?.toJson(),
+      'feedSubscriptionUpdated': feedSubscriptionUpdated?.toJson(),
+      'feedUpdated': feedUpdated?.toJson(),
+      'meetingUpdated': meetingUpdated?.toJson(),
+      'messageUpdated': messageUpdated?.toJson(),
+      'timeEntryUpdated': timeEntryUpdated?.toJson(),
+      'unreadCountUpdated': unreadCountUpdated?.toJson(),
     };
   }
 }
@@ -6372,11 +6391,11 @@ class TStripeChargeCreated implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
-      'creditCard': creditCard.toJson(),
+      'actor': actor?.toJson(),
+      'creditCard': creditCard?.toJson(),
       'id': id,
       'last4': last4,
-      'project': project.toJson(),
+      'project': project?.toJson(),
       'requestId': requestId,
       'time': time,
     };
@@ -6459,7 +6478,7 @@ class TTimeEntry implements TDocumentToken {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'addedAt': addedAt,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'contractId': contractId,
       'date': date,
       'deleted': deleted,
@@ -6467,7 +6486,7 @@ class TTimeEntry implements TDocumentToken {
       'edited': edited,
       'id': id,
       'memo': memo,
-      'user': user.toJson(),
+      'user': user?.toJson(),
       'version': version,
     };
   }
@@ -6623,21 +6642,21 @@ class TTimeEntryCreated implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
-      'contract': contract.toJson(),
-      'contractor': contractor.toJson(),
+      'contract': contract?.toJson(),
+      'contractor': contractor?.toJson(),
       'entryDate': entryDate,
       'entryDuration': entryDuration,
       'entryMemo': entryMemo,
       'id': id,
-      'project': project.toJson(),
+      'project': project?.toJson(),
       'projectId': projectId,
       'requestId': requestId,
       'time': time,
-      'timeEntry': timeEntry.toJson(),
+      'timeEntry': timeEntry?.toJson(),
       'timeEntryId': timeEntryId,
     };
   }
@@ -6757,19 +6776,19 @@ class TTimeEntryDeleted implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
-      'contract': contract.toJson(),
-      'contractor': contractor.toJson(),
+      'contract': contract?.toJson(),
+      'contractor': contractor?.toJson(),
       'id': id,
       'prevEntryDuration': prevEntryDuration,
-      'project': project.toJson(),
+      'project': project?.toJson(),
       'projectId': projectId,
       'requestId': requestId,
       'time': time,
-      'timeEntry': timeEntry.toJson(),
+      'timeEntry': timeEntry?.toJson(),
       'timeEntryId': timeEntryId,
     };
   }
@@ -6919,21 +6938,21 @@ class TTimeEntryEdited implements TTurtleEvent {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'actor': actor.toJson(),
+      'actor': actor?.toJson(),
       'actorId': actorId,
-      'card': card.toJson(),
+      'card': card?.toJson(),
       'cardId': cardId,
-      'contract': contract.toJson(),
-      'contractor': contractor.toJson(),
+      'contract': contract?.toJson(),
+      'contractor': contractor?.toJson(),
       'entryDate': entryDate,
       'entryDuration': entryDuration,
       'entryMemo': entryMemo,
       'id': id,
       'prevEntryDuration': prevEntryDuration,
-      'project': project.toJson(),
+      'project': project?.toJson(),
       'requestId': requestId,
       'time': time,
-      'timeEntry': timeEntry.toJson(),
+      'timeEntry': timeEntry?.toJson(),
       'timeEntryId': timeEntryId,
     };
   }
@@ -7122,6 +7141,7 @@ class TUser implements TDocumentToken, TFeedSource, TAccountSource {
       this.id,
       this.name,
       this.photo,
+      this.profile,
       this.projects,
       this.roles,
       this.skills,
@@ -7150,6 +7170,10 @@ class TUser implements TDocumentToken, TFeedSource, TAccountSource {
 
   /// The photo URL of the user taken from their logged in Google account.
   String photo;
+
+  /// User profile information.
+  ///
+  TUserProfile profile;
 
   /// Projects the user is currently a member of.
   List<TProject> projects;
@@ -7188,6 +7212,9 @@ class TUser implements TDocumentToken, TFeedSource, TAccountSource {
       id: json['id'] as int,
       name: json['name'] as String,
       photo: json['photo'] as String,
+      profile: json['profile'] == null
+          ? null
+          : TUserProfile.fromJson(json['profile'] as Map<String, dynamic>),
       projects: (json['projects'] as List)
           ?.map((e) =>
               e == null ? null : TProject.fromJson(e as Map<String, dynamic>))
@@ -7205,21 +7232,102 @@ class TUser implements TDocumentToken, TFeedSource, TAccountSource {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'activeContractsCount': activeContractsCount,
-      'contracts': List<dynamic>.from(contracts.map((x) => x.toJson())),
+      'contracts': List<dynamic>.from(contracts.map((x) => x?.toJson())),
       'email': email,
-      'feeds': List<dynamic>.from(feeds.map((x) => x.toJson())),
-      'hubspotContact': hubspotContact.toJson(),
+      'feeds': List<dynamic>.from(feeds.map((x) => x?.toJson())),
+      'hubspotContact': hubspotContact?.toJson(),
       'id': id,
       'name': name,
       'photo': photo,
-      'projects': List<dynamic>.from(projects.map((x) => x.toJson())),
+      'profile': profile?.toJson(),
+      'projects': List<dynamic>.from(projects.map((x) => x?.toJson())),
       'roles': roles == null
           ? null
           : new List<dynamic>.from(roles.map((x) => TRoleEnum[x])),
       'skills': skills,
       'status': status,
-      'timeEntries': List<dynamic>.from(timeEntries.map((x) => x.toJson())),
+      'timeEntries': List<dynamic>.from(timeEntries.map((x) => x?.toJson())),
       'timezone': timezone,
+    };
+  }
+}
+
+class TUserProfile {
+  TUserProfile({this.customFields});
+
+  /// List of custom fields.
+  ///
+  List<TUserProfileCustomField> customFields;
+
+  factory TUserProfile.fromJson(Map<String, dynamic> json) {
+    return TUserProfile(
+      customFields: (json['customFields'] as List)
+          ?.map((e) => e == null
+              ? null
+              : TUserProfileCustomField.fromJson(e as Map<String, dynamic>))
+          ?.toList(),
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'customFields': List<dynamic>.from(customFields.map((x) => x?.toJson())),
+    };
+  }
+}
+
+class TUserProfileCustomField {
+  TUserProfileCustomField({this.key, this.value});
+
+  /// The field's name.
+  /// Let's try to keep this all lower_snake_case keys, that should make dealing
+  /// with custom fields' keys during development simpler since those keys
+  /// will be loaded from the database as atoms.
+  ///
+  String key;
+
+  /// The field's value.
+  ///
+  String value;
+
+  factory TUserProfileCustomField.fromJson(Map<String, dynamic> json) {
+    return TUserProfileCustomField(
+      key: json['key'] as String,
+      value: json['value'] as String,
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'key': key,
+      'value': value,
+    };
+  }
+}
+
+class TUserProfileSetCustomFieldInput {
+  TUserProfileSetCustomFieldInput(
+      {this.key, @required this.userId, this.value});
+
+  /// The field's name.
+  String key;
+
+  /// The user's id.
+  String userId;
+
+  /// The field's value.
+  String value;
+
+  factory TUserProfileSetCustomFieldInput.fromJson(Map<String, dynamic> json) {
+    return TUserProfileSetCustomFieldInput(
+      key: json['key'] as String,
+      userId: json['userId'] as String,
+      value: json['value'] as String,
+    );
+  }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'key': key,
+      'userId': userId,
+      'value': value,
     };
   }
 }
@@ -7427,7 +7535,7 @@ class T__Directive {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'args': List<dynamic>.from(args.map((x) => x.toJson())),
+      'args': List<dynamic>.from(args.map((x) => x?.toJson())),
       'description': description,
       'locations': locations == null
           ? null
@@ -7510,12 +7618,12 @@ class T__Field {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'args': List<dynamic>.from(args.map((x) => x.toJson())),
+      'args': List<dynamic>.from(args.map((x) => x?.toJson())),
       'deprecationReason': deprecationReason,
       'description': description,
       'isDeprecated': isDeprecated,
       'name': name,
-      'type': type.toJson(),
+      'type': type?.toJson(),
     };
   }
 }
@@ -7546,7 +7654,7 @@ class T__InputValue {
       'defaultValue': defaultValue,
       'description': description,
       'name': name,
-      'type': type.toJson(),
+      'type': type?.toJson(),
     };
   }
 }
@@ -7594,11 +7702,11 @@ class T__Schema {
   }
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
-      'directives': List<dynamic>.from(directives.map((x) => x.toJson())),
-      'mutationType': mutationType.toJson(),
-      'queryType': queryType.toJson(),
-      'subscriptionType': subscriptionType.toJson(),
-      'types': List<dynamic>.from(types.map((x) => x.toJson())),
+      'directives': List<dynamic>.from(directives.map((x) => x?.toJson())),
+      'mutationType': mutationType?.toJson(),
+      'queryType': queryType?.toJson(),
+      'subscriptionType': subscriptionType?.toJson(),
+      'types': List<dynamic>.from(types.map((x) => x?.toJson())),
     };
   }
 }
@@ -7669,36 +7777,19 @@ class T__Type {
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'description': description,
-      'enumValues': List<dynamic>.from(enumValues.map((x) => x.toJson())),
-      'fields': List<dynamic>.from(fields.map((x) => x.toJson())),
-      'inputFields': List<dynamic>.from(inputFields.map((x) => x.toJson())),
-      'interfaces': List<dynamic>.from(interfaces.map((x) => x.toJson())),
+      'enumValues': List<dynamic>.from(enumValues.map((x) => x?.toJson())),
+      'fields': List<dynamic>.from(fields.map((x) => x?.toJson())),
+      'inputFields': List<dynamic>.from(inputFields.map((x) => x?.toJson())),
+      'interfaces': List<dynamic>.from(interfaces.map((x) => x?.toJson())),
       'kind': kind,
       'name': name,
-      'ofType': ofType.toJson(),
-      'possibleTypes': List<dynamic>.from(possibleTypes.map((x) => x.toJson())),
+      'ofType': ofType?.toJson(),
+      'possibleTypes':
+          List<dynamic>.from(possibleTypes.map((x) => x?.toJson())),
     };
   }
 }
 
-enum TReadStatus {
-  ALL,
-  READ,
-  SUBSCRIBED,
-  UNREAD,
-}
-const TReadStatusValues = {
-  "ALL": TReadStatus.ALL,
-  "READ": TReadStatus.READ,
-  "SUBSCRIBED": TReadStatus.SUBSCRIBED,
-  "UNREAD": TReadStatus.UNREAD,
-};
-const TReadStatusEnum = {
-  TReadStatus.ALL: "ALL",
-  TReadStatus.READ: "READ",
-  TReadStatus.SUBSCRIBED: "SUBSCRIBED",
-  TReadStatus.UNREAD: "UNREAD",
-};
 enum TFeedSubscriptionStatus {
   DELETED,
   FOLLOWING,
@@ -7713,6 +7804,30 @@ const TFeedSubscriptionStatusEnum = {
   TFeedSubscriptionStatus.DELETED: "DELETED",
   TFeedSubscriptionStatus.FOLLOWING: "FOLLOWING",
   TFeedSubscriptionStatus.MUTED: "MUTED",
+};
+enum TMeetingParticipantFilter {
+  ALL,
+  CONNECTED,
+}
+const TMeetingParticipantFilterValues = {
+  "ALL": TMeetingParticipantFilter.ALL,
+  "CONNECTED": TMeetingParticipantFilter.CONNECTED,
+};
+const TMeetingParticipantFilterEnum = {
+  TMeetingParticipantFilter.ALL: "ALL",
+  TMeetingParticipantFilter.CONNECTED: "CONNECTED",
+};
+enum TNotificationDeliveryType {
+  EMAIL,
+  PUSH,
+}
+const TNotificationDeliveryTypeValues = {
+  "EMAIL": TNotificationDeliveryType.EMAIL,
+  "PUSH": TNotificationDeliveryType.PUSH,
+};
+const TNotificationDeliveryTypeEnum = {
+  TNotificationDeliveryType.EMAIL: "EMAIL",
+  TNotificationDeliveryType.PUSH: "PUSH",
 };
 enum TRole {
   ADMIN,
@@ -7732,47 +7847,23 @@ const TRoleEnum = {
   TRole.CUSTOMER: "CUSTOMER",
   TRole.MANAGER: "MANAGER",
 };
-enum TNotificationDeliveryType {
-  EMAIL,
-  PUSH,
+enum TAccountType {
+  EXTERNAL,
+  PROJECT,
+  TURTLE,
+  USER,
 }
-const TNotificationDeliveryTypeValues = {
-  "EMAIL": TNotificationDeliveryType.EMAIL,
-  "PUSH": TNotificationDeliveryType.PUSH,
+const TAccountTypeValues = {
+  "EXTERNAL": TAccountType.EXTERNAL,
+  "PROJECT": TAccountType.PROJECT,
+  "TURTLE": TAccountType.TURTLE,
+  "USER": TAccountType.USER,
 };
-const TNotificationDeliveryTypeEnum = {
-  TNotificationDeliveryType.EMAIL: "EMAIL",
-  TNotificationDeliveryType.PUSH: "PUSH",
-};
-enum TPermission {
-  ADMIN_VIEW,
-  MY_ACCOUNTING_VIEW,
-  PROJECT_ACCOUNTING_VIEW,
-  PROJECT_MEMBERS_MANAGE,
-}
-const TPermissionValues = {
-  "ADMIN_VIEW": TPermission.ADMIN_VIEW,
-  "MY_ACCOUNTING_VIEW": TPermission.MY_ACCOUNTING_VIEW,
-  "PROJECT_ACCOUNTING_VIEW": TPermission.PROJECT_ACCOUNTING_VIEW,
-  "PROJECT_MEMBERS_MANAGE": TPermission.PROJECT_MEMBERS_MANAGE,
-};
-const TPermissionEnum = {
-  TPermission.ADMIN_VIEW: "ADMIN_VIEW",
-  TPermission.MY_ACCOUNTING_VIEW: "MY_ACCOUNTING_VIEW",
-  TPermission.PROJECT_ACCOUNTING_VIEW: "PROJECT_ACCOUNTING_VIEW",
-  TPermission.PROJECT_MEMBERS_MANAGE: "PROJECT_MEMBERS_MANAGE",
-};
-enum TMeetingParticipantFilter {
-  ALL,
-  CONNECTED,
-}
-const TMeetingParticipantFilterValues = {
-  "ALL": TMeetingParticipantFilter.ALL,
-  "CONNECTED": TMeetingParticipantFilter.CONNECTED,
-};
-const TMeetingParticipantFilterEnum = {
-  TMeetingParticipantFilter.ALL: "ALL",
-  TMeetingParticipantFilter.CONNECTED: "CONNECTED",
+const TAccountTypeEnum = {
+  TAccountType.EXTERNAL: "EXTERNAL",
+  TAccountType.PROJECT: "PROJECT",
+  TAccountType.TURTLE: "TURTLE",
+  TAccountType.USER: "USER",
 };
 enum TMeetingRecordingStatus {
   COMPLETED,
@@ -7807,23 +7898,41 @@ const TMeetingStatusEnum = {
   TMeetingStatus.FAILED: "FAILED",
   TMeetingStatus.IN_PROGRESS: "IN_PROGRESS",
 };
-enum TAccountType {
-  EXTERNAL,
-  PROJECT,
-  TURTLE,
-  USER,
+enum TPermission {
+  ADMIN_VIEW,
+  MY_ACCOUNTING_VIEW,
+  PROJECT_ACCOUNTING_VIEW,
+  PROJECT_MEMBERS_MANAGE,
 }
-const TAccountTypeValues = {
-  "EXTERNAL": TAccountType.EXTERNAL,
-  "PROJECT": TAccountType.PROJECT,
-  "TURTLE": TAccountType.TURTLE,
-  "USER": TAccountType.USER,
+const TPermissionValues = {
+  "ADMIN_VIEW": TPermission.ADMIN_VIEW,
+  "MY_ACCOUNTING_VIEW": TPermission.MY_ACCOUNTING_VIEW,
+  "PROJECT_ACCOUNTING_VIEW": TPermission.PROJECT_ACCOUNTING_VIEW,
+  "PROJECT_MEMBERS_MANAGE": TPermission.PROJECT_MEMBERS_MANAGE,
 };
-const TAccountTypeEnum = {
-  TAccountType.EXTERNAL: "EXTERNAL",
-  TAccountType.PROJECT: "PROJECT",
-  TAccountType.TURTLE: "TURTLE",
-  TAccountType.USER: "USER",
+const TPermissionEnum = {
+  TPermission.ADMIN_VIEW: "ADMIN_VIEW",
+  TPermission.MY_ACCOUNTING_VIEW: "MY_ACCOUNTING_VIEW",
+  TPermission.PROJECT_ACCOUNTING_VIEW: "PROJECT_ACCOUNTING_VIEW",
+  TPermission.PROJECT_MEMBERS_MANAGE: "PROJECT_MEMBERS_MANAGE",
+};
+enum TReadStatus {
+  ALL,
+  READ,
+  SUBSCRIBED,
+  UNREAD,
+}
+const TReadStatusValues = {
+  "ALL": TReadStatus.ALL,
+  "READ": TReadStatus.READ,
+  "SUBSCRIBED": TReadStatus.SUBSCRIBED,
+  "UNREAD": TReadStatus.UNREAD,
+};
+const TReadStatusEnum = {
+  TReadStatus.ALL: "ALL",
+  TReadStatus.READ: "READ",
+  TReadStatus.SUBSCRIBED: "SUBSCRIBED",
+  TReadStatus.UNREAD: "UNREAD",
 };
 enum T__DirectiveLocation {
   FIELD,

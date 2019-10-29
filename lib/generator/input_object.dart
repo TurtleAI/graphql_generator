@@ -113,9 +113,9 @@ class InputObjectGenerator {
             return "'${f.name}' : ${f.name} == null  ? null : new List<dynamic>.from(${f.name}.map((x) => ${split}Enum[x])),";
           }
       }
-      return "'${f.name}' : List<dynamic>.from(${f.name}.map((x) => x.toJson())),";
+      return "'${f.name}' : List<dynamic>.from(${f.name}.map((x) => x?.toJson())),";
     } else {
-      return "'${f.name}' : ${f.name}.toJson(),";
+      return "'${f.name}' : ${f.name}?.toJson(),";
     }
   }
 
