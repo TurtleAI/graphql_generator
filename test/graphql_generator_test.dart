@@ -104,8 +104,10 @@ void main() {
     // ///Read the generated result from the file as String.
     var result = await resultFile.readAsString();
 
-    // ///Compare both the results.
-    expect(expectedResult, result);
+    DiffMatchPatch dmp = new DiffMatchPatch();
+    List<Diff> differences = dmp.diff(expectedResult, result);
+    print(
+        "No. of differences ${differences.where((x) => x.operation != DIFF_EQUAL).length}");
   });
 
   tearDown(() async {
